@@ -131,19 +131,20 @@ head(data) #make sure data loads in correctly
 
 ```
 ## ID Status Age Sex Race Service Cancer Renal Infection CPR Systolic HeartRate
-## 1 8 0 27 1 1 0 0 0 1 0 142 88
-## 2 12 0 59 0 1 0 0 0 0 0 112 80
-## 3 14 0 77 0 1 1 0 0 0 0 100 70
-## 4 28 0 54 0 1 0 0 0 1 0 142 103
-## 5 32 0 87 1 1 1 0 0 1 0 110 154
-## 6 38 0 69 0 1 0 0 0 1 0 110 132
-## Previous Type Fracture PO2 PH PCO2 Bicarbonate Creatinine Consciousness
-## 1 0 1 0 0 0 0 0 0 1
-## 2 1 1 0 0 0 0 0 0 1
-## 3 0 0 0 0 0 0 0 0 1
-## 4 0 1 1 0 0 0 0 0 1
-## 5 1 1 0 0 0 0 0 0 1
-## 6 0 1 0 1 0 0 1 0 1
+Previous Type Fracture PO2 PH PCO2
+## 1 8 0 27 1 1 0 0 0 1 0 142 88 0 1 0 0 0 0
+## 2 12 0 59 0 1 0 0 0 0 0 112 80 1 1 0 0 0 0
+## 3 14 0 77 0 1 1 0 0 0 0 100 70 0 0 0 0 0 0
+## 4 28 0 54 0 1 0 0 0 1 0 142 103 0 1 1 0 0 0
+## 5 32 0 87 1 1 1 0 0 1 0 110 154 1 1 0 0 0 0
+## 6 38 0 69 0 1 0 0 0 1 0 110 132 0 1 0 1 0 0
+## Bicarbonate Creatinine Consciousness
+## 1 0 0 1
+## 2 0 0 1
+## 3 0 0 1
+## 4 0 0 1
+## 5 0 0 1
+## 6 1 0 1
 ```
 
 Should see data in environment panel (upper right)
@@ -243,10 +244,10 @@ data[1,] #first row
 ```
 
 ```
-##   ID Status Age Sex Race Service Cancer Renal Infection CPR Systolic HeartRate
-## 1  8      0  27   1    1       0      0     0         1   0      142        88
-##   Previous Type Fracture PO2 PH PCO2 Bicarbonate Creatinine Consciousness
-## 1        0    1        0   0  0    0           0          0             1
+##   ID Status Age Sex Race Service Cancer Renal Infection CPR Systolic HeartRate Previous Type Fracture PO2 PH PCO2
+## 1  8      0  27   1    1       0      0     0         1   0      142        88        0    1        0   0  0    0
+##   Bicarbonate Creatinine Consciousness
+## 1           0          0             1
 ```
 
 ```r
