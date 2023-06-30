@@ -66,7 +66,7 @@ Go with all default options
 
 ```{r, echo=FALSE}
 
-knitr::include_graphics("C:/Users/akleffner2/OneDrive - University of Nebraska-Lincoln/Documents/Creighton/mth-361/week1/images/rstudio.png")
+knitr::include_graphics("../images/Week1/rstudio.png")
 
 ```
 
