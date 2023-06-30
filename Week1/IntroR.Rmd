@@ -1,0 +1,299 @@
+---
+title: "Introduction to R"
+output: 
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r echo=FALSE, message=FALSE, warning = FALSE}
+library(tidyverse)
+library(knitr)
+
+hook_output = knit_hooks$get('output')
+knit_hooks$set(output = function(x, options) {
+  # this hook is used only when the linewidth option is not NULL
+  if (!is.null(n <- options$linewidth)) {
+    x = xfun::split_lines(x)
+    # any lines wider than n should be wrapped
+    if (any(nchar(x) > n)) x = strwrap(x, width = n)
+    x = paste(x, collapse = '\n')
+  }
+  hook_output(x, options)
+})
+
+```
+
+
+## What is R?
+
++ An open-source, free software environment
++ System for statistical computation and graphics
++ CRAN is R's central software repository
+  - Contains contributed packages
+  
+<br>
+<br>
+<br>
+<br>
+
+.center[ 
+It is OK if you never use it (or even heard about it) before! There is no prerequisite for this course.
+]
+---
+
+## Installing R
+
+1. Download and run the R installer for your operating system from CRAN
+  - Windows: https://cran.rstudio.com/bin/windows/base/
+  - Mac: https://cran.rstudio.com/bin/macosx/
+  - Linux: https://cran.rstudio.com/bin/linux/
+2. Now download RStudio from the RStudio website – IDE of R
+ - https://posit.co/download/rstudio-desktop/
+3. If you are using a Mac, you may need to download XQuartz.
+https://www.xquartz.org/
+ - If you run into issues, try downloading this to see if it helps.
+
+
+Go with all default options
+
+---
+
+## R Studio Set-Up
+
+```{r, echo=FALSE}
+
+knitr::include_graphics("../week1/images/rstudio.png")
+
+```
+
+To Create a Script, Click the Following: File -> New File -> R script
+
+[R Studio IDE Cheatsheet](cheatsheets/rstudio-ide.pdf)
+
+---
+
+## Installing Packages
+
+**Note**: To run code from your script:
++ Windows: Ctrl + Enter
++ Mac: Cmd + Enter
++ Highlight what you want to run and hit the “Run” button
+
+We will be installing the [tidyverse](https://www.tidyverse.org/) package.
+
+**Method 1**
+```{r, eval= FALSE}
+
+install.packages("tidyverse")
+
+#Note: It may take a while (use "#" to create notes in R)
+```
+
+**Method 2** - Point and Click
+
++ Tools -> Install Packages
+
+Only have to do this once!!
+
+---
+## Load Package
+
+Let's load the package we just installed!
+
+```{r, eval = FALSE}
+library(tidyverse)
+```
+
+Will have to run this every time we are in a new session and want to use this package
+
+---
+
+## Load Data
+
+We usually work with .csv file in R. When you have a file that need to be read into the Rstudio, first put it with the R markdown file, or set the working directory to the file. 
+
+First Check your working directory!
+
+Method 1:
+```{r, eval = FALSE}
+getwd() #What is your working directory
+setwd() # Change Working directory
+
+```
+
+Method 2 (recommendation):
+
+Session -> Set Working Directory -> Choose Directory -> Select folder data set is located -> Apply
+
+---
+## Load Data
+
+Second, then load in the data
+```{r, linewidth=80}
+data = read.csv("data/ICUAdmissions.csv")
+head(data) #make sure data loads in correctly
+
+```
+
+Should see data in environment panel (upper right)
+
+---
+
+## Help
+
+
+```{r eval = FALSE}
+?head
+```
+
+This returns the help documentation for this function
+
+---
+
+## Some Basic Functions
+
+Check variable types
+
+```{r}
+str(data)
+#Note: The purpose of checking variable types is to make sure R is understanding what each column is representing.
+
+```
+
+---
+
+## Some Basic Functions
+
+ID and Race is being read as an "int" type variable, meaning as an integer.
+
+We actually want to treat this variable as a factor!
+
+```{r}
+
+#To change this column to a factor:
+data$ID <- as.factor(data$ID)
+data$Race <- as.factor(data$Race)
+
+
+#Now they are factors!
+class(data$ID)
+class(data$Race)
+
+```
+
+---
+
+## Some Basic Functions
+
+Selecting Specific Row/Column
+
+```{r}
+data[1,] #first row
+data[1:10,3] #thrid column observations 1 - 10 (also data$Age[1:10])
+
+data[1,3] #first observation in third column
+
+```
+
+
+
+---
+
+## Some Basic Functions
+
+If we want a summary of the data
+
+```{r}
+summary(data[1:5])
+```
+
+
+---
+
+## Giant Calculator!
+
+```{r}
+a <- 1
+b <- 3
+c <- 6
+
+```
+
+.pull-left[
+```{r}
+a+b #Addition
+c-a #Subtraction
+b*c #Multiplication
+```
+].pull-right[
+```{r}
+c/b #Division 
+sqrt(4)
+2^3
+```
+]
+
+---
+
+## Giant Calculator!
+
+**Note**: In R, the following will not work!
+```{r eval = FALSE}
+
+b(a+c)
+```
+*R* will assume the "b()" is indicating some function, NOT multiplication as we do in math and stats. 
+
+Thus, you MUST include the multiplication symbol.
+```{r}
+b*(a+c)
+```
+
+---
+
+## Some Notes
+
++ Google is your Friend!
+  - As an open source software, there is a TON of help out there!
+
++ If you see a red *warning*, it does not always mean something is wrong, R is just alerting you to check something
+
++ If you see a red *error*, code needs to be fixed to run
+
++ Learning to code can be challenging, so try not to get frustrated!
+
+
+
+Introduction points from: https://ourcodingclub.github.io/tutorials/intro-to-r/
+
+---
+
+## Next: Brief Introduction to R Markdown
+
+Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+One method for completing labs/homework
+
+Helpul Links:
++ [Cheatsheet](cheatsheets/rmarkdown-2.0.pdf)
++ [Installation Help](https://bookdown.org/yihui/rmarkdown/installation.html)
+
+```{r eval = FALSE}
+#This alone creates html/word documents
+install.packages("rmarkdown") #install the knitr package
+
+```
+
+
+```{r eval= FALSE}
+#If you want to create a PDF need Latex
+install.packages('tinytex')
+tinytex::install_tinytex()  # install TinyTeX
+```
+
+Create a new document:
++ File -> New File -> R Markdown

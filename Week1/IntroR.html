@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Introduction to R</title>
+    <meta charset="utf-8" />
+    <script src="libs/header-attrs-2.17/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Introduction to R
+]
+
+---
+
+
+
+
+
+## What is R?
+
++ An open-source, free software environment
++ System for statistical computation and graphics
++ CRAN is R's central software repository
+  - Contains contributed packages
+  
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+
+.center[ 
+It is OK if you never use it (or even heard about it) before! There is no prerequisite for this course.
+]
+---
+
+## Installing R
+
+1. Download and run the R installer for your operating system from CRAN
+  - Windows: https://cran.rstudio.com/bin/windows/base/
+  - Mac: https://cran.rstudio.com/bin/macosx/
+  - Linux: https://cran.rstudio.com/bin/linux/
+2. Now download RStudio from the RStudio website – IDE of R
+ - https://posit.co/download/rstudio-desktop/
+3. If you are using a Mac, you may need to download XQuartz.
+https://www.xquartz.org/
+ - If you run into issues, try downloading this to see if it helps.
+
+
+Go with all default options
+
+---
+
+## R Studio Set-Up
+
+&lt;img src="../week1/images/rstudio.png" width="1096" /&gt;
+
+To Create a Script, Click the Following: File -&gt; New File -&gt; R script
+
+[R Studio IDE Cheatsheet](cheatsheets/rstudio-ide.pdf)
+
+---
+
+## Installing Packages
+
+**Note**: To run code from your script:
++ Windows: Ctrl + Enter
++ Mac: Cmd + Enter
++ Highlight what you want to run and hit the “Run” button
+
+We will be installing the [tidyverse](https://www.tidyverse.org/) package.
+
+**Method 1**
+
+```r
+install.packages("tidyverse")
+
+#Note: It may take a while (use "#" to create notes in R)
+```
+
+**Method 2** - Point and Click
+
++ Tools -&gt; Install Packages
+
+Only have to do this once!!
+
+---
+## Load Package
+
+Let's load the package we just installed!
+
+
+```r
+library(tidyverse)
+```
+
+Will have to run this every time we are in a new session and want to use this package
+
+---
+
+## Load Data
+
+We usually work with .csv file in R. When you have a file that need to be read into the Rstudio, first put it with the R markdown file, or set the working directory to the file. 
+
+First Check your working directory!
+
+Method 1:
+
+```r
+getwd() #What is your working directory
+setwd() # Change Working directory
+```
+
+Method 2 (recommendation):
+
+Session -&gt; Set Working Directory -&gt; Choose Directory -&gt; Select folder data set is located -&gt; Apply
+
+---
+## Load Data
+
+Second, then load in the data
+
+```r
+data = read.csv("data/ICUAdmissions.csv")
+head(data) #make sure data loads in correctly
+```
+
+```
+## ID Status Age Sex Race Service Cancer Renal Infection CPR Systolic HeartRate
+## 1 8 0 27 1 1 0 0 0 1 0 142 88
+## 2 12 0 59 0 1 0 0 0 0 0 112 80
+## 3 14 0 77 0 1 1 0 0 0 0 100 70
+## 4 28 0 54 0 1 0 0 0 1 0 142 103
+## 5 32 0 87 1 1 1 0 0 1 0 110 154
+## 6 38 0 69 0 1 0 0 0 1 0 110 132
+## Previous Type Fracture PO2 PH PCO2 Bicarbonate Creatinine Consciousness
+## 1 0 1 0 0 0 0 0 0 1
+## 2 1 1 0 0 0 0 0 0 1
+## 3 0 0 0 0 0 0 0 0 1
+## 4 0 1 1 0 0 0 0 0 1
+## 5 1 1 0 0 0 0 0 0 1
+## 6 0 1 0 1 0 0 1 0 1
+```
+
+Should see data in environment panel (upper right)
+
+---
+
+## Help
+
+
+
+```r
+?head
+```
+
+This returns the help documentation for this function
+
+---
+
+## Some Basic Functions
+
+Check variable types
+
+
+```r
+str(data)
+```
+
+```
+## 'data.frame':	200 obs. of  21 variables:
+##  $ ID           : int  8 12 14 28 32 38 40 41 42 50 ...
+##  $ Status       : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ Age          : int  27 59 77 54 87 69 63 30 35 70 ...
+##  $ Sex          : int  1 0 0 0 1 0 0 1 0 1 ...
+##  $ Race         : int  1 1 1 1 1 1 1 1 2 1 ...
+##  $ Service      : int  0 0 1 0 1 0 1 0 0 1 ...
+##  $ Cancer       : int  0 0 0 0 0 0 0 0 0 1 ...
+##  $ Renal        : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ Infection    : int  1 0 0 1 1 1 0 0 0 0 ...
+##  $ CPR          : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ Systolic     : int  142 112 100 142 110 110 104 144 108 138 ...
+##  $ HeartRate    : int  88 80 70 103 154 132 66 110 60 103 ...
+##  $ Previous     : int  0 1 0 0 1 0 0 0 0 0 ...
+##  $ Type         : int  1 1 0 1 1 1 0 1 1 0 ...
+##  $ Fracture     : int  0 0 0 1 0 0 0 0 0 0 ...
+##  $ PO2          : int  0 0 0 0 0 1 0 0 0 0 ...
+##  $ PH           : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ PCO2         : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ Bicarbonate  : int  0 0 0 0 0 1 0 0 0 0 ...
+##  $ Creatinine   : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ Consciousness: int  1 1 1 1 1 1 1 1 1 1 ...
+```
+
+```r
+#Note: The purpose of checking variable types is to make sure R is understanding what each column is representing.
+```
+
+---
+
+## Some Basic Functions
+
+ID and Race is being read as an "int" type variable, meaning as an integer.
+
+We actually want to treat this variable as a factor!
+
+
+```r
+#To change this column to a factor:
+data$ID &lt;- as.factor(data$ID)
+data$Race &lt;- as.factor(data$Race)
+
+
+#Now they are factors!
+class(data$ID)
+```
+
+```
+## [1] "factor"
+```
+
+```r
+class(data$Race)
+```
+
+```
+## [1] "factor"
+```
+
+---
+
+## Some Basic Functions
+
+Selecting Specific Row/Column
+
+
+```r
+data[1,] #first row
+```
+
+```
+##   ID Status Age Sex Race Service Cancer Renal Infection CPR Systolic HeartRate
+## 1  8      0  27   1    1       0      0     0         1   0      142        88
+##   Previous Type Fracture PO2 PH PCO2 Bicarbonate Creatinine Consciousness
+## 1        0    1        0   0  0    0           0          0             1
+```
+
+```r
+data[1:10,3] #thrid column observations 1 - 10 (also data$Age[1:10])
+```
+
+```
+##  [1] 27 59 77 54 87 69 63 30 35 70
+```
+
+```r
+data[1,3] #first observation in third column
+```
+
+```
+## [1] 27
+```
+
+
+
+---
+
+## Some Basic Functions
+
+If we want a summary of the data
+
+
+```r
+summary(data[1:5])
+```
+
+```
+##        ID          Status         Age             Sex       Race   
+##  4      :  1   Min.   :0.0   Min.   :16.00   Min.   :0.00   1:175  
+##  8      :  1   1st Qu.:0.0   1st Qu.:46.75   1st Qu.:0.00   2: 15  
+##  12     :  1   Median :0.0   Median :63.00   Median :0.00   3: 10  
+##  14     :  1   Mean   :0.2   Mean   :57.55   Mean   :0.38          
+##  27     :  1   3rd Qu.:0.0   3rd Qu.:72.00   3rd Qu.:1.00          
+##  28     :  1   Max.   :1.0   Max.   :92.00   Max.   :1.00          
+##  (Other):194
+```
+
+
+---
+
+## Giant Calculator!
+
+
+```r
+a &lt;- 1
+b &lt;- 3
+c &lt;- 6
+```
+
+.pull-left[
+
+```r
+a+b #Addition
+```
+
+```
+## [1] 4
+```
+
+```r
+c-a #Subtraction
+```
+
+```
+## [1] 5
+```
+
+```r
+b*c #Multiplication
+```
+
+```
+## [1] 18
+```
+].pull-right[
+
+```r
+c/b #Division 
+```
+
+```
+## [1] 2
+```
+
+```r
+sqrt(4)
+```
+
+```
+## [1] 2
+```
+
+```r
+2^3
+```
+
+```
+## [1] 8
+```
+]
+
+---
+
+## Giant Calculator!
+
+**Note**: In R, the following will not work!
+
+```r
+b(a+c)
+```
+*R* will assume the "b()" is indicating some function, NOT multiplication as we do in math and stats. 
+
+Thus, you MUST include the multiplication symbol.
+
+```r
+b*(a+c)
+```
+
+```
+## [1] 21
+```
+
+---
+
+## Some Notes
+
++ Google is your Friend!
+  - As an open source software, there is a TON of help out there!
+
++ If you see a red *warning*, it does not always mean something is wrong, R is just alerting you to check something
+
++ If you see a red *error*, code needs to be fixed to run
+
++ Learning to code can be challenging, so try not to get frustrated!
+
+
+
+Introduction points from: https://ourcodingclub.github.io/tutorials/intro-to-r/
+
+---
+
+## Next: Brief Introduction to R Markdown
+
+Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see &lt;http://rmarkdown.rstudio.com&gt;.
+
+One method for completing labs/homework
+
+Helpul Links:
++ [Cheatsheet](cheatsheets/rmarkdown-2.0.pdf)
++ [Installation Help](https://bookdown.org/yihui/rmarkdown/installation.html)
+
+
+```r
+#This alone creates html/word documents
+install.packages("rmarkdown") #install the knitr package
+```
+
+
+
+```r
+#If you want to create a PDF need Latex
+install.packages('tinytex')
+tinytex::install_tinytex()  # install TinyTeX
+```
+
+Create a new document:
++ File -&gt; New File -&gt; R Markdown
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
