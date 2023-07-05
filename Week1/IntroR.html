@@ -3,6 +3,8 @@
   <head>
     <title>Introduction to R</title>
     <meta charset="utf-8" />
+    <meta name="author" content="Alison Kleffner" />
+    <meta name="date" content="2023-08-17" />
     <script src="libs/header-attrs-2.17/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
@@ -14,44 +16,25 @@ class: center, middle, inverse, title-slide
 .title[
 # Introduction to R
 ]
-
----
-
-
-
-
-
-## What is R?
-
-+ An open-source, free software environment
-+ System for statistical computation and graphics
-+ CRAN is R's central software repository
-  - Contains contributed packages
-  
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-
-.center[ 
-It is OK if you never use it (or even heard about it) before! There is no prerequisite for this course.
+.author[
+### Alison Kleffner
 ]
+.date[
+### August 17, 2023
+]
+
 ---
 
-## Installing R
-
-1. Download and run the R installer for your operating system from CRAN
-  - Windows: https://cran.rstudio.com/bin/windows/base/
-  - Mac: https://cran.rstudio.com/bin/macosx/
-  - Linux: https://cran.rstudio.com/bin/linux/
-2. Now download RStudio from the RStudio website – IDE of R
- - https://posit.co/download/rstudio-desktop/
-3. If you are using a Mac, you may need to download XQuartz.
-https://www.xquartz.org/
- - If you run into issues, try downloading this to see if it helps.
 
 
-Go with all default options
+
+
+## Agenda
+
+- Installing Packages
+- Loading Data
+- Basic Functions
+- R Markdown
 
 ---
 
@@ -289,7 +272,25 @@ summary(data[1:5])
 ##  28     :  1   Max.   :1.0   Max.   :92.00   Max.   :1.00          
 ##  (Other):194
 ```
+---
+## Variable Creation
 
+We can create variables using the assignment operator &lt;-:
+
+
+
+```r
+x &lt;- 5
+RoyalWins &lt;- 25
+```
+
+
+
+Rules:
++ Variables can't start with a number
++ Case-sensitive
++ There are reserved words that *R* won't let you use for variables names
+  - for, in, while, if, else, repeat, break, next
 
 ---
 
@@ -420,6 +421,14 @@ tinytex::install_tinytex()  # install TinyTeX
 
 Create a new document:
 + File -&gt; New File -&gt; R Markdown
+
+---
+## Homework
+
+- Introduction Questionnaire in Blueline due **Thursday August 24 at 11:59 pm**
+  + Should take approximately 5 minutes
+- **Optional**: *R* Practice
+  + Not due for points, but if you want more practice with *R*
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

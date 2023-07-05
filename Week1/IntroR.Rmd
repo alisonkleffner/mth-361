@@ -1,5 +1,7 @@
 ---
 title: "Introduction to R"
+author: "Alison Kleffner"
+date: "August 17, 2023"
 output: 
   xaringan::moon_reader:
     lib_dir: libs
@@ -28,37 +30,12 @@ knit_hooks$set(output = function(x, options) {
 ```
 
 
-## What is R?
+## Agenda
 
-+ An open-source, free software environment
-+ System for statistical computation and graphics
-+ CRAN is R's central software repository
-  - Contains contributed packages
-  
-<br>
-<br>
-<br>
-<br>
-
-.center[ 
-It is OK if you never use it (or even heard about it) before! There is no prerequisite for this course.
-]
----
-
-## Installing R
-
-1. Download and run the R installer for your operating system from CRAN
-  - Windows: https://cran.rstudio.com/bin/windows/base/
-  - Mac: https://cran.rstudio.com/bin/macosx/
-  - Linux: https://cran.rstudio.com/bin/linux/
-2. Now download RStudio from the RStudio website – IDE of R
- - https://posit.co/download/rstudio-desktop/
-3. If you are using a Mac, you may need to download XQuartz.
-https://www.xquartz.org/
- - If you run into issues, try downloading this to see if it helps.
-
-
-Go with all default options
+- Installing Packages
+- Loading Data
+- Basic Functions
+- R Markdown
 
 ---
 
@@ -210,7 +187,26 @@ If we want a summary of the data
 ```{r}
 summary(data[1:5])
 ```
+---
+## Variable Creation
 
+We can create variables using the assignment operator <-:
+
+
+```{r}
+
+x <- 5
+RoyalWins <- 25
+
+```
+
+
+
+Rules:
++ Variables can't start with a number
++ Case-sensitive
++ There are reserved words that *R* won't let you use for variables names
+  - for, in, while, if, else, repeat, break, next
 
 ---
 
@@ -297,3 +293,11 @@ tinytex::install_tinytex()  # install TinyTeX
 
 Create a new document:
 + File -> New File -> R Markdown
+
+---
+## Homework
+
+- Introduction Questionnaire in Blueline due **Thursday August 24 at 11:59 pm**
+  + Should take approximately 5 minutes
+- **Optional**: *R* Practice
+  + Not due for points, but if you want more practice with *R*

@@ -1,0 +1,146 @@
+---
+title: "Welcome to MTH361: Probability and Statistics in the Health Sciences!"
+author: "Alison Kleffner"
+date: "August 15, 2023"
+output: 
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r echo=FALSE, message=FALSE, warning = FALSE}
+library(tidyverse)
+library(knitr)
+
+hook_output = knit_hooks$get('output')
+knit_hooks$set(output = function(x, options) {
+  # this hook is used only when the linewidth option is not NULL
+  if (!is.null(n <- options$linewidth)) {
+    x = xfun::split_lines(x)
+    # any lines wider than n should be wrapped
+    if (any(nchar(x) > n)) x = strwrap(x, width = n)
+    x = paste(x, collapse = '\n')
+  }
+  hook_output(x, options)
+})
+
+```
+
+## Agenda
+
+- What is Statistics?
+- Syllabus/Course Specificis
+- Software Set-up
+
+
+---
+
+## Alison Kleffner, PhD
+
+- BS in Applied Mathematics and Economics at Rockhurst University
+- Master and PhD in Statistics at University of Nebraska at Lincoln
+- Thesis: *Visualization and Modeling of Multivariate Data in Environmental Applications*
+- New Faculty! So I am learning and open to student research projects
+
+
+---
+
+## What is Statistics?
+
+- Statistics is a branch of mathematical science that pertains to the collection, analysis, interpretation and presentation of data.
+  + But it is not Math!
+- It is applicable to a wide variety of disciplines from physical science to social sciences and humanities
+  + Also used in everyday life - statistical literacy
+- Helps us to make educated guesses about the unknown in an ocean of data
+
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+
+knitr::include_graphics("../images/Week1/stat-areas.png")
+
+```
+
+---
+## Branches of Statistics
+
+.pull-left[
+
+**Descriptive statistics** are methods that describe, show, or summarize the data from our sample in a meaningful way.
+  - Tables, charts, averages
+ 
+```{r, echo=FALSE}
+
+knitr::include_graphics("../images/Week1/graph-ex.png")
+
+```
+  
+].pull-right[
+
+**Inferential statistics** are methods that allow us to draw conclusions about the larger population that the sample represents.
+
+```{r, echo=FALSE}
+
+knitr::include_graphics("../images/Week1/inference.png")
+
+```
+  
+]
+
+---
+## What will be in this course?
+
+- Not a ton of calculations, but a lot of interpreting, reading, and writing.
+- We will work with *R* code and output. If programming is new and hard to you, focus on the statistical concepts first!
+- The labs and homework will be provided in both *R* file and PDF. Feel free to print it out and write.
+- As a new faculty, I am learning and I am open to feedback
+
+---
+
+## Syllabus
+
+
+---
+
+## What is R?
+
++ An open-source, free software environment
++ System for statistical computation and graphics
++ CRAN is *R*'s central software repository
+  - Contains contributed packages
+  
+<br>
+<br>
+<br>
+<br>
+
+.center[ 
+**It is OK if you never use it (or even heard about it) before! There is no prerequisite for this course.**
+]
+
+---
+
+## Installing R
+
+1. Download and run the R installer for your operating system from CRAN
+  - Windows: https://cran.rstudio.com/bin/windows/base/
+  - Mac: https://cran.rstudio.com/bin/macosx/
+  - Linux: https://cran.rstudio.com/bin/linux/
+2. Now download RStudio from the RStudio website – IDE of R
+ - https://posit.co/download/rstudio-desktop/
+3. If you are using a Mac, you may need to download XQuartz.
+https://www.xquartz.org/
+ - If you run into issues, try downloading this to see if it helps.
+
+
+Go with all default options
+
+---
+
+## Homework
+
+- Introduction Questionnaire in Blueline due **Thursday August 24 at 11:59 pm**
+  + Should take approximately 5 minutes
+- Have *R* installed by Thursday if you did not do so in class today
+  + Thursday in class we will get familiar with different features of *R*
