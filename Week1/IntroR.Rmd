@@ -1,6 +1,6 @@
 ---
-title: "Introduction to R"
-author: "Alison Kleffner"
+title: "MTH361: Probability and Statistics in the Health Sciences"
+author: "Introduction to R"
 date: "August 17, 2023"
 output: 
   xaringan::moon_reader:
@@ -36,6 +36,14 @@ knit_hooks$set(output = function(x, options) {
 - Loading Data
 - Basic Functions
 - R Markdown
+
+---
+## Announcements
+
+- Introduction Questionnaire in Blueline due **Thursday August 24 at 11:59 pm**
+  + Should take approximately 5 minutes
+- **Optional**: *R* Practice
+  + Not due for points, but if you want more practice with *R*
 
 ---
 
@@ -260,12 +268,21 @@ b*(a+c)
 
 + If you see a red *error*, code needs to be fixed to run
 
-+ Learning to code can be challenging, so try not to get frustrated!
-
 
 
 Introduction points from: https://ourcodingclub.github.io/tutorials/intro-to-r/
 
+
+---
+## Learning to code can be challenging
+
+```{r, echo=FALSE}
+
+knitr::include_graphics("../images/Week1/debug.png")
+
+```
+
+Artwork by @allison_horst
 ---
 
 ## Next: Brief Introduction to R Markdown
@@ -293,11 +310,3 @@ tinytex::install_tinytex()  # install TinyTeX
 
 Create a new document:
 + File -> New File -> R Markdown
-
----
-## Homework
-
-- Introduction Questionnaire in Blueline due **Thursday August 24 at 11:59 pm**
-  + Should take approximately 5 minutes
-- **Optional**: *R* Practice
-  + Not due for points, but if you want more practice with *R*
