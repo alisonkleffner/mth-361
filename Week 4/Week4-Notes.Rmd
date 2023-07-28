@@ -1,0 +1,343 @@
+---
+title: "MTH361: Probability and Statistics in the Health Sciences"
+author: "Probability and Conditional Probability"
+date: "August 29, 2023"
+output: 
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r echo=FALSE, message=FALSE, warning = FALSE}
+library(knitr)
+
+hook_output = knit_hooks$get('output')
+knit_hooks$set(output = function(x, options) {
+  # this hook is used only when the linewidth option is not NULL
+  if (!is.null(n <- options$linewidth)) {
+    x = xfun::split_lines(x)
+    # any lines wider than n should be wrapped
+    if (any(nchar(x) > n)) x = strwrap(x, width = n)
+    x = paste(x, collapse = '\n')
+  }
+  hook_output(x, options)
+})
+
+```
+
+
+### Agenda
+
+- Probability definition and notation
+- Rules for calculating probabilities
+  + Addition Rule
+  + Complement Rule
+  + General Addition Rule
+  + Multiplication Rule
+- Conditional Probability
+- Bayes' Theorem
+
+---
+### Announcements
+
+---
+class:inverse
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+.center[
+# Probability
+]
+
+---
+
+### The "Language" of Probability
+
+**Random Trial**: an experiment or process with two or more possible outcomes, whose occurrence cannot be predicted with certainty
+
+**Event**: the outcome of a random trial that we're most interested in.
+
+**Probability**: the probability of an event is the proportion of times the event would occur if we repeated a random trial many, many times under the exact same conditions.
+
+---
+
+### Notation
+
+We use capital letters to describe an event, eg event *E*
+
+We denote the probability of some event *E* as *P(E)*
+
+To be a valid probability, $0 \leq P(E) \leq 1$
+
+For all possible events $A_i$ in a sample space, we have $\sum_iP(A_i) = 1$
+
+---
+
+### Relationship Between Multiple Events
+
+```{r, echo=FALSE}
+library(kableExtra)
+df <- data.frame(term = c("superset", "subset", "union", "intersection", "complement"), 
+                 notation = c("$A \\supset B$", "$A \\subset B$", "$A \\cup B$", "$A \\cap B$", '$A^c$'),
+                 int = c("encompasses", "within", "or", "and", "not"))
+kable(df, col.names = c("Term", "Notation", "Intuitive Terminology"), escape = F)
+```
+
+Sarah is a college student and she is good with math. Which is more likely to be true:
+
+- Sarah loves music
+- Sarah loves music and she is a data science major
+
+---
+
+### Considering Multiple Events
+
+The way we handle probabilities of two or more events depends on their relationship.
+
+**Mutually Exclusive**: two events *A* and *B* are called mutually exclusive if they cannot both happen at the same time.
+
+- Mutually exclusive events are also called **disjoint**
+
+Examples include: 
+
+- Rolling a 2 or 3 on a dice
+- Turning Right and Left
+- Flipping a Coin
+
+
+---
+
+### Considering Multiple Events
+
+**Independent** two events *A* and *B* are called independent if the occurrence of one does not affect the occurence of the other, and vice versa.
+
+- Events that are not independent are **dependent**
+
+Examples include:
+
+- Rolling dice and flipping a coin simultaneously
+- Going to college and getting married
+
+---
+### Mutually Exclusive or Independent?
+
+The new drug is effective in the trial and the new drug is not effective in the trial
+
+The new drug is effective in the trial and the new drug has side effect
+
+The patient is cured after taking the new drug and the patient shows side effect after taking the new drug
+
+The new drug is effective in the trial and the patient wants to take the drug
+
+<br>
+<br>
+<br>
+Is it possible that two events are both mutually exclusive and independent?
+---
+### Addition Rule for Mutually Exclusive Events
+
+**Addition Rule**: if two events are mutually exclusive, then 
+$$ P(A \cup B) = P(A) + P(B) $$
+
+**Example**: Government data assigns a single cause for each death that occurs in the US. The data show that among people aged 15-24, the probability that a randomly chosen death was accidental is 0.41, 0.16 that it was a homicide, and 0.15 that it was a suicide.
+
+What is the probability that a death is due to one of these three causes?
+
+
+---
+### Complement Rule
+
+**Complement Rule**: the probability that an event does not occur is $$P(A^C) = 1 - P(A)$$
+
+
+**Example**: Government data assigns a single cause for each death that occurs in the US. The data show that among people aged 15-24, the probability that a randomly chosen death was accidental is 0.41, 0.16 that it was a homicide, and 0.15 that it was a suicide.
+
+What is the probability that a death is due to some other cause?
+
+---
+### General Addition Rule
+
+**General Addition Rule**: If two events are not mutually exclusive, then 
+$$ P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
+**Example**: Insulin injections and oral medication are two key options for treating diabetes. The 2014 National Diabetes Statistics Report provides the breakdown of diabetes treatments among American Adults with diagnosed diabetes. Use the General Addition Rule to find the probability of an adult with diabetes uses either insulin or oral medication.
+
+```{r, echo=FALSE}
+df <- data.frame(term = c("Insulin Only", "Oral Medication Only", "Both insulin and oral medication", "Neither insulin or oral medication"), 
+                 notation = c(14, 56.9, 14.7, 14.4))
+kable(df, col.names = c("Treatment", "Percent"), escape = F)
+```
+
+---
+### Multiplication Rule
+
+**Multiplication Rule**: if two events are independent, then 
+$$ P(A \cap B) = P(A)*P(B)$$
+- The Multiplication Rule is a handy tool for verifying independence!
+- The Multiplication Rule extends to three or more events.
+
+**Example**: Are insulin injections and oral medication independent for treating diabetes? Explain why or why not.
+
+```{r, echo=FALSE}
+df <- data.frame(term = c("Insulin Only", "Oral Medication Only", "Both insulin and oral medication", "Neither insulin or oral medication"), 
+                 notation = c(14, 56.9, 14.7, 14.4))
+kable(df, col.names = c("Treatment", "Percent"), escape = F)
+```
+
+---
+### Example: Genetics
+
+The gene Prdm9 is thought to regulate hotspots of recombination (crossing over) in mammals. In the people of Han Chinese descent living in the Los Angeles area there are five alleles at the Prdm9 gene: $A_1$, $A_2$, $A_3$, $A_4$, $A_5$. The relative frequencies with which these alleles occur in that population are 0.06, 0.03, 0.84, 0.03, and 0.04, respectively. Is it reasonable to assume that in this population, the two alleles present in any individual are independently sampled from the population as a whole?
+
+What is the probability that an individual has...
+
+(a) Two $A_1$ alleles? $\\$
+(b) One $A_1$ allele and one $A_3$ allele $\\$
+(c) No $A_1$ alleles?
+
+---
+### Example: Blood Types
+
+The probability that a randomly chosen North American has a particular blood type is listed in the table below.
+
+```{r, echo=FALSE}
+df <- data.frame(prob = c(0.374, 0.066, 0.357, 0.063, 0.085, 0.015, 0.034, 0.006))
+                 
+kable(t(df), col.names = c("O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-"), escape = F)
+```
+
+1. What is the probability that a randomly selected North American has blood type O?
+2. B- blood can be safely donated to anyone who has B+, B-, AB+, or AB- blood. What is the probability that a randomly selected North American can receive blood type B-?
+3. Only individuals with O+ blood can receive an O+ blood donation. What is the probability that a randomly selected North American cannot receive blood type O+?
+4. What is the probability that a randomly selected North American is Rh+?
+5. What is the probability that a randomly selected North American is Rh-?
+6. Assume that blood type does not affect the choice of sexual partner. What probability of North American pregnancies will be at risk for Rh incompatibility?
+
+
+---
+class:inverse
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+.center[
+# Conditional Probability
+]
+
+---
+
+### Conditional Probability
+
+**Conditional Probability**: the probability of an event occurring, given that some other event has occurred or condition is met.
+
+<br>
+
+.center[**P(A|B)**]
+
+reads as "the probability of **A** given **B**"
+
+Visual Explanation of conditional probability: https://setosa.io/conditional/
+
+---
+
+### Example: Diabetes and CKD
+
+Diabetes and chronic kidney disease (CKD) are two diseases that are increasingly burdening the senior population in the United States. A large national sample of visits to the Veteran's Health Administration (VHA) system indicates that 8.3% of veterans in their 60s have stage 3-5 CKD. This rate is 14.1% among veterans with diabetes and only 6.4% among veterans without diabetes. Express these percents using probability notation. 
+
+---
+
+### Bayes's Theorem
+
+.center[
+
+For any two events A and B, the conditional probability can be written as 
+
+$$ P(A|B) = \frac{P(A \cap B)}{P(B)}$$
+
+]
+
+
+---
+### Example: Diabetes and CKD
+
+A large national sample of visits to the Veteran's Health Administration (VHA) system indicates that 8.3% of veterans in their 60s have stage 3-5 CKD. This rate is 14.1% among veterans with diabetes and only 6.4% among veterans without diabetes. The VHA records also suggest that 25% of veterans in their 60s have diabetes. Find the probability that a randomly selected veteran in their 60s has both diabetes and stage 3-5 CKD.
+
+---
+### Extending Bayes
+
+**Law of Total Probability**: Let $A_1$, $A_2$, ... , $A_n$ be disjoint events covering the entire sample space. Then, 
+$$P(B) = \sum_{i}P(A_i \cap B) = \sum_{i}P(A_i|B)P(B) = \sum_iP(B|A_i)P(A_i),$$
+which gives us Extending Bayes: 
+$$ P(A_i|B) =  \frac{P(A_i \cap B)}{P(B)} = \frac{P(A_i \cap B)}{\sum_iP(A_i \cap B)} = \frac{P(B|A_i)P(A_i)}{\sum_jP(B|A_j)P(A_j)}$$
+
+
+---
+### Example: Hand Washing
+
+According to the American Society of Microbiology (2005), the probability that a man washes his hands after using the restroom at an airport is 0.74 and the probability that a woman washes her hands is 0.83. A waiting room in an airport contains 40 men and 60 women. Assume that all passengers-in-waiting are equally likely to use the restroom. What is the probability that the next individual who goes to the restroom with wash their hands?
+
+
+---
+### Additional Helpful Rules
+
+**General Multiplication Rule* = $$ P(A \cap B) = P(A|B)P(B) $$
+
+**Partition** Events = $$ P(A) = P(A \cap B) + P(A \cap B^c) $$
+
+
+---
+### Example: John Hinckley's Trial
+
+In 1981, John Hinckley attempted to assassinate President Ronald Reagan. At this trial, the defense described Hinckley's brain scan as showing human atrophy, which could be evidence of schizophrenia. Approximately 1.5% of Americans suffers from some degree of schizophrenia. Brain atrophy is observed in 30% of schizophrenics, but only 2% of neurotypical individuals. How convincing is the defense's argument?
+
+---
+
+### Example: Rapid HIV Testing
+
+Rapid HIV tests allow for quick diagnosis without expensive laboratory equipment. However, their efficacy has been called into question. In a population of 1517 individuals in Uganda, 4 had HIV but tested negative (False Negative), 166 had HIV and tested positive, 129 did not have HIV but tested positive (false positives) and 1218 did not have HIV and tested negative.
+
+1. What is the probability of a false positive?
+2. What is the probability of a false negative?
+3. If a randomly sampled individual from this population tests positive on a rapid test, what is the probability that he or she has HIV?
+
+---
+
+### Example: Lupus
+
+Lupus is a medical condition where antibodies that are supposed to attack foreign cells to prevent infections instead see plasma proteins as foreign bodies, leading to a high risk of blood clotting. It is believed that 2% of the population suffer from this disease. The test is 74% accurate if a person does not have the disease. There is a line from the Fox television show *House* that is often used after a patient tests positive for lupus: "It's never lupus". Do you this there is truth to this statement? Use appropriate probabilities to support your answer.
+
+
+---
+
+### Fun Application: Monty Hall Problem
+
+Suppose you’re on a game show, and you’re given the choice of three doors: Behind one door is a car; behind the others, goats. You pick a door, say No. 1, and the host, who knows what’s behind the doors, opens another door, say No. 3, which has a goat. He then says to you, ”Do you want to pick door No. 2?” Is it to your advantage to switch your choice?
+
+
+
+
+
+
+
+
+
+
+
+
