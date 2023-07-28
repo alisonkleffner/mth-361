@@ -297,7 +297,7 @@ According to the American Society of Microbiology (2005), the probability that a
 ---
 ### Additional Helpful Rules
 
-**General Multiplication Rule* = $$ P(A \cap B) = P(A|B)P(B) $$
+**General Multiplication Rule** = $$ P(A \cap B) = P(A|B)P(B) $$
 
 **Partition** Events = $$ P(A) = P(A \cap B) + P(A \cap B^c) $$
 
