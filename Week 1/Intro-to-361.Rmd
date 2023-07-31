@@ -31,10 +31,24 @@ knit_hooks$set(output = function(x, options) {
 
 ## Agenda
 
+- Introductions
 - What is Statistics?
-- Syllabus/Course Specificis
+- Syllabus/Course Specifics
 - Software Set-up
 
+---
+
+## Announcements
+
+- Introduction Questionnaire in Blueline due **Thursday August 24 at 11:59 pm**
+  + Should take approximately 5 minutes
+- Have *R* installed by Thursday if you do not do so in class today
+  + Thursday in class we will get familiar with different features of *R*
+
+<br>
+<br>
+<br>
+**Look Ahead**: Sections covered next week in textbook: Chapter 1.1-1.3
 
 ---
 
@@ -44,6 +58,35 @@ knit_hooks$set(output = function(x, options) {
 - Master and PhD in Statistics at University of Nebraska at Lincoln
 - Thesis: *Visualization and Modeling of Multivariate Data in Environmental Applications*
 - New Faculty! So I am learning and open to student research projects
+
+--
+<br>
+<br>
+**Now introduce yourselves!**
+
+- Name
+- Something fun you did this summer
+
+---
+class:inverse
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+.center[##What is Statistics?]
+
+---
+## What is Data?
+
+- Data are plain facts, usually raw numbers.  Think of a spreadsheet full of numbers with no meaningful description. In order for these numbers to become information, they must be interpreted to have meaning.
+- Collected on observational units.
+- Can be in the form of counts, measurements, or responses.
 
 
 ---
@@ -89,6 +132,20 @@ knitr::include_graphics("../images/Week1/inference.png")
 ]
 
 ---
+class:inverse
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+.center[##Course Information]
+
+---
 ## What will be in this course?
 
 - Not a ton of calculations, but a lot of interpreting, reading, and writing.
@@ -97,9 +154,23 @@ knitr::include_graphics("../images/Week1/inference.png")
 - As a new faculty, I am learning and I am open to feedback
 
 ---
-
 ## Syllabus
 
+
+---
+---
+class:inverse
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+.center[##Software Set-Up]
 
 ---
 
@@ -116,7 +187,7 @@ knitr::include_graphics("../images/Week1/inference.png")
 <br>
 
 .center[ 
-**It is OK if you never use it (or even heard about it) before! There is no prerequisite for this course.**
+**It is OK if you never use it (or even heard about it) before! This is not a prerequisite for this course.**
 ]
 
 ---
@@ -135,12 +206,3 @@ https://www.xquartz.org/
 
 
 Go with all default options
-
----
-
-## Homework
-
-- Introduction Questionnaire in Blueline due **Thursday August 24 at 11:59 pm**
-  + Should take approximately 5 minutes
-- Have *R* installed by Thursday if you did not do so in class today
-  + Thursday in class we will get familiar with different features of *R*
