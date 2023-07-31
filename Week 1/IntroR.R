@@ -1,10 +1,9 @@
-
-
 ## ---- Slide 5-----------------------------------------------------------------
   
 install.packages("tidyverse")
   
-#Note: It may take a while (use "#" to create notes in R)
+#Note: It may take a while
+#Note use "#" to create notes in R
 
 ## ---- Slide 6-----------------------------------------------------------------
 library(tidyverse)

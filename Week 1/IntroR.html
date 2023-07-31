@@ -31,28 +31,38 @@ class: center, middle, inverse, title-slide
 
 ## Agenda
 
-- Installing Packages
-- Loading Data
-- Basic Functions
-- R Markdown
+- R Studio Set- Up
+- Some Basic R Tools
+  - Installing Packages
+  - Loading Data
+  - Basic Functions
+  - Giant Calculator
+- Introduction to R Markdown
 
+&lt;br&gt;
+&lt;br&gt;
+**Note**: Code found in file *IntroR.R* in BlueLine. Please run the code as I go along!
 ---
 ## Announcements
 
 - Introduction Questionnaire in Blueline due **Thursday August 24 at 11:59 pm**
   + Should take approximately 5 minutes
-- **Optional**: *R* Practice
-  + Not due for points, but if you want more practice with *R*
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+**Look Ahead**: Sections covered next week in textbook: Chapter 1.1-1.3
 
 ---
 
 ## R Studio Set-Up
 
-![](../images/Week1/rstudio.png)&lt;!-- --&gt;
+&lt;img src="../images/Week1/rstudio.png" width="1096" /&gt;
 
 To Create a Script, Click the Following: File -&gt; New File -&gt; R script
 
-[R Studio IDE Cheatsheet](cheatsheets/rstudio-ide.pdf)
+[R Studio IDE Cheatsheet](https://ucdavis-bioinformatics-training.github.io/Oct2017-ILRI-Workshop/Cheat_Sheets/rstudio-IDE-cheatsheet.pdf) `\(\\\)`
+[More on R Studio Interface](https://srvanderplas.github.io/stat-computing-r-python/part-tools/03-Rstudio-interface.html)
 
 ---
 
@@ -122,19 +132,20 @@ head(data) #make sure data loads in correctly
 
 ```
 ## ID Status Age Sex Race Service Cancer Renal Infection CPR Systolic HeartRate
-## 1 8 0 27 1 1 0 0 0 1 0 142 88
-## 2 12 0 59 0 1 0 0 0 0 0 112 80
-## 3 14 0 77 0 1 1 0 0 0 0 100 70
-## 4 28 0 54 0 1 0 0 0 1 0 142 103
-## 5 32 0 87 1 1 1 0 0 1 0 110 154
-## 6 38 0 69 0 1 0 0 0 1 0 110 132
-## Previous Type Fracture PO2 PH PCO2 Bicarbonate Creatinine Consciousness
-## 1 0 1 0 0 0 0 0 0 1
-## 2 1 1 0 0 0 0 0 0 1
-## 3 0 0 0 0 0 0 0 0 1
-## 4 0 1 1 0 0 0 0 0 1
-## 5 1 1 0 0 0 0 0 0 1
-## 6 0 1 0 1 0 0 1 0 1
+Previous Type Fracture PO2 PH PCO2
+## 1 8 0 27 1 1 0 0 0 1 0 142 88 0 1 0 0 0 0
+## 2 12 0 59 0 1 0 0 0 0 0 112 80 1 1 0 0 0 0
+## 3 14 0 77 0 1 1 0 0 0 0 100 70 0 0 0 0 0 0
+## 4 28 0 54 0 1 0 0 0 1 0 142 103 0 1 1 0 0 0
+## 5 32 0 87 1 1 1 0 0 1 0 110 154 1 1 0 0 0 0
+## 6 38 0 69 0 1 0 0 0 1 0 110 132 0 1 0 1 0 0
+## Bicarbonate Creatinine Consciousness
+## 1 0 0 1
+## 2 0 0 1
+## 3 0 0 1
+## 4 0 0 1
+## 5 0 0 1
+## 6 1 0 1
 ```
 
 Should see data in environment panel (upper right)
@@ -234,10 +245,10 @@ data[1,] #first row
 ```
 
 ```
-##   ID Status Age Sex Race Service Cancer Renal Infection CPR Systolic HeartRate
-## 1  8      0  27   1    1       0      0     0         1   0      142        88
-##   Previous Type Fracture PO2 PH PCO2 Bicarbonate Creatinine Consciousness
-## 1        0    1        0   0  0    0           0          0             1
+##   ID Status Age Sex Race Service Cancer Renal Infection CPR Systolic HeartRate Previous Type Fracture PO2 PH PCO2
+## 1  8      0  27   1    1       0      0     0         1   0      142        88        0    1        0   0  0    0
+##   Bicarbonate Creatinine Consciousness
+## 1           0          0             1
 ```
 
 ```r
@@ -402,7 +413,7 @@ Introduction points from: https://ourcodingclub.github.io/tutorials/intro-to-r/
 ---
 ## Learning to code can be challenging
 
-![](../images/Week1/debug.png)&lt;!-- --&gt;
+&lt;img src="../images/Week1/debug.png" width="1175" /&gt;
 
 Artwork by @allison_horst
 ---
@@ -414,7 +425,7 @@ Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word docu
 One method for completing labs/homework
 
 Helpul Links:
-+ [Cheatsheet](cheatsheets/rmarkdown-2.0.pdf)
++ [Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
 + [Installation Help](https://bookdown.org/yihui/rmarkdown/installation.html)
 
 

@@ -32,18 +32,27 @@ knit_hooks$set(output = function(x, options) {
 
 ## Agenda
 
-- Installing Packages
-- Loading Data
-- Basic Functions
-- R Markdown
+- R Studio Set- Up
+- Some Basic R Tools
+  - Installing Packages
+  - Loading Data
+  - Basic Functions
+  - Giant Calculator
+- Introduction to R Markdown
 
+<br>
+<br>
+**Note**: Code found in file *IntroR.R* in BlueLine. Please run the code as I go along!
 ---
 ## Announcements
 
 - Introduction Questionnaire in Blueline due **Thursday August 24 at 11:59 pm**
   + Should take approximately 5 minutes
-- **Optional**: *R* Practice
-  + Not due for points, but if you want more practice with *R*
+<br>
+<br>
+<br>
+<br>
+**Look Ahead**: Sections covered next week in textbook: Chapter 1.1-1.3
 
 ---
 
@@ -57,7 +66,8 @@ knitr::include_graphics("../images/Week1/rstudio.png")
 
 To Create a Script, Click the Following: File -> New File -> R script
 
-[R Studio IDE Cheatsheet](cheatsheets/rstudio-ide.pdf)
+[R Studio IDE Cheatsheet](https://ucdavis-bioinformatics-training.github.io/Oct2017-ILRI-Workshop/Cheat_Sheets/rstudio-IDE-cheatsheet.pdf) $\\$
+[More on R Studio Interface](https://srvanderplas.github.io/stat-computing-r-python/part-tools/03-Rstudio-interface.html)
 
 ---
 
@@ -292,7 +302,7 @@ Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word docu
 One method for completing labs/homework
 
 Helpul Links:
-+ [Cheatsheet](cheatsheets/rmarkdown-2.0.pdf)
++ [Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
 + [Installation Help](https://bookdown.org/yihui/rmarkdown/installation.html)
 
 ```{r eval = FALSE}
