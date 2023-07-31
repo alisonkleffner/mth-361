@@ -62,6 +62,7 @@ knit_hooks$set(output = function(x, options) {
 --
 <br>
 <br>
+
 **Now introduce yourselves!**
 
 - Name
@@ -156,8 +157,6 @@ class:inverse
 ---
 ## Syllabus
 
-
----
 ---
 class:inverse
 <br>
