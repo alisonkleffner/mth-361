@@ -32,8 +32,8 @@ knit_hooks$set(output = function(x, options) {
 ## Agenda
 
 - Introductions
-- What is Statistics?
 - Syllabus/Course Specifics
+- What is Statistics?
 - Software Set-up
 
 ---
@@ -80,7 +80,37 @@ class:inverse
 <br>
 <br>
 <br>
-.center[##What is Statistics?]
+.center[
+## Course Information
+]
+
+---
+## What will be in this course?
+
+- Not a ton of calculations, but a lot of interpreting, reading, and writing.
+- We will work with *R* code and output. If programming is new and hard to you, focus on the statistical concepts first!
+- The labs and homework will be provided in both *R* file and PDF. Feel free to print it out and write.
+- As a new faculty, I am learning and I am open to feedback
+
+---
+## Syllabus
+
+
+---
+class:inverse
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+.center[
+## What is Statistics?
+]
 
 ---
 ## What is Data?
@@ -133,6 +163,81 @@ knitr::include_graphics("../images/Week1/inference.png")
 ]
 
 ---
+## Arson Activity
+
++ I am a police detective in Winona, Minnesota, and everyone in this room is a suspect in the three fires that have been set in the last 6 weeks. I have called all of you in for questioning. Given are 16 questions I want you to answer about these fires. Please answer all 16 questions.
++ https://www.winonadailynews.com/news/local/arson-suspected-three-winona-fires-in-weeks-might-be-linked/article_492563a2-260a-11e1-9d03-0019bb2963f4.html  
+
+.center[
+```{r, echo=FALSE, out.width="60%", fig.align='center'}
+
+knitr::include_graphics("../images/Week1/arson.png")
+
+```
+
+]
+
+---
+## Arson Activity
+
+**Answer True or False to the following questions:**
+
+1. One of the fires was started using gasoline.
+2. Matches were used to set the fires.
+3. The trash was on the curb in front of the first house that caught on fire.	
+4. There was a doghouse in the backyard at the scene of the second fire.
+5. The residence of the third fire had off-street parking.				
+6. The second residence had a screened porch.			
+7. The suspected entered the first residence through the kitchen window.
+8. The suspect left a flashlight behind at the scene of the second fire.
+9. All three fires took place on Tuesdays.
+10. The porch light was on at the residence where the first fire took place.
+11. The third fire was started in the garage.
+12. There was a dog barking at the house next door to the third fire.
+13. The suspect wore work boots at the scene of the first fire.
+14. The home security system was triggered when the suspect fled the scene of the third fire.
+15. The lock on the back door at the first residence was broken.	
+16. Multiple fires were set at the second residence.
+
+---
+## Arson Activity
+
+**Count the number of correct answers:**
+
+1. One of the fires was started using gasoline. - **F**
+2. Matches were used to set the fires. - **T**
+3. The trash was on the curb in front of the first house that caught on fire.	- **F**
+4. There was a doghouse in the backyard at the scene of the second fire. - **F**
+5. The residence of the third fire had off-street parking. - **T**				
+6. The second residence had a screened porch.		- **T**	
+7. The suspected entered the first residence through the kitchen window. - **T**
+8. The suspect left a flashlight behind at the scene of the second fire. - **F**
+9. All three fires took place on Tuesdays. - **F**
+10. The porch light was on at the residence where the first fire took place. - **T**
+11. The third fire was started in the garage. - **F**
+12. There was a dog barking at the house next door to the third fire. - **T**
+13. The suspect wore work boots at the scene of the first fire. - **T**
+14. The home security system was triggered when the suspect fled the scene of the third fire. - **F**
+15. The lock on the back door at the first residence was broken.	- **F**
+16. Multiple fires were set at the second residence. - **F**
+
+
+---
+## Arson Activity
+
+Before we look at results, let’s discuss some predictions first! With the people around you, discuss the following questions: 
++ If you are not the criminal, how many questions would you expect to get correct?
++ If you are the criminal, how many questions would you expect to get correct?
+
+
+--
+<br>
+<br>
+.center[
+Let’s see how everyone did!
+]
+
+---
 class:inverse
 <br>
 <br>
@@ -144,32 +249,9 @@ class:inverse
 <br>
 <br>
 <br>
-.center[##Course Information]
-
----
-## What will be in this course?
-
-- Not a ton of calculations, but a lot of interpreting, reading, and writing.
-- We will work with *R* code and output. If programming is new and hard to you, focus on the statistical concepts first!
-- The labs and homework will be provided in both *R* file and PDF. Feel free to print it out and write.
-- As a new faculty, I am learning and I am open to feedback
-
----
-## Syllabus
-
----
-class:inverse
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-.center[##Software Set-Up]
+.center[
+##Software Set-Up
+]
 
 ---
 
