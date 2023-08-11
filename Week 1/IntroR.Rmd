@@ -32,12 +32,11 @@ knit_hooks$set(output = function(x, options) {
 
 ## Agenda
 
-- R Studio Set- Up
-- Some Basic R Tools
-  - Installing Packages
-  - Loading Data
-  - Basic Functions
-  - Giant Calculator
+- R Studio Set-Up
+- R as a Calculator
+- Basic Functions
+- Installing Packages
+- Loading Data
 - Introduction to R Markdown
 
 <br>
@@ -68,6 +67,112 @@ To Create a Script, Click the Following: File -> New File -> R script
 
 [R Studio IDE Cheatsheet](https://ucdavis-bioinformatics-training.github.io/Oct2017-ILRI-Workshop/Cheat_Sheets/rstudio-IDE-cheatsheet.pdf) $\\$
 [More on R Studio Interface](https://srvanderplas.github.io/stat-computing-r-python/part-tools/03-Rstudio-interface.html)
+
+
+---
+
+## Giant Calculator!
+
+```{r}
+a <- 1
+b <- 3
+c <- 6
+
+```
+
+.pull-left[
+```{r}
+a+b #Addition
+c-a #Subtraction
+b*c #Multiplication
+```
+].pull-right[
+```{r}
+c/b #Division 
+sqrt(4)
+2^3
+```
+]
+
+---
+
+## Giant Calculator!
+
+**Note**: In R, the following will not work!
+```{r eval = FALSE}
+
+b(a+c)
+```
+*R* will assume the "b()" is indicating some function, NOT multiplication as we do in math and stats. 
+
+Thus, you MUST include the multiplication symbol.
+```{r}
+b*(a+c)
+```
+
+[Basics Cheatsheets](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf)
+
+Note: Adding a "#" to your R Script creates a comment so can take notes
+
+---
+
+## Creating Variables
+
+We can create variables using the assignment operator `<-`
+
+```{r}
+x <- 5
+```
+
+We can then perform any of the functions on the variables:
+
+```{r}
+log(x)
+```
+
+Rules of Naming Variables:
++ Variables can't start with a number
++ Case-sensitive
++ There are reserved words that *R* won't let you use for variables names
+  - for, in, while, if, else, repeat, break, next
+
+---
+## Vectors
+
+A variable does not need to be a single value. We can create a **vector** using the `c` function (combine- combines several objects into one)
+
+```{r}
+y <- c(1, 5, 3, 2)
+```
+
+
+Operations can then be done element-wise
+
+```{r}
+y/2
+```
+
+Determining number of objects in a vector
+
+```{r}
+length(y)
+```
+
+Can also have vectors of characters
+
+```{r}
+bulldogs <- c("american", "english", "french")
+bulldogs
+```
+
+---
+## R Packages
+
+- Commonly used *R* functions are installed with base *R*
+- *R* packages containing more specialized *R* functions can be installed freely from CRAN servers using the function `install.packages()`
+  + Should now show up in *Packages* Tab
+- After packages are installed, their function can be loaded into the current *R* session using the function `library()`
+
 
 ---
 
@@ -147,6 +252,12 @@ Should see data in environment panel (upper right)
 
 This returns the help documentation for this function
 
+Googling for help can be difficult at first. You might need to search for R + CRAN +  to get good results
+
+Stackoverflow is VERY helpful!
+
+[R Reference Card](https://cran.r-project.org/doc/contrib/Short-refcard.pdf)
+
 ---
 
 ## Some Basic Functions
@@ -155,27 +266,29 @@ Check variable types
 
 ```{r}
 str(data)
-#Note: The purpose of checking variable types is to make sure R is understanding what each column is representing.
 
 ```
+
+<br>
+Note: The purpose of checking variable types is to make sure R is understanding what each column is representing.
 
 ---
 
 ## Some Basic Functions
 
-ID and Race is being read as an "int" type variable, meaning as an integer.
+Sex and Race is being read as an "int" type variable, meaning as an integer.
 
 We actually want to treat this variable as a factor!
 
 ```{r}
 
 #To change this column to a factor:
-data$ID <- as.factor(data$ID)
+data$Sex <- as.factor(data$Sex)
 data$Race <- as.factor(data$Race)
 
 
 #Now they are factors!
-class(data$ID)
+class(data$Sex)
 class(data$Race)
 
 ```
@@ -188,8 +301,8 @@ Selecting Specific Row/Column
 
 ```{r}
 data[1,] #first row
-data[1:10,3] #thrid column observations 1 - 10 (also data$Age[1:10])
-
+data[1:10,3] #third column, rows 1 - 10 
+data$Age[1:10] #also third column, rows 1 - 10  
 data[1,3] #first observation in third column
 
 ```
@@ -205,79 +318,21 @@ If we want a summary of the data
 ```{r}
 summary(data[1:5])
 ```
----
-## Variable Creation
-
-We can create variables using the assignment operator <-:
-
-
-```{r}
-
-x <- 5
-RoyalWins <- 25
-
-```
-
-
-
-Rules:
-+ Variables can't start with a number
-+ Case-sensitive
-+ There are reserved words that *R* won't let you use for variables names
-  - for, in, while, if, else, repeat, break, next
 
 ---
+## Some Notes: Warnings vs Errors
 
-## Giant Calculator!
++ Routinely beginners to R panic if they see a red message as innocuous as confirming that a library loaded
+  - Not all red text means that there is an error!
 
-```{r}
-a <- 1
-b <- 3
-c <- 6
++ A *warning* is a message that does not disturb the program flow but is displayed along with the output
 
-```
+  - Not always a cause for concern
 
-.pull-left[
-```{r}
-a+b #Addition
-c-a #Subtraction
-b*c #Multiplication
-```
-].pull-right[
-```{r}
-c/b #Division 
-sqrt(4)
-2^3
-```
-]
-
----
-
-## Giant Calculator!
-
-**Note**: In R, the following will not work!
-```{r eval = FALSE}
-
-b(a+c)
-```
-*R* will assume the "b()" is indicating some function, NOT multiplication as we do in math and stats. 
-
-Thus, you MUST include the multiplication symbol.
-```{r}
-b*(a+c)
-```
-
----
-
-## Some Notes
++ An *error* will terminate a program from being ran
 
 + Google is your Friend!
   - As an open source software, there is a TON of help out there!
-
-+ If you see a red *warning*, it does not always mean something is wrong, R is just alerting you to check something
-
-+ If you see a red *error*, code needs to be fixed to run
-
 
 
 Introduction points from: https://ourcodingclub.github.io/tutorials/intro-to-r/
@@ -301,7 +356,7 @@ Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word docu
 
 One method for completing labs/homework
 
-Helpul Links:
+Helpful Links:
 + [Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
 + [Installation Help](https://bookdown.org/yihui/rmarkdown/installation.html)
 

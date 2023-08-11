@@ -31,12 +31,11 @@ class: center, middle, inverse, title-slide
 
 ## Agenda
 
-- R Studio Set- Up
-- Some Basic R Tools
-  - Installing Packages
-  - Loading Data
-  - Basic Functions
-  - Giant Calculator
+- R Studio Set-Up
+- R as a Calculator
+- Basic Functions
+- Installing Packages
+- Loading Data
 - Introduction to R Markdown
 
 &lt;br&gt;
@@ -64,251 +63,6 @@ To Create a Script, Click the Following: File -&gt; New File -&gt; R script
 [R Studio IDE Cheatsheet](https://ucdavis-bioinformatics-training.github.io/Oct2017-ILRI-Workshop/Cheat_Sheets/rstudio-IDE-cheatsheet.pdf) `\(\\\)`
 [More on R Studio Interface](https://srvanderplas.github.io/stat-computing-r-python/part-tools/03-Rstudio-interface.html)
 
----
-
-## Installing Packages
-
-**Note**: To run code from your script:
-+ Windows: Ctrl + Enter
-+ Mac: Cmd + Enter
-+ Highlight what you want to run and hit the “Run” button
-
-We will be installing the [tidyverse](https://www.tidyverse.org/) package.
-
-**Method 1**
-
-```r
-install.packages("tidyverse")
-
-#Note: It may take a while (use "#" to create notes in R)
-```
-
-**Method 2** - Point and Click
-
-+ Tools -&gt; Install Packages
-
-Only have to do this once!!
-
----
-## Load Package
-
-Let's load the package we just installed!
-
-
-```r
-library(tidyverse)
-```
-
-Will have to run this every time we are in a new session and want to use this package
-
----
-
-## Load Data
-
-We usually work with .csv file in R. When you have a file that need to be read into the Rstudio, first put it with the R markdown file, or set the working directory to the file. 
-
-First Check your working directory!
-
-Method 1:
-
-```r
-getwd() #What is your working directory
-setwd() # Change Working directory
-```
-
-Method 2 (recommendation):
-
-Session -&gt; Set Working Directory -&gt; Choose Directory -&gt; Select folder data set is located -&gt; Apply
-
----
-## Load Data
-
-Second, then load in the data
-
-```r
-data = read.csv("data/ICUAdmissions.csv")
-head(data) #make sure data loads in correctly
-```
-
-```
-## ID Status Age Sex Race Service Cancer Renal Infection CPR Systolic HeartRate
-Previous Type Fracture PO2 PH PCO2
-## 1 8 0 27 1 1 0 0 0 1 0 142 88 0 1 0 0 0 0
-## 2 12 0 59 0 1 0 0 0 0 0 112 80 1 1 0 0 0 0
-## 3 14 0 77 0 1 1 0 0 0 0 100 70 0 0 0 0 0 0
-## 4 28 0 54 0 1 0 0 0 1 0 142 103 0 1 1 0 0 0
-## 5 32 0 87 1 1 1 0 0 1 0 110 154 1 1 0 0 0 0
-## 6 38 0 69 0 1 0 0 0 1 0 110 132 0 1 0 1 0 0
-## Bicarbonate Creatinine Consciousness
-## 1 0 0 1
-## 2 0 0 1
-## 3 0 0 1
-## 4 0 0 1
-## 5 0 0 1
-## 6 1 0 1
-```
-
-Should see data in environment panel (upper right)
-
----
-
-## Help
-
-
-
-```r
-?head
-```
-
-This returns the help documentation for this function
-
----
-
-## Some Basic Functions
-
-Check variable types
-
-
-```r
-str(data)
-```
-
-```
-## 'data.frame':	200 obs. of  21 variables:
-##  $ ID           : int  8 12 14 28 32 38 40 41 42 50 ...
-##  $ Status       : int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ Age          : int  27 59 77 54 87 69 63 30 35 70 ...
-##  $ Sex          : int  1 0 0 0 1 0 0 1 0 1 ...
-##  $ Race         : int  1 1 1 1 1 1 1 1 2 1 ...
-##  $ Service      : int  0 0 1 0 1 0 1 0 0 1 ...
-##  $ Cancer       : int  0 0 0 0 0 0 0 0 0 1 ...
-##  $ Renal        : int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ Infection    : int  1 0 0 1 1 1 0 0 0 0 ...
-##  $ CPR          : int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ Systolic     : int  142 112 100 142 110 110 104 144 108 138 ...
-##  $ HeartRate    : int  88 80 70 103 154 132 66 110 60 103 ...
-##  $ Previous     : int  0 1 0 0 1 0 0 0 0 0 ...
-##  $ Type         : int  1 1 0 1 1 1 0 1 1 0 ...
-##  $ Fracture     : int  0 0 0 1 0 0 0 0 0 0 ...
-##  $ PO2          : int  0 0 0 0 0 1 0 0 0 0 ...
-##  $ PH           : int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ PCO2         : int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ Bicarbonate  : int  0 0 0 0 0 1 0 0 0 0 ...
-##  $ Creatinine   : int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ Consciousness: int  1 1 1 1 1 1 1 1 1 1 ...
-```
-
-```r
-#Note: The purpose of checking variable types is to make sure R is understanding what each column is representing.
-```
-
----
-
-## Some Basic Functions
-
-ID and Race is being read as an "int" type variable, meaning as an integer.
-
-We actually want to treat this variable as a factor!
-
-
-```r
-#To change this column to a factor:
-data$ID &lt;- as.factor(data$ID)
-data$Race &lt;- as.factor(data$Race)
-
-
-#Now they are factors!
-class(data$ID)
-```
-
-```
-## [1] "factor"
-```
-
-```r
-class(data$Race)
-```
-
-```
-## [1] "factor"
-```
-
----
-
-## Some Basic Functions
-
-Selecting Specific Row/Column
-
-
-```r
-data[1,] #first row
-```
-
-```
-##   ID Status Age Sex Race Service Cancer Renal Infection CPR Systolic HeartRate Previous Type Fracture PO2 PH PCO2
-## 1  8      0  27   1    1       0      0     0         1   0      142        88        0    1        0   0  0    0
-##   Bicarbonate Creatinine Consciousness
-## 1           0          0             1
-```
-
-```r
-data[1:10,3] #thrid column observations 1 - 10 (also data$Age[1:10])
-```
-
-```
-##  [1] 27 59 77 54 87 69 63 30 35 70
-```
-
-```r
-data[1,3] #first observation in third column
-```
-
-```
-## [1] 27
-```
-
-
-
----
-
-## Some Basic Functions
-
-If we want a summary of the data
-
-
-```r
-summary(data[1:5])
-```
-
-```
-##        ID          Status         Age             Sex       Race   
-##  4      :  1   Min.   :0.0   Min.   :16.00   Min.   :0.00   1:175  
-##  8      :  1   1st Qu.:0.0   1st Qu.:46.75   1st Qu.:0.00   2: 15  
-##  12     :  1   Median :0.0   Median :63.00   Median :0.00   3: 10  
-##  14     :  1   Mean   :0.2   Mean   :57.55   Mean   :0.38          
-##  27     :  1   3rd Qu.:0.0   3rd Qu.:72.00   3rd Qu.:1.00          
-##  28     :  1   Max.   :1.0   Max.   :92.00   Max.   :1.00          
-##  (Other):194
-```
----
-## Variable Creation
-
-We can create variables using the assignment operator &lt;-:
-
-
-
-```r
-x &lt;- 5
-RoyalWins &lt;- 25
-```
-
-
-
-Rules:
-+ Variables can't start with a number
-+ Case-sensitive
-+ There are reserved words that *R* won't let you use for variables names
-  - for, in, while, if, else, repeat, break, next
 
 ---
 
@@ -394,17 +148,345 @@ b*(a+c)
 ## [1] 21
 ```
 
+[Basics Cheatsheets](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf)
+
+Note: Adding a "#" to your R Script creates a comment so can take notes
+
 ---
 
-## Some Notes
+## Creating Variables
+
+We can create variables using the assignment operator `&lt;-`
+
+
+```r
+x &lt;- 5
+```
+
+We can then perform any of the functions on the variables:
+
+
+```r
+log(x)
+```
+
+```
+## [1] 1.609438
+```
+
+Rules of Naming Variables:
++ Variables can't start with a number
++ Case-sensitive
++ There are reserved words that *R* won't let you use for variables names
+  - for, in, while, if, else, repeat, break, next
+
+---
+## Vectors
+
+A variable does not need to be a single value. We can create a **vector** using the `c` function (combine- combines several objects into one)
+
+
+```r
+y &lt;- c(1, 5, 3, 2)
+```
+
+
+Operations can then be done element-wise
+
+
+```r
+y/2
+```
+
+```
+## [1] 0.5 2.5 1.5 1.0
+```
+
+Determining number of objects in a vector
+
+
+```r
+length(y)
+```
+
+```
+## [1] 4
+```
+
+Can also have vectors of characters
+
+
+```r
+bulldogs &lt;- c("american", "english", "french")
+bulldogs
+```
+
+```
+## [1] "american" "english"  "french"
+```
+
+---
+## R Packages
+
+- Commonly used *R* functions are installed with base *R*
+- *R* packages containing more specialized *R* functions can be installed freely from CRAN servers using the function `install.packages()`
+  + Should now show up in *Packages* Tab
+- After packages are installed, their function can be loaded into the current *R* session using the function `library()`
+
+
+---
+
+## Installing Packages
+
+**Note**: To run code from your script:
++ Windows: Ctrl + Enter
++ Mac: Cmd + Enter
++ Highlight what you want to run and hit the “Run” button
+
+We will be installing the [tidyverse](https://www.tidyverse.org/) package.
+
+**Method 1**
+
+```r
+install.packages("tidyverse")
+
+#Note: It may take a while (use "#" to create notes in R)
+```
+
+**Method 2** - Point and Click
+
++ Tools -&gt; Install Packages
+
+Only have to do this once!!
+
+---
+## Load Package
+
+Let's load the package we just installed!
+
+
+```r
+library(tidyverse)
+```
+
+Will have to run this every time we are in a new session and want to use this package
+
+---
+
+## Load Data
+
+We usually work with .csv file in R. When you have a file that need to be read into the Rstudio, first put it with the R markdown file, or set the working directory to the file. 
+
+First Check your working directory!
+
+Method 1:
+
+```r
+getwd() #What is your working directory
+setwd() # Change Working directory
+```
+
+Method 2 (recommendation):
+
+Session -&gt; Set Working Directory -&gt; Choose Directory -&gt; Select folder data set is located -&gt; Apply
+
+---
+## Load Data
+
+Second, then load in the data
+
+```r
+data = read.csv("data/ICUAdmissions.csv")
+head(data) #make sure data loads in correctly
+```
+
+```
+## ID Status Age Sex Race Service Cancer Renal Infection CPR Systolic HeartRate
+Previous Type Fracture PO2 PH PCO2 Bicarbonate
+## 1 8 0 27 1 1 0 0 0 1 0 142 88 0 1 0 0 0 0 0
+## 2 12 0 59 0 1 0 0 0 0 0 112 80 1 1 0 0 0 0 0
+## 3 14 0 77 0 1 1 0 0 0 0 100 70 0 0 0 0 0 0 0
+## 4 28 0 54 0 1 0 0 0 1 0 142 103 0 1 1 0 0 0 0
+## 5 32 0 87 1 1 1 0 0 1 0 110 154 1 1 0 0 0 0 0
+## 6 38 0 69 0 1 0 0 0 1 0 110 132 0 1 0 1 0 0 1
+## Creatinine Consciousness
+## 1 0 1
+## 2 0 1
+## 3 0 1
+## 4 0 1
+## 5 0 1
+## 6 0 1
+```
+
+Should see data in environment panel (upper right)
+
+---
+
+## Help
+
+
+
+```r
+?head
+```
+
+This returns the help documentation for this function
+
+Googling for help can be difficult at first. You might need to search for R + CRAN +  to get good results
+
+Stackoverflow is VERY helpful!
+
+[R Reference Card](https://cran.r-project.org/doc/contrib/Short-refcard.pdf)
+
+---
+
+## Some Basic Functions
+
+Check variable types
+
+
+```r
+str(data)
+```
+
+```
+## 'data.frame':	200 obs. of  21 variables:
+##  $ ID           : int  8 12 14 28 32 38 40 41 42 50 ...
+##  $ Status       : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ Age          : int  27 59 77 54 87 69 63 30 35 70 ...
+##  $ Sex          : int  1 0 0 0 1 0 0 1 0 1 ...
+##  $ Race         : int  1 1 1 1 1 1 1 1 2 1 ...
+##  $ Service      : int  0 0 1 0 1 0 1 0 0 1 ...
+##  $ Cancer       : int  0 0 0 0 0 0 0 0 0 1 ...
+##  $ Renal        : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ Infection    : int  1 0 0 1 1 1 0 0 0 0 ...
+##  $ CPR          : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ Systolic     : int  142 112 100 142 110 110 104 144 108 138 ...
+##  $ HeartRate    : int  88 80 70 103 154 132 66 110 60 103 ...
+##  $ Previous     : int  0 1 0 0 1 0 0 0 0 0 ...
+##  $ Type         : int  1 1 0 1 1 1 0 1 1 0 ...
+##  $ Fracture     : int  0 0 0 1 0 0 0 0 0 0 ...
+##  $ PO2          : int  0 0 0 0 0 1 0 0 0 0 ...
+##  $ PH           : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ PCO2         : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ Bicarbonate  : int  0 0 0 0 0 1 0 0 0 0 ...
+##  $ Creatinine   : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ Consciousness: int  1 1 1 1 1 1 1 1 1 1 ...
+```
+
+&lt;br&gt;
+Note: The purpose of checking variable types is to make sure R is understanding what each column is representing.
+
+---
+
+## Some Basic Functions
+
+Sex and Race is being read as an "int" type variable, meaning as an integer.
+
+We actually want to treat this variable as a factor!
+
+
+```r
+#To change this column to a factor:
+data$Sex &lt;- as.factor(data$Sex)
+data$Race &lt;- as.factor(data$Race)
+
+
+#Now they are factors!
+class(data$Sex)
+```
+
+```
+## [1] "factor"
+```
+
+```r
+class(data$Race)
+```
+
+```
+## [1] "factor"
+```
+
+---
+
+## Some Basic Functions
+
+Selecting Specific Row/Column
+
+
+```r
+data[1,] #first row
+```
+
+```
+##   ID Status Age Sex Race Service Cancer Renal Infection CPR Systolic HeartRate Previous Type Fracture PO2 PH PCO2 Bicarbonate
+## 1  8      0  27   1    1       0      0     0         1   0      142        88        0    1        0   0  0    0           0
+##   Creatinine Consciousness
+## 1          0             1
+```
+
+```r
+data[1:10,3] #third column, rows 1 - 10 
+```
+
+```
+##  [1] 27 59 77 54 87 69 63 30 35 70
+```
+
+```r
+data$Age[1:10] #also third column, rows 1 - 10  
+```
+
+```
+##  [1] 27 59 77 54 87 69 63 30 35 70
+```
+
+```r
+data[1,3] #first observation in third column
+```
+
+```
+## [1] 27
+```
+
+
+
+---
+
+## Some Basic Functions
+
+If we want a summary of the data
+
+
+```r
+summary(data[1:5])
+```
+
+```
+##        ID            Status         Age        Sex     Race   
+##  Min.   :  4.0   Min.   :0.0   Min.   :16.00   0:124   1:175  
+##  1st Qu.:210.2   1st Qu.:0.0   1st Qu.:46.75   1: 76   2: 15  
+##  Median :412.5   Median :0.0   Median :63.00           3: 10  
+##  Mean   :444.8   Mean   :0.2   Mean   :57.55                  
+##  3rd Qu.:671.8   3rd Qu.:0.0   3rd Qu.:72.00                  
+##  Max.   :929.0   Max.   :1.0   Max.   :92.00
+```
+
+---
+## Some Notes: Warnings vs Errors
+
++ Routinely beginners to R panic if they see a red message as innocuous as confirming that a library loaded
+  - Not all red text means that there is an error!
+
++ A *warning* is a message that does not disturb the program flow but is displayed along with the output
+
+  - Not always a cause for concern
+
++ An *error* will terminate a program from being ran
 
 + Google is your Friend!
   - As an open source software, there is a TON of help out there!
-
-+ If you see a red *warning*, it does not always mean something is wrong, R is just alerting you to check something
-
-+ If you see a red *error*, code needs to be fixed to run
-
 
 
 Introduction points from: https://ourcodingclub.github.io/tutorials/intro-to-r/
@@ -424,7 +506,7 @@ Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word docu
 
 One method for completing labs/homework
 
-Helpul Links:
+Helpful Links:
 + [Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
 + [Installation Help](https://bookdown.org/yihui/rmarkdown/installation.html)
 
