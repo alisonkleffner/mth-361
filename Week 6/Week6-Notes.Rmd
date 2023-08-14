@@ -1,0 +1,314 @@
+---
+title: "MTH361: Probability and Statistics in the Health Sciences"
+author: "Sampling Distribution and CLT"
+date: "September 19, 2023"
+output: 
+  xaringan::moon_reader:
+    lib_dir: libs
+    seal: false
+    css: ["default", "metropolis-fonts", "modal.css", "sizeformat.css"]
+    includes:
+      after_body:
+        "js-addins.html"
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: true
+---
+
+```{r echo=FALSE, message=FALSE, warning = FALSE}
+library(knitr)
+library(tidyverse)
+
+hook_output = knit_hooks$get('output')
+knit_hooks$set(output = function(x, options) {
+  # this hook is used only when the linewidth option is not NULL
+  if (!is.null(n <- options$linewidth)) {
+    x = xfun::split_lines(x)
+    # any lines wider than n should be wrapped
+    if (any(nchar(x) > n)) x = strwrap(x, width = n)
+    x = paste(x, collapse = '\n')
+  }
+  hook_output(x, options)
+})
+
+```
+
+```{r, include = F, eval = T, cache = T}
+clean_file_name <- function(x) {
+  basename(x) %>% str_remove("\\..*?$") %>% str_remove_all("[^[A-z0-9_]]")
+}
+img_modal <- function(src, alt = "", id = clean_file_name(src), other = "") {
+  
+  other_arg <- paste0("'", as.character(other), "'") %>%
+    paste(names(other), ., sep = "=") %>%
+    paste(collapse = " ")
+  
+  js <- glue::glue("<script>
+        /* Get the modal*/
+          var modal{id} = document.getElementById('modal{id}');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+        var img{id} = document.getElementById('img{id}');
+          var modalImg{id} = document.getElementById('imgmodal{id}');
+          var captionText{id} = document.getElementById('caption{id}');
+          img{id}.onclick = function(){{
+            modal{id}.style.display = 'block';
+            modalImg{id}.src = this.src;
+            captionText{id}.innerHTML = this.alt;
+          }}
+          /* When the user clicks on the modalImg, close it*/
+          modalImg{id}.onclick = function() {{
+            modal{id}.style.display = 'none';
+          }}
+</script>")
+  
+  html <- glue::glue(
+     " <!-- Trigger the Modal -->
+<img id='img{id}' src='{src}' alt='{alt}' {other_arg}>
+<!-- The Modal -->
+<div id='modal{id}' class='modal'>
+  <!-- Modal Content (The Image) -->
+  <img class='modal-content' id='imgmodal{id}'>
+  <!-- Modal Caption (Image Text) -->
+  <div id='caption{id}' class='modal-caption'></div>
+</div>
+"
+  )
+  write(js, file = "js-addins.html", append = T)
+  return(html)
+}
+# Clean the file out at the start of the compilation
+write("", file = "js-addins.html")
+```
+
+class:inverse
+
+<br><br><br>
+## MTH361: Probability and Statistics in the Health Sciences
+### Sampling Distribution and CLT
+#### September 19, 2023
+
+
+---
+### Agenda
+
+
+
+---
+### Announcements
+
+---
+### Review on Population and Sample
+
+- We have discussed the concept of population and sample.
+- In the "real world" we won't have access to the population data.
+- A good sample should be able to represent the population's characteristics
+- Today we are going to answer the question on how to use the samples to understand the population
+
+---
+### Estimating Population Parameters
+
+**Example**: The Centers for Disease Control (CDC) uses survey data to estimate features of health from samples of the US population. These surveys include:
+
+- National Health Interview Survey (NHIS)
+- National Health and Nutrition Examination Survey (NHANES)
+- Behavioral Risk Factor Surveillance System (BRFSS)
+- The data set *cdc* contains a small number of variables from a random sample of 20,000 BRFSS responses from the year 2000. 
+
+```{r, echo=FALSE}
+cdc <- read.csv("../Week 6/data/cdc.csv")
+head(cdc)
+```
+
+
+---
+### Sample Statistics
+
+- Suppose we pretend that the *cdc* data set represents the entire population of American adults
+- Now we randomly select 60 rows from the 20,000 responses as our sample.
+
+```{r, echo=FALSE}
+
+set.seed(4)
+cdc_sample <- sample_n(cdc, 60)          
+head(cdc_sample) 
+
+```
+
+- A natural way to estimate the population parameter is to calculate the corresponding **sample statistic**
+  + Population mean $(\mu)$ $\longrightarrow$ sample mean $(\bar{x})$
+  + Population standard deviation $(\sigma)$ $\longrightarrow$ sample standard deviation $s$
+  
+But we have a problem, samples aren't perfect!
+
+---
+### Variability in Estimates
+
+.pull-left[
+Here is the population mean $\mu$ = 
+
+```{r, echo=FALSE}
+mean(cdc$weight)
+```
+].pull-right[
+Here is the sample mean $\bar{x}$ = 
+```{r, echo=FALSE}
+mean(cdc_sample$weight)
+```
+]
+
+--
+
+Close! But not exactly right! How could we get a more accurate sample?
+
+--
+
+What if the sample size is fixed, but we can take multiple samples? Is there anything we can learn from this sample?
+
+---
+### Variability in Estimates
+
+What are the takeaway points?
+
+- Random samples tend to, most of the time, produce sample statistics that are reasonably close to the population parameter.
+- Some samples are "unlucky": they may overestimate or underestimate the population parameter 
+  + There aren't very many of these!
+- The distribution of sample statistics (which has a very special name) has a symmetric, bell-shaped curve appearance.
+
+---
+### Sampling Distribution
+
+**Sampling Distribution**: the probability distribution of all possible values of a sample statistics
+
+- Every statistics has a sampling distribution, but we'll focus on $\bar{x}$ and $\hat{p}$ in this class.
+  + Quantitative response: mean $(\bar{x})$
+  + Categorical response: proportion $(\hat{p})$
+- To describe a sampling distribution, we'll need to know three things:
+  - Center (mean)
+  - Variation (standard error)
+  - Shape
+
+--
+  
+.center[
+```{r, echo=FALSE, results='asis'}
+i2 <- img_modal(src = "../Week 6/images/sampling-distribution.png", alt = "Example of a Sampling Distribution",other=list(width="65%"))
+
+c(str_split(i2, "\\n", simplify = T)[1:2],
+  str_split(i2, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+
+```
+]
+---
+### Standard Error
+
+**Standard Error**: a measure of the **sample-to-sample variability** of the sample statistic.
+
+How far away we expect a "typical" sample statistic to be from the true population parameter. Standard error is the standard deviation of the sample distribution.
+
+--
+
+**Recall**: What is standard deviation?
+
+--
+
+The standard deviation (SD) measures the amount of variability, or dispersion, from the individual data values to the mean
+
+.center[
+```{r, echo=FALSE, results='asis'}
+i2 <- img_modal(src = "../Week 6/images/sd-vs-se.png", alt = "Standard Deviation vs Standard Error",other=list(width="50%"))
+
+c(str_split(i2, "\\n", simplify = T)[1:2],
+  str_split(i2, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+
+```
+]
+
+
+---
+### Standard Error
+
+Sampling Distributions provide the theoretical basis for statistical inference: learning about a population based on a sample.
+
+The sampling distribution of $\bar{x}$ has:
+
+- Mean $(\mu)$
+- Standard Error $(SE_{\bar{x}})$ = $\frac{s}{\sqrt{n}}$
+- Shape: approximately normally distributed, as long as the sample size is "large enough"
+
+--
+
+<br>
+<br>
+**This is true even if the random variable does not follow a normal distribution.**
+<br>
+<br>
+[Sampling Distribution Animation](https://onlinestatbook.com/stat_sim/sampling_dist/)
+
+---
+### Statistical Inference
+
+- Can we find a reasonable estimate or set of estimates for our population parameter?
+  + ie. Given a sample, instead of providing a point estimate to the population parameter, we can give a range of value based on the level of confidence we want.
+  
+- Has our population parameter increased/decreased/changed compared to some other value?
+  + ie. What if my sample sizes increases, how will the other values change
+  
+---
+### Confidence Intervals
+
+**Confidence Intervals**: a range of the most plausible or believable values for the population parameter, based on a sample of data. General formula:  
+<br>
+
+sample statistics $\pm$ margin of error
+
+<br>
+The margin of error (MOE) reflects how uncertain we are about the accuracy of our original sample statistic. 
+  - How much "wiggle room" do we want to add?
+  
+<br>
+
+--
+
+Large MOE $\longrightarrow$ wide confidence interval $\longrightarrow$ more confidence that the true estimate will be in the interval
+
+Small MOE $\longrightarrow$ narrow confidence interval $\longrightarrow$ less condidence that the true estimate will be in the interval
+
+---
+### Confidence Intervals for $\mu$
+
+Suppose we’re interested in estimating the population mean, $\mu$. Based on the sampling distribution, we know that, as long as our sample size is "large enough", we will have
+
+$$\mu - 1.96 \cdot SE_{\bar{x}} < \bar{x} < \mu + 1.96 \cdot SE_{\bar{x}}$$
+
+With a bit of algebra, we get an approximate 95% confidence interval for the mean is:
+
+$$\mu \pm 1.96 \cdot SE_{\bar{x}}$$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
