@@ -236,30 +236,173 @@ Suppose we’re interested in estimating the population mean, `\(\mu\)`. Based o
 
 With a bit of algebra, we get an approximate 95% confidence interval for the mean is:
 
-`$$\mu \pm 1.96 \cdot SE_{\bar{x}}$$`
+`$$\bar{x} \pm 1.96 \cdot SE_{\bar{x}}$$`
+---
+### Interpretation of a Confidence Interval
+
+Correct Interpretation of a 95% confidence interval:
+
+- If repeated samples were taken, 95% of intervals calculated from those samples will contain the true population mean
+- We are 95% confident that the population mean is in the interval
+
+Wrong Interpretation of a 95% confidence interval:
+
+- There is a 95% chance that the true population mean lies within the confidence interval
+- 95% of the data will fall into the interval
+- If we take another sample, there is a 95% chance the sample mean will be in the interval
+
+---
+### Application: CDC
+
+We know that in the CDC data set, the overall mean population weight is `\(\mu\)` = 169.683. Let's pretend we don't know this value (which we usually don't). How often will a confidence interval contain this value?
+
+&lt;img src="Week6-Notes_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+### Let's Calculate a Confidence Interval!
+
+Reminder, for our sample: 
+  - `\(\bar{x}\)` = 171.4833
+  - `\(s\)` = 39.7942
+  - `\(n\)` = 60
+
+--
+
+Formula: $$\bar{x} \pm 1.96 \cdot SE_{\bar{x}} = $$
+
+--
+
+$$ 171.4833 \pm 2(\frac{39.7942}{\sqrt{60}}) = $$
+--
+
+$$ 171.4833 \pm 2(5.137) = $$
+--
+
+$$ 171.4833 \pm 10.274 = $$
+--
+
+`$$[161.2093, 181.7573]$$`
+---
+### Let's Interpret the Interval!
+
+Interpret the confidence interval you calculated on the previous slide for the mean population weight of US Adults
+
+--
+
+We are 95% confident that the population mean weight of US adults is in the range of [161.2093, 181.7573]. 
+
+---
+### Application : BMI
+
+Example: Body mass index (BMI) is one measure of body weight that adjusts for height. The national Health and Nutrition Examination Survey (NHANES) consists of a set of surveys and measurements conducted by the CDC to assess the health and nutritional status of adults and children in the US. Following is summary statistics of BMI of a random sample of 200 individuals from 2009-2010 and 2012-2013. Calculate and interpret a 95% confidence interval for adult BMI.
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; min &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Q1 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; median &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Q3 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; max &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; mean &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; sd &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; n &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; missing &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 13.1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 20.9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 26 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30.7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 69 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 26.6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 190 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+--
+
+If the a healthy range of BMI is [18.5, 24.9], does this suggest that Americans tend to be overweight?
+
+
+---
+### Application : BMI
+
+We can also think about this problem using probability: recall `\(\bar{x} \sim N(\mu, SE_{\bar{x}})\)`
+
+--
+
+What is the probability that the difference between the true mean and sample mean is within 0.5 units?
+
+--
+
+$$ P(|\mu - \bar{x}| &lt; 0.5)  = P(\mu - 0.5 &lt; \bar{x} &lt; \mu + 0.5)$$
+`$$= P(\frac{\mu - 0.5 - \mu}{SE_{\bar{x}}} &lt; \frac{\bar{x} - \mu}{SE_{\bar{x}}} &lt; \frac{\mu + 0.5 + \mu}{SE_{\bar{x}}}$$`
+`$$= P(-\frac{0.5}{8/\sqrt{190}} &lt; Z \frac{0.5}{8/\sqrt{190}} = P(-0.58 &lt; Z &lt; 0.58)$$`
+`$$= 0.7190 - 0.2810 = 0.438$$`
+---
+### Chaning the Confidence Level
+
+`$$\bar{x} \pm 1.96 \cdot SE_{\bar{x}}$$`
+
+Why 1.96?
+--
+&lt;br&gt;
+&lt;br&gt;
+What if we want to have a different confidence level - say 90%?
+- For a 90% confidence level, use z = 1.645
+- For a 99% confidence level, use z = 2.58
+- For any other confidence level, use the standard normal distribution to find z directly.
 
 
 
 
+---
+### Changing the Confidence Level
 
+&lt;img src="Week6-Notes_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /&gt;
 
+---
+### Central Limit Theorem (CLT)
 
+What if we have an infinite number of samples?
 
+sample `\(\longrightarrow\)` population and `\(s\)` `\(\longrightarrow\)` `\(\sigma\)`
 
+**Central Limit Theorem (CLT)**: If `\(X_{1},...,X_{n}\)` are `\(n\)` random samples drawn from a population with mean `\(\mu\)` and finite standard deviation `\(\sigma\)`. When the sample size is going to infinity, we have `\(\frac{\bar{x}-\mu}{\sigma/\sqrt{n}}\sim N(0,1)\)`
 
+---
+### Use CLT to find the Sample Size
 
+- In Chapter 1, we have discussed how to collect sample data
+- However, we did not talk about how large the data has to be
+- First, CLT requires the sample size to be large enough
+  - Generally, at least 30
+- Sample size is decided by the Margin of Error you are willing to have and the population standard deviation.
+- Larger samples lead to better confidence intervals, but we also need to consider the practical reasons, like the cost.
 
+---
+### Use CLT to find the Sample Size
 
+Recall the BMI application, suppose the population standard deviation is also 8. If I want the the difference between the sample mean and the population mean to be less than 0.5 with probability .95, how many people do I need to sample?
 
+$$ P(\mu - 0.5 &lt; \bar{x} &lt; \mu + 0.5) = 0.95$$
+`$$P(\frac{-0.5}{\frac{\sigma}{\sqrt{n}}} &lt; Z \frac{0.5}{\frac{\sigma}{\sqrt{n}}}) = 0.95$$`
+$$ \frac{0.5\sqrt{n}}{\sigma} = 1.96$$
+`$$n = (1.96\sigma*2)^2 = (3.92*8)^2 = 983.44$$`
+We at least need to sample 984 people
 
+---
+### Application: Study Time
 
-
-
-
-
-
-
-
+You want to update the University study time survey for 2021. The 2014 survey results were: `\(\bar{x}\)` = 20.1 and `\(s\)` = 3.0. Use the 2014 results to estimate the sample size necessary for MOE of 0.25 hours with 95% confidence.
 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
@@ -365,516 +508,6 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
 })(document);</script>
 
-<script>
-        /* Get the modal*/
-          var modalsdvsse = document.getElementById('modalsdvsse');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-        var imgsdvsse = document.getElementById('imgsdvsse');
-          var modalImgsdvsse = document.getElementById('imgmodalsdvsse');
-          var captionTextsdvsse = document.getElementById('captionsdvsse');
-          imgsdvsse.onclick = function(){
-            modalsdvsse.style.display = 'block';
-            modalImgsdvsse.src = this.src;
-            captionTextsdvsse.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsdvsse.onclick = function() {
-            modalsdvsse.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsdvsse = document.getElementById('modalsdvsse');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-        var imgsdvsse = document.getElementById('imgsdvsse');
-          var modalImgsdvsse = document.getElementById('imgmodalsdvsse');
-          var captionTextsdvsse = document.getElementById('captionsdvsse');
-          imgsdvsse.onclick = function(){
-            modalsdvsse.style.display = 'block';
-            modalImgsdvsse.src = this.src;
-            captionTextsdvsse.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsdvsse.onclick = function() {
-            modalsdvsse.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsdvsse = document.getElementById('modalsdvsse');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-        var imgsdvsse = document.getElementById('imgsdvsse');
-          var modalImgsdvsse = document.getElementById('imgmodalsdvsse');
-          var captionTextsdvsse = document.getElementById('captionsdvsse');
-          imgsdvsse.onclick = function(){
-            modalsdvsse.style.display = 'block';
-            modalImgsdvsse.src = this.src;
-            captionTextsdvsse.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsdvsse.onclick = function() {
-            modalsdvsse.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsdvsse = document.getElementById('modalsdvsse');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-        var imgsdvsse = document.getElementById('imgsdvsse');
-          var modalImgsdvsse = document.getElementById('imgmodalsdvsse');
-          var captionTextsdvsse = document.getElementById('captionsdvsse');
-          imgsdvsse.onclick = function(){
-            modalsdvsse.style.display = 'block';
-            modalImgsdvsse.src = this.src;
-            captionTextsdvsse.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsdvsse.onclick = function() {
-            modalsdvsse.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsdvsse = document.getElementById('modalsdvsse');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-        var imgsdvsse = document.getElementById('imgsdvsse');
-          var modalImgsdvsse = document.getElementById('imgmodalsdvsse');
-          var captionTextsdvsse = document.getElementById('captionsdvsse');
-          imgsdvsse.onclick = function(){
-            modalsdvsse.style.display = 'block';
-            modalImgsdvsse.src = this.src;
-            captionTextsdvsse.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsdvsse.onclick = function() {
-            modalsdvsse.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsdvsse = document.getElementById('modalsdvsse');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-        var imgsdvsse = document.getElementById('imgsdvsse');
-          var modalImgsdvsse = document.getElementById('imgmodalsdvsse');
-          var captionTextsdvsse = document.getElementById('captionsdvsse');
-          imgsdvsse.onclick = function(){
-            modalsdvsse.style.display = 'block';
-            modalImgsdvsse.src = this.src;
-            captionTextsdvsse.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsdvsse.onclick = function() {
-            modalsdvsse.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsdvsse = document.getElementById('modalsdvsse');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-        var imgsdvsse = document.getElementById('imgsdvsse');
-          var modalImgsdvsse = document.getElementById('imgmodalsdvsse');
-          var captionTextsdvsse = document.getElementById('captionsdvsse');
-          imgsdvsse.onclick = function(){
-            modalsdvsse.style.display = 'block';
-            modalImgsdvsse.src = this.src;
-            captionTextsdvsse.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsdvsse.onclick = function() {
-            modalsdvsse.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsdvsse = document.getElementById('modalsdvsse');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-        var imgsdvsse = document.getElementById('imgsdvsse');
-          var modalImgsdvsse = document.getElementById('imgmodalsdvsse');
-          var captionTextsdvsse = document.getElementById('captionsdvsse');
-          imgsdvsse.onclick = function(){
-            modalsdvsse.style.display = 'block';
-            modalImgsdvsse.src = this.src;
-            captionTextsdvsse.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsdvsse.onclick = function() {
-            modalsdvsse.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsamplingdistribution = document.getElementById('modalsamplingdistribution');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-        var imgsamplingdistribution = document.getElementById('imgsamplingdistribution');
-          var modalImgsamplingdistribution = document.getElementById('imgmodalsamplingdistribution');
-          var captionTextsamplingdistribution = document.getElementById('captionsamplingdistribution');
-          imgsamplingdistribution.onclick = function(){
-            modalsamplingdistribution.style.display = 'block';
-            modalImgsamplingdistribution.src = this.src;
-            captionTextsamplingdistribution.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsamplingdistribution.onclick = function() {
-            modalsamplingdistribution.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsdvsse = document.getElementById('modalsdvsse');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-        var imgsdvsse = document.getElementById('imgsdvsse');
-          var modalImgsdvsse = document.getElementById('imgmodalsdvsse');
-          var captionTextsdvsse = document.getElementById('captionsdvsse');
-          imgsdvsse.onclick = function(){
-            modalsdvsse.style.display = 'block';
-            modalImgsdvsse.src = this.src;
-            captionTextsdvsse.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsdvsse.onclick = function() {
-            modalsdvsse.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsamplingdistribution = document.getElementById('modalsamplingdistribution');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-        var imgsamplingdistribution = document.getElementById('imgsamplingdistribution');
-          var modalImgsamplingdistribution = document.getElementById('imgmodalsamplingdistribution');
-          var captionTextsamplingdistribution = document.getElementById('captionsamplingdistribution');
-          imgsamplingdistribution.onclick = function(){
-            modalsamplingdistribution.style.display = 'block';
-            modalImgsamplingdistribution.src = this.src;
-            captionTextsamplingdistribution.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsamplingdistribution.onclick = function() {
-            modalsamplingdistribution.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsdvsse = document.getElementById('modalsdvsse');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-        var imgsdvsse = document.getElementById('imgsdvsse');
-          var modalImgsdvsse = document.getElementById('imgmodalsdvsse');
-          var captionTextsdvsse = document.getElementById('captionsdvsse');
-          imgsdvsse.onclick = function(){
-            modalsdvsse.style.display = 'block';
-            modalImgsdvsse.src = this.src;
-            captionTextsdvsse.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsdvsse.onclick = function() {
-            modalsdvsse.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsamplingdistribution = document.getElementById('modalsamplingdistribution');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-        var imgsamplingdistribution = document.getElementById('imgsamplingdistribution');
-          var modalImgsamplingdistribution = document.getElementById('imgmodalsamplingdistribution');
-          var captionTextsamplingdistribution = document.getElementById('captionsamplingdistribution');
-          imgsamplingdistribution.onclick = function(){
-            modalsamplingdistribution.style.display = 'block';
-            modalImgsamplingdistribution.src = this.src;
-            captionTextsamplingdistribution.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsamplingdistribution.onclick = function() {
-            modalsamplingdistribution.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsdvsse = document.getElementById('modalsdvsse');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-        var imgsdvsse = document.getElementById('imgsdvsse');
-          var modalImgsdvsse = document.getElementById('imgmodalsdvsse');
-          var captionTextsdvsse = document.getElementById('captionsdvsse');
-          imgsdvsse.onclick = function(){
-            modalsdvsse.style.display = 'block';
-            modalImgsdvsse.src = this.src;
-            captionTextsdvsse.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsdvsse.onclick = function() {
-            modalsdvsse.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsamplingdistribution = document.getElementById('modalsamplingdistribution');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-        var imgsamplingdistribution = document.getElementById('imgsamplingdistribution');
-          var modalImgsamplingdistribution = document.getElementById('imgmodalsamplingdistribution');
-          var captionTextsamplingdistribution = document.getElementById('captionsamplingdistribution');
-          imgsamplingdistribution.onclick = function(){
-            modalsamplingdistribution.style.display = 'block';
-            modalImgsamplingdistribution.src = this.src;
-            captionTextsamplingdistribution.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsamplingdistribution.onclick = function() {
-            modalsamplingdistribution.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsdvsse = document.getElementById('modalsdvsse');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-        var imgsdvsse = document.getElementById('imgsdvsse');
-          var modalImgsdvsse = document.getElementById('imgmodalsdvsse');
-          var captionTextsdvsse = document.getElementById('captionsdvsse');
-          imgsdvsse.onclick = function(){
-            modalsdvsse.style.display = 'block';
-            modalImgsdvsse.src = this.src;
-            captionTextsdvsse.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsdvsse.onclick = function() {
-            modalsdvsse.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsamplingdistribution = document.getElementById('modalsamplingdistribution');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-        var imgsamplingdistribution = document.getElementById('imgsamplingdistribution');
-          var modalImgsamplingdistribution = document.getElementById('imgmodalsamplingdistribution');
-          var captionTextsamplingdistribution = document.getElementById('captionsamplingdistribution');
-          imgsamplingdistribution.onclick = function(){
-            modalsamplingdistribution.style.display = 'block';
-            modalImgsamplingdistribution.src = this.src;
-            captionTextsamplingdistribution.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsamplingdistribution.onclick = function() {
-            modalsamplingdistribution.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsdvsse = document.getElementById('modalsdvsse');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-        var imgsdvsse = document.getElementById('imgsdvsse');
-          var modalImgsdvsse = document.getElementById('imgmodalsdvsse');
-          var captionTextsdvsse = document.getElementById('captionsdvsse');
-          imgsdvsse.onclick = function(){
-            modalsdvsse.style.display = 'block';
-            modalImgsdvsse.src = this.src;
-            captionTextsdvsse.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsdvsse.onclick = function() {
-            modalsdvsse.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsamplingdistribution = document.getElementById('modalsamplingdistribution');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-        var imgsamplingdistribution = document.getElementById('imgsamplingdistribution');
-          var modalImgsamplingdistribution = document.getElementById('imgmodalsamplingdistribution');
-          var captionTextsamplingdistribution = document.getElementById('captionsamplingdistribution');
-          imgsamplingdistribution.onclick = function(){
-            modalsamplingdistribution.style.display = 'block';
-            modalImgsamplingdistribution.src = this.src;
-            captionTextsamplingdistribution.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsamplingdistribution.onclick = function() {
-            modalsamplingdistribution.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsdvsse = document.getElementById('modalsdvsse');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-        var imgsdvsse = document.getElementById('imgsdvsse');
-          var modalImgsdvsse = document.getElementById('imgmodalsdvsse');
-          var captionTextsdvsse = document.getElementById('captionsdvsse');
-          imgsdvsse.onclick = function(){
-            modalsdvsse.style.display = 'block';
-            modalImgsdvsse.src = this.src;
-            captionTextsdvsse.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsdvsse.onclick = function() {
-            modalsdvsse.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsamplingdistribution = document.getElementById('modalsamplingdistribution');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-        var imgsamplingdistribution = document.getElementById('imgsamplingdistribution');
-          var modalImgsamplingdistribution = document.getElementById('imgmodalsamplingdistribution');
-          var captionTextsamplingdistribution = document.getElementById('captionsamplingdistribution');
-          imgsamplingdistribution.onclick = function(){
-            modalsamplingdistribution.style.display = 'block';
-            modalImgsamplingdistribution.src = this.src;
-            captionTextsamplingdistribution.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsamplingdistribution.onclick = function() {
-            modalsamplingdistribution.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsdvsse = document.getElementById('modalsdvsse');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-        var imgsdvsse = document.getElementById('imgsdvsse');
-          var modalImgsdvsse = document.getElementById('imgmodalsdvsse');
-          var captionTextsdvsse = document.getElementById('captionsdvsse');
-          imgsdvsse.onclick = function(){
-            modalsdvsse.style.display = 'block';
-            modalImgsdvsse.src = this.src;
-            captionTextsdvsse.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsdvsse.onclick = function() {
-            modalsdvsse.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsamplingdistribution = document.getElementById('modalsamplingdistribution');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-        var imgsamplingdistribution = document.getElementById('imgsamplingdistribution');
-          var modalImgsamplingdistribution = document.getElementById('imgmodalsamplingdistribution');
-          var captionTextsamplingdistribution = document.getElementById('captionsamplingdistribution');
-          imgsamplingdistribution.onclick = function(){
-            modalsamplingdistribution.style.display = 'block';
-            modalImgsamplingdistribution.src = this.src;
-            captionTextsamplingdistribution.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsamplingdistribution.onclick = function() {
-            modalsamplingdistribution.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsdvsse = document.getElementById('modalsdvsse');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-        var imgsdvsse = document.getElementById('imgsdvsse');
-          var modalImgsdvsse = document.getElementById('imgmodalsdvsse');
-          var captionTextsdvsse = document.getElementById('captionsdvsse');
-          imgsdvsse.onclick = function(){
-            modalsdvsse.style.display = 'block';
-            modalImgsdvsse.src = this.src;
-            captionTextsdvsse.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsdvsse.onclick = function() {
-            modalsdvsse.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsamplingdistribution = document.getElementById('modalsamplingdistribution');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-        var imgsamplingdistribution = document.getElementById('imgsamplingdistribution');
-          var modalImgsamplingdistribution = document.getElementById('imgmodalsamplingdistribution');
-          var captionTextsamplingdistribution = document.getElementById('captionsamplingdistribution');
-          imgsamplingdistribution.onclick = function(){
-            modalsamplingdistribution.style.display = 'block';
-            modalImgsamplingdistribution.src = this.src;
-            captionTextsamplingdistribution.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsamplingdistribution.onclick = function() {
-            modalsamplingdistribution.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsdvsse = document.getElementById('modalsdvsse');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-        var imgsdvsse = document.getElementById('imgsdvsse');
-          var modalImgsdvsse = document.getElementById('imgmodalsdvsse');
-          var captionTextsdvsse = document.getElementById('captionsdvsse');
-          imgsdvsse.onclick = function(){
-            modalsdvsse.style.display = 'block';
-            modalImgsdvsse.src = this.src;
-            captionTextsdvsse.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsdvsse.onclick = function() {
-            modalsdvsse.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsamplingdistribution = document.getElementById('modalsamplingdistribution');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-        var imgsamplingdistribution = document.getElementById('imgsamplingdistribution');
-          var modalImgsamplingdistribution = document.getElementById('imgmodalsamplingdistribution');
-          var captionTextsamplingdistribution = document.getElementById('captionsamplingdistribution');
-          imgsamplingdistribution.onclick = function(){
-            modalsamplingdistribution.style.display = 'block';
-            modalImgsamplingdistribution.src = this.src;
-            captionTextsamplingdistribution.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsamplingdistribution.onclick = function() {
-            modalsamplingdistribution.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsdvsse = document.getElementById('modalsdvsse');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-        var imgsdvsse = document.getElementById('imgsdvsse');
-          var modalImgsdvsse = document.getElementById('imgmodalsdvsse');
-          var captionTextsdvsse = document.getElementById('captionsdvsse');
-          imgsdvsse.onclick = function(){
-            modalsdvsse.style.display = 'block';
-            modalImgsdvsse.src = this.src;
-            captionTextsdvsse.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsdvsse.onclick = function() {
-            modalsdvsse.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsamplingdistribution = document.getElementById('modalsamplingdistribution');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-        var imgsamplingdistribution = document.getElementById('imgsamplingdistribution');
-          var modalImgsamplingdistribution = document.getElementById('imgmodalsamplingdistribution');
-          var captionTextsamplingdistribution = document.getElementById('captionsamplingdistribution');
-          imgsamplingdistribution.onclick = function(){
-            modalsamplingdistribution.style.display = 'block';
-            modalImgsamplingdistribution.src = this.src;
-            captionTextsamplingdistribution.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsamplingdistribution.onclick = function() {
-            modalsamplingdistribution.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsdvsse = document.getElementById('modalsdvsse');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-        var imgsdvsse = document.getElementById('imgsdvsse');
-          var modalImgsdvsse = document.getElementById('imgmodalsdvsse');
-          var captionTextsdvsse = document.getElementById('captionsdvsse');
-          imgsdvsse.onclick = function(){
-            modalsdvsse.style.display = 'block';
-            modalImgsdvsse.src = this.src;
-            captionTextsdvsse.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsdvsse.onclick = function() {
-            modalsdvsse.style.display = 'none';
-          }
-</script>
 <script>
         /* Get the modal*/
           var modalsamplingdistribution = document.getElementById('modalsamplingdistribution');
