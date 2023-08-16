@@ -231,11 +231,18 @@ Before we look at results, let’s discuss some predictions first! With the peop
 
 
 --
-<br>
-<br>
 .center[
 Let’s see how everyone did!
+
+```{r, echo=FALSE, out.width="40%"}
+
+knitr::include_graphics("../images/Week1/arson-results.jpg")
+
+```
+
 ]
+
+
 
 ---
 class:inverse
