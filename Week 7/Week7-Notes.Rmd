@@ -1,0 +1,120 @@
+---
+title: "MTH361: Probability and Statistics in the Health Sciences"
+author: "Hypothesis Testing"
+date: "September 26, 2023"
+output: 
+  xaringan::moon_reader:
+    lib_dir: libs
+    seal: false
+    css: ["default", "metropolis-fonts", "modal.css", "sizeformat.css"]
+    includes:
+      after_body:
+        "js-addins.html"
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: true
+---
+
+```{r echo=FALSE, message=FALSE, warning = FALSE}
+library(knitr)
+library(tidyverse)
+
+hook_output = knit_hooks$get('output')
+knit_hooks$set(output = function(x, options) {
+  # this hook is used only when the linewidth option is not NULL
+  if (!is.null(n <- options$linewidth)) {
+    x = xfun::split_lines(x)
+    # any lines wider than n should be wrapped
+    if (any(nchar(x) > n)) x = strwrap(x, width = n)
+    x = paste(x, collapse = '\n')
+  }
+  hook_output(x, options)
+})
+
+```
+
+```{r, include = F, eval = T, cache = T}
+clean_file_name <- function(x) {
+  basename(x) %>% str_remove("\\..*?$") %>% str_remove_all("[^[A-z0-9_]]")
+}
+img_modal <- function(src, alt = "", id = clean_file_name(src), other = "") {
+  
+  other_arg <- paste0("'", as.character(other), "'") %>%
+    paste(names(other), ., sep = "=") %>%
+    paste(collapse = " ")
+  
+  js <- glue::glue("<script>
+        /* Get the modal*/
+          var modal{id} = document.getElementById('modal{id}');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+        var img{id} = document.getElementById('img{id}');
+          var modalImg{id} = document.getElementById('imgmodal{id}');
+          var captionText{id} = document.getElementById('caption{id}');
+          img{id}.onclick = function(){{
+            modal{id}.style.display = 'block';
+            modalImg{id}.src = this.src;
+            captionText{id}.innerHTML = this.alt;
+          }}
+          /* When the user clicks on the modalImg, close it*/
+          modalImg{id}.onclick = function() {{
+            modal{id}.style.display = 'none';
+          }}
+</script>")
+  
+  html <- glue::glue(
+     " <!-- Trigger the Modal -->
+<img id='img{id}' src='{src}' alt='{alt}' {other_arg}>
+<!-- The Modal -->
+<div id='modal{id}' class='modal'>
+  <!-- Modal Content (The Image) -->
+  <img class='modal-content' id='imgmodal{id}'>
+  <!-- Modal Caption (Image Text) -->
+  <div id='caption{id}' class='modal-caption'></div>
+</div>
+"
+  )
+  write(js, file = "js-addins.html", append = T)
+  return(html)
+}
+# Clean the file out at the start of the compilation
+write("", file = "js-addins.html")
+```
+
+class:inverse
+
+<br><br><br>
+## MTH361: Probability and Statistics in the Health Sciences
+### Hypothesis Tests
+#### September 26, 2023
+
+
+---
+### Agenda
+
+
+
+---
+### Announcements
+
+---
+### From Confidence Intervals to Hypothesis Tests
+
+Recall in Lab 5, we have this statement:
+
+*The poll provides strong evidence that the percentage of US adults who suffer from chronic illnesses is below 50%.*
+
+We also know the 95% confidence interval is [0.43, 0.47].
+
+Today we are going to discuss and solve these kind of question in a Hypothesis way: Given a sample, how to make conclusion about the population statistics.
+
+---
+### Hypothesis Testing
+
+Hypothesis testing is a method for evaluating the evidence for/against a specific research claim based on a probability, called a p-value. There are four basic steps to this procedure:
+
+- Write the null and alternative hypothesis
+- Collect evidence from our sample and calculate a test statistic
+- “Translate” the test statistic into a p-value
+- Make a conclusion based on the p-value
+
