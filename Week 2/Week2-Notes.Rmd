@@ -141,6 +141,8 @@ The research question decides what your research subjects are and how to conduct
 
 ]
 
+--
+
 **Examples**:
 
 - Is smoking related to COVID-19's hospitalization rate?
@@ -511,7 +513,7 @@ You randomly send surveys through mail to some members of the health plan
 .center[May have a biased sample]
 
 ---
-### Other Useful Sampling Methods
+### Other Useful Sampling Methods: Blocking
 
 ```{r, echo=FALSE}
 
@@ -548,13 +550,13 @@ knitr::include_graphics("../images/Week2/sampling.png")
 
 ---
 
-### Experimental vs Observation Studies
+### Experimental vs Observational Studies
 
 .pull-left[
 
 **Experimental Studies**:
 
-- *You* create the groups by what you choose to do to the people or objects.
+- *You* create the groups.
   + *Manipulation* of groups
 - Experience some particular condition (*treatment*)
 - Ethical considerations
@@ -652,6 +654,8 @@ c(str_split(i2, "\\n", simplify = T)[1:2],
 --
 
 Randomly assigning objects to groups tends to balance out all other variables between the groups.
+
+[More Examples](https://www.tylervigen.com/spurious-correlations)
 
 
 ---

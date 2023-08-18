@@ -118,3 +118,121 @@ Hypothesis testing is a method for evaluating the evidence for/against a specifi
 - “Translate” the test statistic into a p-value
 - Make a conclusion based on the p-value
 
+---
+### Step 1: Write Hypotheses
+
+If you want to study something, you need an assumption/expectation/guess for your result $\longrightarrow$ Hypothesis
+
+A Hypothesis contains two mutually exclusive parts:
+
+- Null Hypothesis
+- Alternative Hypothesis
+
+Goal: We want to show that our data indicates the probability of null hypothesis happens is quite low (nearly impossible to happen), thus, the alternative hypothesis is more likely to be true.
+
+---
+### Step 1: Write Hypotheses
+
+Null Hypothesis $(H_0)$: The null hypothesis represents an assumption or a skeptical statement about the population parameter, and always includes just a single value.
+
+Alternative Hypothesis $(H_A)$: A competing hypothesis contrasts to the null hypothesis, usually is what the original research question hoped to show, prove, or find evidence for.
+
+Note: Alternative hypothesis can be one-sided ("increased", "decreased") or two-sided ("changed", "different").
+
+---
+### Step 1: Write Hypotheses
+
+For the following alternative hypotheses: (1) determine whether it is one-sided or two-sided, and (2) state the corresponding null hypothesis
+
+- Patients who take phentermine and topiramate lose weight at a different rate than control patients without these drugs.
+- Artesunate is less effective that quinine at treating children with severe malaria.
+- Cities that do not have safe-injection sites for drug addicts have higher rates of HIV transmission than cities that do have safe-injection sites.
+
+---
+### Step 1: Write Hypotheses
+
+**Example**: Drug maker GlaxoSmithKline (GSK) investigated the potential impact of its oral anti-diabetic drug Avandia on the blood lipid levels of adult diabetics who might benefit from taking Avandia. They were particularly concerned that LDL, "bad" cholesterol, levels might increase. Write the null and alternative hypothesis for their test.
+
+--
+$H_0$: LDL will not change after taking Avandia $\\$
+$H_A$: LDL will increase after taking Avandia
+
+---
+### Step 2: Calculate the Test Statistic 
+
+Given the hypothesis, now we need to use data to show whether the hypothesis is valid or not, through test statistics. 
+
+Test statistic: a number calculated from the sample data that is used to evaluate how far the data we've observed are from the result expected assuming the null hypothesis is true.
+
+Note: We know by now that data does not always reflect the population but we also know that a large enough random sample is pretty close.
+
+---
+### Step 2: Calculate the Test Statistic 
+
+Usually the test statistic follows this form:
+
+$$\text{test statistics} = \frac{\text{sample statistics} - \text{expectation}}{\text{standard error}}$$
+As we'll see, the choice of test statistic depends on two things
+
+- The type of data we're analyzing
+- The assumptions we're willing to make
+
+Different parameters and assumptions will change the test statistics from one hypothesis test to another
+
+---
+### Step 3: Calculate the p-value
+
+It's useful to translate the test statistic into another measurement that's consistent for all types of hypothesis tests. 
+
+p-value: the **probability** of observing a sample statistic as or more extreme as the data we have observed, assuming the null hypothesis is true.
+
+**The p-value is not the probability that the null hypothesis is true!**
+
+---
+### Step 3: Calculate the p-value
+
+How to covert test statistics to p-value? Recall what we did to convert the Z-score to p-value.
+
+Student t distribution:
+
+- Like the normal distribution, the t-distribution has a symmetric smooth shape.
+- The normal distribution assumes that the population standard deviation is known. The t-distribution does not make this assumption.
+- The t-distribution is defined by the degrees of freedom. These are related to the sample size.
+- The t-distribution is most useful for small sample sizes, when the population standard deviation is no known, or both.
+- As the sample size increases, the t-distribution becomes more similar to the normal distribution.
+
+---
+### Step 3: Calculate the p-value
+
+
+---
+### Step 4: Make a conclusion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
