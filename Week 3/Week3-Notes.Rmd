@@ -1,6 +1,6 @@
 ---
 title: "MTH361: Probability and Statistics in the Health Sciences"
-author: "Data Summarization"
+author: "Exploratory Data Analysis"
 date: "August 29, 2023"
 output: 
   xaringan::moon_reader:
@@ -50,9 +50,21 @@ How?
 - Summary statistics
 - Data visualization
 
+---
+### A Quick Note on Good Graphics
+
+Visualization is a method to communicate patterns in data to a wider audience. To do this effectively, the visualizations must be clear, honest, and efficient.
+
+A Few Principles:
+
+- Show the data
+- Make patterns in the data easy to see
+- Represent magnitudes honestly
+- Make graphical elements clear
+
 
 ---
-### Case Study: ICu Admission Data
+### Case Study: ICU Admission Data
 
 Data for a sample of 200 patients at an Intensive Care Unit (ICU). The data set contains 20 variables. Here is a list of the ones we will use in this example:
 
@@ -85,8 +97,8 @@ class:inverse
 - Measures of Center
   - Mean
   - Median
-- Variability and Spread Out
-  - Stand Deviation
+- Variability and Spread
+  - Standard Deviation
   - Variance
   - Range and IQR
 - Visualization
@@ -199,6 +211,8 @@ data %>% ggplot(aes(Age)) + geom_histogram(bins = 15) + ggtitle("Histogram of Ag
 ```
 
 ]
+
+**Note**: Choose interval carefully as it may impact conclusions
   
 ---
 ### Visualizing the Distribution
@@ -313,17 +327,16 @@ kableExtra::kable(dt)
 
 Visualization: Box Plots
 
-.pull-left[
-```{r, echo=FALSE}
-data %>% ggplot(aes(x=Race)) + geom_bar()
+```{r, echo=FALSE, fig.align='center', fig.height=5}
+data %>% ggplot(aes(x=Race, fill = Race)) + geom_bar()
 ```
-].pull-right[
-```{r, echo=FALSE}
-dt %>% ggplot(aes(x= Race, y = prop)) + geom_bar(stat = "identity")
 
-```
-]
+--
 
+Making a Good Bar Chart:
+
+- Baseline of the y-axis should be at 0.
+- For ordinal variables, the bars should be in the natural order. For nominal variables, best to arrange by frequency of occurrence. 
 ---
 ### Difference Between Bar-Plot and Histogram
 
@@ -365,7 +378,7 @@ class:inverse
 - Pearson Correlation Coefficient $(r)$: a measure of linear correlation between two sets of data (more in later chapters)
 - Scatterplots
 
-```{r, echo=FALSE, fig.height=5}
+```{r, echo=FALSE, fig.height=5, fig.align='center'}
 
 data %>% ggplot(aes(x=Systolic, y = HeartRate)) + geom_point()
 
@@ -393,6 +406,8 @@ If you want to focus on the trend of the data (the change in $y$-value with the 
 
 - Line Plots
 - Smooth Line Plots
+
+Especially useful if want to show data over time
 
 .pull-left[
 ```{r, echo=FALSE}
@@ -496,7 +511,7 @@ tab
 + Bar Plots on Multiple Panels
 
 ```{r, echo=FALSE}
-data %>% ggplot(aes(x=Cancer, fill = Type))+ facet_grid(~Type) + geom_bar()
+data %>% ggplot(aes(x=Cancer, fill = Cancer))+ facet_grid(~Type) + geom_bar()
 
 ```
 ]
@@ -504,22 +519,32 @@ data %>% ggplot(aes(x=Cancer, fill = Type))+ facet_grid(~Type) + geom_bar()
 ---
 ### Exercise
 
-A Medical Insurance Company has released data for almost 1000 customers. Create a model that predicts the yearly medical cover cost. The data is voluntarily given by customers.
+A Medical Insurance Company data for almost 1000 customers, where the data is voluntarily given by customers.
 
+.pull-left[
 - Age
 - Diabetes
 - BloodPressureProblems
 - AnyTransplants
 - AnyChronicDiseases
 - Height
+].pull-right[
 - Weight
 - KnownAllergies
 - HistoryOfCancerInFamily
 - NumberofMajorSurgeries
 - PremiumPrice
+] 
+
+For each of the following scenarios, which summary statistics and data visualization should you use?
+
+(a). If you want to examine whether there is a relationship between Age and Premium Price (consider both as continuous variables) $\\$
+(b). If you want to learn more information about people with a transplant. $\\$
+(c) If you want to know the relation between whether someone has a transplant and the premium price. $\\$
+(d) If you want to know whether having a transplant will related to whether people having any chronic diseases.
 
 ---
-### Exercise 1
+### Exercise (a)
 
 (a). If you want to examine whether there is a relationship between Age and Premium Price (consider both as continuous variables), which summary statistics and data visualizations should you use?
 
@@ -540,7 +565,7 @@ med %>% ggplot(aes(x=Age, y = PremiumPrice)) + geom_point() + ggtitle("Scatterpl
 The correlation coefficient and the scatterplot indicates that there may exist a moderate positive linear relationship between age and premium price.
 
 ---
-### Exercise 2
+### Exercise (b)
 
 
 (b). If you want to learn more information about people with a transplant, what summary statistics and data visualization would you consider?
@@ -571,7 +596,7 @@ med %>% ggplot(aes(x=AnyTransplants)) + geom_bar() + theme(axis.ticks.x=element_
 55/(931+55) = 5.58% of the patients have a transplant.
 
 ---
-### Exercise 3
+### Exercise (c)
 
 (c) If you want to know the relation between whether someone has a transplant and the premium price, which summary statistics and data visualization you may choose?
 
@@ -602,7 +627,7 @@ med %>% ggplot(aes(y = PremiumPrice, fill = AnyTransplants)) + geom_boxplot() + 
 ]
 
 ---
-### Exercise 4
+### Exercise (d)
 
 (d) If you want to know whether having a transplant will related to whether people having any chronic diseases, which summary statistics and data visualization you may choose?
 
@@ -638,299 +663,3 @@ med %>% ggplot(aes(x=AnyChronicDiseases, fill = AnyTransplants))+ facet_grid(~An
 ]
 
 
----
-class:inverse
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-.center[
-## R Code Used for Plots
-]
----
-### R Code Used for Plots: Slide 13
-
-.pull-left[
-```{r, message=FALSE}
-library(tidyverse) #package needed
-data <- read.csv("../Week 3/data/ICUAdmissions.csv") #read in data
-
-data %>% ggplot(aes(Age)) + 
-  geom_histogram() + 
-  ggtitle("Histogram of Age with 30 Bins")
-```
-].pull-right[
-```{r, message=FALSE}
-
-data %>% ggplot(aes(Age)) +
-  geom_histogram(bins = 15) + 
-  ggtitle("Histogram of Age with 15 Bins")
-```
-
-]
-
----
-### R Code Used for Plots: Slide 14
-
-
-.pull-left[
-```{r, message=FALSE}
-
-data %>% ggplot(aes(Age)) + 
-  geom_density() + 
-  ggtitle("Density Plot of Age")
-```
-].pull-right[
-```{r, message=FALSE}
-
-data %>% ggplot(aes(Age)) + 
-  geom_density(color="darkblue", fill="lightblue") + 
-  ggtitle("Density Plot of Age")
-```
-
-]
-
----
-### R Code Used for Plots: Slide 17
-
-```{r, message=FALSE}
-
-data %>% summarise(min = min(HeartRate), 
-    Q1=quantile(HeartRate, probs = 0.25), med=median(HeartRate),
-    Q3=quantile(HeartRate,probs = 0.75), max = max(HeartRate), 
-    mean = mean(HeartRate), sd= sd(HeartRate), n = n(), 
-    miss= sum(is.na(HeartRate)))
-```
-
-
----
-### R Code Used for Plots: Slide 17
-```{r, message=FALSE, fig.height = 6}
-data %>% ggplot(aes(HeartRate)) + 
-  geom_histogram() + 
-  ggtitle("Histogram of Heart Rate")
-```
-
-  
----
-### R Code Used for Plots: Slide 19
-
-```{r}
-#turn data into factor and give them more descriptive names
-data <- data %>% 
-  mutate(Race = factor(Race, 
-                    levels = c("1", "2", "3"),
-                    labels = c("White", "Black", "Other"))) 
-
-dt <- data %>%    
-  group_by(Race) %>%    
-  summarise(count = n()) %>% mutate(prop = count/sum(count))
-
-
-dt
-
-```
-
----
-### R Code Used for Plots: Slide 20
-
-.pull-left[
-```{r}
-data %>% ggplot(aes(x=Race)) + geom_bar()
-```
-].pull-right[
-```{r}
-dt %>% ggplot(aes(x= Race, y = prop)) + geom_bar(stat = "identity")
-
-```
-]
-
----
-### R Code Used for Plots: Slide 21
-
-.pull-left[
-```{r}
-data %>% ggplot(aes(x=Race)) + 
-  geom_bar() + 
-  ggtitle("Bar Plot of Race Distribution")
-```
-].pull-right[
-```{r, message=FALSE}
-data %>% ggplot(aes(Age)) + 
-  geom_histogram() + 
-  ggtitle("Histogram of Age Distribution")
-
-```
-]
-
----
-### R Code Used for Plots: Slide 23
-```{r, fig.height=5}
-
-data %>% ggplot(aes(x=Systolic, y = HeartRate)) + geom_point()
-
-```
-
-
----
-### R Code Used for Plots: Slide 25
-
-.pull-left[
-```{r}
-data %>% ggplot(aes(x=Systolic, y = HeartRate)) + 
-  geom_line() + 
-  ggtitle("Line Plot")
-```
-].pull-right[
-```{r, message=FALSE}
-data %>% ggplot(aes(x=Systolic, y = HeartRate)) + 
-  geom_smooth() + 
-  ggtitle("Smooth Line Plot")
-```
-]
-
----
-### R Code Used for Plots: Slide 27
-
-.pull-left[
-```{r}
-data$Infection <- as.factor(data$Infection) #turn into factor
-data %>% ggplot(aes(y = HeartRate, fill = Infection)) + 
-  geom_boxplot() + 
-  ggtitle("Box Plot of Heart Rate")
-
-```
-].pull-right[
-```{r, message=FALSE}
-data %>% ggplot(aes(x=HeartRate, color = Infection)) + 
-  geom_density() + 
-  ggtitle("Density Plot of Heart Rate")
-```
-]
-
----
-### R Code Used for Plots: Slide 28
-
-.pull-left[
-```{r}
-data %>% ggplot(aes(y=HeartRate, fill = Infection)) + 
-  facet_grid(~Infection) + 
-  geom_boxplot() + 
-  ggtitle("Box Plot of Heart Rate")
-
-```
-].pull-right[
-```{r, message=FALSE}
-data %>% ggplot(aes(x=HeartRate, fill = Infection)) + 
-  facet_grid(~Infection) + 
-  geom_histogram() + 
-  ggtitle("Histogram of Heart Rate")
-
-```
-]
-
----
-### R Code Used for Plots: Slide 30
-
-```{r}
-data <- data %>% 
-  mutate(Type = factor(Type, 
-                       levels = c("0", "1"),
-                       labels = c("Elective", "Emergency"))) %>% 
-  mutate(Cancer = factor(Cancer, 
-                       levels = c("0", "1"),
-                       labels = c("Yes", "No")))
-
-
-tab <- table(data$Cancer, data$Type)
-names(attributes(tab)$dimnames) <- c("Cancer","Type")
-tab
-
-```
-
----
-### R Code Used for Plots: Slide 32
-
-```{r, fig.height=5}
-
-med <- read.csv("../Week 3/data/Medicalpremium.csv") #read in data
-
-med %>% ggplot(aes(x=Age, y = PremiumPrice)) + geom_point() + ggtitle("Scatterplot of Age vs Premium Price")
-
-```
-
----
-### R Code Used for Plots: Slide 33
-
-.pull-left[
-```{r }
-med <- med %>% 
-  mutate(AnyTransplants = factor(AnyTransplants, 
-                       levels = c("0", "1"),
-                       labels = c("No", "Yes"))) 
-
-t(table(med$AnyTransplants))
-
-```
-].pull-right[
-```{r }
-med %>% ggplot(aes(x=AnyTransplants)) + 
-  geom_bar() + 
-  theme(axis.ticks.x=element_blank())
-
-```
-
-]
-
----
-### R Code Used for Plots: Slide 34
-
-```{r, }
-med %>% group_by(AnyTransplants) %>% summarise(min = min(PremiumPrice), 
-    Q1=quantile(PremiumPrice, probs = 0.25), med=median(PremiumPrice),
-    Q3=quantile(PremiumPrice,probs = 0.75), max = max(PremiumPrice), 
-    mean = mean(PremiumPrice), sd= sd(PremiumPrice), n = n(), 
-    miss= sum(is.na(PremiumPrice)))
-
-```
-
----
-### R Code Used for Plots: Slide 34
-
-
-```{r, fig.height=5}
-med %>% ggplot(aes(y = PremiumPrice, fill = AnyTransplants)) + 
-  geom_boxplot() + 
-  ggtitle("Box Plot of Premium Price")
-
-```
-
-
----
-### R Code Used for Plots: Slide 35
-
-.pull-left[
-```{r}
-med <- med %>% 
-  mutate(AnyChronicDiseases = factor(AnyChronicDiseases, 
-                                 levels = c("0", "1"),
-                                 labels = c("No", "Yes"))) 
-
-
-tab2 <- table(med$AnyTransplants ,med$AnyChronicDiseases)
-names(attributes(tab2)$dimnames) <- c("Transplant","Chronic")
-tab2
-
-```
-
-
-].pull-right[
-```{r, fig.height=6}
-med %>% ggplot(aes(x=AnyChronicDiseases, fill = AnyTransplants))+ facet_grid(~AnyTransplants) + geom_bar() + ggtitle("Side-by-side bar plot of chronic diseases vs transplant")
-```
-]
