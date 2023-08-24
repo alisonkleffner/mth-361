@@ -31,9 +31,34 @@ class: center, middle, inverse, title-slide
 
 ### Agenda
 
+Exploratory Data Analysis:
+
+- One Variable
+  + Categorical
+  + Numerical
+- Two Variable
+  + Two Numerical
+  + Two Categorical
+  + One Numerical and One Categorical
+  
+&lt;br&gt;
+&lt;br&gt;
+**Sections Covered**: 1.4-1.7
+
 ---
 ### Announcements
 
+- Lab 1 is graded
+
+- Homework 1 due **tonight at 11:59 pm**
+
+- Homework 2 will be available after class
+  + Due **Tuesday September 5 at 11:59 pm**
+  
+- Lab 2 will be on Thursday.
+  + This will require a little `R` code
+
+**Book Sections for Next Week**: Chapter 2
 ---
 ### Exploratory Data Analysis (EDA)
 
@@ -186,9 +211,9 @@ The definition of IQR is related to a boxplot and one of the way to define outli
 Use a histogram to capture the distribution (pattern of outcomes) of a variable
 
 .pull-left[
-![](Week3-Notes-Student_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
-].pull-right[
 ![](Week3-Notes-Student_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
+].pull-right[
+![](Week3-Notes-Student_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
 
 ]
 
@@ -200,9 +225,9 @@ Use a histogram to capture the distribution (pattern of outcomes) of a variable
 Another option for the distribution of a continuous variable: density plot
 
 .pull-left[
-![](Week3-Notes-Student_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
-].pull-right[
 ![](Week3-Notes-Student_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
+].pull-right[
+![](Week3-Notes-Student_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
 
 ]
   
@@ -261,10 +286,18 @@ Describing a Distribution:
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-
-![](Week3-Notes-Student_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
+].pull-left[
+![](Week3-Notes-Student_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
 ]
 
+--
+.pull-right[
+- 200 observations without any missing values
+- The average heart rate is about 98.9 and half of the people have a heart rate over 96.
+- The range of the data is from 39-192, while a typical value would fall between 72.1 and 125.8
+- The distribution of the variable is unimodal and almost symmetrical (slightly skewed right)
+- There may be a potential outlier
+]
 
 ---
 class:inverse
@@ -318,9 +351,9 @@ class:inverse
 ---
 ### EDA for One Categorical Variable
 
-Visualization: Box Plots
+Visualization: Bar Chart
 
-&lt;img src="Week3-Notes-Student_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week3-Notes-Student_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /&gt;
 
 --
 
@@ -331,15 +364,16 @@ Making a Good Bar Chart:
 ---
 ### Difference Between Bar-Plot and Histogram
 
-
-.pull-left[
-![](Week3-Notes-Student_files/figure-html/unnamed-chunk-13-1.png)&lt;!-- --&gt;
-].pull-right[
-![](Week3-Notes-Student_files/figure-html/unnamed-chunk-14-1.png)&lt;!-- --&gt;
-]
 - Histograms are for continuous variables; Bar plots are for categorical variables
 - Histograms are for describing distributions; Bar plot are for bar-to-bar comparison
 - You can not switch the order of the histogram, but for most cases, it is OK to switch the bar order on a Bar Plot
+
+
+.pull-left[
+![](Week3-Notes-Student_files/figure-html/unnamed-chunk-14-1.png)&lt;!-- --&gt;
+].pull-right[
+![](Week3-Notes-Student_files/figure-html/unnamed-chunk-15-1.png)&lt;!-- --&gt;
+]
 
 ---
 class:inverse
@@ -364,7 +398,7 @@ class:inverse
 - Pearson Correlation Coefficient `\((r)\)`: a measure of linear correlation between two sets of data (more in later chapters)
 - Scatterplots
 
-&lt;img src="Week3-Notes-Student_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week3-Notes-Student_files/figure-html/unnamed-chunk-16-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 ### Interpretation of Correlation Coffiecient from Scatterplots
@@ -388,9 +422,9 @@ If you want to focus on the trend of the data (the change in `\(y\)`-value with 
 Especially useful if want to show data over time
 
 .pull-left[
-![](Week3-Notes-Student_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
-].pull-right[
 ![](Week3-Notes-Student_files/figure-html/unnamed-chunk-18-1.png)&lt;!-- --&gt;
+].pull-right[
+![](Week3-Notes-Student_files/figure-html/unnamed-chunk-19-1.png)&lt;!-- --&gt;
 ]
 
 
@@ -416,9 +450,9 @@ class:inverse
 - Side-by-side box plots or density plots
 
 .pull-left[
-![](Week3-Notes-Student_files/figure-html/unnamed-chunk-19-1.png)&lt;!-- --&gt;
-].pull-right[
 ![](Week3-Notes-Student_files/figure-html/unnamed-chunk-20-1.png)&lt;!-- --&gt;
+].pull-right[
+![](Week3-Notes-Student_files/figure-html/unnamed-chunk-21-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -427,9 +461,9 @@ class:inverse
 - Plot continuous variable in multiple panels
 
 .pull-left[
-![](Week3-Notes-Student_files/figure-html/unnamed-chunk-21-1.png)&lt;!-- --&gt;
-].pull-right[
 ![](Week3-Notes-Student_files/figure-html/unnamed-chunk-22-1.png)&lt;!-- --&gt;
+].pull-right[
+![](Week3-Notes-Student_files/figure-html/unnamed-chunk-23-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -464,7 +498,7 @@ class:inverse
 ].pull-right[
 + Bar Plots on Multiple Panels
 
-![](Week3-Notes-Student_files/figure-html/unnamed-chunk-24-1.png)&lt;!-- --&gt;
+![](Week3-Notes-Student_files/figure-html/unnamed-chunk-25-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -503,7 +537,7 @@ For each of the following scenarios, which summary statistics and data visualiza
 
 The Correlation Coefficient is 0.698
 
-![](Week3-Notes-Student_files/figure-html/unnamed-chunk-25-1.png)&lt;!-- --&gt;
+![](Week3-Notes-Student_files/figure-html/unnamed-chunk-26-1.png)&lt;!-- --&gt;
 
 
 ---
@@ -530,7 +564,7 @@ The Correlation Coefficient is 0.698
 &lt;/tbody&gt;
 &lt;/table&gt;
 ].pull-right[
-![](Week3-Notes-Student_files/figure-html/unnamed-chunk-27-1.png)&lt;!-- --&gt;
+![](Week3-Notes-Student_files/figure-html/unnamed-chunk-28-1.png)&lt;!-- --&gt;
 
 ]
 
@@ -585,7 +619,7 @@ The Correlation Coefficient is 0.698
 &lt;/table&gt;
 
 .pull-left[
-![](Week3-Notes-Student_files/figure-html/unnamed-chunk-29-1.png)&lt;!-- --&gt;
+![](Week3-Notes-Student_files/figure-html/unnamed-chunk-30-1.png)&lt;!-- --&gt;
 ]
 
 
@@ -606,7 +640,7 @@ The Correlation Coefficient is 0.698
 ]
 
 .pull-right[
-![](Week3-Notes-Student_files/figure-html/unnamed-chunk-31-1.png)&lt;!-- --&gt;
+![](Week3-Notes-Student_files/figure-html/unnamed-chunk-32-1.png)&lt;!-- --&gt;
 ]
 
 

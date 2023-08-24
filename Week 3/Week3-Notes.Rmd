@@ -32,9 +32,34 @@ knit_hooks$set(output = function(x, options) {
 
 ### Agenda
 
+Exploratory Data Analysis:
+
+- One Variable
+  + Categorical
+  + Numerical
+- Two Variable
+  + Two Numerical
+  + Two Categorical
+  + One Numerical and One Categorical
+  
+<br>
+<br>
+**Sections Covered**: 1.4-1.7
+
 ---
 ### Announcements
 
+- Lab 1 is graded
+
+- Homework 1 due **tonight at 11:59 pm**
+
+- Homework 2 will be available after class
+  + Due **Tuesday September 5 at 11:59 pm**
+  
+- Lab 2 will be on Thursday.
+  + This will require a little `R` code
+
+**Book Sections for Next Week**: Chapter 2
 ---
 ### Exploratory Data Analysis (EDA)
 
@@ -325,9 +350,9 @@ kableExtra::kable(dt)
 ---
 ### EDA for One Categorical Variable
 
-Visualization: Box Plots
+Visualization: Bar Charts
 
-```{r, echo=FALSE, fig.align='center', fig.height=5}
+```{r, echo=FALSE, fig.align='center', fig.height=4}
 data %>% ggplot(aes(x=Race, fill = Race)) + geom_bar()
 ```
 
@@ -340,6 +365,10 @@ Making a Good Bar Chart:
 ---
 ### Difference Between Bar-Plot and Histogram
 
+- Histograms are for continuous variables; Bar plots are for categorical variables
+- Histograms are for describing distributions; Bar plot are for bar-to-bar comparison
+- You can not switch the order of the histogram, but for most cases, it is OK to switch the bar order on a Bar Plot
+
 
 .pull-left[
 ```{r, echo=FALSE}
@@ -351,9 +380,6 @@ data %>% ggplot(aes(Age)) + geom_histogram() + ggtitle("Histogram of Age Distrib
 
 ```
 ]
-- Histograms are for continuous variables; Bar plots are for categorical variables
-- Histograms are for describing distributions; Bar plot are for bar-to-bar comparison
-- You can not switch the order of the histogram, but for most cases, it is OK to switch the bar order on a Bar Plot
 
 ---
 class:inverse
@@ -596,9 +622,9 @@ med %>% ggplot(aes(x=AnyTransplants)) + geom_bar() + theme(axis.ticks.x=element_
 55/(931+55) = 5.58% of the patients have a transplant.
 
 ---
-### Exercise (c)
+#### Exercise (c)
 
-(c) If you want to know the relation between whether someone has a transplant and the premium price, which summary statistics and data visualization you may choose?
+(c) If you want to know the relation between those with transplant & the premium price, what summary statistics and data visualization can you use?
 
 --
 ```{r, echo = FALSE}
@@ -621,7 +647,7 @@ med %>% ggplot(aes(y = PremiumPrice, fill = AnyTransplants)) + geom_boxplot() + 
 - The people without a transplant typically will get a premium price from $18156 to $29639
 - The people with a transplant typically will get a premium price from $22550 to $40977
 - The people with a transplant tend to have a larger variability on their premium price
-- On average, the people with a transplant tend to have a higher premium price. Since the box-plot is not overlapped, the difference is significant
+- On average, the people with a transplant tend to have a higher premium price. No overlap in box plots, so the difference is significant
 
 
 ]
@@ -632,6 +658,8 @@ med %>% ggplot(aes(y = PremiumPrice, fill = AnyTransplants)) + geom_boxplot() + 
 (d) If you want to know whether having a transplant will related to whether people having any chronic diseases, which summary statistics and data visualization you may choose?
 
 --
+
+.pull-left[
 
 ```{r, echo=FALSE}
 med <- med %>% 
@@ -647,7 +675,6 @@ tab2
 ```
 
 
-.pull-left[
 ```{r, echo=FALSE, fig.height=6}
 med %>% ggplot(aes(x=AnyChronicDiseases, fill = AnyTransplants))+ facet_grid(~AnyTransplants) + geom_bar() + ggtitle("Side-by-side bar plot of chronic diseases vs transplant")
 ```

@@ -32,9 +32,34 @@ knit_hooks$set(output = function(x, options) {
 
 ### Agenda
 
+Exploratory Data Analysis:
+
+- One Variable
+  + Categorical
+  + Numerical
+- Two Variable
+  + Two Numerical
+  + Two Categorical
+  + One Numerical and One Categorical
+  
+<br>
+<br>
+**Sections Covered**: 1.4-1.7
+
 ---
 ### Announcements
 
+- Lab 1 is graded
+
+- Homework 1 due **tonight at 11:59 pm**
+
+- Homework 2 will be available after class
+  + Due **Tuesday September 5 at 11:59 pm**
+  
+- Lab 2 will be on Thursday.
+  + This will require a little `R` code
+
+**Book Sections for Next Week**: Chapter 2
 ---
 ### Exploratory Data Analysis (EDA)
 
@@ -270,12 +295,20 @@ rownames(j) <- NULL
 kableExtra::kable(j)
 
 ```
-
-```{r, echo = FALSE, message=FALSE, fig.height=5}
+].pull-left[
+```{r, echo = FALSE, message=FALSE}
 data %>% ggplot(aes(HeartRate)) + geom_histogram() + ggtitle("Histogram of Heart Rate")
 ```
 ]
 
+--
+.pull-right[
+- 200 observations without any missing values
+- The average heart rate is about 98.9 and half of the people have a heart rate over 96.
+- The range of the data is from 39-192, while a typical value would fall between 72.1 and 125.8
+- The distribution of the variable is unimodal and almost symmetrical (slightly skewed right)
+- There may be a potential outlier
+]
 
 ---
 class:inverse
@@ -317,9 +350,9 @@ kableExtra::kable(dt)
 ---
 ### EDA for One Categorical Variable
 
-Visualization: Box Plots
+Visualization: Bar Chart
 
-```{r, echo=FALSE, fig.align='center', fig.height=5}
+```{r, echo=FALSE, fig.align='center', fig.height=4}
 data %>% ggplot(aes(x=Race, fill = Race)) + geom_bar()
 ```
 
@@ -332,6 +365,10 @@ Making a Good Bar Chart:
 ---
 ### Difference Between Bar-Plot and Histogram
 
+- Histograms are for continuous variables; Bar plots are for categorical variables
+- Histograms are for describing distributions; Bar plot are for bar-to-bar comparison
+- You can not switch the order of the histogram, but for most cases, it is OK to switch the bar order on a Bar Plot
+
 
 .pull-left[
 ```{r, echo=FALSE}
@@ -343,9 +380,6 @@ data %>% ggplot(aes(Age)) + geom_histogram() + ggtitle("Histogram of Age Distrib
 
 ```
 ]
-- Histograms are for continuous variables; Bar plots are for categorical variables
-- Histograms are for describing distributions; Bar plot are for bar-to-bar comparison
-- You can not switch the order of the histogram, but for most cases, it is OK to switch the bar order on a Bar Plot
 
 ---
 class:inverse
