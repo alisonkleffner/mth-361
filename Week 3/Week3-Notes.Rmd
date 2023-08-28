@@ -60,6 +60,19 @@ Exploratory Data Analysis:
   + This will require a little `R` code
 
 **Book Sections for Next Week**: Chapter 2
+
+---
+### Lab 1 Notes
+
+- Show your work
+
+- **Confounding Variables**: unmeasured third variable that influences both the explanatory and response variables.
+  - If unaccounted for, may introduce bias
+
+- **Observational studies** -> confounding variables -> no cause and effect
+
+- **Experimental studies** -> balance out confounding variables (randomization) -> can determine cause and effect
+    + [Example](https://www.rossmanchance.com/applets/2021/randomassignment/Subjects.html)
 ---
 ### Exploratory Data Analysis (EDA)
 
