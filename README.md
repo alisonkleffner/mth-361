@@ -12,3 +12,5 @@ Date | Notes | Description | Additional Files | Homework Assigned
 8/24/2023 | | Lab Day | | Lab 1 **due Friday August 25 at 11:59 pm**
 8/29/2023 | [Exploratory Data Analysis](Week 3/Week3-Notes-Student.html) | Summaries and Visualizations of Data | | Homework 2 **due Tuesday September 5 at 11:59 pm**
 8/31/2023 | | Lab Day | | Lab 2 **due Friday September 1 at 11:59 pm**
+9/5/2023 | [Probability Rules](Week 4/Week4-Notes.html) | Probability Rules and Conditional Probability Rules | | Homework 3 **due Tuesday September 12 at 11:59 pm**
+9/7/2023 | | Lab Day | | Lab 3 **due Friday September 8 at 11:59 pm**

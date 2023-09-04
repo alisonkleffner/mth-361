@@ -1,7 +1,7 @@
 ---
-title: "MTH361: Probability and Statistics in the Health Sciences"
+title: "MTH361"
 author: "Probability and Conditional Probability"
-date: "August 29, 2023"
+date: "September 5, 2023"
 output: 
   xaringan::moon_reader:
     lib_dir: libs
@@ -43,6 +43,16 @@ knit_hooks$set(output = function(x, options) {
 ---
 ### Announcements
 
++ Lab 2 Graded
+  - Cite Evidence when making a claim
+  - Describing a distribution: Shape, spread, center, and outliers
+  
++ Homework 1 should be graded
+  - Let me know if you have any questions
+
++ Lab 3 on Thursday 
+  - Have a calculator
+
 ---
 class:inverse
 
@@ -69,6 +79,8 @@ class:inverse
 **Event**: the outcome of a random trial that we're most interested in.
 
 **Probability**: the probability of an event is the proportion of times the event would occur if we repeated a random trial many, many times under the exact same conditions.
+
+[Coin Flip Example](https://digitalfirst.bfwpub.com/stats_applet/stats_applet_10_prob.html)
 
 ---
 
@@ -223,6 +235,54 @@ kable(t(df), col.names = c("O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-"), es
 5. What is the probability that a randomly selected North American is Rh-?
 6. Assume that blood type does not affect the choice of sexual partner. What probability of North American pregnancies will be at risk for Rh incompatibility?
 
+---
+### Example: Blood Types
+
+The probability that a randomly chosen North American has a particular blood type is listed in the table below.
+
+```{r, echo=FALSE}
+df <- data.frame(prob = c(0.374, 0.066, 0.357, 0.063, 0.085, 0.015, 0.034, 0.006))
+                 
+kable(t(df), col.names = c("O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-"), escape = F)
+```
+
+1. What is the probability that a randomly selected North American has blood type O?
+$\\$
+$\\$
+$\\$
+2. B- blood can be safely donated to anyone who has B+, B-, AB+, or AB- blood. What is the probability that a randomly selected North American can receive blood type B-?
+$\\$
+$\\$
+$\\$
+$\\$
+3. Only individuals with O+ blood can receive an O+ blood donation. What is the probability that a randomly selected North American cannot receive blood type O+?
+
+---
+### Example: Blood Types
+
+The probability that a randomly chosen North American has a particular blood type is listed in the table below.
+
+```{r, echo=FALSE}
+df <- data.frame(prob = c(0.374, 0.066, 0.357, 0.063, 0.085, 0.015, 0.034, 0.006))
+                 
+kable(t(df), col.names = c("O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-"), escape = F)
+```
+
+4. What is the probability that a randomly selected North American is Rh+?
+$\\$
+$\\$
+$\\$
+$\\$
+$\\$
+$\\$
+5. What is the probability that a randomly selected North American is Rh-?
+$\\$
+$\\$
+$\\$
+$\\$
+$\\$
+$\\$
+6. Assume that blood type does not affect the choice of sexual partner. What probability of North American pregnancies will be at risk for Rh incompatibility?
 
 ---
 class:inverse
@@ -321,7 +381,7 @@ Rapid HIV tests allow for quick diagnosis without expensive laboratory equipment
 
 ### Example: Lupus
 
-Lupus is a medical condition where antibodies that are supposed to attack foreign cells to prevent infections instead see plasma proteins as foreign bodies, leading to a high risk of blood clotting. It is believed that 2% of the population suffer from this disease. The test is 74% accurate if a person does not have the disease. There is a line from the Fox television show *House* that is often used after a patient tests positive for lupus: "It's never lupus". Do you this there is truth to this statement? Use appropriate probabilities to support your answer.
+Lupus is a medical condition where antibodies that are supposed to attack foreign cells to prevent infections instead see plasma proteins as foreign bodies, leading to a high risk of blood clotting. It is believed that 2% of the population suffer from this disease. The test is 98% accurate if a person has the disease. The test is 74% accurate if a person does not have the disease. There is a line from the Fox television show *House* that is often used after a patient tests positive for lupus: "It's never lupus". Do you this there is truth to this statement? Use appropriate probabilities to support your answer.
 
 
 ---
@@ -330,14 +390,14 @@ Lupus is a medical condition where antibodies that are supposed to attack foreig
 
 Suppose you’re on a game show, and you’re given the choice of three doors: Behind one door is a car; behind the others, goats. You pick a door, say No. 1, and the host, who knows what’s behind the doors, opens another door, say No. 3, which has a goat. He then says to you, ”Do you want to pick door No. 2?” Is it to your advantage to switch your choice?
 
+[Simulator](http://www.rossmanchance.com/applets/2021/montyhall/Monty.html)
 
 
+---
 
+### Example (If Time): Cystic Fibrosis 
 
-
-
-
-
+Cystic fibrosis (CF) is a hereditary lung disorder that often results in death. It can be inherited only if both parents are carriers of an abnormal gene. In 1989, the CF gene that is abnormal in carriers of cystic fibrosis was identified. The probability that a randomly chosen person carries an abnormal CF gene is 0.03. The CF20m test detects most, but not all harmful mutations of the CF gene. The test is positive for 90% of people who are carriers. It is positive for 1% of people who are not carriers. If you test positive, what is the probability that you are actually a carrier?
 
 
 

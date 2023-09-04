@@ -72,7 +72,6 @@ Exploratory Data Analysis:
 
 - **Experimental studies** -&gt; balance out confounding variables (randomization) -&gt; can determine cause and effect
     + [Example](https://www.rossmanchance.com/applets/2021/randomassignment/Subjects.html)
-
 ---
 ### Exploratory Data Analysis (EDA)
 
@@ -88,6 +87,8 @@ How?
 - Summary statistics
 - Data visualization
 
+Choosing an effective data display is a much a science as an art.
+
 ---
 ### A Quick Note on Good Graphics
 
@@ -99,6 +100,13 @@ A Few Principles:
 - Make patterns in the data easy to see
 - Represent magnitudes honestly
 - Make graphical elements clear
+
+--
+
+
+Note
+
+- All R code for producing the graphics and data summaries will use the `tidyverse` and `mosaic` libraries. The code can be found in the provided file in BlueLine, so you should be able to reproduce these graphics at home.
 
 
 ---
@@ -218,16 +226,75 @@ The definition of IQR is related to a boxplot and one of the way to define outli
 &lt;img src="../Week 3/images/IQR.png" width="65%" /&gt;
 
 ]
-  
+
 ---
-### Visualizing the Distribution
+### Easy Calculation of Summary Statistics
+  
+Use the `favstats()` function in the  `mosaic` package. 
+
+```r
+library(mosaic)
+favstats(data$Age) #gives statistical summaries
+```
+
+```
+##  min    Q1 median Q3 max   mean       sd   n missing
+##   16 46.75     63 72  92 57.545 20.05465 200       0
+```
+
+Can also use `summary()` but `favstats()` also provide total number of observations and number of missing values. 
+
+---
+### Visualizing the Distribution - Side Note
+
+We can create a distribution of the `Age` variable with the `ggplot()` function. 
+
+
+```r
+data %&gt;% ggplot(aes(Age))
+```
+
+
+&lt;img src="Week3-Notes-Student_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+### Visualizing the Distribution - Side Note
+
+`ggplot()` is an additive function. The geom_histogram() function will add an new histogram "layer" to our plot. New layers can be added with a `+` sign.
+
+
+```r
+data %&gt;% ggplot(aes(Age)) + geom_histogram() + 
+  ggtitle("Histogram of Age with 30 Bins")
+```
+
+
+&lt;img src="Week3-Notes-Student_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+#### Visualizing the Distribution
+
 
 Use a histogram to capture the distribution (pattern of outcomes) of a variable
 
 .pull-left[
-![](Week3-Notes-Student_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
+
+```r
+data %&gt;% ggplot(aes(Age)) + 
+* geom_histogram() +
+  ggtitle("Histogram 30 Bins")
+```
+
+![](Week3-Notes-Student_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
 ].pull-right[
-![](Week3-Notes-Student_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
+
+```r
+data %&gt;% ggplot(aes(Age)) + 
+* geom_histogram(bins = 15) +
+  ggtitle("Histogram 15 Bins")
+```
+
+![](Week3-Notes-Student_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
 
 ]
 
@@ -239,9 +306,23 @@ Use a histogram to capture the distribution (pattern of outcomes) of a variable
 Another option for the distribution of a continuous variable: density plot
 
 .pull-left[
-![](Week3-Notes-Student_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
+
+```r
+data %&gt;% ggplot(aes(Age)) + 
+* geom_density() +
+  ggtitle("Density Plot of Age")
+```
+
+![](Week3-Notes-Student_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
 ].pull-right[
-![](Week3-Notes-Student_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
+
+```r
+data %&gt;% ggplot(aes(Age)) + 
+* geom_density(fill="blue") +
+  ggtitle("Density Plot of Age")
+```
+
+![](Week3-Notes-Student_files/figure-html/unnamed-chunk-12-1.png)&lt;!-- --&gt;
 
 ]
   
@@ -301,7 +382,7 @@ Describing a Distribution:
 &lt;/tbody&gt;
 &lt;/table&gt;
 ].pull-left[
-![](Week3-Notes-Student_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
+![](Week3-Notes-Student_files/figure-html/unnamed-chunk-15-1.png)&lt;!-- --&gt;
 ]
 
 --
@@ -335,39 +416,35 @@ class:inverse
 - Frequency Table
 - Sample Proportion `\((\hat{p})\)`: the proportion in a given category of interest
 
-&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt; Race &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; count &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; prop &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; White &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 175 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.875 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Black &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 15 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.075 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Other &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.050 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
+
+
+
+```r
+data %&gt;%    
+  group_by(Race) %&gt;%    
+  summarise(count = n()) %&gt;% mutate(prop = count/sum(count))
+```
+
+```
+## # A tibble: 3 × 3
+##   Race  count  prop
+##   &lt;fct&gt; &lt;int&gt; &lt;dbl&gt;
+## 1 White   175 0.875
+## 2 Black    15 0.075
+## 3 Other    10 0.05
+```
 
 ---
 ### EDA for One Categorical Variable
 
-Visualization: Bar Chart
+Visualization: Bar Charts
 
-&lt;img src="Week3-Notes-Student_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /&gt;
+
+```r
+data %&gt;% ggplot(aes(x=Race, fill = Race)) + geom_bar() 
+```
+
+&lt;img src="Week3-Notes-Student_files/figure-html/unnamed-chunk-18-1.png" style="display: block; margin: auto;" /&gt;
 
 --
 
@@ -384,9 +461,9 @@ Making a Good Bar Chart:
 
 
 .pull-left[
-![](Week3-Notes-Student_files/figure-html/unnamed-chunk-13-1.png)&lt;!-- --&gt;
+![](Week3-Notes-Student_files/figure-html/unnamed-chunk-19-1.png)&lt;!-- --&gt;
 ].pull-right[
-![](Week3-Notes-Student_files/figure-html/unnamed-chunk-14-1.png)&lt;!-- --&gt;
+![](Week3-Notes-Student_files/figure-html/unnamed-chunk-20-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -412,7 +489,12 @@ class:inverse
 - Pearson Correlation Coefficient `\((r)\)`: a measure of linear correlation between two sets of data (more in later chapters)
 - Scatterplots
 
-&lt;img src="Week3-Notes-Student_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /&gt;
+
+```r
+data %&gt;% ggplot(aes(x=Systolic, y = HeartRate)) + geom_point()
+```
+
+&lt;img src="Week3-Notes-Student_files/figure-html/unnamed-chunk-21-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 ### Interpretation of Correlation Coffiecient from Scatterplots
@@ -435,10 +517,29 @@ If you want to focus on the trend of the data (the change in `\(y\)`-value with 
 
 Especially useful if want to show data over time
 
+---
+### Focus on Trend
+
 .pull-left[
-![](Week3-Notes-Student_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
+
+```r
+data %&gt;% 
+  ggplot(aes(x=Systolic,y=HeartRate))+ 
+* geom_line() +
+  ggtitle("Line Plot")
+```
+
+![](Week3-Notes-Student_files/figure-html/unnamed-chunk-23-1.png)&lt;!-- --&gt;
 ].pull-right[
-![](Week3-Notes-Student_files/figure-html/unnamed-chunk-18-1.png)&lt;!-- --&gt;
+
+```r
+data %&gt;% 
+  ggplot(aes(x=Systolic,y=HeartRate))+ 
+* geom_smooth() +
+  ggtitle("Smooth Line Plot")
+```
+
+![](Week3-Notes-Student_files/figure-html/unnamed-chunk-24-1.png)&lt;!-- --&gt;
 ]
 
 
@@ -463,10 +564,30 @@ class:inverse
 
 - Side-by-side box plots or density plots
 
+
+
 .pull-left[
-![](Week3-Notes-Student_files/figure-html/unnamed-chunk-19-1.png)&lt;!-- --&gt;
+
+```r
+data %&gt;% 
+  ggplot(aes(y = HeartRate, 
+            fill=Infection)) + 
+  geom_boxplot() + 
+  ggtitle("Box Plot of HR")
+```
+
+![](Week3-Notes-Student_files/figure-html/unnamed-chunk-26-1.png)&lt;!-- --&gt;
 ].pull-right[
-![](Week3-Notes-Student_files/figure-html/unnamed-chunk-20-1.png)&lt;!-- --&gt;
+
+```r
+data %&gt;% 
+  ggplot(aes(x=HeartRate, 
+          color=Infection)) + 
+  geom_density() + 
+  ggtitle("Density Plot of HR")
+```
+
+![](Week3-Notes-Student_files/figure-html/unnamed-chunk-27-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -475,9 +596,27 @@ class:inverse
 - Plot continuous variable in multiple panels
 
 .pull-left[
-![](Week3-Notes-Student_files/figure-html/unnamed-chunk-21-1.png)&lt;!-- --&gt;
+
+```r
+data %&gt;% ggplot(aes(y=HeartRate, 
+             fill = Infection)) + 
+  facet_grid(~Infection) + 
+* geom_boxplot() +
+  ggtitle("Box Plot of HR")
+```
+
+![](Week3-Notes-Student_files/figure-html/unnamed-chunk-28-1.png)&lt;!-- --&gt;
 ].pull-right[
-![](Week3-Notes-Student_files/figure-html/unnamed-chunk-22-1.png)&lt;!-- --&gt;
+
+```r
+data %&gt;% ggplot(aes(x=HeartRate, 
+                    fill = Infection)) + 
+  facet_grid(~Infection) + 
+* geom_histogram() +
+  ggtitle("Hist of Heart Rate")
+```
+
+![](Week3-Notes-Student_files/figure-html/unnamed-chunk-29-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -503,16 +642,30 @@ class:inverse
 + Contingency Tables ("Two-Way" tables)
 
 
+
+
+```r
+table(data$Cancer, data$Type)
 ```
-##       Type
-## Cancer Elective Emergency
-##    Yes       38       142
-##    No        15         5
+
+```
+##      
+##       Elective Emergency
+##   Yes       38       142
+##   No        15         5
 ```
 ].pull-right[
 + Bar Plots on Multiple Panels
 
-![](Week3-Notes-Student_files/figure-html/unnamed-chunk-24-1.png)&lt;!-- --&gt;
+
+```r
+data %&gt;% 
+  ggplot(aes(x=Cancer,
+             fill=Cancer)) +
+  facet_grid(~Type)+geom_bar()
+```
+
+![](Week3-Notes-Student_files/figure-html/unnamed-chunk-32-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -551,7 +704,7 @@ For each of the following scenarios, which summary statistics and data visualiza
 
 The Correlation Coefficient is 0.698
 
-![](Week3-Notes-Student_files/figure-html/unnamed-chunk-25-1.png)&lt;!-- --&gt;
+![](Week3-Notes-Student_files/figure-html/unnamed-chunk-33-1.png)&lt;!-- --&gt;
 
 
 ---
@@ -578,7 +731,7 @@ The Correlation Coefficient is 0.698
 &lt;/tbody&gt;
 &lt;/table&gt;
 ].pull-right[
-![](Week3-Notes-Student_files/figure-html/unnamed-chunk-27-1.png)&lt;!-- --&gt;
+![](Week3-Notes-Student_files/figure-html/unnamed-chunk-35-1.png)&lt;!-- --&gt;
 
 ]
 
@@ -633,7 +786,7 @@ The Correlation Coefficient is 0.698
 &lt;/table&gt;
 
 .pull-left[
-![](Week3-Notes-Student_files/figure-html/unnamed-chunk-29-1.png)&lt;!-- --&gt;
+![](Week3-Notes-Student_files/figure-html/unnamed-chunk-37-1.png)&lt;!-- --&gt;
 ]
 
 
@@ -654,7 +807,7 @@ The Correlation Coefficient is 0.698
 ]
 
 .pull-right[
-![](Week3-Notes-Student_files/figure-html/unnamed-chunk-31-1.png)&lt;!-- --&gt;
+![](Week3-Notes-Student_files/figure-html/unnamed-chunk-39-1.png)&lt;!-- --&gt;
 ]
 
 

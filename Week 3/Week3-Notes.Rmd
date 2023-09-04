@@ -88,6 +88,8 @@ How?
 - Summary statistics
 - Data visualization
 
+Choosing an effective data display is a much a science as an art.
+
 ---
 ### A Quick Note on Good Graphics
 
@@ -99,6 +101,13 @@ A Few Principles:
 - Make patterns in the data easy to see
 - Represent magnitudes honestly
 - Make graphical elements clear
+
+--
+
+
+Note
+
+- All R code for producing the graphics and data summaries will use the `tidyverse` and `mosaic` libraries. The code can be found in the provided file in BlueLine, so you should be able to reproduce these graphics at home.
 
 
 ---
@@ -226,26 +235,71 @@ knitr::include_graphics("../Week 3/images/IQR.png")
 ```
 
 ]
-  
+
 ---
-### Visualizing the Distribution
+### Easy Calculation of Summary Statistics
+  
+Use the `favstats()` function in the  `mosaic` package. 
+```{r, message=FALSE}
+library(mosaic)
+favstats(data$Age) #gives statistical summaries
+```
+
+Can also use `summary()` but `favstats()` also provide total number of observations and number of missing values. 
+
+---
+### Visualizing the Distribution - Side Note
+
+We can create a distribution of the `Age` variable with the `ggplot()` function. 
+
+```{r, eval = FALSE}
+data %>% ggplot(aes(Age))
+```
+
+
+```{r, echo=FALSE, message=FALSE, fig.align='center', fig.height=5}
+library(tidyverse)
+data <- read.csv("../Week 3/data/ICUAdmissions.csv")
+data %>% ggplot(aes(Age))
+
+```
+
+---
+### Visualizing the Distribution - Side Note
+
+`ggplot()` is an additive function. The geom_histogram() function will add an new histogram "layer" to our plot. New layers can be added with a `+` sign.
+
+```{r, eval = FALSE}
+data %>% ggplot(aes(Age)) + geom_histogram() + 
+  ggtitle("Histogram of Age with 30 Bins")
+```
+
+
+```{r, echo=FALSE, message=FALSE, fig.align='center', fig.height=5}
+library(tidyverse)
+data <- read.csv("../Week 3/data/ICUAdmissions.csv")
+data %>% ggplot(aes(Age)) + geom_histogram() + ggtitle("Histogram of Age with 30 Bins")
+
+```
+
+---
+#### Visualizing the Distribution
+
 
 Use a histogram to capture the distribution (pattern of outcomes) of a variable
 
 .pull-left[
-```{r, echo=FALSE, message=FALSE}
-data <- read.csv("../Week 3/data/ICUAdmissions.csv")
-
-
-library(tidyverse)
-
-#Histograms to Capture the Distribution
-data %>% ggplot(aes(Age)) + geom_histogram() + ggtitle("Histogram of Age with 30 Bins")
+```{r, message=FALSE}
+data %>% ggplot(aes(Age)) + 
+  geom_histogram() + #<<
+  ggtitle("Histogram 30 Bins")
 ```
 ].pull-right[
-```{r, echo=FALSE, message=FALSE}
+```{r, message=FALSE}
 
-data %>% ggplot(aes(Age)) + geom_histogram(bins = 15) + ggtitle("Histogram of Age with 15 Bins")
+data %>% ggplot(aes(Age)) + 
+  geom_histogram(bins = 15) + #<<
+  ggtitle("Histogram 15 Bins")
 ```
 
 ]
@@ -258,14 +312,18 @@ data %>% ggplot(aes(Age)) + geom_histogram(bins = 15) + ggtitle("Histogram of Ag
 Another option for the distribution of a continuous variable: density plot
 
 .pull-left[
-```{r, echo=FALSE, message=FALSE}
+```{r, message=FALSE}
 
-data %>% ggplot(aes(Age)) + geom_density() + ggtitle("Density Plot of Age")
+data %>% ggplot(aes(Age)) + 
+  geom_density() + #<<
+  ggtitle("Density Plot of Age")
 ```
 ].pull-right[
-```{r, echo=FALSE, message=FALSE}
+```{r, message=FALSE}
 
-data %>% ggplot(aes(Age)) + geom_density(color="darkblue", fill="lightblue") + ggtitle("Density Plot of Age")
+data %>% ggplot(aes(Age)) + 
+  geom_density(fill="blue") + #<<
+  ggtitle("Density Plot of Age")
 ```
 
 ]
@@ -351,12 +409,12 @@ data <- data %>%
                     levels = c("1", "2", "3"),
                     labels = c("White", "Black", "Other")))
 
-dt <- data %>%    
+```
+
+```{r}
+data %>%    
   group_by(Race) %>%    
   summarise(count = n()) %>% mutate(prop = count/sum(count))
-
-
-kableExtra::kable(dt)
 
 ```
 
@@ -365,8 +423,8 @@ kableExtra::kable(dt)
 
 Visualization: Bar Charts
 
-```{r, echo=FALSE, fig.align='center', fig.height=4}
-data %>% ggplot(aes(x=Race, fill = Race)) + geom_bar()
+```{r, fig.align='center', fig.height=4}
+data %>% ggplot(aes(x=Race, fill = Race)) + geom_bar() 
 ```
 
 --
@@ -417,7 +475,7 @@ class:inverse
 - Pearson Correlation Coefficient $(r)$: a measure of linear correlation between two sets of data (more in later chapters)
 - Scatterplots
 
-```{r, echo=FALSE, fig.height=5, fig.align='center'}
+```{r, fig.height=5, fig.align='center'}
 
 data %>% ggplot(aes(x=Systolic, y = HeartRate)) + geom_point()
 
@@ -448,13 +506,22 @@ If you want to focus on the trend of the data (the change in $y$-value with the 
 
 Especially useful if want to show data over time
 
+---
+### Focus on Trend
+
 .pull-left[
-```{r, echo=FALSE}
-data %>% ggplot(aes(x=Systolic, y = HeartRate)) + geom_line() + ggtitle("Line Plot")
+```{r}
+data %>% 
+  ggplot(aes(x=Systolic,y=HeartRate))+ 
+  geom_line() + #<<
+  ggtitle("Line Plot")
 ```
 ].pull-right[
-```{r, echo=FALSE, message=FALSE}
-data %>% ggplot(aes(x=Systolic, y = HeartRate)) + geom_smooth() + ggtitle("Smooth Line Plot")
+```{r, message=FALSE}
+data %>% 
+  ggplot(aes(x=Systolic,y=HeartRate))+ 
+  geom_smooth() + #<<
+  ggtitle("Smooth Line Plot")
 ```
 ]
 
@@ -480,15 +547,26 @@ class:inverse
 
 - Side-by-side box plots or density plots
 
-.pull-left[
 ```{r, echo=FALSE}
 data$Infection <- as.factor(data$Infection)
-data %>% ggplot(aes(y = HeartRate, fill = Infection)) + geom_boxplot() + ggtitle("Box Plot of Heart Rate")
+```
+
+.pull-left[
+```{r, fig.height=6}
+data %>% 
+  ggplot(aes(y = HeartRate, 
+            fill=Infection)) + 
+  geom_boxplot() + 
+  ggtitle("Box Plot of HR")
 
 ```
 ].pull-right[
-```{r, echo=FALSE, message=FALSE}
-data %>% ggplot(aes(x=HeartRate, color = Infection)) + geom_density() + ggtitle("Density Plot of Heart Rate")
+```{r, message=FALSE, fig.height=6}
+data %>% 
+  ggplot(aes(x=HeartRate, 
+          color=Infection)) + 
+  geom_density() + 
+  ggtitle("Density Plot of HR")
 ```
 ]
 
@@ -498,13 +576,21 @@ data %>% ggplot(aes(x=HeartRate, color = Infection)) + geom_density() + ggtitle(
 - Plot continuous variable in multiple panels
 
 .pull-left[
-```{r, echo=FALSE}
-data %>% ggplot(aes(y=HeartRate, fill = Infection)) + facet_grid(~Infection) + geom_boxplot() + ggtitle("Box Plot of Heart Rate")
+```{r, fig.height=6}
+data %>% ggplot(aes(y=HeartRate, 
+             fill = Infection)) + 
+  facet_grid(~Infection) + 
+  geom_boxplot() + #<<
+  ggtitle("Box Plot of HR")
 
 ```
 ].pull-right[
-```{r, echo=FALSE, message=FALSE}
-data %>% ggplot(aes(x=HeartRate, fill = Infection)) + facet_grid(~Infection) + geom_histogram() + ggtitle("Histogram of Heart Rate")
+```{r,  message=FALSE}
+data %>% ggplot(aes(x=HeartRate, 
+                    fill = Infection)) + 
+  facet_grid(~Infection) + 
+  geom_histogram() + #<<
+  ggtitle("Hist of Heart Rate")
 
 ```
 ]
@@ -540,17 +626,21 @@ data <- data %>%
                        levels = c("0", "1"),
                        labels = c("Yes", "No")))
 
+```
 
-tab <- table(data$Cancer, data$Type)
-names(attributes(tab)$dimnames) <- c("Cancer","Type")
-tab
+```{r}
+
+table(data$Cancer, data$Type)
 
 ```
 ].pull-right[
 + Bar Plots on Multiple Panels
 
-```{r, echo=FALSE}
-data %>% ggplot(aes(x=Cancer, fill = Cancer))+ facet_grid(~Type) + geom_bar()
+```{r}
+data %>% 
+  ggplot(aes(x=Cancer,
+             fill=Cancer)) +
+  facet_grid(~Type)+geom_bar()
 
 ```
 ]
