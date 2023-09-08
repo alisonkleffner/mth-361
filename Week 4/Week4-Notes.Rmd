@@ -215,7 +215,7 @@ What is the probability that an individual has...
 
 (a) Two $A_1$ alleles? $\\$
 (b) One $A_1$ allele and one $A_3$ allele $\\$
-(c) No $A_1$ alleles?
+(c) Does not have two $A_1$ alleles?
 
 ---
 ### Example: Blood Types
@@ -345,7 +345,7 @@ A large national sample of visits to the Veteran's Health Administration (VHA) s
 **Law of Total Probability**: Let $A_1$, $A_2$, ... , $A_n$ be disjoint events covering the entire sample space. Then, 
 $$P(B) = \sum_{i}P(A_i \cap B) = \sum_{i}P(A_i|B)P(B) = \sum_iP(B|A_i)P(A_i),$$
 which gives us Extending Bayes: 
-$$ P(A_i|B) =  \frac{P(A_i \cap B)}{P(B)} = \frac{P(A_i \cap B)}{\sum_iP(A_i \cap B)} = \frac{P(B|A_i)P(A_i)}{\sum_jP(B|A_j)P(A_j)}$$
+$$ P(A_i|B) =  \frac{P(A_i \cap B)}{P(B)} = \frac{P(A_i \cap B)}{\sum_iP(A_i \cap B)} = \frac{P(B|A_i)P(A_i)}{\sum_jP(B|A_i)P(A_i)}$$
 
 
 ---

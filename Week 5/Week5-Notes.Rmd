@@ -50,43 +50,67 @@ knit_hooks$set(output = function(x, options) {
 - **Random variable** is a **function** that maps events to real numbers (or high dimensional real space)
 - Let random variable X be the number of people diagnosed with Cancer, then the question is asking what is P(X = 1)
 
+---
+### Random Variables
+
+If a Coin is tossed three times, the outcome is a sequence of observed heads and tails
+
 ```{r, echo=FALSE, out.width="70%", fig.align='center'}
-knitr::include_graphics("../images/Week5/random-variable.png")
+knitr::include_graphics("../images/Week5/randon-variable-heads.png")
 ```
 
+The figure shows the possible outcomes when a coin is tossed three times. 
+$\\$
+Here, $X$ is the number of heads for the three tosses.
 
 ---
 ### Probability Distribution
 
-- Probability distribution: a list of the probabilities of all mutually exclusive outcomes of random variable
-- Based on the potential outcomes of a random variable, we can classify random variables and their distribution into continuous and discrete. e.g., 
+Probability distribution: a list of the probabilities of all mutually exclusive outcomes of random variable
+
+Based on the potential outcomes of a random variable, we can classify random variables and their distribution into continuous and discrete. e.g., 
   + The number of people enter the clinic 
   + The proportion of people recovered with the new drug
-- For discrete random variable, its probability distribution is called probability mass function (p(y))
-- For continuous random variable, its probability distribution is called probability density function (f (y))
+  
+For discrete random variable, its probability distribution is called probability mass function (p(y))
+
+For continuous random variable, its probability distribution is called probability density function (f (y))
+
+---
+### Probability Distribution
+
+```{r, echo=FALSE, out.width="70%", fig.align='center'}
+knitr::include_graphics("../images/Week5/probability-distribution-heads.png")
+```
+
+Rules:
+
++ Outcomes must be mutually exclusive
++ Each probability must be between 0 and 1
++ Probabilities must sum to 1
 
 
 ---
 ### Example: Let's Start with an Example
 
-The forced expiratory volume (FEV, measured in liters) is a primary i ndicator of successful lung function and corresponds to the volume of air that can be forcibly be blown out in the first second after fully breathing in. A study of FEV on a sample of n = 654 children measured the children’s age, FEV, height, sex, and whether they had been exposed to second-hand smoke.
+The forced expiratory volume (FEV, measured in liters) is a primary indicator of successful lung function and corresponds to the volume of air that can be forcibly be blown out in the first second after fully breathing in. A study of FEV on a sample of n = 654 children measured the children’s age, FEV, height, sex, and whether they had been exposed to second-hand smoke.
 <br>
 Let’s see the distribution of FEV and height.
 
 .pull-left[
-```{r, echo=FALSE}
+```{r, echo=FALSE, message=FALSE}
 library(tidyverse)
 fev <- read.csv("data/FEV.csv")
 
 fev %>% ggplot(aes(x=fev)) +
-  geom_density(color="black", fill="darkblue")
+  geom_density(color="black", fill="blue")
 
 ```
 
 ].pull-right[
 ```{r, echo=FALSE}
 fev %>% ggplot(aes(x=height)) +
-  geom_density(color="black", fill="darkblue")
+  geom_density(color="black", fill="blue")
 
 ```
 
@@ -95,11 +119,13 @@ fev %>% ggplot(aes(x=height)) +
 ---
 ### Normal Distribution
 
-+ Both variables’ distribution is a “bell-shaped curve”. We define the probability distribution that generates a perfect “bell-shaped curve” is called the normal distribution.
-+ Normal distribution: a continuous probability distribution (any value in an interval is possible) that always describes a symmetric, bell-shaped curve with two parameters: mean $(\mu)$ and standard deviation $(\sigma)$.
++ Both variables’ distribution is a “bell-shaped curve”. 
++ **Normal Distribution**: the probability distribution that generates a perfect “bell-shaped curve”
+  - A continuous probability distribution (any value in an interval is possible) that always describes a symmetric, bell-shaped curve with two parameters: mean $(\mu)$ and standard deviation $(\sigma)$.
+  - Notation: $N(\mu, \sigma)$ 
 
 
-```{r, echo=FALSE, out.width = "50%", fig.align='center'}
+```{r, echo=FALSE, out.width = "40%", fig.align='center'}
 
 ggplot(data.frame(x = c(-3, 3)), aes(x = x)) +
         stat_function(fun = dnorm) + ylab("Density")
@@ -161,24 +187,69 @@ How do we find the area under it?
 
 - Comparing and calculating values across different normal distributions can be tricky.
 - One of the solution is to convert all normal distribution with different mean and standard deviation to a standard normal distribution.
-- For a random normal distribution, we can always define a new random variable Z, such that
+- For a random normal distribution, we can always define a new random variable Z, such that $$Z = \frac{X − \mu}{\sigma},$$ then Z will follow a standard normal distribution with mean equal to 0 and standard deviation equals to 1.
 
-$$Z = \frac{X − \mu}{\sigma},$$
-then Z will follow a standard normal distribution with mean equals to 0 and standard deviation equals to 1.
 
-```{r, echo=FALSE, fig.align='center', out.width="50%"}
+**Essentially**: if $X \sim N(\mu, \sigma^2) \text{ then }  Z = \frac{X − \mu}{\sigma} \sim N(0,1)$ 
+
+  - [Proof](https://online.stat.psu.edu/stat414/lesson/16/16.2)
+
+---
+### Z-Score
+
+- Quantifies how far the observation is from the mean, in units of standard deviation
+- Observations above the man have positive Z-scores, while observations below the mean have negative Z-scores.
+
+```{r, echo=FALSE, fig.align='center', out.height="70%", out.width="70%"}
 knitr::include_graphics("../images/Week5/standard-normal.png")
 ```
 
 ---
+### Standard Normal Distribution
+
+The Standard Normal $(N(0,1))$ distribution is well-studied
+
+We have a z-score chart that records all the probabilities of the standard normal distribution from $-\infty$ to a certain value ([link to chart](https://www.z-table.com/)). 
+
+.pull-left[
+```{r, echo= FALSE, out.width="85%", fig.align='center'}
+# ggplot() with dummy data
+dnorm_limit <- function(x) {
+    y <- dnorm(x)
+    y[x > -1  |  x < -3] <- NA
+    return(y)
+}
+
+p1 <- ggplot(data.frame(x = c(-3, 3)), aes(x = x))
+
+p1 +
+  stat_function(fun = dnorm_limit, geom = "area", fill = "blue", alpha = 0.4) +
+  stat_function(fun = dnorm) + ylab("Density")
+```
+].pull-right[
+```{r, echo= FALSE, out.width="85%", fig.align='center'}
+# ggplot() with dummy data
+# ggplot() with dummy data
+dnorm_limit <- function(x) {
+    y <- dnorm(x)
+    y[x > 1  |  x < -1] <- NA
+    return(y)
+}
+
+p2 <- ggplot(data.frame(x = c(-3, 3)), aes(x = x))
+
+p2 +
+  stat_function(fun = dnorm_limit, geom = "area", fill = "blue", alpha = 0.4) +
+  stat_function(fun = dnorm) + ylab("Density")
+```
+]
+
+If you want to calculate $P( a < X < b)$, then $$ P( a < X < b) = P( -\infty < X < b) = P( -\infty < X < a)$$
+
+---
 ### Application: FEV
 
-Assume forced expiratory volume (FEV) follows a normal model with $\mu$ = 2.64 and $\sigma$ = 0.87. Find the probability that a child has FEV less than 1.5.
-
-Let X be the random variable of FEV.
-$$P(X < 1.5) = P(\frac{X − \mu}{\sigma} < \frac{1.5 − \mu}{\sigma}) =$$ $$ P(Z < \frac{1.5 − 2.64}{0.87}) = P(Z < −1.31) $$
-
-then check with the chart.
+Assume forced expiratory volume (FEV) follows a normal model with $\mu$ = 2.64 and $\sigma$ = 0.87. Find the probability that a child has FEV less than 1.5. First let's calculate the z-score.
 
 ---
 ### Application: FEV
@@ -188,7 +259,6 @@ Assume forced expiratory volume (FEV) follows a normal model with $\mu$ = 2.64 a
 ```{r, echo=FALSE}
 library(mosaic)
 ```
-
 
 In the `mosaic` package in R, we have a function called `xpnorm`
 
@@ -206,13 +276,11 @@ The babies born in single births in the United States have birth weights that ar
 
 ---
 ### Probability of a baby with a born weight between 3 kg and 4 kg?
+
+If X ~ N(3.3, 0.56) then
 .pull-left[
 `xpnorm(3, mean=3.3, sd=0.56)`
-$\\$
-If X ~ N(3.3, 0.56) then $\\$
 P(Z $\leq$ -0.5357) = 0.2961
-
-
 
 ```{r, message=FALSE, echo=FALSE, out.width="90%"}
 xpnorm(3, mean=3.3, sd=0.56)
@@ -220,17 +288,34 @@ xpnorm(3, mean=3.3, sd=0.56)
 
 ].pull-right[
 `xpnorm(4, mean=3.3, sd=0.56)`
-$\\$
-If X ~ N(3.3, 0.56) then $\\$
 P(Z $\leq$ 1.25) = 0.8944 $\\$
-
 
 ```{r, message=FALSE, echo=FALSE, out.width="90%"}
 xpnorm(4, mean=3.3, sd=0.56)
 ```
 
 ]
---
+
+---
+### Probability of a baby with a born weight between 3 kg and 4 kg?
+
+.pull-left[
+
+P(Z $\leq$ -0.5357) = 0.2961
+
+```{r, message=FALSE, echo=FALSE, out.width="85%"}
+xpnorm(3, mean=3.3, sd=0.56)
+```
+
+].pull-right[
+
+P(Z $\leq$ 1.25) = 0.8944 $\\$
+
+```{r, message=FALSE, echo=FALSE, out.width="80%"}
+xpnorm(4, mean=3.3, sd=0.56)
+```
+]
+
 .center[
 
 P(3 < X < 4) = P(-0.5357 < Z < 1.25) = 0.8944 - 0.2961 = 0.5983
@@ -252,7 +337,7 @@ P(X > 5) = 1-P(Z $\leq$ 3.04) = 1-0.9988002 = 0.001199833
 ---
 ### Your Turn: Spy Height
 
-It was rumored that Britain’s domestic intelligence service MI5 has an upper limit on the height of its spies, on the assumption that tall people stand out. (For the record - they deny this.) The rumor says that, to apply to be a spy, you can be no taller than 5 feet 11 inches (180.3 cm) if you are a man, and no taller than 5 feet 8 inches (172.7 cm) if you are a woman – supposedly to allow the spies to blend in with a crowd. Adult heights are known to be approximately normally distributed. For males, x ∼ Normal(177.0, 7.1) and for females, x ∼ Normal(163.3, 6.4).
+It was rumored that Britain’s domestic intelligence service MI5 has an upper limit on the height of its spies, on the assumption that tall people stand out. (For the record - they deny this.) The rumor says that, to apply to be a spy, you can be no taller than 5 feet 11 inches (180.3 cm) if you are a man, and no taller than 5 feet 8 inches (172.7 cm) if you are a woman – supposedly to allow the spies to blend in with a crowd. Adult heights are known to be approximately normally distributed. For males, x ∼ N(177.0, 7.1) and for females, x ∼ N(163.3, 6.4).
 
 + What proportion of British males are eligible to apply to MI5?
 + What proportion of British females are eligible to apply to MI5?
@@ -261,21 +346,36 @@ Sketch a graph of both distributions to help you out.
 
 ---
 ### Your Turn: Spy Height
+
 .pull-left[
+What proportion of British males are eligible to apply to MI5?
+
+
+
+].pull-right[
+What proportion of British females are eligible to apply to MI5?
+
+]
+
+---
+### Your Turn: Spy Height
+.pull-left[
+What proportion of British males are eligible to apply to MI5?
+
 If X ~ N(177.0, 7.1), then $\\$
 P(X $\leq$ 180.3) = P(Z $\leq$ 0.4648) = 0.679 $\\$
-P(X >  180.3) = P(Z >  0.4648) = 0.321 $\\$
 
 ```{r, out.width="60%", message=FALSE}
 xpnorm(180.3, mean=177, sd=7.1)
 ```
 ].pull-right[
+What proportion of British females are eligible to apply to MI5?
+
 If X ~ N(163.3, 6.4), then $\\$
 P(X $\leq$ 172.7) = P(Z $\leq$ 1.469) = 0.929 $\\$
-P(X >  172.7) = P(Z >  1.469) = 0.07095 $\\$
 	
 ```{r, out.width="60%", message=FALSE}
-xpnorm(172.7, mean=163.3, sd=6.4)
+xpnorm(172.7,mean=163.3,sd=6.4)
 ```
 ]
 
@@ -307,6 +407,11 @@ The babies born in singleton births in the United States have birth weights that
 
 What if the question is asking about a random probability?
 
+To convert a value from the standard normal curve (Z) to one on the normal distribution $N(\mu, \sigma)$: $$X = \mu + Z\sigma$$
+
+---
+### Find the quantile for a random probability
+
 Assume FEV follows a normal model with $\mu$ = 2.64 and $\sigma$ = 0.87. Find the lung capacity of the lowest 40% of children.
 
 --
@@ -321,8 +426,25 @@ The babies born in singleton births in the United States have birth weights that
 + Find the birth rate of the lowest 20% of babies
 + Find the birth rate of the highest 40% of babies
 
+
+--
+
+.pull-left[
+
+```{r, message=FALSE, out.width="65%", fig.align='center'}
+xqnorm(0.2,mean=3.296,sd=0.56)
+```
+
+].pull-right[
+```{r, message=FALSE, out.width="65%", fig.align='center'}
+1-xqnorm(0.4,mean=3.296,sd=0.56)
+```
+]
+
 ---
 ### Does the data ”fit” a normal model?
+
+The normal distribution can be used to approximate other distributions, such as the binomial distribution. In order to continue with using the normal distribution, we must test the appropriateness of this assumption
 
 + **QQ plot**: a quantile-quantile plot plots the sample values from our data against the corresponding ”theoretical quantiles” from a normal distribution using converted z-scores
 + The closer the QQ plot is to a straight line, the better our data ”fits” a normal model.
@@ -396,12 +518,19 @@ data %>%
 
 Would it be reasonable to model height of children using a normal distribution?
 
-```{r echo=FALSE, fig.align='center', fig.height=6.5, fig.width=10}
+.pull-left[
+```{r echo=FALSE, fig.align='center', fig.height=8.5, fig.width=10}
+fev %>% 
+  ggplot(aes(x=height)) + geom_density(color="black", fill="blue")
+```
+
+].pull-right[
+```{r echo=FALSE, fig.align='center', fig.height=8.5, fig.width=10}
 fev %>% 
   ggplot(aes(sample=height)) +
   stat_qq() + stat_qq_line()
 ```
-
+]
 ---
 ### Application: Height
 Would it be reasonable to model height of children using a normal distribution?
