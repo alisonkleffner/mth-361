@@ -14,3 +14,5 @@ Date | Notes | Description | Additional Files | Homework Assigned
 8/31/2023 | | Lab Day | | Lab 2 **due Friday September 1 at 11:59 pm**
 9/5/2023 | [Probability Rules](Week 4/Week4-Notes.html) | Probability Rules and Conditional Probability Rules | | Homework 3 **due Tuesday September 12 at 11:59 pm**
 9/7/2023 | | Lab Day | | Lab 3 **due Friday September 8 at 11:59 pm**
+9/12/2023 | [Normal Distribution](Week 5/Week5-Notes.html) | Basics of Normal Distribution | | Homework 4 **due Tuesday September 19 at 11:59 pm**
+9/14/2023 | | Lab Day | | Lab 4 **due Friday September 15 at 11:59 pm**
