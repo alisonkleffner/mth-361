@@ -199,7 +199,7 @@ We have a z-score chart that records all the probabilities of the standard norma
 &lt;img src="Week5-Notes-Student_files/figure-html/unnamed-chunk-12-1.png" width="85%" style="display: block; margin: auto;" /&gt;
 ]
 
-If you want to calculate `\(P( a &lt; X &lt; b)\)`, then $$ P( a &lt; X &lt; b) = P( -\infty &lt; X &lt; b) = P( -\infty &lt; X &lt; a)$$
+If you want to calculate `\(P( a &lt; X &lt; b)\)`, then $$ P( a &lt; X &lt; b) = P(X &lt; b) - P(X &lt; a)$$
 
 ---
 ### Application: FEV
@@ -212,6 +212,59 @@ Assume forced expiratory volume (FEV) follows a normal model with `\(\mu\)` = 2.
 Assume forced expiratory volume (FEV) follows a normal model with `\(\mu\)` = 2.64 and `\(\sigma\)` = 0.87. Find the probability that a child has FEV less than 1.5.
 
 
+```
+## Registered S3 method overwritten by 'mosaic':
+##   method                           from   
+##   fortify.SpatialPolygonsDataFrame ggplot2
+```
+
+```
+## 
+## The 'mosaic' package masks several functions from core packages in order to add 
+## additional features.  The original behavior of these functions should not be affected by this.
+```
+
+```
+## 
+## Attaching package: 'mosaic'
+```
+
+```
+## The following object is masked from 'package:Matrix':
+## 
+##     mean
+```
+
+```
+## The following objects are masked from 'package:dplyr':
+## 
+##     count, do, tally
+```
+
+```
+## The following object is masked from 'package:purrr':
+## 
+##     cross
+```
+
+```
+## The following object is masked from 'package:ggplot2':
+## 
+##     stat
+```
+
+```
+## The following objects are masked from 'package:stats':
+## 
+##     binom.test, cor, cor.test, cov, fivenum, IQR, median, prop.test, quantile,
+##     sd, t.test, var
+```
+
+```
+## The following objects are masked from 'package:base':
+## 
+##     max, mean, min, prod, range, sample, sum
+```
 
 In the `mosaic` package in R, we have a function called `xpnorm`
 

@@ -340,15 +340,6 @@ cdc_sample <- sample_n(cdc, 60)
 favstats(cdc_sample$weight)
 ```
 
---
-
-$$SE = \frac{s}{\sqrt{n}} = $$
---
-
-$$\frac{39.79}{\sqrt{60}} = 5.14$$
---
-
-So the Sampling Distribution for $\bar{X} \sim N(\mu, 5.14)$
 
 ---
 ### Statistical Inference
@@ -450,26 +441,12 @@ Reminder, for our sample:
 
 Formula: $$\bar{x} \pm 1.96 \cdot SE_{\bar{x}} = $$
 
---
 
-$$ 171.4833 \pm 1.96 (\frac{39.7942}{\sqrt{60}}) = $$
---
-
-$$ 171.4833 \pm 1.96(5.137) = $$
---
-
-$$ 171.4833 \pm 10.274 = $$
---
-
-$$[161.2093, 181.7573]$$
 ---
 ### Let's Interpret the Interval!
 
 Interpret the confidence interval you calculated on the previous slide for the mean population weight of US Adults
 
---
-
-We are 95% confident that the population mean weight of US adults is in the range of [161.2093, 181.7573]. 
 
 ---
 ### Application : BMI
@@ -486,7 +463,6 @@ kableExtra::kable(x)
 
 If the a healthy range of BMI is [18.5, 24.9], does this suggest that Americans tend to be overweight?
 
-
 ---
 ### Application : BMI
 
@@ -496,18 +472,6 @@ We can also think about this problem using probability: recall $\bar{x} \sim N(\
 
 What is the probability that the difference between the true mean and sample mean is within 0.5 units?
 
---
-
-$$ P(|\mu - \bar{x}| < 0.5)  = P(\mu - 0.5 < \bar{x} < \mu + 0.5)$$
---
-
-$$= P(\frac{\mu - 0.5 - \mu}{SE_{\bar{x}}} < \frac{\bar{x} - \mu}{SE_{\bar{x}}} < \frac{\mu + 0.5 + \mu}{SE_{\bar{x}}}$$
---
-
-$$= P(-\frac{0.5}{8/\sqrt{190}} < Z < \frac{0.5}{8/\sqrt{190}} = P(-0.58 < Z < 0.58)$$
---
-
-$$= 0.7190 - 0.2810 = 0.438$$
 ---
 ### Changing the Confidence Level
 
@@ -604,11 +568,7 @@ sample $\longrightarrow$ population and $s$ $\longrightarrow$ $\sigma$
 
 Recall the BMI application, suppose the population standard deviation is also 8. If I want the the difference between the sample mean and the population mean to be less than 0.5 with probability .95, how many people do I need to sample?
 
-$$ P(\mu - 0.5 < \bar{x} < \mu + 0.5) = 0.95$$
-$$P(\frac{-0.5}{\frac{\sigma}{\sqrt{n}}} < Z \frac{0.5}{\frac{\sigma}{\sqrt{n}}}) = 0.95$$
-$$ \frac{0.5\sqrt{n}}{\sigma} = 1.96$$
-$$n = (1.96\sigma*2)^2 = (3.92*8)^2 = 983.44$$
-We at least need to sample 984 people
+
 
 ---
 ### Application: Study Time

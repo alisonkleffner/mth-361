@@ -285,15 +285,6 @@ Summary Statistics from our initial sample:
 ##  104 148.75  164.5 191.75 300 171.4833 39.79417 60       0
 ```
 
---
-
-$$SE = \frac{s}{\sqrt{n}} = $$
---
-
-`$$\frac{39.79}{\sqrt{60}} = 5.14$$`
---
-
-So the Sampling Distribution for `\(\bar{X} \sim N(\mu, 5.14)\)`
 
 ---
 ### Statistical Inference
@@ -353,7 +344,7 @@ Wrong Interpretation of a 95% confidence interval:
 
 We know that in the CDC data set, the overall mean population weight is `\(\mu\)` = 169.683. Let's pretend we don't know this value (which we usually don't). How often will a confidence interval contain this value?
 
-&lt;img src="Week6-Notes_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week6-Notes-Student_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /&gt;
 
 
 
@@ -369,26 +360,12 @@ Reminder, for our sample:
 
 Formula: $$\bar{x} \pm 1.96 \cdot SE_{\bar{x}} = $$
 
---
 
-$$ 171.4833 \pm 1.96 (\frac{39.7942}{\sqrt{60}}) = $$
---
-
-$$ 171.4833 \pm 1.96(5.137) = $$
---
-
-$$ 171.4833 \pm 10.274 = $$
---
-
-`$$[161.2093, 181.7573]$$`
 ---
 ### Let's Interpret the Interval!
 
 Interpret the confidence interval you calculated on the previous slide for the mean population weight of US Adults
 
---
-
-We are 95% confident that the population mean weight of US adults is in the range of [161.2093, 181.7573]. 
 
 ---
 ### Application : BMI
@@ -429,7 +406,6 @@ Example: Body mass index (BMI) is one measure of body weight that adjusts for he
 
 If the a healthy range of BMI is [18.5, 24.9], does this suggest that Americans tend to be overweight?
 
-
 ---
 ### Application : BMI
 
@@ -439,18 +415,6 @@ We can also think about this problem using probability: recall `\(\bar{x} \sim N
 
 What is the probability that the difference between the true mean and sample mean is within 0.5 units?
 
---
-
-$$ P(|\mu - \bar{x}| &lt; 0.5)  = P(\mu - 0.5 &lt; \bar{x} &lt; \mu + 0.5)$$
---
-
-`$$= P(\frac{\mu - 0.5 - \mu}{SE_{\bar{x}}} &lt; \frac{\bar{x} - \mu}{SE_{\bar{x}}} &lt; \frac{\mu + 0.5 + \mu}{SE_{\bar{x}}}$$`
---
-
-`$$= P(-\frac{0.5}{8/\sqrt{190}} &lt; Z &lt; \frac{0.5}{8/\sqrt{190}} = P(-0.58 &lt; Z &lt; 0.58)$$`
---
-
-`$$= 0.7190 - 0.2810 = 0.438$$`
 ---
 ### Changing the Confidence Level
 
@@ -471,7 +435,7 @@ What if we want to have a different confidence level - say 90%?
 ---
 ### Changing the Confidence Level
 
-&lt;img src="Week6-Notes_files/figure-html/unnamed-chunk-16-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week6-Notes-Student_files/figure-html/unnamed-chunk-16-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 ### Central Limit Theorem (CLT)
@@ -497,11 +461,7 @@ sample `\(\longrightarrow\)` population and `\(s\)` `\(\longrightarrow\)` `\(\si
 
 Recall the BMI application, suppose the population standard deviation is also 8. If I want the the difference between the sample mean and the population mean to be less than 0.5 with probability .95, how many people do I need to sample?
 
-$$ P(\mu - 0.5 &lt; \bar{x} &lt; \mu + 0.5) = 0.95$$
-`$$P(\frac{-0.5}{\frac{\sigma}{\sqrt{n}}} &lt; Z \frac{0.5}{\frac{\sigma}{\sqrt{n}}}) = 0.95$$`
-$$ \frac{0.5\sqrt{n}}{\sigma} = 1.96$$
-`$$n = (1.96\sigma*2)^2 = (3.92*8)^2 = 983.44$$`
-We at least need to sample 984 people
+
 
 ---
 ### Application: Study Time
@@ -612,6 +572,91 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
 })(document);</script>
 
+<script>
+        /* Get the modal*/
+          var modalQ1 = document.getElementById('modalQ1');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+        var imgQ1 = document.getElementById('imgQ1');
+          var modalImgQ1 = document.getElementById('imgmodalQ1');
+          var captionTextQ1 = document.getElementById('captionQ1');
+          imgQ1.onclick = function(){
+            modalQ1.style.display = 'block';
+            modalImgQ1.src = this.src;
+            captionTextQ1.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgQ1.onclick = function() {
+            modalQ1.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalQ2ab = document.getElementById('modalQ2ab');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+        var imgQ2ab = document.getElementById('imgQ2ab');
+          var modalImgQ2ab = document.getElementById('imgmodalQ2ab');
+          var captionTextQ2ab = document.getElementById('captionQ2ab');
+          imgQ2ab.onclick = function(){
+            modalQ2ab.style.display = 'block';
+            modalImgQ2ab.src = this.src;
+            captionTextQ2ab.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgQ2ab.onclick = function() {
+            modalQ2ab.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalQ2cd = document.getElementById('modalQ2cd');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+        var imgQ2cd = document.getElementById('imgQ2cd');
+          var modalImgQ2cd = document.getElementById('imgmodalQ2cd');
+          var captionTextQ2cd = document.getElementById('captionQ2cd');
+          imgQ2cd.onclick = function(){
+            modalQ2cd.style.display = 'block';
+            modalImgQ2cd.src = this.src;
+            captionTextQ2cd.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgQ2cd.onclick = function() {
+            modalQ2cd.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalsamplingdistribution = document.getElementById('modalsamplingdistribution');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+        var imgsamplingdistribution = document.getElementById('imgsamplingdistribution');
+          var modalImgsamplingdistribution = document.getElementById('imgmodalsamplingdistribution');
+          var captionTextsamplingdistribution = document.getElementById('captionsamplingdistribution');
+          imgsamplingdistribution.onclick = function(){
+            modalsamplingdistribution.style.display = 'block';
+            modalImgsamplingdistribution.src = this.src;
+            captionTextsamplingdistribution.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgsamplingdistribution.onclick = function() {
+            modalsamplingdistribution.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalsdvsse = document.getElementById('modalsdvsse');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+        var imgsdvsse = document.getElementById('imgsdvsse');
+          var modalImgsdvsse = document.getElementById('imgmodalsdvsse');
+          var captionTextsdvsse = document.getElementById('captionsdvsse');
+          imgsdvsse.onclick = function(){
+            modalsdvsse.style.display = 'block';
+            modalImgsdvsse.src = this.src;
+            captionTextsdvsse.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgsdvsse.onclick = function() {
+            modalsdvsse.style.display = 'none';
+          }
+</script>
 <script>
         /* Get the modal*/
           var modalQ1 = document.getElementById('modalQ1');

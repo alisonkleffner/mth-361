@@ -266,7 +266,7 @@ p2 +
 ```
 ]
 
-If you want to calculate $P( a < X < b)$, then $$ P( a < X < b) = P( -\infty < X < b) = P( -\infty < X < a)$$
+If you want to calculate $P( a < X < b)$, then $$ P( a < X < b) = P(X < b) - P(X < a)$$
 
 ---
 ### Application: FEV
