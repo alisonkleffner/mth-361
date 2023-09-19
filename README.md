@@ -16,3 +16,5 @@ Date | Notes | Description | Additional Files | Homework Assigned
 9/7/2023 | | Lab Day | | Lab 3 **due Friday September 8 at 11:59 pm**
 9/12/2023 | [Normal Distribution](Week 5/Week5-Notes.html) | Basics of Normal Distribution | | Homework 4 **due Tuesday September 19 at 11:59 pm**
 9/14/2023 | | Lab Day | | Lab 4 **due Friday September 15 at 11:59 pm**
+9/19/2023 | [Sampling Distribution](Week 6/Week6-Notes.html) | Sampling Distribution and Confidence Intervals | | Homework 5 **due Tuesday September 26 at 11:59 pm**
+9/21/2023 | | Lab Day | | Lab 5 **due Friday September 22 at 11:59 pm**
