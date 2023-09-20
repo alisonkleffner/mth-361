@@ -19,6 +19,13 @@ output:
 ```{r echo=FALSE, message=FALSE, warning = FALSE}
 library(knitr)
 library(tidyverse)
+library(xaringanthemer)
+library(xaringanExtra)
+
+style_duo_accent(primary_color = "#0054a6",
+                 secondary_color = "#f1fffe",
+  header_font_google = google_font("Source Sans Pro"),
+  text_font_google = google_font("Source Sans Pro"))
 
 hook_output = knit_hooks$get('output')
 knit_hooks$set(output = function(x, options) {
@@ -32,6 +39,9 @@ knit_hooks$set(output = function(x, options) {
   hook_output(x, options)
 })
 
+xaringanExtra::use_tachyons()
+
+xaringanExtra::use_tile_view()
 ```
 
 ```{r, include = F, eval = T, cache = T}
@@ -111,6 +121,24 @@ Today we are going to discuss and solve these kind of question in a Hypothesis w
 ---
 ### Hypothesis Testing
 
+**Disclaimer:** Lots of people have strong feelings about hypothesis testing
+
+```{r, echo=FALSE, fig.align='center', out.height="60%", out.width="60%"}
+knitr::include_graphics("../images/Week7/pvalue-controversy.png")
+```
+
+---
+### Hypothesis Testing
+
+Hypothesis tests are designed to answer a yes/no research question: if have a set of two competing hypotheses, which one is more plausible given the data we've observed?
+
+- Despite the recent controversy, hypothesis testing is still the most used class of statistical procedures in the sciences
+- There are lots of variations of hypothesis tests, depending on the data we are interested in. The basic structure and thought process remains the same.
+
+
+---
+### Hypothesis Testing
+
 Hypothesis testing is a method for evaluating the evidence for/against a specific research claim based on a probability, called a p-value. There are four basic steps to this procedure:
 
 - Write the null and alternative hypothesis
@@ -134,8 +162,12 @@ Goal: We want to show that our data indicates the probability of null hypothesis
 ### Step 1: Write Hypotheses
 
 Null Hypothesis $(H_0)$: The null hypothesis represents an assumption or a skeptical statement about the population parameter, and always includes just a single value.
+  
+  - "Random Chance Alone"
 
 Alternative Hypothesis $(H_A)$: A competing hypothesis contrasts to the null hypothesis, usually is what the original research question hoped to show, prove, or find evidence for.
+
+  - "There is an effect"
 
 Note: Alternative hypothesis can be one-sided ("increased", "decreased") or two-sided ("changed", "different").
 
@@ -154,6 +186,7 @@ For the following alternative hypotheses: (1) determine whether it is one-sided 
 **Example**: Drug maker GlaxoSmithKline (GSK) investigated the potential impact of its oral anti-diabetic drug Avandia on the blood lipid levels of adult diabetics who might benefit from taking Avandia. They were particularly concerned that LDL, "bad" cholesterol, levels might increase. Write the null and alternative hypothesis for their test.
 
 --
+
 $H_0$: LDL will not change after taking Avandia $\\$
 $H_A$: LDL will increase after taking Avandia
 
@@ -171,7 +204,7 @@ Note: We know by now that data does not always reflect the population but we als
 
 Usually the test statistic follows this form:
 
-$$\text{test statistics} = \frac{\text{sample statistics} - \text{expectation}}{\text{standard error}}$$
+$$\text{test statistic} = \frac{\text{sample statistic} - \text{expectation}}{\text{standard error}}$$
 As we'll see, the choice of test statistic depends on two things
 
 - The type of data we're analyzing
@@ -184,14 +217,30 @@ Different parameters and assumptions will change the test statistics from one hy
 
 It's useful to translate the test statistic into another measurement that's consistent for all types of hypothesis tests. 
 
-p-value: the **probability** of observing a sample statistic as or more extreme as the data we have observed, assuming the null hypothesis is true.
+p-value: the **probability** of observing a sample statistic as or more extreme as the sample statistic we have observed, assuming the null hypothesis is true.
 
 **The p-value is not the probability that the null hypothesis is true!**
 
+```{r, echo=FALSE, fig.align='center', out.height="80%", out.width="80%"}
+knitr::include_graphics("../images/Week7/pvalue-def.png")
+```
+
+---
+### Step 3: Assuming Null Hypothesis is True?
+
+Assuming Randomness!
+
+Do you remember the Arson Activity from the first day of class?
+
+```{r, echo=FALSE, fig.align='center', out.height="70%", out.width="70%"}
+knitr::include_graphics("../images/Week1/arson-results.jpg")
+```
+
+You didn't know it at the time, but we created a Null Distribution!
 ---
 ### Step 3: Calculate the p-value
 
-How to covert test statistics to p-value? Recall what we did to convert the Z-score to p-value.
+How to covert test statistics to p-value? Recall what we did to convert the Z-score to a probability.
 
 Student t distribution:
 
@@ -204,19 +253,281 @@ Student t distribution:
 ---
 ### Step 3: Calculate the p-value
 
+Because the test makes use of the t distribution, it is called T-test. In today’s lecture, we only have one variable and try to decide whether the variable’s mean is higher/lower/equal to an expected value, this is called one sample t-test.
+
+```{r, echo=FALSE, out.width="70%", fig.align='center'}
+
+knitr::include_graphics("../images/Week7/t-distribution.png")
+
+```
+
+---
+### Step 4: Make a conclusion
+
+- If the p-value is ”small”, we **reject** the null hypothesis. Assuming the null hypothesis is true, the probability of observing a sample statistic as or more extreme as ours is very low. There are two explanations:
+  + Our sample data is extremely unusual or unlikely, and the null hypothesis is still true.
+  + Our sample data is typical, and the null hypothesis is not plausible.
+  
+- If the p-value is ”large”, we **fail to reject** the null hypothesis. 
+  + This doesn’t imply that the null hypothesis is true! It does imply that the data we observed is consistent with what would happen IF the null hypothesis were true.
 
 ---
 ### Step 4: Make a conclusion
 
 
+How ”small” is small? How ”large” is large?
+
+Significance level: a predetermined value that we compare the p-value to
+
+- If the p-value is < $\alpha$, we will reject the null hypothesis. 
+  + We have ”strong enough” evidence to conclude the null hypothesis is false.
+- If the p-value is > $\alpha$, we will fail to reject the null hypothesis. 
+  + We do not have enough evidence to reject the null hypothesis.
+
+Does not mean we know the population value.
+
+Most disciplines will use $\alpha$ = 0.05 by default, and that a p-value must be
+below 0.05 to be **“statistically significant”**.
+
+[More on p-values](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5187603/)
+
+---
+### P-values are controversal
+
+No statistical reason for choosing $\alpha$ = 0.05
+
+```{r, echo=FALSE, out.width="35%", out.width="35%", fig.align='center'}
+
+knitr::include_graphics("../images/Week7/pvalue-controversy2.png")
+
+```
+
+Must define $\alpha$ before test!
+
+---
+### P-values are controversal
+
+Statistical vs Practical Significance:
+
+- Statistical significance shows that an effect exists in a study, practical significance shows that the effect is large enough to be meaningful in the real world
+
+Hypothesis tests with small effect sizes can produce very low p-values if you have large sample size or the data have low variability. 
+  - Hence, effect sizes that are trivial in the practical sense can be highly statistically significant.
+  - Note: Effect size measures the strength of the relationship between two variables in a population
+  
+---
+### Example: Insomia
+
+.bg-washed-blue.b--blue.ba.ph3[
+
+__Example__: Belsomra is a drug prescribed for insomnia. A randomized, placebo-controlled clinical trial found that patients assigned to take Belsomra for three months fell asleep 35 minutes faster, on average, than they did before the study -- a statistically significant improvement.
+
+- Would you consider an __effect size__ of falling asleep 35 minutes sooner important in the context of patients suffering from insomnia? Explain why or why not.
+
+]
+
+
+---
+### Example: Insomia
+
+.bg-washed-blue.b--blue.ba.ph3[
+
+__Example__: By contrast, patients assigned to take a placebo for three months fell asleep 27 minutes faster than they did originally -- also statistically significant. The difference between taking Belsomra and taking a placebo was, on average falling asleep 8 minutes faster with Belsomra.
+
+- Would you consider an **effect size** of 8 minutes important in the context of patients suffering from insomnia? 
+- Explain why this result occurred.]
+
+
+---
+### Step 4: Make a conclusion
+
+Usually the decision can be a little more complicated:
+
+- How strong is the evidence from the p-value?
+- How trustworthy is the sample?
+- What are the consequences of being wrong?
+
+--
+
+When you’re summarizing the results of any hypothesis test, three things should always be included.
+
+- The decision (reject $H_0$ or fail to reject $H_0$).
+- The rationale for the decision (test statistic and p-value, most researchers will parenthesize these or put them in a table).
+- An interpretation of the decision in context. What are the practical implications? How can you answer the research question based on this hypothesis test?
+
+---
+### Example: BMI
+
+A BMI in adults of 25.0 or greater is considered overweight. Based on the data from the NHANES sample, is there strong enough evidence to show that the population mean BMI for American adults is greater than 25.0?
+
+```{r, echo=FALSE, warning=FALSE, fig.height=6, fig.align='center'}
+library(NHANES)
+library(mosaic)
+library(oibiostat)
+
+data("nhanes.samp")
+nhanes.samp %>% ggplot(aes(x = BMI)) + geom_histogram(fill = "lightblue", color = "black", bins = 20)
+
+```
+
+
+---
+### Example: BMI
+
+Write the null and alternative hypothesis, and calculate the test statistic.
+
+```{r}
+favstats(~BMI, data=nhanes.samp)
+```
+
+
+---
+### Example: BMI 
+
+Identify the p-value, and write a conclusion for the test.
+
+```{r, echo=TRUE}
+t.test(~BMI, 
+       mu=25, 
+       alternative='greater', 
+       data=nhanes.samp)
+```
+
+---
+
+### Example: Mercury Levels for Saltwater Fish
+
+While fish and other types of seafood are important for a healthy diet, nearly all fish and shellfish contain traces of mercury. Dietary exposure to mercury can be dangerous for young children and unborn babies. The general consensus is that fish with levels above 0.5 ppm should not be consumed. A study of mercury levels for saltwater fish caught of the New Jersey coast found that a sample of 23 bluefin tuna had a mean mercury level of 0.54 ppm, with standard deviation 0.15 ppm.
+
+Write the null and alternative hypothesis, and calculate the test statistic.
+
+
+```{r, echo=FALSE}
+set.seed(361)
+bluefin_tuna <- tibble(mercury = rnorm(n=23, mean=0.52, sd=0.16))
+favstats(~mercury, data=bluefin_tuna)
+```
+
+---
+### Example:  Mercury Levels for Saltwater Fish
+
+Identify the p-value, and write a conclusion for the test.
+
+```{r, echo=TRUE}
+t.test(~mercury, 
+       mu=0.5, 
+       alternative='greater', 
+       data=bluefin_tuna)
+```
+
+
+---
+### Types of Errors
+
+There are four possible outcomes in every hypothesis test. Two outcomes result in a "correct decision"... but the other two outcomes result in an "error".
+
+.bg-washed-yellow.b--yellow.ba.ph3[
+__Type 1 Error__: Rejecting the null hypothesis when it is actually true
+
+__Type 2 Error__: Failing to reject the null hypothesis when it is actually false
+]
+
+--
+
+```{r, echo=FALSE, fig.align='center'}
+
+knitr::include_graphics("../images/Week7/error-table.png")
+
+```
 
 
 
+---
+### Errors and Significance Level
+
+In this context, we can think of the significance level $(\alpha)$ as the probability of rejecting the null hypothesis if it were true. That is the probability of making a Type I Error or a false positive.
+
+.pull-left[
+Let's assume $\alpha = 0.10$
+
+- This means, if the null is true, 10% of random samples would produce a sample proportion/mean extreme enough to reject the null hypothesis
+- In other words, 10% of the time we reject a true null.
+- Problem! We just made the wrong decision 10% of the time!
+- What type of error was this?
+].pull-right[
+```{r, echo=FALSE, fig.align='center', out.height="80%", out.width="80%"}
+
+knitr::include_graphics("../images/Week7/rg-error.png")
+
+```
+]
 
 
 
+---
+### Example: Fibromyalgia
+
+.bg-washed-blue.b--blue.ba.ph3[
+A patient was diagnosed with fibromyalgia, a long-term syndrome of body pain, and was prescribed anti-depressants. Being a skeptic, the patient didn’t initially believe that anti-depressants would help her symptoms. However, after a couple months she decides the anti-depressants must be working, because she feels like her symptoms are getting better.
+]
+
+- What is a Type 1 error? 
+- What is a Type 2 error?
+
+---
+
+### Example: Aspirin Active Ingredient
+
+.bg-washed-blue.b--blue.ba.ph3[
+__Example__: A pharmaceutical company manufactures aspirin tablets that are sold with the label "active ingredient: aspirin 325 mg". A random sample of 100 aspirin tablets had $\bar{x}=326.9$ mg and $s=3.1$ mg.
+]
+
+- What are the consequences of Type 1 and Type 2 errors in this scenario? 
+- Which is "worse"?
+
+---
+
+### Adjusting for errors
+
+- We can never prevent these errors but we can take steps to control them! For example, we can set the significance level $\alpha$ to be very small if we'd like to control for Type 1 Error.
+
+--
+
+- The probability of a Type 2 Error can be controlled by choosing a statistical method with high power. 
+
+--
+
+.bg-washed-yellow.b--yellow.ba.ph3[
+__Power__: probability that a random sample taken from a population will lead to a correct rejection of a false null hypothesis
+
+.center[Power = 1 - Type 2 Error]
+]
+
+- A test with high power will have a low probability of a Type 2 Error. Eg: a
+test with large sample size.
 
 
+```{r, echo=FALSE, fig.align='center', results='asis'}
+i2 <- img_modal(src = "../images/Week7/spidey-power.png", other=list(width="30%"))
+
+c(str_split(i2, "\\n", simplify = T)[1:2],
+  str_split(i2, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+
+---
+
+### Adjusting for errors: Trade - Off
+
+Caution! There is a trade-off!!
+
+- As the probability of a Type I Error goes down, the probability of a Type II Error goes up.
+
+```{r, echo=FALSE, fig.align='center', out.height="90%", out.width="90%"}
+
+knitr::include_graphics("../images/Week7/power-table.png")
+
+```
 
 
 
