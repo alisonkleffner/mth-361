@@ -18,3 +18,5 @@ Date | Notes | Description | Additional Files | Homework Assigned
 9/14/2023 | | Lab Day | | Lab 4 **due Friday September 15 at 11:59 pm**
 9/19/2023 | [Sampling Distribution](Week 6/Week6-Notes.html) | Sampling Distribution and Confidence Intervals | | Homework 5 **due Tuesday September 26 at 11:59 pm**
 9/21/2023 | | Lab Day | | Lab 5 **due Friday September 22 at 11:59 pm**
+9/26/2023 | [Hypothesis Testing](Week 7/Week7-Notes.html) | Basic of Hypothesis Testing | | Homework 6 **due Tuesday October 3 at 11:59 pm**
+9/28/2023 | | Lab Day | | Lab 6 **due Friday September 29 at 11:59 pm**

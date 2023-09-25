@@ -102,10 +102,48 @@ class:inverse
 ---
 ### Agenda
 
+- Hypothesis Testing
+  + Write Hypothesis
+  + Calculate test statistic
+  + Calculate p-value
+  + Make a conclusion
+- Type 1 and Type 2 Errors
 
 
+**Book**: Section 4.3
 ---
 ### Announcements
+
+Homework 5 **due Tonight at 11:59pm**!
+
+Lab 6 on Thursday (**due Friday at 11:59 pm**)
+  + Rock-Paper-Scissors Portion
+    - Part of Lab will be completed as a class on Thursday
+    - To do so we need to simulate some data
+    - Play 12 games of Rock-Papers-Scissors with a friend and count the number of times they chose heads (do not tell them what you are counting).
+    - Record your number in the Blueline assignment: Lab 6: Rock-Paper-Scissors **due at 12:30 pm on Thursday September 28** (before class)
+    - Completion of this is worth 5 points on your Lab 6 grade.
+    
+Midterm on Thursday October 5
+  - Review on Tuesday October 3
+
+---
+### Notes on Lab 5
+
++ Distribution of Random Variable, X: $X \sim N(\mu, \sigma)$
+
++ From one sample from the population, we can calculate $\bar{x}$
+  - But we don't know if this is a good estimate of $\mu$ or not
+
++ If we take multiple samples from the population, we will have multiple $\bar{x}$. 
+  - This creates a distribution, called the sampling distribution
+  - $\bar{x} \sim N(\mu, SE_{\bar{x}})$
+  - When using applets, make sure to use $SE_{\bar{x}}$ instead of $\sigma$
+  - Less spread out than distribution of X
+
++ The word "cause" should send up a red flag
+
++ 95% confidence is not a probability
 
 ---
 ### From Confidence Intervals to Hypothesis Tests
@@ -505,15 +543,6 @@ __Power__: probability that a random sample taken from a population will lead to
 
 - A test with high power will have a low probability of a Type 2 Error. Eg: a
 test with large sample size.
-
-
-```{r, echo=FALSE, fig.align='center', results='asis'}
-i2 <- img_modal(src = "../images/Week7/spidey-power.png", other=list(width="30%"))
-
-c(str_split(i2, "\\n", simplify = T)[1:2],
-  str_split(i2, "\\n", simplify = T)[3:9]
-  ) %>% paste(collapse = "\n") %>% cat()
-```
 
 ---
 
