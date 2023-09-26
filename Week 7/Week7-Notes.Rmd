@@ -321,6 +321,8 @@ Significance level: a predetermined value that we compare the p-value to
   + We have ”strong enough” evidence to conclude the null hypothesis is false.
 - If the p-value is > $\alpha$, we will fail to reject the null hypothesis. 
   + We do not have enough evidence to reject the null hypothesis.
+  
+**Note**: Significance level = 1 - Confidence Level
 
 Does not mean we know the population value.
 
@@ -512,6 +514,13 @@ A patient was diagnosed with fibromyalgia, a long-term syndrome of body pain, an
 - What is a Type 1 error? 
 - What is a Type 2 error?
 
+--
+
+Type 1: Conclude anti-depressants are working when they are not (Reject)
+
+--
+
+Type 2: Conclude they are not working when they are (Fail to Reject)
 ---
 
 ### Example: Aspirin Active Ingredient
@@ -523,6 +532,11 @@ __Example__: A pharmaceutical company manufactures aspirin tablets that are sold
 - What are the consequences of Type 1 and Type 2 errors in this scenario? 
 - Which is "worse"?
 
+--
+
+Type 1: conclude that the aspirin tablet has more than the active ingredient when they do not
+
+Type 2: conclude that aspirin tablets don't have more than the active ingredient when they do
 ---
 
 ### Adjusting for errors

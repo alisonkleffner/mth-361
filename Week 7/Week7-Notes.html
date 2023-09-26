@@ -242,6 +242,8 @@ Significance level: a predetermined value that we compare the p-value to
   + We have ”strong enough” evidence to conclude the null hypothesis is false.
 - If the p-value is &gt; `\(\alpha\)`, we will fail to reject the null hypothesis. 
   + We do not have enough evidence to reject the null hypothesis.
+  
+**Note**: Significance level = 1 - Confidence Level
 
 Does not mean we know the population value.
 
@@ -314,6 +316,61 @@ When you’re summarizing the results of any hypothesis test, three things shoul
 ### Example: BMI
 
 A BMI in adults of 25.0 or greater is considered overweight. Based on the data from the NHANES sample, is there strong enough evidence to show that the population mean BMI for American adults is greater than 25.0?
+
+
+```
+## Registered S3 method overwritten by 'mosaic':
+##   method                           from   
+##   fortify.SpatialPolygonsDataFrame ggplot2
+```
+
+```
+## 
+## The 'mosaic' package masks several functions from core packages in order to add 
+## additional features.  The original behavior of these functions should not be affected by this.
+```
+
+```
+## 
+## Attaching package: 'mosaic'
+```
+
+```
+## The following object is masked from 'package:Matrix':
+## 
+##     mean
+```
+
+```
+## The following objects are masked from 'package:dplyr':
+## 
+##     count, do, tally
+```
+
+```
+## The following object is masked from 'package:purrr':
+## 
+##     cross
+```
+
+```
+## The following object is masked from 'package:ggplot2':
+## 
+##     stat
+```
+
+```
+## The following objects are masked from 'package:stats':
+## 
+##     binom.test, cor, cor.test, cov, fivenum, IQR, median, prop.test, quantile, sd,
+##     t.test, var
+```
+
+```
+## The following objects are masked from 'package:base':
+## 
+##     max, mean, min, prod, range, sample, sum
+```
 
 &lt;img src="Week7-Notes_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
 
@@ -449,6 +506,13 @@ A patient was diagnosed with fibromyalgia, a long-term syndrome of body pain, an
 - What is a Type 1 error? 
 - What is a Type 2 error?
 
+--
+
+Type 1: Conclude anti-depressants are working when they are not (Reject)
+
+--
+
+Type 2: Conclude they are not working when they are (Fail to Reject)
 ---
 
 ### Example: Aspirin Active Ingredient
@@ -460,6 +524,11 @@ __Example__: A pharmaceutical company manufactures aspirin tablets that are sold
 - What are the consequences of Type 1 and Type 2 errors in this scenario? 
 - Which is "worse"?
 
+--
+
+Type 1: conclude that the aspirin tablet has more than the active ingredient when they do not
+
+Type 2: conclude that aspirin tablets don't have more than the active ingredient when they do
 ---
 
 ### Adjusting for errors
