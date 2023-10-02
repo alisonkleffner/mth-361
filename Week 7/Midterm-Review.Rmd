@@ -1,0 +1,80 @@
+---
+title: "MTH361: Probability and Statistics in the Health Sciences"
+author: "Midterm Review"
+date: "October 3, 2023"
+output: 
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r echo=FALSE, message=FALSE, warning = FALSE}
+library(tidyverse)
+library(knitr)
+
+hook_output = knit_hooks$get('output')
+knit_hooks$set(output = function(x, options) {
+  # this hook is used only when the linewidth option is not NULL
+  if (!is.null(n <- options$linewidth)) {
+    x = xfun::split_lines(x)
+    # any lines wider than n should be wrapped
+    if (any(nchar(x) > n)) x = strwrap(x, width = n)
+    x = paste(x, collapse = '\n')
+  }
+  hook_output(x, options)
+})
+
+```
+
+## Announcements
+
+- Homework 6 due tonight at 11:59 pm!
+  - I will post the answer key tomorrow
+- Midterm Exam: Thursday October 5
+  - Extra Credit due at beginning of class
+
+
+---
+## Project Proposal Comments
+
+- Silly things: Skipped discussion of concerns about your data/analysis
+- Do not use `favstats` for categorical variables
+  + The numbers to denote groups have no numerical meaning
+  + Use a frequency table instead
+- Some used inappropriate plots for data types -> make sure you know these!
+- Type `R` summary statistic results into a table - no `R` output/code in formal reports
+- Needed to include a citation.
+
+We will talk about the next step, the **Analysis Plan**, after Fall Break
+
+---
+## Lab 6 Comments
+
+Conclusions consist of three parts:
++ Compare p-value to $\alpha$
++ Using that, decide to Reject or Fail to Reject
++ We *(do/do not)* have evidence ...
+  
+Always write conclusion in terms of alternative hypothesis:
++ Answers research question
++ Just because we don't have evidence for the alternative, doesn't mean we now have evidence the null is true.
+  - We are doing our calculations assuming the null is true
+  - Could just have an unlucky sample
+  
+Make sure to include context of problem when writing hypothesis and conclusions
+
+---
+## Exam Structure
+
+- Problem-Based - using data (~85%)
+  + Short answer
+  + Similar to questions on homeworks/labs
+- Conceptual questions (~15%)
+  + True/False, Multiple Choices, Short answer
+- Please bring a calculator or let me know ASAP if you need to borrow one
+- Formula Sheet provided
+
+
