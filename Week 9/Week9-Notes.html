@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>MTH361: Probability and Statistics in the Health Sciences</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Two Sample Testing" />
+    <meta name="date" content="2023-10-17" />
+    <script src="libs/header-attrs-2.23/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
+    <link href="libs/tachyons-4.12.0/tachyons.min.css" rel="stylesheet" />
+    <link href="libs/tile-view-0.2.6/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view-0.2.6/tile-view.js"></script>
+    <link rel="stylesheet" href="modal.css" type="text/css" />
+    <link rel="stylesheet" href="sizeformat.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+class:inverse
+
+&lt;br&gt;&lt;br&gt;&lt;br&gt;
+## MTH361: Probability and Statistics in the Health Sciences
+### Hypothesis Tests
+#### September 26, 2023
+
+
+---
+### Agenda
+
+
+
+
+**Book**: 
+---
+### Announcements
+
+
+---
+### Sample and Population Standard Deviation
+
+- In the previous lectures, we did not really distinguish sample standard deviation and population standard deviation (used them interchangebly)
+
+- If your sample size is large, they may be similar
+
+- Sample standard deviation can be calculated from the sample, while population standard deviation is likely unknown.
+
+---
+### Z distribution vs. t distribution
+
+We've learned already that, assuming our sample size `\(n\)` is "large enough" and that the population is relatively symmetric, the sample mean follows and approximately normal distribution: `$$\bar{x} \sim N(\mu, \frac{\sigma}{\sqrt{n}})$$`.
+
+
+But what if the population standard deviation `\(\sigma\)` is unknown and also your sample size is not quite large enough? Can we directly replace `\(\sigma\)` with *s*?
+
+---
+### Z distribution vs. t distribution
+
+Properties of the *t*-distribution:
+
+- Symmetric, bell-shaped curve - looks like a normal distribution!
+- The tails (ends) are "fatter", which means that values farther from zero are more likely than they are under a normal distribution.
+- All centered at 0 (like the standard normal)
+- Has a single parameter, *df* = degrees of freedom
+- Larger sample size -&gt; closer to the standard normal 
+
+&lt;img src="../images/Week7/t-distribution.png" width="50%" height="50%" style="display: block; margin: auto;" /&gt;
+
+
+---
+### Z distribution vs. t distribution
+
+.pull-left[
+
+If the population standard deviation `\(\sigma\)` is known, let `$$Z = \frac{\bar{x}-\mu}{\sigma/\sqrt{n}}$$` The variable *Z* follows a standard normal distribution.
+].pull-right[
+If the population standard deviation `\(\sigma\)` is unknown, let `$$t = \frac{\bar{x}-\mu}{\sigma/\sqrt{n}}$$` The variable *t* follows a t-distribution with *df* = *n* - 1.
+]
+
+---
+### Z distribution vs. t distribution
+
+What will be affected by the difference?
+
+- The p value calculated from the test statistics will be affected.
+- The confidence interval will be affected
+
+.pull-left[
+If the population standard deviation `\(\sigma\)` is known, the 95% confidence interval is `$$\bar{x} \pm Z^*(\frac{\sigma}{\sqrt{n}})$$`
+].pull-right[
+If the population standard deviation `\(\sigma\)` is unknown, the 95% confidence interval is `$$\bar{x} \pm t^*(\frac{\sigma}{\sqrt{n}})$$`
+]
+
+Both `\(Z^*\)` and `\(t^*\)` can be found through tables or R functions. For this course, I will provide you `\(t^*\)` if it is necessary.
+
+---
+## Example: Bluefin Tuna Mercury
+
+While fish and other types of seafood are important for a healthy diet, nearly all fish and shellfish contain traces of mercury. Dietary exposure to mercury can be dangerous for young children and unborn babies. The general consensus is that fish with levels above 0.5 ppm should not be consumed. A study of mercury levels for saltwater fish caught of the New Jersey coast found that a sample of 23 Bluefin tuna had a mean mercury level of 0.54 ppm, with standard deviation 0.15 ppm. Calculate a 95% of confidence interval with `\(t^*\)` = 2.074.
+
+---
+### DNA Concentration
+
+Outside of currently living cells, the most common place DNA can be found is on the ocean floor. DNA actually plays a vital role in nourishing seafloor life. A random sample of ocean floor specimens from 116 locations around the world gave a mean value with 0.2781 and the sample standard deviation, 0.1803. Calculate and interpret a 95% confidence interval with `\(t^*\)` = 1.981 for the mean DNA concentration on the ocean floor, by hand.
+
+---
+### Robust Procedure
+
+The `\(t\)`-distribution is a “robust statistical procedure” – it is not sensitive to modest departures from the following assumption: ”the variable is normally distributed in the population”.
+
+  - Some textbooks heavily emphasize this assumption, others are more lax about it.
+  - It turns out, that for reasonably large sample sizes, this assumption isn’t really necessary.
+  - When the sample size is ”small”, we can turn to different procedures instead.
+  
+  
+Punchline: As long as the variable we’re interested in is numerical with a “reasonable” sample distribution (i.e. no extreme outliers or patterns), the t-test and confidence interval will work well.
+
+---
+### Two - Sample Tests
+
+Suppose we want to compare two sample means, such as the average growth in a control and a treatment group
+
+Two Types of Two-Sample Data
+- Paired: two sets of observations are considered paired if each observation in one set has a one-to-one correspondence or connection with a single observation in the other data
+set
+
+- Independent: two sets of observations are considered independent if there is no relationship between observations in each group
+
+The appropriate analysis depends on whether we have paired data or independent samples!
+
+---
+class:inverse
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.center[
+## Independent Designs
+]
+
+
+---
+### Two-sample test for independent data
+
+.center[
+**Looking at the difference in means**
+]
+
+Let `\(x_{1i}\)` represent the `\(i^{th}\)` observation in group 1 and let `\(x_{2i}\)` represent the `\(i^{th}\)` observation in group 2.
+
+Denote the sample mean in each group as `\(\bar{x}_1\)` and `\(\bar{x}_2\)` and sample size as `\(n_1\)`
+and `\(n_2\)`, respectively.
+
+It turns out that `\(\bar{x}_1\)` − `\(\bar{x}_2\)` follows a t-distribution with mean `\(\mu_1 - \mu_2\)`
+
+Can we assume both groups have the same population standard deviation,
+`\(\sigma_1\)` = `\(\sigma_2\)`?
+
+---
+### Equal variances or unequal variances
+
+Rule of thumb: if `\(\frac{s_{max}}{s_{min}}\)` &gt; 2, we should consider the population standard deviations for both groups to be different. 
+
+If we assume them to be the same: $$SE_{\bar{x}_1 - \bar{x}_2} = s \sqrt{\frac{1}{n_1} + \frac{1}{n_2}} $$
+
+where `$$s^2 = \frac{(n_1 - 1)s^2_1 + (n_2-1)s^2_2}{(n_1 - 1) + (n_2 -1)}$$`
+
+--
+
+If we assume them to be different (Welch Approximation): $$SE_{\bar{x}_1 - \bar{x}_2} = \sqrt{\frac{s^2_1}{n_1} + \frac{s^2_2}{n_2}} $$
+
+In practice the results are pretty similar.
+
+---
+### Confidence interval for the two sample t-test
+
+Confidence interval for the difference of population means:
+`$$(\bar{x}_1 − \bar{x}_2) ± t^∗(SE_{(\bar{x}_1 − \bar{x}_2)})$$`
+
+A study tries to understand how different the average bone density will be for the physically active the women and non-active ones. The study tests 35 women’s bone density for each group and following are the summary statistics. The `\(t^*\)` = 1.995 for 95% confidence interval.
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; group &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; min &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Q1 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; median &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Q3 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; max &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; mean &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; sd &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; n &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; active &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 155 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 207 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 212 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 219 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 257 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 211.63 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 18.73 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 35 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; nonactive &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 162 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 201 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 206 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 213 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 270 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 207.60 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 21.43 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 35 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+## Independent: Hypothesis Tests
+
+
+What are the Hypothesis and test statistic for an Independent Design?
+
+--
+
+`\(H_0\)`: The population difference in averages is equal to some value, usually zero
+
+`\(H_A\)`: The population difference in averages is less than/greater than/different
+from some value
+
+--
+
+Our test statistic:
+
+`$$t = \frac{(\bar{x}_1 − \bar{x}_2) - \mu_0}{SE_{(\bar{x}_1 − \bar{x}_2)}}$$`
+where `\(\mu_0\)` is typically zero (the expected value)
+
+---
+### Example: Football concussion
+
+A study in the Journal of the American Medical Association (JAMA) included three groups, with 25 subjects in each. The control group consisted of healthy individuals with no history of brain trauma who were comparable to the other groups in age, sex, and education. The second group consisted of NCAA Division 1 college football players with no history of concussion, while the third group consisted of NCAA Division 1 college football players with a history of concussion. High resolution MRI was used to collect brain hippocampus volume.
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; group &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; min &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Q1 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; median &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Q3 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; max &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; mean &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; sd &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Control &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6175 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6780 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7385 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8510 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9710 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7602.6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1074.02 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; FBConcuss &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4490 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5505 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5710 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6035 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7160 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5734.6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 593.40 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; FBNoConcuss &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4810 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5965 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6515 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7020 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7790 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6459.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 779.74 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+Is there sufficient evidence to show that the population mean total hippocampus volume for football players with a history of concussions is different from the football players without a history of concussion? Write out your hypothesis and calculate the test statistic.
+
+---
+### Example: Football concussion
+
+Let `\(t^*\)` = 2.06. Calculate and interpret a confidence interval. Does this interval provide evidence that the population mean total hippocampus volume for football players with a history of concussions is different from the football players without a history of concussion?
+
+
+---
+class:inverse
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.center[
+## Paired Designs
+]
+
+---
+### Paired Designs
+
+- Response variables come in pairs, with one response value in the pair belonging to each explanatory variable group
+
+- Pairs can come from matching individuals OR measuring the same individual twice (repeated measures)
+
+- Different from independent groups design 
+  + Each individual in a group is unrelated to all other individuals in the study
+  + Each person/thing only provides one response value
+
+---
+### Why do Paired Designs?
+
+- By careful pairing, we typically get more informative results 
+- Lots of response variables that are better measured over time, on the same person/thing, with similar units
+- Pairing helps us look at the differences between our explanatory variable groups rather than the differences between the observational units
+
+
+**Note**: If your design is a paired design, then you must analyze it as a paired design
+
+---
+### Paired or Independent?
+
+Based on the details given, determine whether or not the following scenarios would be conducted as paired designs:
+
+- Reaction times for students taken at 8:00 a.m. compared to reaction times for the same students taken at 10:00 p.m.
+
+- Change in weight for those on the Atkins Diet compared to the change in weight for those on the Paleo Diet
+
+- Times for skiers to complete a downhill skiing race course on skis treated with wax A with times for skiers with similar experience to complete the course on skis treated with wax B
+
+
+---
+### Paired Confidence Intervals
+
+**Looking at the mean of the differences**
+
+Let `\(x_{1i}\)` represent the `\(i^{th}\)` observation in group 1 and let `\(x_{2i}\)` represent the `\(i^{th}\)` observation in group 2. Define the "difference" as:
+
+`$$d_i = x_{1i} - x_{2i}$$`
+
+Confidence interval for the population mean difference: we’ll treat the new
+difference variable as our variable of interest]
+
+`$$\bar{d} \pm t^*SE(\bar{d})$$`
+where, `$$SE(\bar{d}) = \frac{s_d}{\sqrt{n_d}}$$` 
+
+--
+
+What does it mean if 0 is in your confidence interval?
+
+---
+## Example: oligofructose
+
+Nondigestible oligosaccharides are known to stimulate calcium absorption in rats. A double-blind, randomized experiment investigated whether the consumption of oligofructose similarly stimulates calcium absorption in healthy male adolescents.
+
+The 11 subjects took a pill for nine days and had their calcium absorption tested on the last day. The experiment was repeated three weeks later. Some subjects received the oligofructose pill in the first round and a placebo in the second; the order was switched for the remaining subjects.
+
+We take the difference of calcium absorption for each subject when they are in treatment group and control group, the mean of the difference is -10.84 and the sample standard deviation is 18.15. Calculate and interpret a 95% confidence interval for the difference in calcium absorption. The `\(t^*\)` is 2.228.
+
+---
+## Paired: Hypothesis Tests
+
+
+What are the Hypothesis and test statistic for a Paired Design?
+
+--
+
+`\(H_0\)`: The population mean difference is equal to some value, usually zero
+
+`\(H_A\)`: The population mean difference is less than/greater than/different
+from some value
+
+$$t = \frac{\bar{d} - \mu_0}{s_d/\sqrt{n}} $$
+
+---
+## Example: oligofructose
+
+Let's set up a hypothesis test for the oligofructose example. Reminder they wanted to know if the consumption of oligofructose stimulates calcium absorption in healthy male adolescents.
+
+The mean of the difference was -10.84, with a sample standard deviation of 18.15.
+
+--
+
+If the p value for two sided test is 0.07577, what is the conclusion? Is there a possibility an error was committed?
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

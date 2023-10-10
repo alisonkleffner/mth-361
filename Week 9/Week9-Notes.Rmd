@@ -1,0 +1,414 @@
+---
+title: "MTH361: Probability and Statistics in the Health Sciences"
+author: "Two Sample Testing"
+date: "October 17, 2023"
+output: 
+  xaringan::moon_reader:
+    lib_dir: libs
+    seal: false
+    css: ["default", "metropolis-fonts", "modal.css", "sizeformat.css"]
+    includes:
+      after_body:
+        "js-addins.html"
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: true
+---
+
+```{r echo=FALSE, message=FALSE, warning = FALSE}
+library(knitr)
+library(tidyverse)
+library(xaringanthemer)
+library(xaringanExtra)
+
+style_duo_accent(primary_color = "#0054a6",
+                 secondary_color = "#f1fffe",
+  header_font_google = google_font("Source Sans Pro"),
+  text_font_google = google_font("Source Sans Pro"))
+
+hook_output = knit_hooks$get('output')
+knit_hooks$set(output = function(x, options) {
+  # this hook is used only when the linewidth option is not NULL
+  if (!is.null(n <- options$linewidth)) {
+    x = xfun::split_lines(x)
+    # any lines wider than n should be wrapped
+    if (any(nchar(x) > n)) x = strwrap(x, width = n)
+    x = paste(x, collapse = '\n')
+  }
+  hook_output(x, options)
+})
+
+xaringanExtra::use_tachyons()
+
+xaringanExtra::use_tile_view()
+```
+
+```{r, include = F, eval = T, cache = T}
+clean_file_name <- function(x) {
+  basename(x) %>% str_remove("\\..*?$") %>% str_remove_all("[^[A-z0-9_]]")
+}
+img_modal <- function(src, alt = "", id = clean_file_name(src), other = "") {
+  
+  other_arg <- paste0("'", as.character(other), "'") %>%
+    paste(names(other), ., sep = "=") %>%
+    paste(collapse = " ")
+  
+  js <- glue::glue("<script>
+        /* Get the modal*/
+          var modal{id} = document.getElementById('modal{id}');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+        var img{id} = document.getElementById('img{id}');
+          var modalImg{id} = document.getElementById('imgmodal{id}');
+          var captionText{id} = document.getElementById('caption{id}');
+          img{id}.onclick = function(){{
+            modal{id}.style.display = 'block';
+            modalImg{id}.src = this.src;
+            captionText{id}.innerHTML = this.alt;
+          }}
+          /* When the user clicks on the modalImg, close it*/
+          modalImg{id}.onclick = function() {{
+            modal{id}.style.display = 'none';
+          }}
+</script>")
+  
+  html <- glue::glue(
+     " <!-- Trigger the Modal -->
+<img id='img{id}' src='{src}' alt='{alt}' {other_arg}>
+<!-- The Modal -->
+<div id='modal{id}' class='modal'>
+  <!-- Modal Content (The Image) -->
+  <img class='modal-content' id='imgmodal{id}'>
+  <!-- Modal Caption (Image Text) -->
+  <div id='caption{id}' class='modal-caption'></div>
+</div>
+"
+  )
+  write(js, file = "js-addins.html", append = T)
+  return(html)
+}
+# Clean the file out at the start of the compilation
+write("", file = "js-addins.html")
+```
+
+class:inverse
+
+<br><br><br>
+## MTH361: Probability and Statistics in the Health Sciences
+### Hypothesis Tests
+#### September 26, 2023
+
+
+---
+### Agenda
+
+
+
+
+**Book**: 
+---
+### Announcements
+
+
+---
+### Sample and Population Standard Deviation
+
+- In the previous lectures, we did not really distinguish sample standard deviation and population standard deviation (used them interchangebly)
+
+- If your sample size is large, they may be similar
+
+- Sample standard deviation can be calculated from the sample, while population standard deviation is likely unknown.
+
+---
+### Z distribution vs. t distribution
+
+We've learned already that, assuming our sample size $n$ is "large enough" and that the population is relatively symmetric, the sample mean follows and approximately normal distribution: $$\bar{x} \sim N(\mu, \frac{\sigma}{\sqrt{n}})$$.
+
+
+But what if the population standard deviation $\sigma$ is unknown and also your sample size is not quite large enough? Can we directly replace $\sigma$ with *s*?
+
+---
+### Z distribution vs. t distribution
+
+Properties of the *t*-distribution:
+
+- Symmetric, bell-shaped curve - looks like a normal distribution!
+- The tails (ends) are "fatter", which means that values farther from zero are more likely than they are under a normal distribution.
+- All centered at 0 (like the standard normal)
+- Has a single parameter, *df* = degrees of freedom
+- Larger sample size -> closer to the standard normal 
+
+```{r, echo=FALSE, fig.align='center', out.height="50%", out.width="50%"}
+
+knitr::include_graphics("../images/Week7/t-distribution.png")
+
+```
+
+
+---
+### Z distribution vs. t distribution
+
+.pull-left[
+
+If the population standard deviation $\sigma$ is known, let $$Z = \frac{\bar{x}-\mu}{\sigma/\sqrt{n}}$$ The variable *Z* follows a standard normal distribution.
+].pull-right[
+If the population standard deviation $\sigma$ is unknown, let $$t = \frac{\bar{x}-\mu}{\sigma/\sqrt{n}}$$ The variable *t* follows a t-distribution with *df* = *n* - 1.
+]
+
+---
+### Z distribution vs. t distribution
+
+What will be affected by the difference?
+
+- The p value calculated from the test statistics will be affected.
+- The confidence interval will be affected
+
+.pull-left[
+If the population standard deviation $\sigma$ is known, the 95% confidence interval is $$\bar{x} \pm Z^*(\frac{\sigma}{\sqrt{n}})$$
+].pull-right[
+If the population standard deviation $\sigma$ is unknown, the 95% confidence interval is $$\bar{x} \pm t^*(\frac{\sigma}{\sqrt{n}})$$
+]
+
+Both $Z^*$ and $t^*$ can be found through tables or R functions. For this course, I will provide you $t^*$ if it is necessary.
+
+---
+## Example: Bluefin Tuna Mercury
+
+While fish and other types of seafood are important for a healthy diet, nearly all fish and shellfish contain traces of mercury. Dietary exposure to mercury can be dangerous for young children and unborn babies. The general consensus is that fish with levels above 0.5 ppm should not be consumed. A study of mercury levels for saltwater fish caught of the New Jersey coast found that a sample of 23 Bluefin tuna had a mean mercury level of 0.54 ppm, with standard deviation 0.15 ppm. Calculate a 95% of confidence interval with $t^*$ = 2.074.
+
+---
+### DNA Concentration
+
+Outside of currently living cells, the most common place DNA can be found is on the ocean floor. DNA actually plays a vital role in nourishing seafloor life. A random sample of ocean floor specimens from 116 locations around the world gave a mean value with 0.2781 and the sample standard deviation, 0.1803. Calculate and interpret a 95% confidence interval with $t^*$ = 1.981 for the mean DNA concentration on the ocean floor, by hand.
+
+---
+### Robust Procedure
+
+The $t$-distribution is a “robust statistical procedure” – it is not sensitive to modest departures from the following assumption: ”the variable is normally distributed in the population”.
+
+  - Some textbooks heavily emphasize this assumption, others are more lax about it.
+  - It turns out, that for reasonably large sample sizes, this assumption isn’t really necessary.
+  - When the sample size is ”small”, we can turn to different procedures instead.
+  
+  
+Punchline: As long as the variable we’re interested in is numerical with a “reasonable” sample distribution (i.e. no extreme outliers or patterns), the t-test and confidence interval will work well.
+
+---
+### Two - Sample Tests
+
+Suppose we want to compare two sample means, such as the average growth in a control and a treatment group
+
+Two Types of Two-Sample Data
+- Paired: two sets of observations are considered paired if each observation in one set has a one-to-one correspondence or connection with a single observation in the other data
+set
+
+- Independent: two sets of observations are considered independent if there is no relationship between observations in each group
+
+The appropriate analysis depends on whether we have paired data or independent samples!
+
+---
+class:inverse
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+.center[
+## Independent Designs
+]
+
+
+---
+### Two-sample test for independent data
+
+.center[
+**Looking at the difference in means**
+]
+
+Let $x_{1i}$ represent the $i^{th}$ observation in group 1 and let $x_{2i}$ represent the $i^{th}$ observation in group 2.
+
+Denote the sample mean in each group as $\bar{x}_1$ and $\bar{x}_2$ and sample size as $n_1$
+and $n_2$, respectively.
+
+It turns out that $\bar{x}_1$ − $\bar{x}_2$ follows a t-distribution with mean $\mu_1 - \mu_2$
+
+Can we assume both groups have the same population standard deviation,
+$\sigma_1$ = $\sigma_2$?
+
+---
+### Equal variances or unequal variances
+
+Rule of thumb: if $\frac{s_{max}}{s_{min}}$ > 2, we should consider the population standard deviations for both groups to be different. 
+
+If we assume them to be the same: $$SE_{\bar{x}_1 - \bar{x}_2} = s \sqrt{\frac{1}{n_1} + \frac{1}{n_2}} $$
+
+where $$s^2 = \frac{(n_1 - 1)s^2_1 + (n_2-1)s^2_2}{(n_1 - 1) + (n_2 -1)}$$
+
+--
+
+If we assume them to be different (Welch Approximation): $$SE_{\bar{x}_1 - \bar{x}_2} = \sqrt{\frac{s^2_1}{n_1} + \frac{s^2_2}{n_2}} $$
+
+In practice the results are pretty similar.
+
+---
+### Confidence interval for the two sample t-test
+
+Confidence interval for the difference of population means:
+$$(\bar{x}_1 − \bar{x}_2) ± t^∗(SE_{(\bar{x}_1 − \bar{x}_2)})$$
+
+A study tries to understand how different the average bone density will be for the physically active the women and non-active ones. The study tests 35 women’s bone density for each group and following are the summary statistics. The $t^*$ = 1.995 for 95% confidence interval.
+
+```{r, echo=FALSE}
+df = data.frame(group = c("active", "nonactive"), min = c(155, 162), Q1 = c(207, 201), median = c(212, 206), Q3 = c(219, 213), max = c(257, 270), mean = c(211.63, 207.60), sd = c(18.73, 21.43), n = c(35, 35))
+
+kableExtra::kable(df)
+```
+
+---
+## Independent: Hypothesis Tests
+
+
+What are the Hypothesis and test statistic for an Independent Design?
+
+--
+
+$H_0$: The population difference in averages is equal to some value, usually zero
+
+$H_A$: The population difference in averages is less than/greater than/different
+from some value
+
+--
+
+Our test statistic:
+
+$$t = \frac{(\bar{x}_1 − \bar{x}_2) - \mu_0}{SE_{(\bar{x}_1 − \bar{x}_2)}}$$
+where $\mu_0$ is typically zero (the expected value)
+
+---
+### Example: Football concussion
+
+A study in the Journal of the American Medical Association (JAMA) included three groups, with 25 subjects in each. The control group consisted of healthy individuals with no history of brain trauma who were comparable to the other groups in age, sex, and education. The second group consisted of NCAA Division 1 college football players with no history of concussion, while the third group consisted of NCAA Division 1 college football players with a history of concussion. High resolution MRI was used to collect brain hippocampus volume.
+
+```{r, echo=FALSE}
+df2 <- data.frame(group = c("Control", "FBConcuss", "FBNoConcuss"), min = c(6175, 4490, 4810), Q1 = c(6780, 5505, 5965), median = c(7385, 5710, 6515), Q3 = c(8510, 6035, 7020), max = c(9710, 7160, 7790), mean = c(7602.6, 5734.6, 6459.2), sd = c(1074.02, 593.4, 779.74))
+
+kableExtra::kable(df2)
+
+```
+
+
+Is there sufficient evidence to show that the population mean total hippocampus volume for football players with a history of concussions is different from the football players without a history of concussion? Write out your hypothesis and calculate the test statistic.
+
+---
+### Example: Football concussion
+
+Let $t^*$ = 2.06. Calculate and interpret a confidence interval. Does this interval provide evidence that the population mean total hippocampus volume for football players with a history of concussions is different from the football players without a history of concussion?
+
+
+---
+class:inverse
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+.center[
+## Paired Designs
+]
+
+---
+### Paired Designs
+
+- Response variables come in pairs, with one response value in the pair belonging to each explanatory variable group
+
+- Pairs can come from matching individuals OR measuring the same individual twice (repeated measures)
+
+- Different from independent groups design 
+  + Each individual in a group is unrelated to all other individuals in the study
+  + Each person/thing only provides one response value
+
+---
+### Why do Paired Designs?
+
+- By careful pairing, we typically get more informative results 
+- Lots of response variables that are better measured over time, on the same person/thing, with similar units
+- Pairing helps us look at the differences between our explanatory variable groups rather than the differences between the observational units
+
+
+**Note**: If your design is a paired design, then you must analyze it as a paired design
+
+---
+### Paired or Independent?
+
+Based on the details given, determine whether or not the following scenarios would be conducted as paired designs:
+
+- Reaction times for students taken at 8:00 a.m. compared to reaction times for the same students taken at 10:00 p.m.
+
+- Change in weight for those on the Atkins Diet compared to the change in weight for those on the Paleo Diet
+
+- Times for skiers to complete a downhill skiing race course on skis treated with wax A with times for skiers with similar experience to complete the course on skis treated with wax B
+
+
+---
+### Paired Confidence Intervals
+
+**Looking at the mean of the differences**
+
+Let $x_{1i}$ represent the $i^{th}$ observation in group 1 and let $x_{2i}$ represent the $i^{th}$ observation in group 2. Define the "difference" as:
+
+$$d_i = x_{1i} - x_{2i}$$
+
+Confidence interval for the population mean difference: we’ll treat the new
+difference variable as our variable of interest]
+
+$$\bar{d} \pm t^*SE(\bar{d})$$
+where, $$SE(\bar{d}) = \frac{s_d}{\sqrt{n_d}}$$ 
+
+--
+
+What does it mean if 0 is in your confidence interval?
+
+---
+## Example: oligofructose
+
+Nondigestible oligosaccharides are known to stimulate calcium absorption in rats. A double-blind, randomized experiment investigated whether the consumption of oligofructose similarly stimulates calcium absorption in healthy male adolescents.
+
+The 11 subjects took a pill for nine days and had their calcium absorption tested on the last day. The experiment was repeated three weeks later. Some subjects received the oligofructose pill in the first round and a placebo in the second; the order was switched for the remaining subjects.
+
+We take the difference of calcium absorption for each subject when they are in treatment group and control group, the mean of the difference is -10.84 and the sample standard deviation is 18.15. Calculate and interpret a 95% confidence interval for the difference in calcium absorption. The $t^*$ is 2.228.
+
+---
+## Paired: Hypothesis Tests
+
+
+What are the Hypothesis and test statistic for a Paired Design?
+
+--
+
+$H_0$: The population mean difference is equal to some value, usually zero
+
+$H_A$: The population mean difference is less than/greater than/different
+from some value
+
+$$t = \frac{\bar{d} - \mu_0}{s_d/\sqrt{n}} $$
+
+---
+## Example: oligofructose
+
+Let's set up a hypothesis test for the oligofructose example. Reminder they wanted to know if the consumption of oligofructose stimulates calcium absorption in healthy male adolescents.
+
+The mean of the difference was -10.84, with a sample standard deviation of 18.15.
+
+--
+
+If the p value for two sided test is 0.07577, what is the conclusion? Is there a possibility an error was committed?
