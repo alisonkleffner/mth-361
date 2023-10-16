@@ -1,6 +1,6 @@
 ---
 title: "MTH361: Probability and Statistics in the Health Sciences"
-author: "Two Sample Testing"
+author: "Two-Sample Testing"
 date: "October 17, 2023"
 output: 
   xaringan::moon_reader:
@@ -95,42 +95,106 @@ class:inverse
 
 <br><br><br>
 ## MTH361: Probability and Statistics in the Health Sciences
-### Hypothesis Tests
-#### September 26, 2023
+### Two-Sample Testing
+#### October 17, 2023
 
 
 ---
 ### Agenda
 
+- Z vs t distribution
+- Two-sample Hypothesis Tests
+  - Independent 
+  - Paired
+  
+<br>
+<br>
+<br>
+<br>
 
-
-
-**Book**: 
+**Book**: 5.1-5.3
 ---
 ### Announcements
 
+- Exams graded and passed back. Please schedule a time to meet with me if you want to go over it.
+- **Lab 7** on Thursday (due Friday at 11:59 per usual)
+- **Homework 7** due on October 31st at 11:59pm
+  + A little bit longer. 
+  + Half over this week and half over next week's materials
+- We will talk about the Analysis Plan on Thursday
 
 ---
-### Sample and Population Standard Deviation
+## Review: Sampling distribution of the mean
 
-- In the previous lectures, we did not really distinguish sample standard deviation and population standard deviation (used them interchangebly)
+We've already learned that, assuming our sample size $n$ is "large enough" and that the population is relatively symmetric, the sample mean follows an approximately normal distribution:
 
-- If your sample size is large, they may be similar
+$$\bar{x}\sim Normal\left(\mu,\frac{\sigma}{\sqrt{n}}\right)$$
 
-- Sample standard deviation can be calculated from the sample, while population standard deviation is likely unknown.
+--
+
+- We’d like to use the sample mean $\bar{x}$ to estimate the population mean $\mu$. But, there’s a problem. __Do we have all the necessary information?__
+
 
 ---
-### Z distribution vs. t distribution
 
-We've learned already that, assuming our sample size $n$ is "large enough" and that the population is relatively symmetric, the sample mean follows and approximately normal distribution: $$\bar{x} \sim N(\mu, \frac{\sigma}{\sqrt{n}})$$.
+## Review: Sampling distribution of the mean
 
+We've used the sample standard deviation $s$ to estimate the unknown population standard deviation $\sigma$.
 
-But what if the population standard deviation $\sigma$ is unknown and also your sample size is not quite large enough? Can we directly replace $\sigma$ with *s*?
+$$\bar{x}\sim Normal\left(\mu,\frac{s}{\sqrt{n}}\right)?$$
+
+--
+
+This brings additional variability into the picture. __There are  two sources of error!__
+
+--
+
+![](https://media.giphy.com/media/dlMIwDQAxXn1K/giphy.gif)
 
 ---
-### Z distribution vs. t distribution
 
-Properties of the *t*-distribution:
+## t-distribution
+
+Calculate a new _test statistic_, 
+
+$$t = \frac{\bar{x}-\mu}{s/\sqrt{n}}$$
+
+This new test statistic follows a $t$-distribution.
+
+---
+
+## t-distribution
+
+In the graph below, the standard normal distribution is the red dotted line and selected $t$-distributions are the blue solid lines. What do you notice about the $t$-distribution?
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center', fig.width=10, fig.height=6}
+x <- seq(from=-3, to=3, length=1000)
+norm <- dnorm(x, mean=0, sd=1)
+t1 <- dt(x, df=1)
+t3 <- dt(x, df=3)
+t5 <- dt(x, df=5)
+t10 <- dt(x, df=10)
+t25 <- dt(x, df=25)
+
+data <- tibble(x=rep(x, 6),
+               p=c(norm, t1, t3, t5, t10, t25),
+               dist=c(rep('Normal', 1000), rep('t (df=01)', 1000), rep('t (df=03)', 1000),
+                      rep('t (df=05)', 1000), rep('t (df=10)', 1000), 
+                      rep('t (df=25)', 1000)))
+
+library(RColorBrewer)
+cols <- brewer.pal(9, 'Blues')
+data %>% ggplot(aes(x=x, y=p)) + geom_line(aes(col=dist), lwd=1.5) + scale_color_manual(values=c('red', cols[4:8]))
+```
+
+
+
+---
+### t distribution
+
+.bg-washed-yellow.b--yellow.ba.ph3[
+__t-distribution__: used to account for the extra variability that comes from estimating the standard error using the sample standard deviation.
+]
 
 - Symmetric, bell-shaped curve - looks like a normal distribution!
 - The tails (ends) are "fatter", which means that values farther from zero are more likely than they are under a normal distribution.
@@ -138,11 +202,6 @@ Properties of the *t*-distribution:
 - Has a single parameter, *df* = degrees of freedom
 - Larger sample size -> closer to the standard normal 
 
-```{r, echo=FALSE, fig.align='center', out.height="50%", out.width="50%"}
-
-knitr::include_graphics("../images/Week7/t-distribution.png")
-
-```
 
 
 ---
@@ -152,7 +211,7 @@ knitr::include_graphics("../images/Week7/t-distribution.png")
 
 If the population standard deviation $\sigma$ is known, let $$Z = \frac{\bar{x}-\mu}{\sigma/\sqrt{n}}$$ The variable *Z* follows a standard normal distribution.
 ].pull-right[
-If the population standard deviation $\sigma$ is unknown, let $$t = \frac{\bar{x}-\mu}{\sigma/\sqrt{n}}$$ The variable *t* follows a t-distribution with *df* = *n* - 1.
+If the population standard deviation $\sigma$ is unknown, let $$t = \frac{\bar{x}-\mu}{s/\sqrt{n}}$$ The variable *t* follows a t-distribution with *df* = *n* - 1.
 ]
 
 ---
@@ -166,20 +225,34 @@ What will be affected by the difference?
 .pull-left[
 If the population standard deviation $\sigma$ is known, the 95% confidence interval is $$\bar{x} \pm Z^*(\frac{\sigma}{\sqrt{n}})$$
 ].pull-right[
-If the population standard deviation $\sigma$ is unknown, the 95% confidence interval is $$\bar{x} \pm t^*(\frac{\sigma}{\sqrt{n}})$$
+If the population standard deviation $\sigma$ is unknown, the 95% confidence interval is $$\bar{x} \pm t^*(\frac{s}{\sqrt{n}})$$
 ]
 
+--
+
+For better long-term accuracy, the $t$-distribution should be used in place of the normal distribution when doing inference about a population mean.
+
+- _Downside: Since the distribution changes for every sample size, it's harder to work with values from the $t$-distribution "by hand"._
+
+
+
+---
+### Z distribution vs. t distribution
+
 Both $Z^*$ and $t^*$ can be found through tables or R functions. For this course, I will provide you $t^*$ if it is necessary.
+
+If you want to learn the `R` function:
+
+```{r, echo=TRUE}
+#95% Confidence Interval, n=10
+qt(p=(1-0.05/2), df=10-1)
+```
 
 ---
 ## Example: Bluefin Tuna Mercury
 
 While fish and other types of seafood are important for a healthy diet, nearly all fish and shellfish contain traces of mercury. Dietary exposure to mercury can be dangerous for young children and unborn babies. The general consensus is that fish with levels above 0.5 ppm should not be consumed. A study of mercury levels for saltwater fish caught of the New Jersey coast found that a sample of 23 Bluefin tuna had a mean mercury level of 0.54 ppm, with standard deviation 0.15 ppm. Calculate a 95% of confidence interval with $t^*$ = 2.074.
 
----
-### DNA Concentration
-
-Outside of currently living cells, the most common place DNA can be found is on the ocean floor. DNA actually plays a vital role in nourishing seafloor life. A random sample of ocean floor specimens from 116 locations around the world gave a mean value with 0.2781 and the sample standard deviation, 0.1803. Calculate and interpret a 95% confidence interval with $t^*$ = 1.981 for the mean DNA concentration on the ocean floor, by hand.
 
 ---
 ### Robust Procedure
@@ -226,9 +299,9 @@ class:inverse
 ---
 ### Two-sample test for independent data
 
-.center[
-**Looking at the difference in means**
-]
+.bg-washed-yellow.b--yellow.ba.ph3[
+__Independent samples__: two sets of observations are considered independent if there is no relationship between observations in each group]
+
 
 Let $x_{1i}$ represent the $i^{th}$ observation in group 1 and let $x_{2i}$ represent the $i^{th}$ observation in group 2.
 
@@ -236,6 +309,8 @@ Denote the sample mean in each group as $\bar{x}_1$ and $\bar{x}_2$ and sample s
 and $n_2$, respectively.
 
 It turns out that $\bar{x}_1$ − $\bar{x}_2$ follows a t-distribution with mean $\mu_1 - \mu_2$
+
+--
 
 Can we assume both groups have the same population standard deviation,
 $\sigma_1$ = $\sigma_2$?
@@ -264,7 +339,7 @@ $$(\bar{x}_1 − \bar{x}_2) ± t^∗(SE_{(\bar{x}_1 − \bar{x}_2)})$$
 A study tries to understand how different the average bone density will be for the physically active the women and non-active ones. The study tests 35 women’s bone density for each group and following are the summary statistics. The $t^*$ = 1.995 for 95% confidence interval.
 
 ```{r, echo=FALSE}
-df = data.frame(group = c("active", "nonactive"), min = c(155, 162), Q1 = c(207, 201), median = c(212, 206), Q3 = c(219, 213), max = c(257, 270), mean = c(211.63, 207.60), sd = c(18.73, 21.43), n = c(35, 35))
+df = data.frame(group = c("active", "nonactive"), min = c(155, 162), Q1 = c(207, 201), median = c(212, 206), Q3 = c(219, 213), max = c(257, 270), mean = c(211.63, 207.60), sd = c(8.73, 21.43), n = c(35, 35))
 
 kableExtra::kable(df)
 ```
@@ -273,21 +348,49 @@ kableExtra::kable(df)
 ## Independent: Hypothesis Tests
 
 
-What are the Hypothesis and test statistic for an Independent Design?
+Step 1: What are the Hypothesis and test statistic for an Independent Design?
 
 --
 
 $H_0$: The population difference in averages is equal to some value, usually zero
 
+$$H_0: \mu_1 - \mu_2 = \mu_0$$
+
 $H_A$: The population difference in averages is less than/greater than/different
 from some value
 
+$$H_A: \mu_1 - \mu_2 (<, >, \ne) \mu_0$$
+
 --
 
-Our test statistic:
+Step 2: Our test statistic:
 
 $$t = \frac{(\bar{x}_1 − \bar{x}_2) - \mu_0}{SE_{(\bar{x}_1 − \bar{x}_2)}}$$
 where $\mu_0$ is typically zero (the expected value)
+
+---
+## Independent: Hypothesis Tests
+
+Step 3: Determine the p-value:
+
+Use `t.test()`.
+
+- Choose appropriate assumption about variances
+
+```{r, eval = FALSE}
+t.test(Hipp~Group, mu=0, alternative='two.sided', var.equal=TRUE,
+       data=FootballBrain)
+```
+
+
+--
+
+Step 4: Make a conclusion about the original research question:
+
+Still business as usual. 
+
+- Reject $H_0$ if the $p$-value $<\alpha$
+- Fail to reject $H_0$ if the $p$-value $>\alpha$
 
 ---
 ### Example: Football concussion
@@ -328,6 +431,9 @@ class:inverse
 
 ---
 ### Paired Designs
+
+.bg-washed-yellow.b--yellow.ba.ph3[
+__Paired data__: two sets of observations are considered paired if each observation in one set has a one-to-one correspondence or connection with a single observation in the other data set]
 
 - Response variables come in pairs, with one response value in the pair belonging to each explanatory variable group
 
@@ -397,8 +503,16 @@ What are the Hypothesis and test statistic for a Paired Design?
 
 $H_0$: The population mean difference is equal to some value, usually zero
 
+$$H_0: \mu_d = \mu_0$$
+
 $H_A$: The population mean difference is less than/greater than/different
 from some value
+
+$$H_A: \mu_d (<, >, \ne) \mu_0$$
+
+--
+
+Compute the test statistic
 
 $$t = \frac{\bar{d} - \mu_0}{s_d/\sqrt{n}} $$
 
@@ -412,3 +526,13 @@ The mean of the difference was -10.84, with a sample standard deviation of 18.15
 --
 
 If the p value for two sided test is 0.07577, what is the conclusion? Is there a possibility an error was committed?
+
+---
+## R for Paired Data
+
+**Note**: Calculate the Differences first
+
+```{r, eval = FALSE}
+t.test(~Difference, alternative='two.sided', mu=0,
+       data=oligofructose)
+```

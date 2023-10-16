@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>MTH361: Probability and Statistics in the Health Sciences</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="ANOVA" />
+    <meta name="date" content="2023-10-24" />
+    <script src="libs/header-attrs-2.23/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
+    <link href="libs/tachyons-4.12.0/tachyons.min.css" rel="stylesheet" />
+    <link href="libs/tile-view-0.2.6/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view-0.2.6/tile-view.js"></script>
+    <link rel="stylesheet" href="modal.css" type="text/css" />
+    <link rel="stylesheet" href="sizeformat.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+class:inverse
+
+&lt;br&gt;&lt;br&gt;&lt;br&gt;
+## MTH361: Probability and Statistics in the Health Sciences
+### ANOVA
+#### October 24, 2023
+
+
+---
+### Agenda
+
+- Z vs t distribution
+- Two-sample Hypothesis Tests
+  - Independent 
+  - Paired
+  
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+
+**Book**: 5.1-5.3
+---
+### Announcements
+
+
+---
+### Summary: What do you need to know for the t-test?
+
+- Identify the type of test (one-sample, paired, two-sample)
+- Write the null and alternative hypothesis for the test
+  - Null Hypothesis always contains and equal sign
+  - Alternative hypothesis is the one you want to show (research question). Can be greater than, less than, or two-sided.
+- Calculate the SE
+  - Depends on the type of test
+  - Use to find the test statistic
+- Given the p-value, make a conclusion for the test
+  - P-value + decision + content explanation
+
+---
+### One More Example
+
+A study tries to understand how different the average bone density will be for the physically active the women and non-active ones. The study tests 35 women’s bone density for each group and following are the summary statistics. The `\(t^*\)` = 1.995 for 95% confidence interval.
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; group &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; min &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Q1 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; median &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Q3 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; max &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; mean &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; sd &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; n &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; active &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 155 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 207 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 212 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 219 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 257 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 211.63 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 18.73 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 35 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; nonactive &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 162 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 201 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 206 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 213 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 270 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 207.60 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 21.43 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 35 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+- Identify the type of the t-test
+- Write the hypothesis for the test
+- Calculate the SE of the test
+- If the p-vale is 0.4, write the conclusion of the test
+
+---
+### Statistical Modeling
+
+- Much of statistics involves modeling
+- Generally, it is a mathematicl formula showing the relationship between the response and explanatory variable(s)
+- Often written as `$$\text{Y = Model + Error}$$` where the model is where you put your explanatory variables
+
+---
+### Analysis of Variance (ANOVA)
+
+- Used to find if the difference between multiple independent groups of data are statistically significant.
+- Analyzes the variance (spread) of individuals within each group as well as between the different groups
+- What matters is not how far apart the sample means are, but how far apart they are relative to the variability of individual observations.
+- Also takes into account sample size and difference between the groups
+
+&lt;br&gt;
+
+&lt;img src="../images/Week10/anova-pic.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+### Examples of ANOVA
+
+Suppose we are interested in comparing if waiting times at Starbucks differ on different days of the week.
+- Explanatory:
+- Number of levels:
+- Response:
+
+
+Suppose we are interested in comparing if salaries tend to increase as education level
+(Associates, bachelors, master’s, doctoral) increases.
+- Explanatory:
+- Number of levels:
+- Response:
+
+Typical overarching research questions: Are there at least two population means that differ?
+
+---
+
+### ANOVA
+
+Analysis of variance (ANOVA) tests the null hypothesis that all `\(k\)` groups have the same population mean
+
+`$$H_0 : \mu_1 = \mu_2 = \mu_3 = .... = \mu_k$$`
+`$$H_A : \text{not } H_0$$`
+
+The alternative hypothesis is that there’s at least two population means differ (i.e. `\(\mu_i \neq \mu_j\)` for some i, j), 
+
+---
+### One-Way ANOVA Model
+
+The statistical model for an analysis of variance is `$$Y_{i,j} = \mu + \alpha_i + \epsilon_{ij}$$`
+
+- Response variable for subject `\(j\)` in group `\(i\)`: `\(Y_{i,j}\)`
+- Mean response for each group `\(i\)`: `\(\mu_i = \mu + \alpha_i\)`
+- Grand mean: `\(\mu\)`
+  + Overall mean for baseline group that all other groups are compared to
+- Group effect for group `\(i\)`: `\(\alpha_i\)` 
+  + How much that group mean deviates from the intercept
+- Error term for subject `\(j\)` in group `\(i\)`: `\(\epsilon_{ij}\)`
+
+---
+### Assumptions of ANOVA
+
+It is important to check whether the assumptions for conducting ANOVA are reasonably satisfied:
+
+- Observations independent within and across groups
+  + Think about study design/context
+- Data within each group are nearly normal
+  + Look at the data graphically, such as with a histogram 
+  + Normal Q-Q plots can help
+- Variability across groups is about equal
+  + Look at the data graphically
+  + Numerical rule of thumb: ratio of largest variance to smallest variance &lt; 3 is considered “about equal”
+  
+---
+### ANOVA: Sums of Squares
+
+Does splitting our data up intro groups explain the variability?
+
+`$$\sum_{ij}(y_{ij} - \bar{y})^2 = n\sum_i(\bar{y_i} - \bar{y})^2 + \sum_{ij}(y_{ij} - \bar{y_i})^2$$`
+
+`$$SS_{\text{total}} = SS_{\text{treatment}} + SS_{\text{error}}$$`
+
+Sums of Squares measures deviation of points from mean values
+- `\(SS_{\text{treatment}}\)` signifies between group variability (how much the means vary from group to group)
+  + Used to calculate the between-group variance
+-  `\(SS_{\text{error}}\)` signifies variability within group (how much the
+observations vary within each group)
+  - Used to calculate the within-group variance
+- `\(SS_{\text{total}}\)`  signifies variability of each observation and
+overall mean
+
+---
+### ANOVA: Sums of Squares
+
+If one of the groups have a much different mean from the others, we expect `\(SS_{\text{treatment}}\)` to be large.
+
+We want to show the variation between groups are larger than the variation within the groups.
+
+---
+### ANOVA: Test Statistic
+
+The test statistic for an analysis of variance is an F-Statistic:
+`$$F=\frac{\text{variance between groups}}{\text{variance within groups}} = \frac{MS_{Group}}{MS_{Error}}$$`
+
+`\(MS_{Group}\)`: measure of variability between levels of each factor 
+
+`\(MS_{Error}\)`: measure of variability within each level (error term)
+
+Software programs will report the results of an ANOVA model in an ANOVA table:
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt;  &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Df &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Sum Sq &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Mean Sq &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; F-Value &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Pr(&amp;gt;F) &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; group &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 190.50 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 95.25 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14.84 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.0014 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Residuals &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 57.75 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.42 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+
+---
+### Example: Recall our football Example
+
+A study in the Journal of the American Medical Association (JAMA) included three groups, with 25 subjects in each. The control group consisted of healthy individuals with no history of brain trauma who were comparable to the other groups in age, sex, and education. The second group consisted of NCAA Division 1 college football players with no history of concussion, while the third group consisted of NCAA Division 1 college football players with a history of concussion. High resolution MRI was used to collect brain hippocampus volume.
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; group &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; min &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Q1 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; median &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Q3 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; max &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; mean &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; sd &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Control &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6175 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6780 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7385 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8510 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9710 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7602.6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1074.02 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; FBConcuss &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4490 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5505 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5710 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6035 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7160 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5734.6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 593.40 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; FBNoConcuss &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4810 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5965 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6515 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7020 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7790 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6459.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 779.74 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+Write the hypothesis for the ANOVA Test if we want to test whether the three group have the same brain hippocampus volume. 
+
+
+---
+### Football Example: Check Assumptions
+
+&lt;img src="Week10-Notes_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+### Football Example: Check Assumptions
+
+&lt;img src="Week10-Notes_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+
+
+Several things you can do:
+
+- Collect more data 
+- Do a log transformation
+
+---
+### Football example: Result
+
+Let’s assume that the data fits the assumption and here is the ANOVA table from R:
+
+
+```r
+model = aov(Hipp~Group, data = FootballBrain)
+summary(model)
+```
+
+```
+##             Df   Sum Sq  Mean Sq F value   Pr(&gt;F)    
+## Group        2 44348606 22174303   31.47 1.51e-10 ***
+## Residuals   72 50727336   704546                     
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
+Write the conclusion for the test, for `\(\alpha\)` = 0.05.
+
+---
+### Multiple Group Testing
+
+You probably have realized one problem from the ANOVA test.
+
+--
+ANOVA can only tell us that at least one group is different but it won’t tell you which.
+
+As one of the solution to the problem, you can do multiple two-sample t-test to address the difference between each pair. However...
+
+---
+### Recall the meaning of `\(\alpha\)`
+
+In the hypothesis test, we define the significant level `\(\alpha\)`, which is also the probability of Type 1 error.
+
+Suppose we need to do three hypothesis tests on a dataset. Each one has a Type 1 error rate  `\(\alpha\)` = 0.05. What is the probability that at least one test results is an error?
+
+--
+
+$$P(\text{no error}) = (1-0.05)^3 = 0.857 $$
+`$$P(\text{at least one error}) = 1 - 0.857 = 0.143$$`
+
+As an ANOVA test, if we consider `\(\alpha\)` = 0.05, it means the probability of at least one test has an error is 0.05, thus the significance level for each pairwise test will be much smaller.
+  - Called the "family-wise" or "experiment-wise" error rate
+  
+---
+### Multiplicify Adjustments 
+
+A multiplicity adjustment needs to be done to ensure that the experiment-wise Type 1 error rate stays at the specified `\(\alpha\)` level.
+
+Multiple types of adjustments, but we are going to focus on Tukey's HSD 
+  - adjusts critical values `\((t^∗)\)` to control the overall error rate.
+
+We are not going to cover the details of the methods but you need to know when to use the test and how to interpret the result table:
+
+
+```r
+TukeyHSD(model)
+```
+
+```
+##   Tukey multiple comparisons of means
+##     95% family-wise confidence level
+## 
+## Fit: aov(formula = Hipp ~ Group, data = FootballBrain)
+## 
+## $Group
+##                          diff        lwr        upr     p adj
+## FBConcuss-Control     -1868.0 -2436.1525 -1299.8475 0.0000000
+## FBNoConcuss-Control   -1143.4 -1711.5525  -575.2475 0.0000233
+## FBNoConcuss-FBConcuss   724.6   156.4475  1292.7525 0.0088269
+```
+
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

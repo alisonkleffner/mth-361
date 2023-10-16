@@ -1,0 +1,376 @@
+---
+title: "MTH361: Probability and Statistics in the Health Sciences"
+author: "ANOVA"
+date: "October 24, 2023"
+output: 
+  xaringan::moon_reader:
+    lib_dir: libs
+    seal: false
+    css: ["default", "metropolis-fonts", "modal.css", "sizeformat.css"]
+    includes:
+      after_body:
+        "js-addins.html"
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: true
+---
+
+```{r echo=FALSE, message=FALSE, warning = FALSE}
+library(knitr)
+library(tidyverse)
+library(xaringanthemer)
+library(xaringanExtra)
+
+style_duo_accent(primary_color = "#0054a6",
+                 secondary_color = "#f1fffe",
+  header_font_google = google_font("Source Sans Pro"),
+  text_font_google = google_font("Source Sans Pro"))
+
+hook_output = knit_hooks$get('output')
+knit_hooks$set(output = function(x, options) {
+  # this hook is used only when the linewidth option is not NULL
+  if (!is.null(n <- options$linewidth)) {
+    x = xfun::split_lines(x)
+    # any lines wider than n should be wrapped
+    if (any(nchar(x) > n)) x = strwrap(x, width = n)
+    x = paste(x, collapse = '\n')
+  }
+  hook_output(x, options)
+})
+
+xaringanExtra::use_tachyons()
+
+xaringanExtra::use_tile_view()
+```
+
+```{r, include = F, eval = T, cache = T}
+clean_file_name <- function(x) {
+  basename(x) %>% str_remove("\\..*?$") %>% str_remove_all("[^[A-z0-9_]]")
+}
+img_modal <- function(src, alt = "", id = clean_file_name(src), other = "") {
+  
+  other_arg <- paste0("'", as.character(other), "'") %>%
+    paste(names(other), ., sep = "=") %>%
+    paste(collapse = " ")
+  
+  js <- glue::glue("<script>
+        /* Get the modal*/
+          var modal{id} = document.getElementById('modal{id}');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+        var img{id} = document.getElementById('img{id}');
+          var modalImg{id} = document.getElementById('imgmodal{id}');
+          var captionText{id} = document.getElementById('caption{id}');
+          img{id}.onclick = function(){{
+            modal{id}.style.display = 'block';
+            modalImg{id}.src = this.src;
+            captionText{id}.innerHTML = this.alt;
+          }}
+          /* When the user clicks on the modalImg, close it*/
+          modalImg{id}.onclick = function() {{
+            modal{id}.style.display = 'none';
+          }}
+</script>")
+  
+  html <- glue::glue(
+     " <!-- Trigger the Modal -->
+<img id='img{id}' src='{src}' alt='{alt}' {other_arg}>
+<!-- The Modal -->
+<div id='modal{id}' class='modal'>
+  <!-- Modal Content (The Image) -->
+  <img class='modal-content' id='imgmodal{id}'>
+  <!-- Modal Caption (Image Text) -->
+  <div id='caption{id}' class='modal-caption'></div>
+</div>
+"
+  )
+  write(js, file = "js-addins.html", append = T)
+  return(html)
+}
+# Clean the file out at the start of the compilation
+write("", file = "js-addins.html")
+```
+
+class:inverse
+
+<br><br><br>
+## MTH361: Probability and Statistics in the Health Sciences
+### ANOVA
+#### October 24, 2023
+
+
+---
+### Agenda
+
+- Z vs t distribution
+- Two-sample Hypothesis Tests
+  - Independent 
+  - Paired
+  
+<br>
+<br>
+<br>
+<br>
+
+**Book**: 5.1-5.3
+---
+### Announcements
+
+
+---
+### Summary: What do you need to know for the t-test?
+
+- Identify the type of test (one-sample, paired, two-sample)
+- Write the null and alternative hypothesis for the test
+  - Null Hypothesis always contains and equal sign
+  - Alternative hypothesis is the one you want to show (research question). Can be greater than, less than, or two-sided.
+- Calculate the SE
+  - Depends on the type of test
+  - Use to find the test statistic
+- Given the p-value, make a conclusion for the test
+  - P-value + decision + content explanation
+
+---
+### One More Example
+
+A study tries to understand how different the average bone density will be for the physically active the women and non-active ones. The study tests 35 women’s bone density for each group and following are the summary statistics. The $t^*$ = 1.995 for 95% confidence interval.
+
+```{r, echo=FALSE}
+df = data.frame(group = c("active", "nonactive"), min = c(155, 162), Q1 = c(207, 201), median = c(212, 206), Q3 = c(219, 213), max = c(257, 270), mean = c(211.63, 207.60), sd = c(18.73, 21.43), n = c(35, 35))
+
+kableExtra::kable(df)
+
+```
+
+- Identify the type of the t-test
+- Write the hypothesis for the test
+- Calculate the SE of the test
+- If the p-vale is 0.4, write the conclusion of the test
+
+---
+### Statistical Modeling
+
+- Much of statistics involves modeling
+- Generally, it is a mathematicl formula showing the relationship between the response and explanatory variable(s)
+- Often written as $$\text{Y = Model + Error}$$ where the model is where you put your explanatory variables
+
+---
+### Analysis of Variance (ANOVA)
+
+- Used to find if the difference between multiple independent groups of data are statistically significant.
+- Analyzes the variance (spread) of individuals within each group as well as between the different groups
+- What matters is not how far apart the sample means are, but how far apart they are relative to the variability of individual observations.
+- Also takes into account sample size and difference between the groups
+
+<br>
+
+```{r, echo=FALSE, fig.align='center', out.width="90%"}
+knitr::include_graphics("../images/Week10/anova-pic.png")
+```
+
+
+
+---
+### Examples of ANOVA
+
+Suppose we are interested in comparing if waiting times at Starbucks differ on different days of the week.
+- Explanatory:
+- Number of levels:
+- Response:
+
+
+Suppose we are interested in comparing if salaries tend to increase as education level
+(Associates, bachelors, master’s, doctoral) increases.
+- Explanatory:
+- Number of levels:
+- Response:
+
+Typical overarching research questions: Are there at least two population means that differ?
+
+---
+
+### ANOVA
+
+Analysis of variance (ANOVA) tests the null hypothesis that all $k$ groups have the same population mean
+
+$$H_0 : \mu_1 = \mu_2 = \mu_3 = .... = \mu_k$$
+$$H_A : \text{not } H_0$$
+
+The alternative hypothesis is that there’s at least two population means differ (i.e. $\mu_i \neq \mu_j$ for some i, j), 
+
+---
+### One-Way ANOVA Model
+
+The statistical model for an analysis of variance is $$Y_{i,j} = \mu + \alpha_i + \epsilon_{ij}$$
+
+- Response variable for subject $j$ in group $i$: $Y_{i,j}$
+- Mean response for each group $i$: $\mu_i = \mu + \alpha_i$
+- Grand mean: $\mu$
+  + Overall mean for baseline group that all other groups are compared to
+- Group effect for group $i$: $\alpha_i$ 
+  + How much that group mean deviates from the intercept
+- Error term for subject $j$ in group $i$: $\epsilon_{ij}$
+
+---
+### Assumptions of ANOVA
+
+It is important to check whether the assumptions for conducting ANOVA are reasonably satisfied:
+
+- Observations independent within and across groups
+  + Think about study design/context
+- Data within each group are nearly normal
+  + Look at the data graphically, such as with a histogram 
+  + Normal Q-Q plots can help
+- Variability across groups is about equal
+  + Look at the data graphically
+  + Numerical rule of thumb: ratio of largest variance to smallest variance < 3 is considered “about equal”
+  
+---
+### ANOVA: Sums of Squares
+
+Does splitting our data up intro groups explain the variability?
+
+$$\sum_{ij}(y_{ij} - \bar{y})^2 = n\sum_i(\bar{y_i} - \bar{y})^2 + \sum_{ij}(y_{ij} - \bar{y_i})^2$$
+
+$$SS_{\text{total}} = SS_{\text{treatment}} + SS_{\text{error}}$$
+
+Sums of Squares measures deviation of points from mean values
+- $SS_{\text{treatment}}$ signifies between group variability (how much the means vary from group to group)
+  + Used to calculate the between-group variance
+-  $SS_{\text{error}}$ signifies variability within group (how much the
+observations vary within each group)
+  - Used to calculate the within-group variance
+- $SS_{\text{total}}$  signifies variability of each observation and
+overall mean
+
+---
+### ANOVA: Sums of Squares
+
+If one of the groups have a much different mean from the others, we expect $SS_{\text{treatment}}$ to be large.
+
+We want to show the variation between groups are larger than the variation within the groups.
+
+---
+### ANOVA: Test Statistic
+
+The test statistic for an analysis of variance is an F-Statistic:
+$$F=\frac{\text{variance between groups}}{\text{variance within groups}} = \frac{MS_{Group}}{MS_{Error}}$$
+
+$MS_{Group}$: measure of variability between levels of each factor 
+
+$MS_{Error}$: measure of variability within each level (error term)
+
+Software programs will report the results of an ANOVA model in an ANOVA table:
+
+```{r, echo = FALSE}
+
+library(kableExtra)
+
+df = data.frame(one = c("group", "Residuals"), two = c(2, 9), three = c(190.50, 57.75), four = c(95.25, 6.42), five = c(14.84, ""), six = c(0.0014, ""))
+
+kableExtra::kable(df, col.names = c("", "Df", "Sum Sq", "Mean Sq", "F-Value", "Pr(>F)"))
+
+```
+
+
+
+---
+### Example: Recall our football Example
+
+A study in the Journal of the American Medical Association (JAMA) included three groups, with 25 subjects in each. The control group consisted of healthy individuals with no history of brain trauma who were comparable to the other groups in age, sex, and education. The second group consisted of NCAA Division 1 college football players with no history of concussion, while the third group consisted of NCAA Division 1 college football players with a history of concussion. High resolution MRI was used to collect brain hippocampus volume.
+
+```{r, echo=FALSE}
+df2 <- data.frame(group = c("Control", "FBConcuss", "FBNoConcuss"), min = c(6175, 4490, 4810), Q1 = c(6780, 5505, 5965), median = c(7385, 5710, 6515), Q3 = c(8510, 6035, 7020), max = c(9710, 7160, 7790), mean = c(7602.6, 5734.6, 6459.2), sd = c(1074.02, 593.4, 779.74))
+
+kableExtra::kable(df2)
+
+```
+
+
+Write the hypothesis for the ANOVA Test if we want to test whether the three group have the same brain hippocampus volume. 
+
+
+---
+### Football Example: Check Assumptions
+
+```{r, echo=FALSE, fig.align='center', fig.height=6, fig.width=10}
+library(Lock5Data)
+data(FootballBrain)
+
+ggplot(FootballBrain, aes(x = Group, y = Hipp)) + 
+  geom_point(aes(col = Group))
+
+```
+
+
+
+---
+### Football Example: Check Assumptions
+
+```{r, echo=FALSE, fig.align='center', fig.height=5, fig.width=10}
+ggplot(FootballBrain, aes(sample = Hipp, col = Group)) +
+  stat_qq() + stat_qq_line() +
+  facet_wrap(~Group)
+```
+
+
+Several things you can do:
+
+- Collect more data 
+- Do a log transformation
+
+---
+### Football example: Result
+
+Let’s assume that the data fits the assumption and here is the ANOVA table from R:
+
+```{r}
+model = aov(Hipp~Group, data = FootballBrain)
+summary(model)
+```
+
+Write the conclusion for the test, for $\alpha$ = 0.05.
+
+---
+### Multiple Group Testing
+
+You probably have realized one problem from the ANOVA test.
+
+--
+ANOVA can only tell us that at least one group is different but it won’t tell you which.
+
+As one of the solution to the problem, you can do multiple two-sample t-test to address the difference between each pair. However...
+
+---
+### Recall the meaning of $\alpha$
+
+In the hypothesis test, we define the significant level $\alpha$, which is also the probability of Type 1 error.
+
+Suppose we need to do three hypothesis tests on a dataset. Each one has a Type 1 error rate  $\alpha$ = 0.05. What is the probability that at least one test results is an error?
+
+--
+
+$$P(\text{no error}) = (1-0.05)^3 = 0.857 $$
+$$P(\text{at least one error}) = 1 - 0.857 = 0.143$$
+
+As an ANOVA test, if we consider $\alpha$ = 0.05, it means the probability of at least one test has an error is 0.05, thus the significance level for each pairwise test will be much smaller.
+  - Called the "family-wise" or "experiment-wise" error rate
+  
+---
+### Multiplicify Adjustments 
+
+A multiplicity adjustment needs to be done to ensure that the experiment-wise Type 1 error rate stays at the specified $\alpha$ level.
+
+Multiple types of adjustments, but we are going to focus on Tukey's HSD 
+  - adjusts critical values $(t^∗)$ to control the overall error rate.
+
+We are not going to cover the details of the methods but you need to know when to use the test and how to interpret the result table:
+
+```{r}
+TukeyHSD(model)
+```
+
+
+
+
+
