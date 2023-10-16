@@ -20,5 +20,7 @@ Date | Notes | Description | Additional Files | Homework Assigned
 9/21/2023 | | Lab Day | | Lab 5 **due Friday September 22 at 11:59 pm**
 9/26/2023 | [Hypothesis Testing](Week 7/Week7-Notes.html) | Basic of Hypothesis Testing | | Homework 6 **due Tuesday October 3 at 11:59 pm**
 9/28/2023 | | Lab Day | | Lab 6 **due Friday September 29 at 11:59 pm**
-9/26/2023 | [Midterm Review](Week 7/Midterm-Review.html) |  | | 
-9/28/2023 | | Midterm | | 
+10/3/2023 | [Midterm Review](Week 7/Midterm-Review.html) |  | | 
+10/5/2023 | | Midterm | | 
+10/17/2023 | [Two-Sample Testing](Week 9/Week9-Notes.html) | Hypothesis Testing for Two Samples| | Homework 7 **due Tuesday October 31 at 11:59 pm**
+10/19/2023 | | Lab Day | | Lab 7 **due Friday October 20 at 11:59 pm**
