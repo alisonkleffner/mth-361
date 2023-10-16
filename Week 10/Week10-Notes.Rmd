@@ -21,6 +21,7 @@ library(knitr)
 library(tidyverse)
 library(xaringanthemer)
 library(xaringanExtra)
+library(mosaic)
 
 style_duo_accent(primary_color = "#0054a6",
                  secondary_color = "#f1fffe",
@@ -102,17 +103,19 @@ class:inverse
 ---
 ### Agenda
 
-- Z vs t distribution
-- Two-sample Hypothesis Tests
-  - Independent 
-  - Paired
+- Analysis of Variance (ANOVA)
+  - Model
+  - Assumptions
+  - Hypothesis
+- Multiplicity Adjustments
+
   
 <br>
 <br>
 <br>
 <br>
 
-**Book**: 5.1-5.3
+**Book**: 5.5
 ---
 ### Announcements
 
@@ -212,6 +215,75 @@ The statistical model for an analysis of variance is $$Y_{i,j} = \mu + \alpha_i 
 - Error term for subject $j$ in group $i$: $\epsilon_{ij}$
 
 ---
+
+### Example: Analysis of variance
+
+Overall Summary Statistics - regardless of group
+
+```{r, echo=FALSE}
+favstats(~y, data=data)
+```
+
+
+```{r, echo=FALSE, fig.align='center', fig.height=6, fig.width=8}
+data %>% ggplot(aes(x=obs, y=y)) + geom_point(aes(col=group)) + 
+  geom_hline(yintercept=12.25, col='red')
+```
+
+---
+
+###Example: Analysis of variance
+
+```{r, echo=FALSE}
+favstats(~y|group, data=data)
+```
+
+
+```{r, echo=FALSE, fig.align='center',fig.height=6, fig.width=8}
+data %>% ggplot(aes(x=obs, y=y)) + geom_point(aes(col=group)) +  
+  geom_hline(yintercept=12.25) + 
+  geom_segment(aes(x=1, y=7.5, xend=4, yend=7.5), col='red') + 
+  geom_segment(aes(x=5, y=12, xend=8, yend=12), col='red') + 
+  geom_segment(aes(x=9, y=17.25, xend=12, yend=17.25), col='red') +
+  geom_segment(aes(x=2.5, y=7.5, xend=2.5, yend=12.25), col='red') +
+  geom_segment(aes(x=6.5, y=12, xend=6.5, yend=12.25), col='red') +
+  geom_segment(aes(x=10.5, y=17.25, xend=10.5, yend=12.25), col='red')
+
+```
+
+---
+
+###Example: Analysis of variance
+
+**Ask ourselves**: Does splitting our data up into groups explain the variability?
+- We want to show the variation between groups is larger than the variation within the groups.
+
+```{r, echo=FALSE, fig.align='center',fig.height=5.5, fig.width=8}
+data %>% ggplot(aes(x=obs, y=y)) + geom_point(aes(col=group)) +  
+  geom_hline(yintercept=12.25) + 
+  geom_segment(aes(x=1, y=7.5, xend=4, yend=7.5), col='black') + 
+  geom_segment(aes(x=5, y=12, xend=8, yend=12), col='black') + 
+  geom_segment(aes(x=9, y=17.25, xend=12, yend=17.25), col='black') +
+  geom_segment(aes(x=2.5, y=7.5, xend=2.5, yend=12.25), col='black') +
+  geom_segment(aes(x=6.5, y=12, xend=6.5, yend=12.25), col='black') +
+  geom_segment(aes(x=10.5, y=17.25, xend=10.5, yend=12.25), col='black') +
+  geom_segment(aes(x=1, y=7.5, xend=1, yend=8), col='red') + 
+  geom_segment(aes(x=2, y=7.5, xend=2, yend=7), col='red') + 
+  geom_segment(aes(x=3, y=7.5, xend=3, yend=10), col='red') + 
+  geom_segment(aes(x=4, y=7.5, xend=4, yend=5), col='red') +
+  geom_segment(aes(x=5, y=12, xend=5, yend=14), col='red') + 
+  geom_segment(aes(x=6, y=12, xend=6, yend=15), col='red') + 
+  geom_segment(aes(x=7, y=12, xend=7, yend=10), col='red') + 
+  geom_segment(aes(x=8, y=12, xend=8, yend=9), col='red') +
+  geom_segment(aes(x=9, y=17.25, xend=9, yend=20), col='red') + 
+  geom_segment(aes(x=10, y=17.25, xend=10, yend=18), col='red') + 
+  geom_segment(aes(x=11, y=17.25, xend=11, yend=17), col='red') + 
+  geom_segment(aes(x=12, y=17.25, xend=12, yend=14), col='red') 
+
+```
+
+
+---
 ### Assumptions of ANOVA
 
 It is important to check whether the assumptions for conducting ANOVA are reasonably satisfied:
@@ -250,6 +322,7 @@ If one of the groups have a much different mean from the others, we expect $SS_{
 
 We want to show the variation between groups are larger than the variation within the groups.
 
+
 ---
 ### ANOVA: Test Statistic
 
@@ -260,17 +333,24 @@ $MS_{Group}$: measure of variability between levels of each factor
 
 $MS_{Error}$: measure of variability within each level (error term)
 
-Software programs will report the results of an ANOVA model in an ANOVA table:
 
-```{r, echo = FALSE}
+---
 
-library(kableExtra)
+## ANOVA Table
 
-df = data.frame(one = c("group", "Residuals"), two = c(2, 9), three = c(190.50, 57.75), four = c(95.25, 6.42), five = c(14.84, ""), six = c(0.0014, ""))
+Software programs will report the results of an ANOVA model in an __ANOVA table__.
 
-kableExtra::kable(df, col.names = c("", "Df", "Sum Sq", "Mean Sq", "F-Value", "Pr(>F)"))
+- The basic outline of the ANOVA table looks like this:
 
-```
+Source|df|Sums of Sq.|Mean Sq.|F-ratio|p-value
+---|---|---|---|---|---|---
+Groups (trt)|k-1|SSGroup|MSGroup|F|p-value
+Error|n-k|SSError|MSError||
+Total|n-1|SSTotal|||
+
+- Calculation details are in  _OpenIntro Statistics_ (p. 264-270).
+- I won't expect you to calculate an ANOVA table by hand, but you should be able to identify the most important parts of the ANOVA table and what they tell us.
+
 
 
 
@@ -288,6 +368,18 @@ kableExtra::kable(df2)
 
 
 Write the hypothesis for the ANOVA Test if we want to test whether the three group have the same brain hippocampus volume. 
+
+---
+### Football Example: Box-plots
+
+```{r, echo=FALSE, fig.align='center', fig.height=6, fig.width=10}
+library(Lock5Data)
+data(FootballBrain)
+
+ggplot(FootballBrain, aes(x = Group, y = Hipp, fill = Group)) + 
+  geom_boxplot()
+
+```
 
 
 ---
@@ -320,7 +412,7 @@ Several things you can do:
 - Do a log transformation
 
 ---
-### Football example: Result
+### Football Example: Result
 
 Let’s assume that the data fits the assumption and here is the ANOVA table from R:
 
@@ -346,18 +438,23 @@ As one of the solution to the problem, you can do multiple two-sample t-test to 
 
 In the hypothesis test, we define the significant level $\alpha$, which is also the probability of Type 1 error.
 
+- So if we did multiple independent t-tests, we want each test to have P(Type 1 Error) = $\alpha$
+  + This is called the comparison-wise error rate
+
 Suppose we need to do three hypothesis tests on a dataset. Each one has a Type 1 error rate  $\alpha$ = 0.05. What is the probability that at least one test results is an error?
 
 --
 
-$$P(\text{no error}) = (1-0.05)^3 = 0.857 $$
-$$P(\text{at least one error}) = 1 - 0.857 = 0.143$$
+<br>
+<br>
+<br>
+<br>
 
-As an ANOVA test, if we consider $\alpha$ = 0.05, it means the probability of at least one test has an error is 0.05, thus the significance level for each pairwise test will be much smaller.
+This increases the Type 1 error to about 0.143 for the whole experiment.
   - Called the "family-wise" or "experiment-wise" error rate
   
 ---
-### Multiplicify Adjustments 
+### Multiplicity Adjustments 
 
 A multiplicity adjustment needs to be done to ensure that the experiment-wise Type 1 error rate stays at the specified $\alpha$ level.
 
@@ -370,7 +467,38 @@ We are not going to cover the details of the methods but you need to know when t
 TukeyHSD(model)
 ```
 
+---
+### Example: Yield
+
+Experiment design is extensively applied in the field of Agriculture. People usually select several similar fields but apply different conditions, like humidity or fertilizer to each of them and compare yields (as measured by dried weight of plants) after a period of time. Following are the results of yields obtained under a control and two different treatment conditions.
 
 
+```{r, echo=FALSE, message=FALSE}
+library(BSDA)
 
+data("PlantGrowth")
+favstats(~weight|group, data=PlantGrowth)
+```
+
+Write the hypothesis if you want to test whether the three groups share the same population mean on yields. What data visualizations you need to check before you fit a model?
+
+---
+### Example: Yield
+
+Here is the result for ANOVA test. Write the conclusions for each of them with $\alpha$ = 0.05. Do we need to go further?
+
+```{r, echo=FALSE}
+model = aov(weight~group, data = PlantGrowth)
+summary(model)
+
+```
+
+--
+<br>
+
+What groups are different?
+
+```{r, echo=FALSE}
+TukeyHSD(model)
+```
 

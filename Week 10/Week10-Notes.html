@@ -33,17 +33,19 @@ class:inverse
 ---
 ### Agenda
 
-- Z vs t distribution
-- Two-sample Hypothesis Tests
-  - Independent 
-  - Paired
+- Analysis of Variance (ANOVA)
+  - Model
+  - Assumptions
+  - Hypothesis
+- Multiplicity Adjustments
+
   
 &lt;br&gt;
 &lt;br&gt;
 &lt;br&gt;
 &lt;br&gt;
 
-**Book**: 5.1-5.3
+**Book**: 5.5
 ---
 ### Announcements
 
@@ -174,6 +176,46 @@ The statistical model for an analysis of variance is `$$Y_{i,j} = \mu + \alpha_i
 - Error term for subject `\(j\)` in group `\(i\)`: `\(\epsilon_{ij}\)`
 
 ---
+
+### Example: Analysis of variance
+
+Overall Summary Statistics - regardless of group
+
+
+```
+##  min   Q1 median   Q3 max  mean       sd  n missing
+##    5 8.75     12 15.5  20 12.25 4.750598 12       0
+```
+
+
+&lt;img src="Week10-Notes_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+###Example: Analysis of variance
+
+
+```
+##   group min    Q1 median    Q3 max  mean       sd n missing
+## 1     A   5  6.50    7.5  8.50  10  7.50 2.081666 4       0
+## 2     B   9  9.75   12.0 14.25  15 12.00 2.943920 4       0
+## 3     C  14 16.25   17.5 18.50  20 17.25 2.500000 4       0
+```
+
+
+&lt;img src="Week10-Notes_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+###Example: Analysis of variance
+
+**Ask ourselves**: Does splitting our data up into groups explain the variability?
+- We want to show the variation between groups is larger than the variation within the groups.
+
+&lt;img src="Week10-Notes_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
 ### Assumptions of ANOVA
 
 It is important to check whether the assumptions for conducting ANOVA are reasonably satisfied:
@@ -212,6 +254,7 @@ If one of the groups have a much different mean from the others, we expect `\(SS
 
 We want to show the variation between groups are larger than the variation within the groups.
 
+
 ---
 ### ANOVA: Test Statistic
 
@@ -222,38 +265,24 @@ The test statistic for an analysis of variance is an F-Statistic:
 
 `\(MS_{Error}\)`: measure of variability within each level (error term)
 
-Software programs will report the results of an ANOVA model in an ANOVA table:
 
-&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt;  &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Df &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Sum Sq &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Mean Sq &lt;/th&gt;
-   &lt;th style="text-align:left;"&gt; F-Value &lt;/th&gt;
-   &lt;th style="text-align:left;"&gt; Pr(&amp;gt;F) &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; group &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 190.50 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 95.25 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 14.84 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 0.0014 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Residuals &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 57.75 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 6.42 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
+---
+
+## ANOVA Table
+
+Software programs will report the results of an ANOVA model in an __ANOVA table__.
+
+- The basic outline of the ANOVA table looks like this:
+
+Source|df|Sums of Sq.|Mean Sq.|F-ratio|p-value
+---|---|---|---|---|---|---
+Groups (trt)|k-1|SSGroup|MSGroup|F|p-value
+Error|n-k|SSError|MSError||
+Total|n-1|SSTotal|||
+
+- Calculation details are in  _OpenIntro Statistics_ (p. 264-270).
+- I won't expect you to calculate an ANOVA table by hand, but you should be able to identify the most important parts of the ANOVA table and what they tell us.
+
 
 
 
@@ -312,18 +341,23 @@ A study in the Journal of the American Medical Association (JAMA) included three
 
 Write the hypothesis for the ANOVA Test if we want to test whether the three group have the same brain hippocampus volume. 
 
+---
+### Football Example: Box-plots
+
+&lt;img src="Week10-Notes_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /&gt;
+
 
 ---
 ### Football Example: Check Assumptions
 
-&lt;img src="Week10-Notes_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week10-Notes_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /&gt;
 
 
 
 ---
 ### Football Example: Check Assumptions
 
-&lt;img src="Week10-Notes_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week10-Notes_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /&gt;
 
 
 Several things you can do:
@@ -332,7 +366,7 @@ Several things you can do:
 - Do a log transformation
 
 ---
-### Football example: Result
+### Football Example: Result
 
 Let’s assume that the data fits the assumption and here is the ANOVA table from R:
 
@@ -367,18 +401,23 @@ As one of the solution to the problem, you can do multiple two-sample t-test to 
 
 In the hypothesis test, we define the significant level `\(\alpha\)`, which is also the probability of Type 1 error.
 
+- So if we did multiple independent t-tests, we want each test to have P(Type 1 Error) = `\(\alpha\)`
+  + This is called the comparison-wise error rate
+
 Suppose we need to do three hypothesis tests on a dataset. Each one has a Type 1 error rate  `\(\alpha\)` = 0.05. What is the probability that at least one test results is an error?
 
 --
 
-$$P(\text{no error}) = (1-0.05)^3 = 0.857 $$
-`$$P(\text{at least one error}) = 1 - 0.857 = 0.143$$`
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
 
-As an ANOVA test, if we consider `\(\alpha\)` = 0.05, it means the probability of at least one test has an error is 0.05, thus the significance level for each pairwise test will be much smaller.
+This increases the Type 1 error to about 0.143 for the whole experiment.
   - Called the "family-wise" or "experiment-wise" error rate
   
 ---
-### Multiplicify Adjustments 
+### Multiplicity Adjustments 
 
 A multiplicity adjustment needs to be done to ensure that the experiment-wise Type 1 error rate stays at the specified `\(\alpha\)` level.
 
@@ -405,9 +444,54 @@ TukeyHSD(model)
 ## FBNoConcuss-FBConcuss   724.6   156.4475  1292.7525 0.0088269
 ```
 
+---
+### Example: Yield
+
+Experiment design is extensively applied in the field of Agriculture. People usually select several similar fields but apply different conditions, like humidity or fertilizer to each of them and compare yields (as measured by dried weight of plants) after a period of time. Following are the results of yields obtained under a control and two different treatment conditions.
 
 
 
+```
+##   group  min     Q1 median     Q3  max  mean        sd  n missing
+## 1  ctrl 4.17 4.5500  5.155 5.2925 6.11 5.032 0.5830914 10       0
+## 2  trt1 3.59 4.2075  4.550 4.8700 6.03 4.661 0.7936757 10       0
+## 3  trt2 4.92 5.2675  5.435 5.7350 6.31 5.526 0.4425733 10       0
+```
+
+Write the hypothesis if you want to test whether the three groups share the same population mean on yields. What data visualizations you need to check before you fit a model?
+
+---
+### Example: Yield
+
+Here is the result for ANOVA test. Write the conclusions for each of them with `\(\alpha\)` = 0.05. Do we need to go further?
+
+
+```
+##             Df Sum Sq Mean Sq F value Pr(&gt;F)  
+## group        2  3.766  1.8832   4.846 0.0159 *
+## Residuals   27 10.492  0.3886                 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
+--
+&lt;br&gt;
+
+What groups are different?
+
+
+```
+##   Tukey multiple comparisons of means
+##     95% family-wise confidence level
+## 
+## Fit: aov(formula = weight ~ group, data = PlantGrowth)
+## 
+## $group
+##             diff        lwr       upr     p adj
+## trt1-ctrl -0.371 -1.0622161 0.3202161 0.3908711
+## trt2-ctrl  0.494 -0.1972161 1.1852161 0.1979960
+## trt2-trt1  0.865  0.1737839 1.5562161 0.0120064
+```
 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
