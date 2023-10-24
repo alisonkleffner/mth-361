@@ -24,3 +24,5 @@ Date | Notes | Description | Additional Files | Homework Assigned
 10/5/2023 | | Midterm | | 
 10/17/2023 | [Two-Sample Testing](Week 9/Week9-Notes.html) | Hypothesis Testing for Two Samples| | Homework 7 **due Tuesday October 31 at 11:59 pm**
 10/19/2023 | | Lab Day | | Lab 7 **due Friday October 20 at 11:59 pm**
+10/24/2023 | [ANOVA](Week 10/Week10-Notes.html) | One-Way ANOVA | | Homework 7 **due Tuesday October 31 at 11:59 pm**
+10/26/2023 | | Lab Day | | Lab 8 **due Friday October 27 at 11:59 pm**

@@ -119,18 +119,30 @@ class:inverse
 ---
 ### Announcements
 
+- **Homework 7 ** due Tuesday October 31 at 11:59 pm
+- **Lab 8 ** on Thursday
+  + Due Friday October 27 at 11:59 pm
+
 
 ---
 ### Summary: What do you need to know for the t-test?
 
-- Identify the type of test (one-sample, paired, two-sample)
-- Write the null and alternative hypothesis for the test
+- **Step 1**: Identify the type of test (one-sample, paired, two-sample)
+
+```{r, echo=FALSE, fig.align='center', out.width="100%"}
+knitr::include_graphics("../images/Week10/all-t-test.png")
+```
+
+
+---
+### Summary: What do you need to know for the t-test?
+- **Step 2**: Write the null and alternative hypothesis for the test
   - Null Hypothesis always contains and equal sign
   - Alternative hypothesis is the one you want to show (research question). Can be greater than, less than, or two-sided.
-- Calculate the SE
+- **Step 3**: Calculate the SE
   - Depends on the type of test
   - Use to find the test statistic
-- Given the p-value, make a conclusion for the test
+- **Step 4**: Given the p-value, make a conclusion for the test
   - P-value + decision + content explanation
 
 ---
@@ -139,7 +151,7 @@ class:inverse
 A study tries to understand how different the average bone density will be for the physically active the women and non-active ones. The study tests 35 women’s bone density for each group and following are the summary statistics. The $t^*$ = 1.995 for 95% confidence interval.
 
 ```{r, echo=FALSE}
-df = data.frame(group = c("active", "nonactive"), min = c(155, 162), Q1 = c(207, 201), median = c(212, 206), Q3 = c(219, 213), max = c(257, 270), mean = c(211.63, 207.60), sd = c(18.73, 21.43), n = c(35, 35))
+df = data.frame(group = c("active", "nonactive"), min = c(155, 162), Q1 = c(207, 201), median = c(212, 206), Q3 = c(219, 213), max = c(257, 270), mean = c(211.63, 207.60), sd = c(8.73, 21.43), n = c(35, 35))
 
 kableExtra::kable(df)
 
@@ -148,7 +160,9 @@ kableExtra::kable(df)
 - Identify the type of the t-test
 - Write the hypothesis for the test
 - Calculate the SE of the test
-- If the p-vale is 0.4, write the conclusion of the test
+- If the p-vale is 0.3084, write the conclusion of the test
+
+---
 
 ---
 ### Statistical Modeling
@@ -219,6 +233,15 @@ The statistical model for an analysis of variance is $$Y_{i,j} = \mu + \alpha_i 
 ### Example: Analysis of variance
 
 Overall Summary Statistics - regardless of group
+
+```{r, echo=FALSE}
+set.seed(361)
+group <- c(rep('A', 4), rep('B', 4), rep('C', 4))
+y <- c(sample(5:10, 4), sample(8:15, 4), sample(12:20, 4))
+
+data <- tibble(obs=1:12, group, y)
+
+```
 
 ```{r, echo=FALSE}
 favstats(~y, data=data)
@@ -368,6 +391,8 @@ kableExtra::kable(df2)
 
 
 Write the hypothesis for the ANOVA Test if we want to test whether the three group have the same brain hippocampus volume. 
+
+---
 
 ---
 ### Football Example: Box-plots
