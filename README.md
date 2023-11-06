@@ -28,3 +28,5 @@ Date | Notes | Description | Additional Files | Homework Assigned
 10/26/2023 | | Lab Day | | Lab 8 **due Friday October 27 at 11:59 pm**
 10/31/2023 | [Regression Part 1](Week 11/Week11-Notes.html) | Simple Linear Regression | | Homework 8 **due Tuesday November 7 at 11:59 pm**
 11/2/2023 | | Lab Day | | Lab 9 **due Friday November 3 at 11:59 pm**
+11/7/2023 | [Regression Part 2](Week 12/Week12-Notes.html) | Multiple Linear Regression | | Homework 9 **due Tuesday November 14 at 11:59 pm**
+11/9/2023 | | Lab Day | | Lab 10 **due Friday November 10 at 11:59 pm**

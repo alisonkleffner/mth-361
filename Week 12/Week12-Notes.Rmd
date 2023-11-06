@@ -40,13 +40,52 @@ knit_hooks$set(output = function(x, options) {
 
 + Homework 8 due **Tuesday November 7 at 11:59 pm**
 
-+ Analysis Plan due **Tuesday November 14 at 11:59 pm**
++ Analysis Plan due **Tuesday November 21 at 11:59 pm**
+
++ MLR work
+  - Lab 10 due **Friday November 10 at 11:59 pm**
+  - Homework 9 due **Tuesday November 14 at 11:59 pm**
 
 
-**Today**: Section 6.1-6.3
+**Today**: Chapter 7
 
 ---
 ### Notes from Lab 9
+
+- When working with a transformation, written out model must included the transformation: 
+$$ log(y) = \beta_0 + \beta_1log(x)$$
+- Assumptions:
+  - QQ plot for normality
+  - Residuals vs Fitted for constant variance (look for pattern!)
+  - Explain why met or not met
+- Leverage vs outliers
+
+--
+
+```{r, echo=FALSE, fig.align='center', out.width="70%", out.height="70%"}
+knitr::include_graphics("../images/Week 12/leverage.png")
+```
+
+---
+### Schedule for Rest of the semester
+
+- Option 1 (current)
+
+```{r, echo=FALSE, out.width="80%", out.height="80%"}
+knitr::include_graphics("../images/Week 12/option1.jpeg")
+```
+
+---
+### Schedule for Rest of the semester
+
+- Option 2 (Lab Day before Thanksgiving)
+
+```{r, echo=FALSE}
+knitr::include_graphics("../images/Week 12/option2.jpeg")
+```
+
+
+  
 
 
 ---
@@ -183,7 +222,7 @@ Basically, we just __add more terms__ to the linear regression model.
 
 ---
 
-## Mulitple linear regression
+## Multiple linear regression
 
 .bg-washed-blue.b--blue.ba.ph3[
 __Example__: Write the multiple linear regression model for predicting RFFT score based on age and statin use. How many regression coefficients are in the model?
@@ -191,7 +230,7 @@ __Example__: Write the multiple linear regression model for predicting RFFT scor
 
 ---
 
-## Mulitple linear regression
+## Multiple linear regression
 
 .bg-washed-blue.b--blue.ba.ph3[
 __Example__: Write the estimated multiple linear regression model for predicting RFFT score based on age and statin use. How does whether a patient is using statins affect the predicted value? Does it affect the slope?
@@ -199,7 +238,7 @@ __Example__: Write the estimated multiple linear regression model for predicting
 
 ```{r, echo=FALSE}
 model <- lm(RFFT ~ Age + Statin, data=prevend.samp)
-summary(model)
+broom::tidy(model)
 ```
 
 ---
@@ -276,7 +315,7 @@ $$R^2_{adj} = 1-\frac{(1-R^2)(n-1)}{n-p-1}$$
 
 ## Which R-squared?
 
-How much of the variability in the active heart rate can be explained using this multiple regression model?
+How much of the variability in the RFFT can be explained using this multiple regression model?
 
 ```{r, echo=FALSE}
 prevend.samp$Ethnicity = as.factor(prevend.samp$Ethnicity)
@@ -501,6 +540,6 @@ model <- lm(RFFT ~ Age + Statin + Education, data=prevend.samp)
 - Interpret the slope of Age
 - Interpret the p-value of Age
 - Try to write the set of linear model for different education level and interpret the results.
-- Interpet an adjusted $R^2$ of 0.4248
+- Interpret an adjusted $R^2$ of 0.4248
 
-
+---

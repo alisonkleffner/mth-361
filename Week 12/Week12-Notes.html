@@ -39,13 +39,46 @@ class: center, middle, inverse, title-slide
 
 + Homework 8 due **Tuesday November 7 at 11:59 pm**
 
-+ Analysis Plan due **Tuesday November 14 at 11:59 pm**
++ Analysis Plan due **Tuesday November 21 at 11:59 pm**
+
++ MLR work
+  - Lab 10 due **Friday November 10 at 11:59 pm**
+  - Homework 9 due **Tuesday November 14 at 11:59 pm**
 
 
-**Today**: Section 6.1-6.3
+**Today**: Chapter 7
 
 ---
 ### Notes from Lab 9
+
+- When working with a transformation, written out model must included the transformation: 
+$$ log(y) = \beta_0 + \beta_1log(x)$$
+- Assumptions:
+  - QQ plot for normality
+  - Residuals vs Fitted for constant variance (look for pattern!)
+  - Explain why met or not met
+- Leverage vs outliers
+
+--
+
+&lt;img src="../images/Week 12/leverage.png" width="70%" height="70%" style="display: block; margin: auto;" /&gt;
+
+---
+### Schedule for Rest of the semester
+
+- Option 1 (current)
+
+&lt;img src="../images/Week 12/option1.jpeg" width="80%" height="80%" /&gt;
+
+---
+### Schedule for Rest of the semester
+
+- Option 2 (Lab Day before Thanksgiving)
+
+&lt;img src="../images/Week 12/option2.jpeg" width="2203" /&gt;
+
+
+  
 
 
 ---
@@ -95,7 +128,7 @@ However, there's concern that use of statins may be associated with increased ri
 
 `Statin` = 1 for statin users and 0 for non-users.
 
-&lt;img src="Week12-Notes_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week12-Notes_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -113,7 +146,7 @@ There is a relationship between RFFT and Age, but...
 
 - `Statin` use may also be related!
 
-&lt;img src="Week12-Notes_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week12-Notes_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -133,7 +166,7 @@ Basically, we just __add more terms__ to the linear regression model.
 
 ---
 
-## Mulitple linear regression
+## Multiple linear regression
 
 .bg-washed-blue.b--blue.ba.ph3[
 __Example__: Write the multiple linear regression model for predicting RFFT score based on age and statin use. How many regression coefficients are in the model?
@@ -141,7 +174,7 @@ __Example__: Write the multiple linear regression model for predicting RFFT scor
 
 ---
 
-## Mulitple linear regression
+## Multiple linear regression
 
 .bg-washed-blue.b--blue.ba.ph3[
 __Example__: Write the estimated multiple linear regression model for predicting RFFT score based on age and statin use. How does whether a patient is using statins affect the predicted value? Does it affect the slope?
@@ -149,25 +182,12 @@ __Example__: Write the estimated multiple linear regression model for predicting
 
 
 ```
-## 
-## Call:
-## lm(formula = RFFT ~ Age + Statin, data = prevend.samp)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -63.855 -16.860  -1.178  15.730  58.751 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 137.8822     5.1221  26.919   &lt;2e-16 ***
-## Age          -1.2710     0.0943 -13.478   &lt;2e-16 ***
-## Statin        0.8509     2.5957   0.328    0.743    
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 23.21 on 497 degrees of freedom
-## Multiple R-squared:  0.2852,	Adjusted R-squared:  0.2823 
-## F-statistic: 99.13 on 2 and 497 DF,  p-value: &lt; 2.2e-16
+## # A tibble: 3 × 5
+##   term        estimate std.error statistic  p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)  138.       5.12      26.9   4.03e-99
+## 2 Age           -1.27     0.0943   -13.5   1.65e-35
+## 3 Statin         0.851    2.60       0.328 7.43e- 1
 ```
 
 ---
@@ -204,7 +224,7 @@ One more:
 
 ## Interpreting residual plots
 
-&lt;img src="Week12-Notes_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week12-Notes_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -241,7 +261,7 @@ __Adjusted R-squared__: a measure of the "quality" of a model that takes the mul
 
 ## Which R-squared?
 
-How much of the variability in the active heart rate can be explained using this multiple regression model?
+How much of the variability in the RFFT can be explained using this multiple regression model?
 
 
 ```
@@ -426,7 +446,7 @@ __Example__: Write the estimated multiple linear regression model for predicting
 
 ## Interaction terms
 
-&lt;img src="Week12-Notes_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week12-Notes_files/figure-html/unnamed-chunk-18-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -443,13 +463,13 @@ __Example__: According to the guidance issued, individuals with Type II diabetes
 Describe the relationship between age and cholesterol, without accounting for whether someone has diabetes?
 
 
-&lt;img src="Week12-Notes_files/figure-html/unnamed-chunk-16-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week12-Notes_files/figure-html/unnamed-chunk-19-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
 ## Interaction terms
 
-&lt;img src="Week12-Notes_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week12-Notes_files/figure-html/unnamed-chunk-20-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -486,9 +506,9 @@ secondary education; 2 = higher secondary education; 3 = university.
 - Interpret the slope of Age
 - Interpret the p-value of Age
 - Try to write the set of linear model for different education level and interpret the results.
-- Interpet an adjusted `\(R^2\)` of 0.4248
+- Interpret an adjusted `\(R^2\)` of 0.4248
 
-
+---
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
