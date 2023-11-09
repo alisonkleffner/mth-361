@@ -303,7 +303,7 @@ for which we fail to reject the null hypothesis, and set those as the confidence
 The Clopper-Pearson interval is difficult to calculate by hand, but easy for R.
 
 ```{r}
-binom.test(x=30, n=87, conf.level=0.95)
+binom.test(x=30, n=87, conf.level=0.95 , p = 0.519)
 ```
 
 --
@@ -323,7 +323,7 @@ Calculate and interpret a Wald confidence interval and a Clopper-Pearson confide
 
 ```{r, echo=FALSE}
 # Clopper-Pearson
-binom.test(x=21, n=52, conf.level=0.95)
+binom.test(x=21, n=52, conf.level=0.95, p = 0.3)
 ```
 
 ---
@@ -338,7 +338,7 @@ The difference in two sample proportions, $\hat{p}_1 - \hat{p}_2$ tends to follo
 
 --
 
-- The two samples are idnependent of each other
+- The two samples are independent of each other
 
 --
 
@@ -376,20 +376,11 @@ This is a **two-way table**, which summarizes the relationship between two categ
 
 A natural question for a two-way table is whether there is an association with these two categorical variables. In our context, is there evidence that the screening method is associated with the outcome?
 
-
----
-
-## Association
-
-.bg-washed-blue.b--blue.ba.ph3[
-__Example__: The use of screening mammograms for breast cancer has been con- troversial for decades because the overall benefit on breast cancer mortality is uncertain. Several large randomized studies have been conducted in an attempt to estimate the effect of mammogram screening. A 30-year study to investigate the effectiveness of mammograms versus a standard non-mammogram breast cancer exam was conducted in Canada with 89,835 female participants. During a 5-year screening period, each woman was randomized to either receive annual mammograms or standard physical exams for breast cancer. During the 25 years following the screening period, each woman was screened for breast cancer according to the standard of care at her health care center. __Is there evidence that the screening method is associated with the outcome__?
-]
-
 ---
 
 ## Chi-square test for independence
 
-.bg-washed-yellow.b--yellow.ba.ph3[__Chi-square test for independence__: procedure for determining whether or not two categoricall variables are associated
+.bg-washed-yellow.b--yellow.ba.ph3[__Chi-square test for independence__: procedure for determining whether or not two categorical variables are associated
 
 - $H_0$: The "row" variable is independent of the "column" variable
 - $H_A$: There is an association between the "row" variable and the "column" variable
@@ -506,15 +497,15 @@ __Chi-square goodness-of-fit test__: compares the observed frequencies in the da
 Test statistics and rule of thumb are exactly the same.
 
 ---
-
-## Chi-square goodness of fit
+### Chi-square goodness of fit
 
 .bg-washed-blue.b--blue.ba.ph3[
 __Example__: Melanoma is a rare form of skin cancer that accounts for the great majority of skin cancer fatalities. UV exposure is a major risk factor for melanoma. Some body parts are regularly more exposed to the sun than others. A random sample of 310 women diagnosed with melanoma were classified according to the known location of the melanoma on their bodies. 
 
-Location|Head/neck|Trunk|Upper limbs|Lower limbs
----|---|---|---|---
-Count|45|80|34|151
+Location|Head/neck|Trunk|Upper limbs|Lower limbs|Total
+---|---|---|---|---|---
+Count|45|80|34|151|310
+Expected|77.5|77.5|77.5|77.5|
 
 Assume that these body parts represent roughly equal skin areas. Do the data support the hypothesis that melanoma occurs evenly on the body?
 ]
@@ -523,7 +514,7 @@ Assume that these body parts represent roughly equal skin areas. Do the data sup
 
 ## Chi-square goodness of fit
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, fig.align='center', fig.height=7, fig.width=12}
 data <- tibble(
   location = c(rep('Head/neck', 45), rep('Trunk', 80), rep('Upper limbs', 34), rep('Lower limbs', 151))
 )
