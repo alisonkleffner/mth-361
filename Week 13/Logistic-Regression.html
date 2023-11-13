@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Ch. 8: Logistic Regression</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="MTH 361: Probability and Statistics in the Health Sciences" />
+    <meta name="date" content="2023-11-16" />
+    <script src="libs/header-attrs-2.23/header-attrs.js"></script>
+    <link href="libs/tachyons-4.12.0/tachyons.min.css" rel="stylesheet" />
+    <link href="libs/tile-view-0.2.6/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view-0.2.6/tile-view.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: left, middle, inverse, title-slide
+
+.title[
+# Ch. 8: Logistic Regression
+]
+.author[
+### MTH 361: Probability and Statistics in the Health Sciences
+]
+.date[
+### November 16, 2023
+]
+
+---
+
+class: inverse
+
+### Announcements
+
+
+
+
+
+
+
+
+---
+### Logistic Regression
+
+Logistic regression generalizes methods for two-way tables, allowing for the joint association between a (binary) categorical response and several predictors to be studied. It also allows for numerical predictors. Similar in intent to linear regression, but details are different...
+
+- The response variable is categorical (specifically, binary)
+- The model is not estimated via minimizing least squares
+- The model coefficients have a different interpretation
+
+---
+### Survival to Discharge in the ICU
+
+Patients admitted to intensive care units (ICUs) are very ill, either from a serious medical event (e.g. respiratory failure from asthma) or from trauma (e.g, traffic accident).
+
+Can patient features available at admission be used to estimate the probability of survival to hospital discharge? The `icu` data set in the `aplore3` package is from a study conducted at Baystate Medical Center in Springfield, MA. 
+
+- The data set contains information about patient characteristics at admission, such as heart rate, diagnosis, and kidney function. 
+- The variable `sta` is a factor variable with labels Died and Lived, corresponding to the levels 0 for death before discharge and 1 survival to discharge.
+- Information on other variables measured are in the lab.
+
+---
+### Survival and CPR
+
+Here is the summary count data:
+
+
+```
+##        
+##          No Yes Sum
+##   Lived 154   6 160
+##   Died   33   7  40
+##   Sum   187  13 200
+```
+
+The probability of survival for those who did not receive CPR is `$$154/187=0.824$$`
+
+--
+
+With logistic regression, we can also look at the odds of survival for those who did not recive CPR `$$154/33=4.67$$`
+
+---
+### Odds and Probabilities
+
+If the probability of an event *A* is *p*, the odds of the event are `$$\frac{p}{1-p}$$`
+
+With some algebra, it is possible to show the following relationship:
+
+`$$\text{odds} = \frac{p}{1-p} \longrightarrow p = \frac{\text{odds}}{1 + \text{odds}}$$`
+--
+
+From the previous example,
+
+- odds = 4.67, *p* = 0.824
+- `\(\frac{p}{1-p}\)` = `\(\frac{0.824}{1-0.824} = 4.67\)`
+- `\(\frac{\text{odds}}{1 + \text{odds}} = \frac{4.67}{1+4.67} = 0.824\)`
+
+---
+### Odds
+
+
+- Odds are always greater than 0. 
+  + A value greater than 1 means the probability of success is higher.
+  + A value less than 1 means the probability of failure is higher.
+- If  probability of success is 75%, the odds is `\(\frac{0.75}{1−0.75}=3\)`
+  + Odds of success are 3:1
+  
+---
+### The model for Logistic Regression
+
+- Suppose *Y* is a binary variable and *X* is a predictor variable
+  + In the ICU example, let *Y* be survival to discharge and *X* represent prior CPR
+  + Let `\(p(x) = P(Y=1|X=x)\)`, where *Y* = 1 denotes survival
+  
+The model for a single variable logistic regression is
+
+$$\text{log}[\frac{p(x)}{1-p(x)}] = \beta_0 + \beta_1x $$
+- Hence, we are modeling the log(odds)
+
+---
+### True Odds
+
+We often want to write the odds ration in terms of our regression model.
+
+Notice: `$$\text{log}[\frac{p(x)}{1-p(x)}] = \beta_0 + \beta_1x \longrightarrow \frac{p(x)}{1-p(x)} = e^{\beta_0 + \beta_1x}$$` 
+
+
+For a given `\(x_1\)`, the odds can be expressed as:
+`$$\text{odds}_{x_1}=e^{\beta_0+\beta_1x_1}$$`
+
+For a constant *c* unit increase in `\(x_1\)`, the odds can be expressed as:
+`$$\text{odds}_{x_1 + c}=e^{\beta_0+\beta_1 (x_1+c)}$$`
+---
+### True Odds Ratio
+
+The odds ratio for `\(x_1\)` = `$$\frac{\text{odds}_{x_1 + c}}{\text{odds}_{x_1}} = \frac{e^{\beta_0+\beta_1 (x_1+c)}}{e^{\beta_0+\beta_1x_1}} = \frac{e^{\beta_0+\beta_1x_1+\beta_1c}}{e^{\beta_0+\beta_1x_1}} = e^{c\beta_1}$$`
+
+
+Interpretation: For a *c*-unit increase in `\(x_1\)`, the odds of success changes by `\(e^{c\beta_1}\)` 
+
+---
+### Why log(odds) in logistic regression models?
+
+**Notes**: log(odds) is also called the logit
+
+- `\(\text{log}[\frac{p(x)}{1-p(x)}] = logit(p(x))\)`
+
+Logistic regression is based on modeling the association between the probability *p* of the event of interest occurring and the values of the predictor variables.
+
+Since a probability only takes values from 0 to 1, it is not ideal as a response
+
+- The odds, `\(\frac{p}{1-p}\)`, ranges from 0 to `\(\infty\)`
+- The natural log of the odds (log(odds)) ranges from `\(-\infty \text{ to } \infty\)`.
+
+Logistic regression is used to model the odds because it ensures the probability will be between 0 and 1
+
+---
+### Logistic versus Linear Regression
+
+Similarities:
+
+- The right hand side of the model looks the same, but there is not residual error term in the logistic model
+
+Differences:
+
+- Logistic regression is used to calculate predicted values of log(odds), rather than the predicted mean.
+- The function `glm` in *R* is used to estimate a logistic regression model, and requires an additional specification in the argument: `family = binomial(link = "logit")`.
+
+---
+### Interpreting the output...
+
+
+```
+## # A tibble: 2 × 5
+##   term        estimate std.error statistic  p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)    -1.54     0.192     -8.03 9.71e-16
+## 2 cprYes          1.69     0.588      2.88 3.98e- 3
+```
+
+The slope of `cprYes` represents the change in log(odds of survival), from the no previous CPR group to the previous CPR group.
+
+The odds of survival in patients who previously received CPR:
+
+- `\(log[\frac{\hat{p}({\text{status = lived|cpr})}}{1-\hat{p}({\text{status = lived|cpr})}}] = 1.545 - 1.695(1)\)`
+- `\(\hat{\text{odds}}_{survival} = exp(1.545 - 1.695) = 0.856\)`
+
+The slope coefficient is the log of the estimated *odds ratio* for survival, comparing those who recived CPR to those who did not:
+
+- `\(\hat{\text{OR}} = \text{exp}(-1.695) = 0.184\)`
+- `\(\hat{\text{OR}} = \frac{\text{odds}_{\text{cpr = yes}}}{\text{odds}_{\text{cpr = no}}} = \frac{0.856}{4.66} = 0.184\)`
+
+---
+### Inference for Simple Logistic Regression
+
+As with linear regression, the model slope captures information about association between a response and predictor.
+
+- `\(H_0: \beta_1 = 0\)`, the *X* and *Y* variables are not associated
+- `\(H_A: \beta_1 \neq 0\)`, the *X* and *Y* variables are associated
+
+These hypotheses can also be written in terms of the odds ratio.
+
+---
+### What does logistic regression add?
+
+The `\(\chi^2\)` test does not directly who the direction of a significant association
+
+- Some information about direction from the residuals or differences between observed and expected values.
+
+Logistic regression gives a numerical estimate of the size of an association
+
+- Also can be used with a numerical variable
+
+---
+### Extending logistic regression to more than one predictor
+
+Suppose `\(p(x) = p(x_1, x_2, \dots, x_p) = P(Y = 1|x_1, x_2, \dots, x_p)\)`.
+
+With several predictors `\(x_1, x_2, \dots, x_p\)`, the model is 
+
+$$\text{log}[\frac{p(x)}{1-p(x)}] = \beta_0 + \beta_1x_1 + \beta_2x_2+ \dots+\beta_px_p $$
+
+Each coefficient estimates the change in log(odds) for a one unit change in that variables, given the other variables do not change.
+
+--
+
+
+```
+## # A tibble: 4 × 5
+##   term        estimate std.error statistic p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1 (Intercept)  -1.35     1.05        -1.28 0.202  
+## 2 cprYes        1.64     0.628        2.61 0.00899
+## 3 age           0.0299   0.0112       2.67 0.00768
+## 4 sys          -0.0157   0.00606     -2.59 0.00951
+```
+
+---
+### True Odds Ratio for Multiple Logistic Regression
+
+The odds ratio for `\(x_1\)` = `$$\frac{\text{odds}_{x_1 + c}}{\text{odds}_{x_1}} = \frac{e^{\beta_0+\beta_1 (x_1+c)+ \beta_2x_2+ \dots+\beta_px_p}}{e^{\beta_0+\beta_1x_1+ \beta_2x_2+ \dots+\beta_px_p}} = \frac{e^{\beta_0+\beta_1x_1+\beta_1c+ \beta_2x_2+ \dots+\beta_px_p}}{e^{\beta_0+\beta_1x_1+ \beta_2x_2+ \dots+\beta_px_p}} = e^{c\beta_1}$$`
+
+
+Interpretation: For a *c*-unit increase in `\(x_1\)`, the odds of success changes by `\(e^{c\beta_1}\)` holding the other variables constant.
+
+- follow same idea for each variable
+
+---
+### Inference for Multiple Logistic Regression
+
+As with linear regression, the model slope captures information about association between a response and predictor.
+
+- `\(H_0: \beta_k = 0\)`, the `\(X_k\)` and *Y* variables are not associated
+- `\(H_A: \beta_k \neq 0\)`, the `\(X_k\)` and *Y* variables are associated
+
+These hypotheses can also be written in terms of the odds ratio.
+
+---
+### Logistic Regression Summary
+
+Overall goals similar to linear regression. . .
+
+- Estimating the association between a response and several predictors
+- Assessing statistical significance of the association
+
+However, in logistic regression, association is captured through odds and log(odds), instead of the mean of a response variable. Logistic regression can be thought of as an extension of two-way tables...
+
+- Just as linear regression can be thought of as an extension of two-sample t-tests and ANOVA.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

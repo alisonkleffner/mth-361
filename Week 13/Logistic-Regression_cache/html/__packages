@@ -1,4 +1,6 @@
-knitr
+aplore3
+xaringanthemer
+xaringanExtra
 tidyverse
 ggplot2
 tibble
@@ -9,8 +11,6 @@ dplyr
 stringr
 forcats
 lubridate
-xaringanthemer
-xaringanExtra
 RColorBrewer
 patchwork
 kableExtra
@@ -20,4 +20,3 @@ Matrix
 ggformula
 mosaicData
 mosaic
-aplore3
