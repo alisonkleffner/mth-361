@@ -30,4 +30,6 @@ Date | Notes | Description | Additional Files | Homework Assigned
 11/2/2023 | | Lab Day | | Lab 9 **due Friday November 3 at 11:59 pm**
 11/7/2023 | [Regression Part 2](Week 12/Week12-Notes.html) | Multiple Linear Regression | | Homework 9 **due Tuesday November 14 at 11:59 pm**
 11/9/2023 | | Lab Day | | Lab 10 **due Friday November 10 at 11:59 pm**
-11/7/2023 | [Intro to Categorical Data](Week 13/inference-for-categorical-data.html) | Hypothesis Tests for Categorical Data | | 
+11/14/2023 | [Intro to Categorical Data](Week 13/inference-for-categorical-data.html) | Hypothesis Tests for Categorical Data | | 
+11/16/2023 | [Logistic Regression](Week 13/Logistic-Regression.html) | Intro to Logistic Regression | | 
+11/21/2023 | | Lab Day | | Lab 11 **due Wednesday November 22 at 11:59 pm**

@@ -31,7 +31,19 @@ class: inverse
 
 ### Announcements
 
+Homeworks:
 
+- Homework 10 due November 28 at 11:59pm
+- Homework 11 due December 1 at 11:59pm
+
+Labs:
+
+- Lab 11 due November 22 at 11:59 pm
+- Lab 12 due November 29 at 11:59 pm
+
+Analysis Plan
+
+- Due November 21 at 11:59 pm
 
 
 
@@ -56,7 +68,6 @@ Can patient features available at admission be used to estimate the probability 
 
 - The data set contains information about patient characteristics at admission, such as heart rate, diagnosis, and kidney function. 
 - The variable `sta` is a factor variable with labels Died and Lived, corresponding to the levels 0 for death before discharge and 1 survival to discharge.
-- Information on other variables measured are in the lab.
 
 ---
 ### Survival and CPR
@@ -76,7 +87,7 @@ The probability of survival for those who did not receive CPR is `$$154/187=0.82
 
 --
 
-With logistic regression, we can also look at the odds of survival for those who did not recive CPR `$$154/33=4.67$$`
+With logistic regression, we can also look at the odds of survival for those who did not receive CPR `$$154/33=4.67$$`
 
 ---
 ### Odds and Probabilities
@@ -91,8 +102,6 @@ With some algebra, it is possible to show the following relationship:
 From the previous example,
 
 - odds = 4.67, *p* = 0.824
-- `\(\frac{p}{1-p}\)` = `\(\frac{0.824}{1-0.824} = 4.67\)`
-- `\(\frac{\text{odds}}{1 + \text{odds}} = \frac{4.67}{1+4.67} = 0.824\)`
 
 ---
 ### Odds
@@ -105,7 +114,7 @@ From the previous example,
   + Odds of success are 3:1
   
 ---
-### The model for Logistic Regression
+### The Model for Logistic Regression
 
 - Suppose *Y* is a binary variable and *X* is a predictor variable
   + In the ICU example, let *Y* be survival to discharge and *X* represent prior CPR
@@ -124,25 +133,15 @@ We often want to write the odds ration in terms of our regression model.
 Notice: `$$\text{log}[\frac{p(x)}{1-p(x)}] = \beta_0 + \beta_1x \longrightarrow \frac{p(x)}{1-p(x)} = e^{\beta_0 + \beta_1x}$$` 
 
 
-For a given `\(x_1\)`, the odds can be expressed as:
+For a given `\(x_1\)`, the odds of success can be expressed as:
 `$$\text{odds}_{x_1}=e^{\beta_0+\beta_1x_1}$$`
-
-For a constant *c* unit increase in `\(x_1\)`, the odds can be expressed as:
-`$$\text{odds}_{x_1 + c}=e^{\beta_0+\beta_1 (x_1+c)}$$`
----
-### True Odds Ratio
-
-The odds ratio for `\(x_1\)` = `$$\frac{\text{odds}_{x_1 + c}}{\text{odds}_{x_1}} = \frac{e^{\beta_0+\beta_1 (x_1+c)}}{e^{\beta_0+\beta_1x_1}} = \frac{e^{\beta_0+\beta_1x_1+\beta_1c}}{e^{\beta_0+\beta_1x_1}} = e^{c\beta_1}$$`
-
-
-Interpretation: For a *c*-unit increase in `\(x_1\)`, the odds of success changes by `\(e^{c\beta_1}\)` 
-
+Can then use your odds to find the probability
 ---
 ### Why log(odds) in logistic regression models?
 
 **Notes**: log(odds) is also called the logit
 
-- `\(\text{log}[\frac{p(x)}{1-p(x)}] = logit(p(x))\)`
+- `\(\text{log}[\frac{p(x)}{1-p(x)}] = \text{logit}(p(x))\)`
 
 Logistic regression is based on modeling the association between the probability *p* of the event of interest occurring and the values of the predictor variables.
 
@@ -181,13 +180,25 @@ The slope of `cprYes` represents the change in log(odds of survival), from the n
 
 The odds of survival in patients who previously received CPR:
 
-- `\(log[\frac{\hat{p}({\text{status = lived|cpr})}}{1-\hat{p}({\text{status = lived|cpr})}}] = 1.545 - 1.695(1)\)`
-- `\(\hat{\text{odds}}_{survival} = exp(1.545 - 1.695) = 0.856\)`
 
-The slope coefficient is the log of the estimated *odds ratio* for survival, comparing those who recived CPR to those who did not:
 
-- `\(\hat{\text{OR}} = \text{exp}(-1.695) = 0.184\)`
-- `\(\hat{\text{OR}} = \frac{\text{odds}_{\text{cpr = yes}}}{\text{odds}_{\text{cpr = no}}} = \frac{0.856}{4.66} = 0.184\)`
+---
+### True Odds Ratio: Slope
+
+
+For a constant *c* unit increase in `\(x_1\)`, the odds can be expressed as:
+`$$\text{odds}_{x_1 + c}=e^{\beta_0+\beta_1 (x_1+c)}$$`
+
+The odds ratio for `\(x_1\)` = `$$\frac{\text{odds}_{x_1 + c}}{\text{odds}_{x_1}} = \frac{e^{\beta_0+\beta_1 (x_1+c)}}{e^{\beta_0+\beta_1x_1}} = \frac{e^{\beta_0+\beta_1x_1+\beta_1c}}{e^{\beta_0+\beta_1x_1}} = e^{c\beta_1}$$`
+
+
+Interpretation: For a *c*-unit increase in `\(x_1\)`, the odds of success changes by `\(e^{c\beta_1}\)` 
+
+--
+
+The slope coefficient is the log of the estimated *odds ratio* for survival, comparing those who received CPR to those who did not:
+
+
 
 ---
 ### Inference for Simple Logistic Regression
