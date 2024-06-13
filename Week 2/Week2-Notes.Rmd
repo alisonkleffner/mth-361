@@ -1,7 +1,7 @@
 ---
 title: "MTH361: Probability and Statistics in the Health Sciences"
 author: "Introduction to Data and Data Collection"
-date: "August 22, 2023"
+date: "August 27, 2024"
 output: 
   xaringan::moon_reader:
     lib_dir: libs
@@ -20,7 +20,6 @@ output:
 library(tidyverse)
 library(knitr)
 
-knitr::knit_hooks$set(purl = knitr::hook_purl)
 hook_output = knit_hooks$get('output')
 knit_hooks$set(output = function(x, options) {
   # this hook is used only when the linewidth option is not NULL
@@ -87,7 +86,7 @@ class:inverse
 <br><br><br>
 ## MTH361: Probability and Statistics in the Health Sciences
 ### Introduction to Data and Data Collection
-#### August 22, 2023
+#### August 27, 2024
 
 
 ---
@@ -108,17 +107,16 @@ class:inverse
 Sections covered today in Book: Chapter 1.1-1.3
 
 ---
-
 ### Announcements 
 
-+ **Intro Questionnaire** due in Blueline at **11:59pm on Thursday August 24**
++ **Intro Questionnaire** due in Blueline at **11:59pm on Thursday August 29**
 
 + **Homework 1** will be released after class today
-  - Due **Tuesday August 29 at 11:59pm**
+  - Due **Tuesday September 3 at 1:59 pm**
   - Upload to Blueline
   
 + **Thursday's lab** will be available on Blueline after class today. If you want to hand write your lab, feel free to print it out and bring to lab
-  - Will be due **Friday August 25 at 11:59pm** in Blueline (but should have most of it done in class)
+  - Will be due **Friday August 30 at 11:59pm** in Blueline (but should have most of it done in class)
 
 **Look Ahead**: Sections 1.4-1.7 covered next week
 
@@ -141,7 +139,6 @@ The research question decides what your research subjects are and how to conduct
 
 ]
 
---
 
 **Examples**:
 
@@ -149,15 +146,6 @@ The research question decides what your research subjects are and how to conduct
 - What is the main cause of depression among the youth?
 - How does sleep affect your cholesterol levels?
 - Does the current heart transplantation mortality rate at a hospital exceed the national rate?
-
---
-
-Once you have a research question, you need to answer it. How?
-
---
-
-<br>
-.center[**Data!**]
 
 
 ---
@@ -189,7 +177,6 @@ If interested in this topic, you can find more information [here](https://peanut
   + Pass: No allergic reaction was detected
   + Fail: An allergic reaction was detected
 
---
 
 <br>
 <br>
@@ -273,7 +260,7 @@ So, what is Statistics?
 ---
 ### Describing a Data Set
 
-In a data table (also called a data matrix, like the one below):
+If we have a data set like the one below...
 
 ```{r, echo = FALSE}
 
@@ -385,7 +372,6 @@ There are at least two ways to describe variables:
   - **Explanatory Variable** (independent, predictor): a secondary variable(s) that explains changes in the response variable
   - **Response Variable** (dependent): defined by the particular research question a study seeks to address, and measures the outcome of interest in the study
   
---
   
 **Example**: Does receiving a monetary incentive increase the likelihood of a person responding to a survey?
 
@@ -401,7 +387,7 @@ There are at least two ways to describe variables:
 ---
 ### Another Example
 
-**Example**: Could cancer cells be selectively targeted by using antibodies recognizing a tumor-specific protein marker? Researchers grafted human cancerous cells onto healthy adult mice. Some of the mice were then injected with tumor-specific antibodies while others were not. The researchers wanted to study the number of mice exhibiting lymph node metastases in each group.
+**Example**: Could cancer cells be selectively targeted by using antibodies recognizing a tumor-specific protein marker? Researchers grafted human cancerous cells onto healthy adult mice. Some of the mice were then injected with tumor-specific antibodies while others were not. The researchers wanted to study the proportion of mice exhibiting lymph node metastases in each group.
 		
 - What variables were recorded? Classify each variable as numerical or categorical.
 - Classify each variable as the response variable or explanatory.
@@ -458,19 +444,13 @@ Samples are most useful for learning about a population when they are **represen
 - ie. If it is similar to or represents the whole population from which it has been drawn
 
 
---
-
 **Example**: Would our class data be representative of all Creighton students?
 
---
+---
+### Sampling from a Population
 
-.center[No! There is *bias* in this sample.]
-
-
---
 **Bias** : when the statistic consistently overestimates or underestimates the population parameter of interest.
 
---
 
 **Another Example**: Would asking Creighton students enrolled in 8 am classes if they are morning people be representative of all Creighton students?
 
@@ -478,15 +458,11 @@ Samples are most useful for learning about a population when they are **represen
 ---
 ### Bad Sampling
 
+**Convenience sample**: individuals who are easily accessible are more likely to be included in the sample
+
 **Example** Suppose that the quality improvement team at an integrated health care system, such as Harvard Pilgrim Health Care, is interested in learning about how members of the health plan perceive the quality of the services offered under the plan.
 
 You have a staff waiting at the door of the health plan clinic and survey everyone entering the door. Is this a good sample?
-
---
-
-**Convenience sample**: individuals who are easily accessible are more likely to be included in the sample
-
-In this scenario we would fail to enroll generally healthy members
 
 ---
 ### Simple Random Sample
@@ -504,14 +480,19 @@ You randomly send surveys through mail to some members of the health plan
 - If have randomization, we can generalize the results to the population
 
 
---
+---
+### Simple Random Sample
 
 .center[
 **What if you have a high non-response rate?**]
 
---
-.center[May have a biased sample]
+<br>
+<br>
+<br>
+<br>
+<br>
 
+Example: If questions assume that participants are fluent in English, then a high non-response rate would be expected if the population largely consists of individuals who are not fluent in English
 ---
 ### Other Useful Sampling Methods: Blocking
 
@@ -522,14 +503,6 @@ knitr::include_graphics("../images/Week2/sampling.png")
 
 ```
 
----
-### Sampling Methods
-
-**Example**: For the scenarios below, which sampling method would you recommend and why?
-		
-- Suppose researchers are interested in estimating the malaria rate in a densely tropical portion of rural Indonesia. There are 30 villages in the area, each more or less similar to the others. The goal is to test 150 individuals for malaria.
-- It is common for health care facilities to follow up a patient visit with an email providing a link to a website where patients can rate their experience. Since the non-response rate for email is expected to be high, the facilities have decided to use a phone survey instead.
-  - This health care facility is concerned following some reports of discriminatory treatment of minority patients, and they want to make sure that minority patients' experiences are well-documented.
   
 ---
 ### Let's Go Back to the Peanut Example
@@ -592,31 +565,20 @@ knitr::include_graphics("../images/Week2/sampling.png")
 ### Three Principles of Experimental Design
 
 **Control**: Researchers attempt to control outside variables by standardizing experimental conditions 
-
-**Randomization**: Randomly assigning patients to treatment groups ensures that groups are balanced with respect to variables both we cannot control
-
-**Replication**: Experiments should be repeated on a sufficiently large sample of data
-
-
----
-
-### Three Principles of Experimental Design
-
-There are two ideas of **control** in statistics:
 		
-- Control from the experimental design perspective (v.): Researchers attempt to control outside variables by standardizing experimental conditions
-- Control group (n.): in an experiment, the control group serves as a basis for comparison. Placebo group, known treatment, etc.
+- Researchers attempt to control outside variables by standardizing experimental conditions
+- Have a control group which serves as a basis for comparison (ie. Placebo group, known treatment, etc)
 
 In a study, we can **randomize** in several ways:
 				
 - Randomly select subjects to participate (generalize to population)
 - Randomly assign subjects to experimental treatments (can determine cause/effect)
 
-**Replication** can be in one study or multiple study
+**Replication**: Experiments should be repeated on a sufficiently large sample of data
 		
 - The study is conducted on multiple subjects
   + Have more than one observation per treatment group
-- Replication study: a phenomenon in research where earlier studies are fully repeated to see if the results remain the same
+
 
 ---
 
@@ -651,7 +613,6 @@ c(str_split(i2, "\\n", simplify = T)[1:2],
 **Association does not justify causation**
 ]
 
---
 
 Randomly assigning objects to groups tends to balance out all other variables between the groups.
 
