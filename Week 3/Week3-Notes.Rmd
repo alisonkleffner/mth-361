@@ -1,7 +1,7 @@
 ---
 title: "MTH361: Probability and Statistics in the Health Sciences"
 author: "Exploratory Data Analysis"
-date: "August 29, 2023"
+date: "September 3, 2024"
 output: 
   xaringan::moon_reader:
     lib_dir: libs
@@ -49,30 +49,10 @@ Exploratory Data Analysis:
 ---
 ### Announcements
 
-- Lab 1 is graded
 
-- Homework 1 due **tonight at 11:59 pm**
-
-- Homework 2 will be available after class
-  + Due **Tuesday September 5 at 11:59 pm**
-  
-- Lab 2 will be on Thursday.
-  + This will require a little `R` code
 
 **Book Sections for Next Week**: Chapter 2
 
----
-### Lab 1 Notes
-
-- Show your work
-
-- **Confounding Variables**: unmeasured third variable that influences both the explanatory and response variables.
-  - If unaccounted for, may introduce bias
-
-- **Observational studies** -> confounding variables -> no cause and effect
-
-- **Experimental studies** -> balance out confounding variables (randomization) -> can determine cause and effect
-    + [Example](https://www.rossmanchance.com/applets/2021/randomassignment/Subjects.html)
 ---
 ### Exploratory Data Analysis (EDA)
 
@@ -90,6 +70,7 @@ How?
 
 Choosing an effective data display is a much a science as an art.
 
+
 ---
 ### A Quick Note on Good Graphics
 
@@ -102,12 +83,37 @@ A Few Principles:
 - Represent magnitudes honestly
 - Make graphical elements clear
 
---
 
 
-Note
+Note:
 
 - All R code for producing the graphics and data summaries will use the `tidyverse` and `mosaic` libraries. The code can be found in the provided file in BlueLine, so you should be able to reproduce these graphics at home.
+
+---
+### Some Bad Graphics: COVID-19
+
+.center[
+
+
+```{r, echo=FALSE, out.width="45%"}
+
+knitr::include_graphics("../Week 3/images/bad-pie.png")
+
+
+```
+
+]
+
+.center[
+
+
+```{r, echo=FALSE, out.width="60%"}
+
+knitr::include_graphics("../Week 3/images/bad-scale.png")
+
+```
+
+]
 
 
 ---
@@ -161,17 +167,6 @@ Same median (*m*): middle observation when all the values are ordered from small
 
 **Example**: We have a mean age of 57.5 and a median age of 63.
 
---
-
-<br>
-<br>
-.center[**How to interpret them?**]
-<br>
-<br>
-
---
-
-The average age of people in the study in 57.5. Half of the age's of the people in the study is below (or above) 63 years old. 
 
 ---
 ### Standard Deviation and Variance
@@ -183,7 +178,7 @@ $$s = \sqrt{\frac{1}{n-1}\sum^{n}_{i-1}(x_i - \bar{x})^2}$$
 
 - "Large" *s* indicates that the observations are typically far from the mean
 - "Small" *s* indicates that observations are closely concentrated around the mean
-- The "large" and "small" are relatively speaking
+- The "large" and "small" are relative
 
 **Variance**: $s^2$
   
@@ -240,47 +235,39 @@ knitr::include_graphics("../Week 3/images/IQR.png")
 ### Easy Calculation of Summary Statistics
   
 Use the `favstats()` function in the  `mosaic` package. 
-```{r, message=FALSE}
+
+```{r, message=FALSE, eval = FALSE}
 library(mosaic)
+data <- read.csv("ICUAdmissions.csv")
 favstats(data$Age) #gives statistical summaries
 ```
+
+
+```{r, message=FALSE, echo=FALSE}
+library(mosaic)
+data <- read.csv("../Week 3/data/ICUAdmissions.csv")
+favstats(data$Age) #gives statistical summaries
+```
+
 
 Can also use `summary()` but `favstats()` also provide total number of observations and number of missing values. 
 
 ---
 ### Visualizing the Distribution - Side Note
 
-We can create a distribution of the `Age` variable with the `ggplot()` function. 
+We can create a distribution of the `Age` variable with the `ggplot()` function. `ggplot()` is an additive function. The geom_histogram() function will add an new histogram "layer" to our plot. New layers can be added with a `+` sign.  
 
-```{r, eval = FALSE}
-data %>% ggplot(aes(Age))
+.pull-left[
+```{r, message=FALSE}
+data %>% ggplot(aes(Age)) 
+```
+].pull-right[
+```{r, message=FALSE}
+data %>% ggplot(aes(Age)) + 
+  geom_histogram() #<<
 ```
 
-
-```{r, echo=FALSE, message=FALSE, fig.align='center', fig.height=5}
-library(tidyverse)
-data <- read.csv("../Week 3/data/ICUAdmissions.csv")
-data %>% ggplot(aes(Age))
-
-```
-
----
-### Visualizing the Distribution - Side Note
-
-`ggplot()` is an additive function. The geom_histogram() function will add an new histogram "layer" to our plot. New layers can be added with a `+` sign.
-
-```{r, eval = FALSE}
-data %>% ggplot(aes(Age)) + geom_histogram() + 
-  ggtitle("Histogram of Age with 30 Bins")
-```
-
-
-```{r, echo=FALSE, message=FALSE, fig.align='center', fig.height=5}
-library(tidyverse)
-data <- read.csv("../Week 3/data/ICUAdmissions.csv")
-data %>% ggplot(aes(Age)) + geom_histogram() + ggtitle("Histogram of Age with 30 Bins")
-
-```
+]
 
 ---
 #### Visualizing the Distribution
@@ -298,8 +285,8 @@ data %>% ggplot(aes(Age)) +
 ```{r, message=FALSE}
 
 data %>% ggplot(aes(Age)) + 
-  geom_histogram(bins = 15) + #<<
-  ggtitle("Histogram 15 Bins")
+  geom_histogram(bins = 10) + #<<
+  ggtitle("Histogram 10 Bins")
 ```
 
 ]
@@ -348,7 +335,7 @@ Describing a Distribution:
 .center[
 
 
-```{r, echo=FALSE, out.width="85%"}
+```{r, echo=FALSE, out.width="95%"}
 
 knitr::include_graphics("../Week 3/images/skewness.png")
 
@@ -358,7 +345,10 @@ knitr::include_graphics("../Week 3/images/skewness.png")
 
 ---
 ### Exercise
-.center[Let's explore the Heart Rate variable with the given summary statistics and figure
+
+Describe the Heart Rate variable using the given summary statistics and figure
+
+.center[
 ```{r, echo = FALSE, message=FALSE}
 j <- t(data.frame(c(summary(data$HeartRate), sd= sd(data$HeartRate), n= length(data$HeartRate), missing=sum(is.na(data$HeartRate)))))
 rownames(j) <- NULL 
@@ -374,11 +364,10 @@ data %>% ggplot(aes(HeartRate)) + geom_histogram() + ggtitle("Histogram of Heart
 
 --
 .pull-right[
-- 200 observations without any missing values
-- The average heart rate is about 98.9 and half of the people have a heart rate over 96.
-- The range of the data is from 39-192, while a typical value would fall between 72.1 and 125.8
-- The distribution of the variable is unimodal and almost symmetrical (slightly skewed right)
-- There may be a potential outlier
+- **Center**: Average heart rate is 98.925 and half of the people have a heart rate over 96.
+- **Variability**: The range of the data is from 39-192, while a typical value would fall between 72.1 and 125.8. Standard deviation of 26.83, says the data is fairly spread out.
+- **Shape**: Unimodal and almost symmetrical (slightly skewed right)
+- **Outlier**: Maybe at the far right
 ]
 
 ---
@@ -412,6 +401,8 @@ data <- data %>%
 ```
 
 ```{r}
+table(data$Race)
+
 data %>%    
   group_by(Race) %>%    
   summarise(count = n()) %>% mutate(prop = count/sum(count))
@@ -423,21 +414,34 @@ data %>%
 
 Visualization: Bar Charts
 
-```{r, fig.align='center', fig.height=4}
-data %>% ggplot(aes(x=Race, fill = Race)) + geom_bar() 
+```{r, fig.align='center', fig.height=5}
+data %>% ggplot(aes(x=Race, fill = Race)) + 
+  geom_bar() #<<
 ```
 
---
-
+---
+### EDA for One Categorical Variable
 Making a Good Bar Chart:
-
 - Baseline of the y-axis should be at 0.
 - For ordinal variables, the bars should be in the natural order. For nominal variables, best to arrange by frequency of occurrence. 
+
+What's wrong with this example?
+
+.center[
+
+
+```{r, echo=FALSE, out.width="95%"}
+
+knitr::include_graphics("../Week 3/images/bad-bar.png")
+
+```
+
+]
+
 ---
 ### Difference Between Bar-Plot and Histogram
 
 - Histograms are for continuous variables; Bar plots are for categorical variables
-- Histograms are for describing distributions; Bar plot are for bar-to-bar comparison
 - You can not switch the order of the histogram, but for most cases, it is OK to switch the bar order on a Bar Plot
 
 
@@ -472,12 +476,13 @@ class:inverse
 
 ### EDA for Two Contiuous Variables
 
-- Pearson Correlation Coefficient $(r)$: a measure of linear correlation between two sets of data (more in later chapters)
-- Scatterplots
+- Numerical: Pearson Correlation Coefficient $(r)$: a measure of linear correlation between two sets of data (more in later chapters)
+- Visualziation: Scatterplots
 
 ```{r, fig.height=5, fig.align='center'}
 
-data %>% ggplot(aes(x=Systolic, y = HeartRate)) + geom_point()
+data %>% ggplot(aes(x=Systolic, y = HeartRate)) + 
+  geom_point() #<<
 
 ```
 
@@ -512,14 +517,16 @@ Especially useful if want to show data over time
 .pull-left[
 ```{r}
 data %>% 
-  ggplot(aes(x=Systolic,y=HeartRate))+ 
+  ggplot(aes(x=Systolic,
+             y=HeartRate))+ 
   geom_line() + #<<
   ggtitle("Line Plot")
 ```
 ].pull-right[
 ```{r, message=FALSE}
 data %>% 
-  ggplot(aes(x=Systolic,y=HeartRate))+ 
+  ggplot(aes(x=Systolic,
+             y=HeartRate))+ 
   geom_smooth() + #<<
   ggtitle("Smooth Line Plot")
 ```
@@ -556,7 +563,7 @@ data$Infection <- as.factor(data$Infection)
 data %>% 
   ggplot(aes(y = HeartRate, 
             fill=Infection)) + 
-  geom_boxplot() + 
+  geom_boxplot() + #<<
   ggtitle("Box Plot of HR")
 
 ```
@@ -565,7 +572,7 @@ data %>%
 data %>% 
   ggplot(aes(x=HeartRate, 
           color=Infection)) + 
-  geom_density() + 
+  geom_density() + #<<
   ggtitle("Density Plot of HR")
 ```
 ]
@@ -573,22 +580,22 @@ data %>%
 ---
 ### EDA for One Contiuous and One Categorical Variable
 
-- Plot continuous variable in multiple panels
+- Plot continuous variable in multiple panels `(facet_grid)`
 
 .pull-left[
 ```{r, fig.height=6}
-data %>% ggplot(aes(y=HeartRate, 
-             fill = Infection)) + 
-  facet_grid(~Infection) + 
-  geom_boxplot() + #<<
+data %>% ggplot(aes(x=HeartRate, 
+        fill = Infection)) + 
+  facet_grid(~Infection) + #<<
+  geom_density() + #<<
   ggtitle("Box Plot of HR")
 
 ```
 ].pull-right[
-```{r,  message=FALSE}
+```{r,  message=FALSE, fig.height=6}
 data %>% ggplot(aes(x=HeartRate, 
-                    fill = Infection)) + 
-  facet_grid(~Infection) + 
+          fill = Infection)) + 
+  facet_grid(~Infection) + #<<
   geom_histogram() + #<<
   ggtitle("Hist of Heart Rate")
 
@@ -675,13 +682,11 @@ For each of the following scenarios, which summary statistics and data visualiza
 ---
 ### Exercise (a)
 
-(a). If you want to examine whether there is a relationship between Age and Premium Price (consider both as continuous variables), which summary statistics and data visualizations should you use?
-
---
+Describe the relationship between Age and Premium Price.
 
 The Correlation Coefficient is 0.698
 
-```{r, echo=FALSE, fig.height=4}
+```{r, echo=FALSE, fig.height=5, fig.align='center'}
 
 med <- read.csv("../Week 3/data/Medicalpremium.csv")
 
@@ -689,17 +694,11 @@ med %>% ggplot(aes(x=Age, y = PremiumPrice)) + geom_point() + ggtitle("Scatterpl
   
 ```
 
---
-
-The correlation coefficient and the scatterplot indicates that there may exist a moderate positive linear relationship between age and premium price.
-
 ---
 ### Exercise (b)
 
 
-(b). If you want to learn more information about people with a transplant, what summary statistics and data visualization would you consider?
-
---
+Describe what you learned about people with a transplant.
 
 .pull-left[
 ```{r echo=FALSE}
@@ -714,53 +713,38 @@ kableExtra::kable(t(table(med$AnyTransplants)))
 ].pull-right[
 ```{r echo=FALSE}
 
-med %>% ggplot(aes(x=AnyTransplants)) + geom_bar() + theme(axis.ticks.x=element_blank())
+med %>% ggplot(aes(x=AnyTransplants, fill = AnyTransplants)) + geom_bar() + theme(axis.ticks.x=element_blank())
 
 ```
 
 ]
 
---
-
-55/(931+55) = 5.58% of the patients have a transplant.
-
 ---
-#### Exercise (c)
+### Exercise (c)
 
-(c) If you want to know the relation between those with transplant & the premium price, what summary statistics and data visualization can you use?
+Describe the relationship between those with transplant & the premium price.
 
---
 ```{r, echo = FALSE}
-kableExtra::kable(med %>% group_by(AnyTransplants) %>% summarise(min = min(PremiumPrice), Q1=quantile(PremiumPrice, probs = 0.25),
+colnames(med)[4] <- "Transplants"
+
+kableExtra::kable(med %>% group_by(Transplants) %>% summarise(min = min(PremiumPrice), Q1=quantile(PremiumPrice, probs = 0.25),
                                                med=median(PremiumPrice), Q3=quantile(PremiumPrice, probs = 0.75), max = max(PremiumPrice), 
-                                               mean = mean(PremiumPrice), sd= sd(PremiumPrice), n = n(), miss= sum(is.na(PremiumPrice))))
+                                               mean = mean(PremiumPrice), sd= sd(PremiumPrice), n = n()))
 
 ```
 
 .pull-left[
 ```{r, echo=FALSE, fig.height=6}
-med %>% ggplot(aes(y = PremiumPrice, fill = AnyTransplants)) + geom_boxplot() + ggtitle("Box Plot of Premium Price")
+med %>% ggplot(aes(y = PremiumPrice, fill = Transplants)) + geom_boxplot() + ggtitle("Box Plot of Premium Price")
 
 ```
 ]
 
---
-.pull-right[
-
-- The people without a transplant typically will get a premium price from $18156 to $29639
-- The people with a transplant typically will get a premium price from $22550 to $40977
-- The people with a transplant tend to have a larger variability on their premium price
-- On average, the people with a transplant tend to have a higher premium price. No overlap in box plots, so the difference is significant
-
-
-]
 
 ---
 ### Exercise (d)
 
-(d) If you want to know whether having a transplant will related to whether people having any chronic diseases, which summary statistics and data visualization you may choose?
-
---
+Does having a transplant relate to whether people have any chronic diseases? Explain.
 
 .pull-left[
 
@@ -771,7 +755,7 @@ med <- med %>%
                                  labels = c("No", "Yes"))) 
 
 
-tab2 <- table(med$AnyTransplants ,med$AnyChronicDiseases)
+tab2 <- table(med$Transplants ,med$AnyChronicDiseases)
 names(attributes(tab2)$dimnames) <- c("Transplant","Chronic")
 tab2
 
@@ -779,17 +763,8 @@ tab2
 
 
 ```{r, echo=FALSE, fig.height=6}
-med %>% ggplot(aes(x=AnyChronicDiseases, fill = AnyTransplants))+ facet_grid(~AnyTransplants) + geom_bar() + ggtitle("Side-by-side bar plot of chronic diseases vs transplant")
+med %>% ggplot(aes(x=AnyChronicDiseases, fill = Transplants))+ facet_grid(~Transplants) + geom_bar() + ggtitle("Side-by-side bar plot of chronic diseases vs transplant")
 ```
-]
-
---
-.pull-right[
-
-- Among the people without transplants, 165/(165+766) = 17.7% of people have chronic diseases
-- Among the people with transplants, 13/(13+42) = 23.6% of people have chronic diseases
-- From the data, it seems that people with transplants are more likely to have chronic diseases but the difference is not large.
-
 ]
 
 

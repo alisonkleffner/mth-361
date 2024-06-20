@@ -4,8 +4,8 @@
     <title>MTH361: Probability and Statistics in the Health Sciences</title>
     <meta charset="utf-8" />
     <meta name="author" content="Exploratory Data Analysis" />
-    <meta name="date" content="2023-08-29" />
-    <script src="libs/header-attrs-2.23/header-attrs.js"></script>
+    <meta name="date" content="2024-09-03" />
+    <script src="libs/header-attrs-2.27/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
   </head>
@@ -20,7 +20,7 @@ class: center, middle, inverse, title-slide
 ### Exploratory Data Analysis
 ]
 .date[
-### August 29, 2023
+### September 3, 2024
 ]
 
 ---
@@ -48,30 +48,10 @@ Exploratory Data Analysis:
 ---
 ### Announcements
 
-- Lab 1 is graded
 
-- Homework 1 due **tonight at 11:59 pm**
-
-- Homework 2 will be available after class
-  + Due **Tuesday September 5 at 11:59 pm**
-  
-- Lab 2 will be on Thursday.
-  + This will require a little `R` code
 
 **Book Sections for Next Week**: Chapter 2
 
----
-### Lab 1 Notes
-
-- Show your work
-
-- **Confounding Variables**: unmeasured third variable that influences both the explanatory and response variables.
-  - If unaccounted for, may introduce bias
-
-- **Observational studies** -&gt; confounding variables -&gt; no cause and effect
-
-- **Experimental studies** -&gt; balance out confounding variables (randomization) -&gt; can determine cause and effect
-    + [Example](https://www.rossmanchance.com/applets/2021/randomassignment/Subjects.html)
 ---
 ### Exploratory Data Analysis (EDA)
 
@@ -89,6 +69,7 @@ How?
 
 Choosing an effective data display is a much a science as an art.
 
+
 ---
 ### A Quick Note on Good Graphics
 
@@ -101,12 +82,28 @@ A Few Principles:
 - Represent magnitudes honestly
 - Make graphical elements clear
 
---
 
 
-Note
+Note:
 
 - All R code for producing the graphics and data summaries will use the `tidyverse` and `mosaic` libraries. The code can be found in the provided file in BlueLine, so you should be able to reproduce these graphics at home.
+
+---
+### Some Bad Graphics: COVID-19
+
+.center[
+
+
+&lt;img src="../Week 3/images/bad-pie.png" width="45%" /&gt;
+
+]
+
+.center[
+
+
+&lt;img src="../Week 3/images/bad-scale.png" width="60%" /&gt;
+
+]
 
 
 ---
@@ -160,17 +157,6 @@ Same median (*m*): middle observation when all the values are ordered from small
 
 **Example**: We have a mean age of 57.5 and a median age of 63.
 
---
-
-&lt;br&gt;
-&lt;br&gt;
-.center[**How to interpret them?**]
-&lt;br&gt;
-&lt;br&gt;
-
---
-
-The average age of people in the study in 57.5. Half of the age's of the people in the study is below (or above) 63 years old. 
 
 ---
 ### Standard Deviation and Variance
@@ -182,7 +168,7 @@ The average age of people in the study in 57.5. Half of the age's of the people 
 
 - "Large" *s* indicates that the observations are typically far from the mean
 - "Small" *s* indicates that observations are closely concentrated around the mean
-- The "large" and "small" are relatively speaking
+- The "large" and "small" are relative
 
 **Variance**: `\(s^2\)`
   
@@ -232,44 +218,45 @@ The definition of IQR is related to a boxplot and one of the way to define outli
   
 Use the `favstats()` function in the  `mosaic` package. 
 
-```r
+
+``` r
 library(mosaic)
+data &lt;- read.csv("ICUAdmissions.csv")
 favstats(data$Age) #gives statistical summaries
 ```
+
+
 
 ```
 ##  min    Q1 median Q3 max   mean       sd   n missing
 ##   16 46.75     63 72  92 57.545 20.05465 200       0
 ```
 
+
 Can also use `summary()` but `favstats()` also provide total number of observations and number of missing values. 
 
 ---
 ### Visualizing the Distribution - Side Note
 
-We can create a distribution of the `Age` variable with the `ggplot()` function. 
+We can create a distribution of the `Age` variable with the `ggplot()` function. `ggplot()` is an additive function. The geom_histogram() function will add an new histogram "layer" to our plot. New layers can be added with a `+` sign.  
 
+.pull-left[
 
-```r
-data %&gt;% ggplot(aes(Age))
+``` r
+data %&gt;% ggplot(aes(Age)) 
 ```
 
+![](Week3-Notes_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
+].pull-right[
 
-&lt;img src="Week3-Notes_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
-
----
-### Visualizing the Distribution - Side Note
-
-`ggplot()` is an additive function. The geom_histogram() function will add an new histogram "layer" to our plot. New layers can be added with a `+` sign.
-
-
-```r
-data %&gt;% ggplot(aes(Age)) + geom_histogram() + 
-  ggtitle("Histogram of Age with 30 Bins")
+``` r
+data %&gt;% ggplot(aes(Age)) + 
+* geom_histogram()
 ```
 
+![](Week3-Notes_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
 
-&lt;img src="Week3-Notes_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+]
 
 ---
 #### Visualizing the Distribution
@@ -279,22 +266,22 @@ Use a histogram to capture the distribution (pattern of outcomes) of a variable
 
 .pull-left[
 
-```r
+``` r
 data %&gt;% ggplot(aes(Age)) + 
 * geom_histogram() +
   ggtitle("Histogram 30 Bins")
 ```
 
-![](Week3-Notes_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
+![](Week3-Notes_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
 ].pull-right[
 
-```r
+``` r
 data %&gt;% ggplot(aes(Age)) + 
-* geom_histogram(bins = 15) +
-  ggtitle("Histogram 15 Bins")
+* geom_histogram(bins = 10) +
+  ggtitle("Histogram 10 Bins")
 ```
 
-![](Week3-Notes_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
+![](Week3-Notes_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
 
 ]
 
@@ -307,22 +294,22 @@ Another option for the distribution of a continuous variable: density plot
 
 .pull-left[
 
-```r
+``` r
 data %&gt;% ggplot(aes(Age)) + 
 * geom_density() +
   ggtitle("Density Plot of Age")
 ```
 
-![](Week3-Notes_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
+![](Week3-Notes_files/figure-html/unnamed-chunk-12-1.png)&lt;!-- --&gt;
 ].pull-right[
 
-```r
+``` r
 data %&gt;% ggplot(aes(Age)) + 
 * geom_density(fill="blue") +
   ggtitle("Density Plot of Age")
 ```
 
-![](Week3-Notes_files/figure-html/unnamed-chunk-12-1.png)&lt;!-- --&gt;
+![](Week3-Notes_files/figure-html/unnamed-chunk-13-1.png)&lt;!-- --&gt;
 
 ]
   
@@ -346,52 +333,30 @@ Describing a Distribution:
 .center[
 
 
-&lt;img src="../Week 3/images/skewness.png" width="85%" /&gt;
+&lt;img src="../Week 3/images/skewness.png" width="95%" /&gt;
 
 ]
 
 ---
 ### Exercise
-.center[Let's explore the Heart Rate variable with the given summary statistics and figure
-&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:right;"&gt; Min. &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; 1st Qu. &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Median &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Mean &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; 3rd Qu. &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Max. &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; sd &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; n &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; missing &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 39 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 80 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 96 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 98.925 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 118.25 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 192 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 26.82962 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 200 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
+
+Describe the Heart Rate variable using the given summary statistics and figure
+
+.center[
+
+| Min.| 1st Qu.| Median|   Mean| 3rd Qu.| Max.|       sd|   n| missing|
+|----:|-------:|------:|------:|-------:|----:|--------:|---:|-------:|
+|   39|      80|     96| 98.925|  118.25|  192| 26.82962| 200|       0|
 ].pull-left[
-![](Week3-Notes_files/figure-html/unnamed-chunk-15-1.png)&lt;!-- --&gt;
+![](Week3-Notes_files/figure-html/unnamed-chunk-16-1.png)&lt;!-- --&gt;
 ]
 
 --
 .pull-right[
-- 200 observations without any missing values
-- The average heart rate is about 98.9 and half of the people have a heart rate over 96.
-- The range of the data is from 39-192, while a typical value would fall between 72.1 and 125.8
-- The distribution of the variable is unimodal and almost symmetrical (slightly skewed right)
-- There may be a potential outlier
+- **Center**: Average heart rate is 98.925 and half of the people have a heart rate over 96.
+- **Variability**: The range of the data is from 39-192, while a typical value would fall between 72.1 and 125.8. Standard deviation of 26.83, says the data is fairly spread out.
+- **Shape**: Unimodal and almost symmetrical (slightly skewed right)
+- **Outlier**: Maybe at the far right
 ]
 
 ---
@@ -419,7 +384,17 @@ class:inverse
 
 
 
-```r
+``` r
+table(data$Race)
+```
+
+```
+## 
+## White Black Other 
+##   175    15    10
+```
+
+``` r
 data %&gt;%    
   group_by(Race) %&gt;%    
   summarise(count = n()) %&gt;% mutate(prop = count/sum(count))
@@ -440,30 +415,39 @@ data %&gt;%
 Visualization: Bar Charts
 
 
-```r
-data %&gt;% ggplot(aes(x=Race, fill = Race)) + geom_bar() 
+``` r
+data %&gt;% ggplot(aes(x=Race, fill = Race)) + 
+* geom_bar()
 ```
 
-&lt;img src="Week3-Notes_files/figure-html/unnamed-chunk-18-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week3-Notes_files/figure-html/unnamed-chunk-19-1.png" style="display: block; margin: auto;" /&gt;
 
---
-
+---
+### EDA for One Categorical Variable
 Making a Good Bar Chart:
-
 - Baseline of the y-axis should be at 0.
 - For ordinal variables, the bars should be in the natural order. For nominal variables, best to arrange by frequency of occurrence. 
+
+What's wrong with this example?
+
+.center[
+
+
+&lt;img src="../Week 3/images/bad-bar.png" width="95%" /&gt;
+
+]
+
 ---
 ### Difference Between Bar-Plot and Histogram
 
 - Histograms are for continuous variables; Bar plots are for categorical variables
-- Histograms are for describing distributions; Bar plot are for bar-to-bar comparison
 - You can not switch the order of the histogram, but for most cases, it is OK to switch the bar order on a Bar Plot
 
 
 .pull-left[
-![](Week3-Notes_files/figure-html/unnamed-chunk-19-1.png)&lt;!-- --&gt;
+![](Week3-Notes_files/figure-html/unnamed-chunk-21-1.png)&lt;!-- --&gt;
 ].pull-right[
-![](Week3-Notes_files/figure-html/unnamed-chunk-20-1.png)&lt;!-- --&gt;
+![](Week3-Notes_files/figure-html/unnamed-chunk-22-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -486,15 +470,16 @@ class:inverse
 
 ### EDA for Two Contiuous Variables
 
-- Pearson Correlation Coefficient `\((r)\)`: a measure of linear correlation between two sets of data (more in later chapters)
-- Scatterplots
+- Numerical: Pearson Correlation Coefficient `\((r)\)`: a measure of linear correlation between two sets of data (more in later chapters)
+- Visualziation: Scatterplots
 
 
-```r
-data %&gt;% ggplot(aes(x=Systolic, y = HeartRate)) + geom_point()
+``` r
+data %&gt;% ggplot(aes(x=Systolic, y = HeartRate)) + 
+* geom_point()
 ```
 
-&lt;img src="Week3-Notes_files/figure-html/unnamed-chunk-21-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week3-Notes_files/figure-html/unnamed-chunk-23-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 ### Interpretation of Correlation Coffiecient from Scatterplots
@@ -522,24 +507,26 @@ Especially useful if want to show data over time
 
 .pull-left[
 
-```r
+``` r
 data %&gt;% 
-  ggplot(aes(x=Systolic,y=HeartRate))+ 
+  ggplot(aes(x=Systolic,
+             y=HeartRate))+ 
 * geom_line() +
   ggtitle("Line Plot")
 ```
 
-![](Week3-Notes_files/figure-html/unnamed-chunk-23-1.png)&lt;!-- --&gt;
+![](Week3-Notes_files/figure-html/unnamed-chunk-25-1.png)&lt;!-- --&gt;
 ].pull-right[
 
-```r
+``` r
 data %&gt;% 
-  ggplot(aes(x=Systolic,y=HeartRate))+ 
+  ggplot(aes(x=Systolic,
+             y=HeartRate))+ 
 * geom_smooth() +
   ggtitle("Smooth Line Plot")
 ```
 
-![](Week3-Notes_files/figure-html/unnamed-chunk-24-1.png)&lt;!-- --&gt;
+![](Week3-Notes_files/figure-html/unnamed-chunk-26-1.png)&lt;!-- --&gt;
 ]
 
 
@@ -568,39 +555,10 @@ class:inverse
 
 .pull-left[
 
-```r
+``` r
 data %&gt;% 
   ggplot(aes(y = HeartRate, 
             fill=Infection)) + 
-  geom_boxplot() + 
-  ggtitle("Box Plot of HR")
-```
-
-![](Week3-Notes_files/figure-html/unnamed-chunk-26-1.png)&lt;!-- --&gt;
-].pull-right[
-
-```r
-data %&gt;% 
-  ggplot(aes(x=HeartRate, 
-          color=Infection)) + 
-  geom_density() + 
-  ggtitle("Density Plot of HR")
-```
-
-![](Week3-Notes_files/figure-html/unnamed-chunk-27-1.png)&lt;!-- --&gt;
-]
-
----
-### EDA for One Contiuous and One Categorical Variable
-
-- Plot continuous variable in multiple panels
-
-.pull-left[
-
-```r
-data %&gt;% ggplot(aes(y=HeartRate, 
-             fill = Infection)) + 
-  facet_grid(~Infection) + 
 * geom_boxplot() +
   ggtitle("Box Plot of HR")
 ```
@@ -608,15 +566,44 @@ data %&gt;% ggplot(aes(y=HeartRate,
 ![](Week3-Notes_files/figure-html/unnamed-chunk-28-1.png)&lt;!-- --&gt;
 ].pull-right[
 
-```r
+``` r
+data %&gt;% 
+  ggplot(aes(x=HeartRate, 
+          color=Infection)) + 
+* geom_density() +
+  ggtitle("Density Plot of HR")
+```
+
+![](Week3-Notes_files/figure-html/unnamed-chunk-29-1.png)&lt;!-- --&gt;
+]
+
+---
+### EDA for One Contiuous and One Categorical Variable
+
+- Plot continuous variable in multiple panels `(facet_grid)`
+
+.pull-left[
+
+``` r
 data %&gt;% ggplot(aes(x=HeartRate, 
-                    fill = Infection)) + 
-  facet_grid(~Infection) + 
+        fill = Infection)) + 
+* facet_grid(~Infection) +
+* geom_density() +
+  ggtitle("Box Plot of HR")
+```
+
+![](Week3-Notes_files/figure-html/unnamed-chunk-30-1.png)&lt;!-- --&gt;
+].pull-right[
+
+``` r
+data %&gt;% ggplot(aes(x=HeartRate, 
+          fill = Infection)) + 
+* facet_grid(~Infection) +
 * geom_histogram() +
   ggtitle("Hist of Heart Rate")
 ```
 
-![](Week3-Notes_files/figure-html/unnamed-chunk-29-1.png)&lt;!-- --&gt;
+![](Week3-Notes_files/figure-html/unnamed-chunk-31-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -644,7 +631,7 @@ class:inverse
 
 
 
-```r
+``` r
 table(data$Cancer, data$Type)
 ```
 
@@ -658,14 +645,14 @@ table(data$Cancer, data$Type)
 + Bar Plots on Multiple Panels
 
 
-```r
+``` r
 data %&gt;% 
   ggplot(aes(x=Cancer,
              fill=Cancer)) +
   facet_grid(~Type)+geom_bar()
 ```
 
-![](Week3-Notes_files/figure-html/unnamed-chunk-32-1.png)&lt;!-- --&gt;
+![](Week3-Notes_files/figure-html/unnamed-chunk-34-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -698,120 +685,48 @@ For each of the following scenarios, which summary statistics and data visualiza
 ---
 ### Exercise (a)
 
-(a). If you want to examine whether there is a relationship between Age and Premium Price (consider both as continuous variables), which summary statistics and data visualizations should you use?
-
---
+Describe the relationship between Age and Premium Price.
 
 The Correlation Coefficient is 0.698
 
-![](Week3-Notes_files/figure-html/unnamed-chunk-33-1.png)&lt;!-- --&gt;
-
---
-
-The correlation coefficient and the scatterplot indicates that there may exist a moderate positive linear relationship between age and premium price.
+&lt;img src="Week3-Notes_files/figure-html/unnamed-chunk-35-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 ### Exercise (b)
 
 
-(b). If you want to learn more information about people with a transplant, what summary statistics and data visualization would you consider?
-
---
+Describe what you learned about people with a transplant.
 
 .pull-left[
-&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:right;"&gt; No &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Yes &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 931 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 55 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
+
+|  No| Yes|
+|---:|---:|
+| 931|  55|
 ].pull-right[
-![](Week3-Notes_files/figure-html/unnamed-chunk-35-1.png)&lt;!-- --&gt;
+![](Week3-Notes_files/figure-html/unnamed-chunk-37-1.png)&lt;!-- --&gt;
 
 ]
-
---
-
-55/(931+55) = 5.58% of the patients have a transplant.
 
 ---
-#### Exercise (c)
+### Exercise (c)
 
-(c) If you want to know the relation between those with transplant &amp; the premium price, what summary statistics and data visualization can you use?
+Describe the relationship between those with transplant &amp; the premium price.
 
---
-&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt; AnyTransplants &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; min &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Q1 &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; med &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Q3 &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; max &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; mean &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; sd &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; n &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; miss &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; No &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 15000 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 21000 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 23000 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 28000 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 40000 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 23897.96 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 5741.502 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 931 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Yes &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 15000 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 28000 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 38000 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 38000 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 38000 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 31763.64 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 9213.444 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 55 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
+
+|Transplants |   min|    Q1|   med|    Q3|   max|     mean|       sd|   n|
+|:-----------|-----:|-----:|-----:|-----:|-----:|--------:|--------:|---:|
+|No          | 15000| 21000| 23000| 28000| 40000| 23897.96| 5741.502| 931|
+|Yes         | 15000| 28000| 38000| 38000| 38000| 31763.64| 9213.444|  55|
 
 .pull-left[
-![](Week3-Notes_files/figure-html/unnamed-chunk-37-1.png)&lt;!-- --&gt;
+![](Week3-Notes_files/figure-html/unnamed-chunk-39-1.png)&lt;!-- --&gt;
 ]
 
---
-.pull-right[
-
-- The people without a transplant typically will get a premium price from $18156 to $29639
-- The people with a transplant typically will get a premium price from $22550 to $40977
-- The people with a transplant tend to have a larger variability on their premium price
-- On average, the people with a transplant tend to have a higher premium price. No overlap in box plots, so the difference is significant
-
-
-]
 
 ---
 ### Exercise (d)
 
-(d) If you want to know whether having a transplant will related to whether people having any chronic diseases, which summary statistics and data visualization you may choose?
-
---
+Does having a transplant relate to whether people have any chronic diseases? Explain.
 
 .pull-left[
 
@@ -824,16 +739,7 @@ The correlation coefficient and the scatterplot indicates that there may exist a
 ```
 
 
-![](Week3-Notes_files/figure-html/unnamed-chunk-39-1.png)&lt;!-- --&gt;
-]
-
---
-.pull-right[
-
-- Among the people without transplants, 165/(165+766) = 17.7% of people have chronic diseases
-- Among the people with transplants, 13/(13+42) = 23.6% of people have chronic diseases
-- From the data, it seems that people with transplants are more likely to have chronic diseases but the difference is not large.
-
+![](Week3-Notes_files/figure-html/unnamed-chunk-41-1.png)&lt;!-- --&gt;
 ]
 
 
