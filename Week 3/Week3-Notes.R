@@ -1,119 +1,181 @@
-## ----echo=FALSE, message=FALSE, warning = FALSE--------------------------------------------------------
+## ----echo=FALSE, message=FALSE, warning = FALSE------------------------------------------------------------
 library(tidyverse)
-#install.packages("mosaic")
+
+## ----message=FALSE, echo=FALSE-----------------------------------------------------------------------------
 library(mosaic)
-
-data <- read.csv("ICUAdmissions.csv") #Should already have on your Computer
-
-
-### One Continuous ----
-
-#Histograms to Capture the Distribution (Slide 18)
-data %>% ggplot(aes(Age)) + geom_histogram() + ggtitle("Histogram of Age with 30 Bins")
-
-data %>% ggplot(aes(Age)) + geom_histogram(bins = 15) + ggtitle("Histogram of Age with 15 Bins")
+data <- read.csv("ICUAdmissions.csv")
+favstats(data$Age) #gives statistical summaries
 
 
-# Density Plots (Slide 19)
-data %>% ggplot(aes(Age)) + geom_density() + ggtitle("Density Plot of Age")
-
-data %>% ggplot(aes(Age)) + geom_density(color="darkblue", fill="lightblue") + ggtitle("Density Plot of Age")
+## ----message=FALSE-----------------------------------------------------------------------------------------
+data %>% ggplot(aes(Age)) 
 
 
-# Exercise (Slide 22)
+## ----message=FALSE-----------------------------------------------------------------------------------------
+data %>% ggplot(aes(Age)) + 
+  geom_histogram() #<<
 
 
-favstats(data$HeartRate) #gives statistical summaries
+## ----message=FALSE-----------------------------------------------------------------------------------------
+data %>% ggplot(aes(Age)) + 
+  geom_histogram() + 
+  ggtitle("Histogram 30 Bins")
 
+
+## ----message=FALSE-----------------------------------------------------------------------------------------
+
+data %>% ggplot(aes(Age)) + 
+  geom_histogram(bins = 10) + 
+  ggtitle("Histogram 10 Bins")
+
+
+## ----message=FALSE-----------------------------------------------------------------------------------------
+
+data %>% ggplot(aes(Age)) + 
+  geom_density() + #<<
+  ggtitle("Density Plot of Age")
+
+
+## ----message=FALSE-----------------------------------------------------------------------------------------
+
+data %>% ggplot(aes(Age)) + 
+  geom_density(fill="blue") + 
+  ggtitle("Density Plot of Age")
+
+
+## ----echo = FALSE, message=FALSE---------------------------------------------------------------------------
+favstats(~HeartRate, data = data)
+
+## ----echo = FALSE, message=FALSE---------------------------------------------------------------------------
 data %>% ggplot(aes(HeartRate)) + geom_histogram() + ggtitle("Histogram of Heart Rate")
 
 
-### One Categorical ----
-
-# Slide 24
-
+## ----echo=FALSE--------------------------------------------------------------------------------------------
 data <- data %>% 
   mutate(Race = factor(Race, 
                     levels = c("1", "2", "3"),
-                    labels = c("White", "Black", "Other"))) #creating labels
+                    labels = c("White", "Black", "Other"))) #Renaming Race Categories so using actual category instead of number
+
+
+
+## ----------------------------------------------------------------------------------------------------------
+table(data$Race)
 
 data %>%    
   group_by(Race) %>%    
-  summarise(count = n()) %>% mutate(prop = count/sum(count)) #Creating Frequency Table
-
-# Bar Plots (Slide 25)
-data %>% ggplot(aes(x=Race, fill = Race)) + geom_bar()
+  summarise(count = n()) %>% mutate(prop = count/sum(count))
 
 
-## Slide 26
+
+## ----fig.align='center', fig.height=5----------------------------------------------------------------------
+data %>% ggplot(aes(x=Race, fill = Race)) + 
+  geom_bar() 
+
+
+## ----echo=FALSE--------------------------------------------------------------------------------------------
 data %>% ggplot(aes(x=Race)) + geom_bar() + ggtitle("Bar Plot of Race Distribution")
 
+
+## ----echo=FALSE, message=FALSE-----------------------------------------------------------------------------
 data %>% ggplot(aes(Age)) + geom_histogram() + ggtitle("Histogram of Age Distribution")
 
 
 
-### Two Continuous ----
+## ----fig.height=5, fig.align='center'----------------------------------------------------------------------
 
-# Scatterplot (Slide 27)
-
-data %>% ggplot(aes(x=Systolic, y = HeartRate)) + geom_point()
-
-
-# Trends (Slide 31)
-data %>% ggplot(aes(x=Systolic, y = HeartRate)) + geom_line() + ggtitle("Line Plot")
-
-data %>% ggplot(aes(x=Systolic, y = HeartRate)) + geom_smooth() + ggtitle("Smooth Line Plot")
+data %>% ggplot(aes(x=Systolic, y = HeartRate)) + 
+  geom_point() 
 
 
-### One Continuous and One Categorical ----
-
-# Slide 33
-data$Infection <- as.factor(data$Infection)
-data %>% ggplot(aes(y = HeartRate, fill = Infection)) + geom_boxplot() + ggtitle("Box Plot of Heart Rate")
-
-
-data %>% ggplot(aes(x=HeartRate, color = Infection)) + geom_density() + ggtitle("Density Plot of Heart Rate")
+## ----------------------------------------------------------------------------------------------------------
+data %>% 
+  ggplot(aes(x=Systolic,
+             y=HeartRate))+ 
+  geom_line() + 
+  ggtitle("Line Plot")
 
 
-# Slide 34 (Panels)
-data %>% ggplot(aes(y=HeartRate, fill = Infection)) + facet_grid(~Infection) + geom_boxplot() + ggtitle("Box Plot of Heart Rate")
+## ----message=FALSE-----------------------------------------------------------------------------------------
+data %>% 
+  ggplot(aes(x=Systolic,
+             y=HeartRate))+ 
+  geom_smooth() + 
+  ggtitle("Smooth Line Plot")
 
-data %>% ggplot(aes(x=HeartRate, fill = Infection)) + facet_grid(~Infection) + geom_histogram() + ggtitle("Histogram of Heart Rate")
+
+## ----echo=FALSE--------------------------------------------------------------------------------------------
+data$Infection <- as.factor(data$Infection) #Infection currently being treated as numeric, want it to be a factor
+
+
+## ----fig.height=6------------------------------------------------------------------------------------------
+data %>% 
+  ggplot(aes(y = HeartRate, 
+            fill=Infection)) + 
+  geom_boxplot() +
+  ggtitle("Box Plot of HR")
 
 
 
-### Two Categorical ----
+## ----message=FALSE, fig.height=6---------------------------------------------------------------------------
+data %>% 
+  ggplot(aes(x=HeartRate, 
+          color=Infection)) + 
+  geom_density() + 
+  ggtitle("Density Plot of HR")
 
+
+## ----fig.height=6------------------------------------------------------------------------------------------
+data %>% ggplot(aes(x=HeartRate, 
+        fill = Infection)) + 
+  facet_grid(~Infection) + 
+  geom_density() + 
+  ggtitle("Box Plot of HR")
+
+
+
+## ----message=FALSE, fig.height=6---------------------------------------------------------------------------
+data %>% ggplot(aes(x=HeartRate, 
+          fill = Infection)) + 
+  facet_grid(~Infection) + 
+  geom_histogram() + 
+  ggtitle("Hist of Heart Rate")
+
+
+
+## ----echo=FALSE--------------------------------------------------------------------------------------------
 data <- data %>% 
   mutate(Type = factor(Type, 
                        levels = c("0", "1"),
                        labels = c("Elective", "Emergency"))) %>% 
   mutate(Cancer = factor(Cancer, 
                        levels = c("0", "1"),
-                       labels = c("Yes", "No"))) #Creating labels
+                       labels = c("Yes", "No")))
 
+#Rename Type and Cancer categories
 
-## Two-Way Table (Slide 35)
-tab <- table(data$Cancer, data$Type)
-names(attributes(tab)$dimnames) <- c("Cancer","Type")
-tab
+## ----------------------------------------------------------------------------------------------------------
 
-# Bar Plot in Multiple Panels (Slide 36)
-data %>% ggplot(aes(x=Cancer, fill = Cancer))+ facet_grid(~Type) + geom_bar()
+table(data$Cancer, data$Type)
 
 
 
-#### Exercise (Slides 37-41) ----
+## ----------------------------------------------------------------------------------------------------------
+data %>% 
+  ggplot(aes(x=Cancer,
+             fill=Cancer)) +
+  facet_grid(~Type)+geom_bar()
 
+
+
+## ----echo=FALSE, fig.height=5, fig.align='center'----------------------------------------------------------
 
 med <- read.csv("Medicalpremium.csv")
-
-# Slide 33
 
 med %>% ggplot(aes(x=Age, y = PremiumPrice)) + geom_point() + ggtitle("Scatterplot of Age vs Premium Price")
   
 
-# Slide 34
+
+## ----echo=FALSE--------------------------------------------------------------------------------------------
 med <- med %>% 
   mutate(AnyTransplants = factor(AnyTransplants, 
                        levels = c("0", "1"),
@@ -123,15 +185,22 @@ table(med$AnyTransplants)
 
 
 
-med %>% ggplot(aes(x=AnyTransplants)) + geom_bar() + theme(axis.ticks.x=element_blank())
+## ----echo=FALSE--------------------------------------------------------------------------------------------
 
-# Slide 35
-favstats(x=~PremiumPrice|AnyTransplants, data = med)
+med %>% ggplot(aes(x=AnyTransplants, fill = AnyTransplants)) + geom_bar() + theme(axis.ticks.x=element_blank())
 
+
+
+## ----echo = FALSE------------------------------------------------------------------------------------------
+
+favstats(~PremiumPrice|AnyTransplants, data = med)
+
+## ----echo=FALSE, fig.height=6------------------------------------------------------------------------------
 med %>% ggplot(aes(y = PremiumPrice, fill = AnyTransplants)) + geom_boxplot() + ggtitle("Box Plot of Premium Price")
 
-# Slide 36
 
+
+## ----echo=FALSE--------------------------------------------------------------------------------------------
 med <- med %>% 
   mutate(AnyChronicDiseases = factor(AnyChronicDiseases, 
                                  levels = c("0", "1"),
@@ -143,5 +212,7 @@ names(attributes(tab2)$dimnames) <- c("Transplant","Chronic")
 tab2
 
 
-med %>% ggplot(aes(x=AnyChronicDiseases, fill = AnyTransplants))+ facet_grid(~AnyTransplants) + geom_bar() + ggtitle("Side-by-side bar plot of chronic diseases vs transplant")
+
+## ----echo=FALSE, fig.height=6------------------------------------------------------------------------------
+med %>% ggplot(aes(x=AnyChronicDiseases, fill = Transplants))+ facet_grid(~Transplants) + geom_bar() + ggtitle("Side-by-side bar plot of chronic diseases vs transplant")
 
