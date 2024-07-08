@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>MTH361</title>
+    <title>MTH361: Probability and Statistics in the Health Sciences</title>
     <meta charset="utf-8" />
     <meta name="author" content="Probability and Conditional Probability" />
-    <meta name="date" content="2023-09-05" />
-    <script src="libs/header-attrs-2.23/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.27/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
   </head>
@@ -14,13 +13,13 @@
 class: center, middle, inverse, title-slide
 
 .title[
-# MTH361
+# MTH361: Probability and Statistics in the Health Sciences
 ]
 .author[
 ### Probability and Conditional Probability
 ]
 .date[
-### September 5, 2023
+### September 10/12, 2024
 ]
 
 ---
@@ -43,15 +42,6 @@ class: center, middle, inverse, title-slide
 ---
 ### Announcements
 
-+ Lab 2 Graded
-  - Cite Evidence when making a claim
-  - Describing a distribution: Shape, spread, center, and outliers
-  
-+ Homework 1 should be graded
-  - Let me know if you have any questions
-
-+ Lab 3 on Thursday 
-  - Have a calculator
 
 ---
 class:inverse
@@ -98,42 +88,14 @@ For all possible events `\(A_i\)` in a sample space, we have `\(\sum_iP(A_i) = 1
 
 ### Relationship Between Multiple Events
 
-&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt; Term &lt;/th&gt;
-   &lt;th style="text-align:left;"&gt; Notation &lt;/th&gt;
-   &lt;th style="text-align:left;"&gt; Intuitive Terminology &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; superset &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; `\(A \supset B\)` &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; encompasses &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; subset &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; `\(A \subset B\)` &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; within &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; union &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; `\(A \cup B\)` &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; or &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; intersection &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; `\(A \cap B\)` &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; and &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; complement &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; `\(A^c\)` &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; not &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
+
+|Term         |Notation |Intuitive Terminology |
+|:------------|:--------|:---------------------|
+|superset     |         |                      |
+|subset       |         |                      |
+|union        |         |                      |
+|intersection |         |                      |
+|complement   |         |                      |
 
 Sarah is a college student and she is good with math. Which is more likely to be true:
 
@@ -213,32 +175,13 @@ What is the probability that a death is due to some other cause?
 $$ P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
 **Example**: Insulin injections and oral medication are two key options for treating diabetes. The 2014 National Diabetes Statistics Report provides the breakdown of diabetes treatments among American Adults with diagnosed diabetes. Use the General Addition Rule to find the probability of an adult with diabetes uses either insulin or oral medication.
 
-&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt; Treatment &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Percent &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Insulin Only &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 14.0 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Oral Medication Only &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 56.9 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Both insulin and oral medication &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 14.7 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Neither insulin or oral medication &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 14.4 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
+
+|Treatment                          | Percent|
+|:----------------------------------|-------:|
+|Insulin Only                       |    14.0|
+|Oral Medication Only               |    56.9|
+|Both insulin and oral medication   |    14.7|
+|Neither insulin or oral medication |    14.4|
 
 ---
 ### Multiplication Rule
@@ -250,32 +193,25 @@ $$ P(A \cap B) = P(A)*P(B)$$
 
 **Example**: Are insulin injections and oral medication independent for treating diabetes? Explain why or why not.
 
-&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt; Treatment &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Percent &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Insulin Only &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 14.0 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Oral Medication Only &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 56.9 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Both insulin and oral medication &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 14.7 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Neither insulin or oral medication &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 14.4 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
+
+|Treatment                          | Percent|
+|:----------------------------------|-------:|
+|Insulin Only                       |    14.0|
+|Oral Medication Only               |    56.9|
+|Both insulin and oral medication   |    14.7|
+|Neither insulin or oral medication |    14.4|
+
+---
+### Example: Doctor Visits
+
+The probability that a visit to a primary care physician’s (PCP) oﬀice results in neither lab work nor referral to a specialist is 40%. Of those coming to a PCP’s oﬀice, 25% are referred to specialists and 45% require lab work
+
+(a). Determine the probability that a visit to the PCP's office results in lab work or referral to a specialist.
+
+
+(b). Determine the probability that a visit to the PCP's office results in both lab work and referral to a specialist.
+
+---
 
 ---
 ### Example: Genetics
@@ -289,38 +225,16 @@ What is the probability that an individual has...
 (c) Does not have two `\(A_1\)` alleles?
 
 ---
+
+---
 ### Example: Blood Types
 
 The probability that a randomly chosen North American has a particular blood type is listed in the table below.
 
-&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt;   &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; O+ &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; O- &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; A+ &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; A- &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; B+ &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; B- &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; AB+ &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; AB- &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; prob &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.374 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.066 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.357 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.063 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.085 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.015 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.034 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.006 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
+
+|     |    O+|    O-|    A+|    A-|    B+|    B-|   AB+|   AB-|
+|:----|-----:|-----:|-----:|-----:|-----:|-----:|-----:|-----:|
+|prob | 0.374| 0.066| 0.357| 0.063| 0.085| 0.015| 0.034| 0.006|
 
 1. What is the probability that a randomly selected North American has blood type O?
 2. B- blood can be safely donated to anyone who has B+, B-, AB+, or AB- blood. What is the probability that a randomly selected North American can receive blood type B-?
@@ -330,99 +244,6 @@ The probability that a randomly chosen North American has a particular blood typ
 6. Assume that blood type does not affect the choice of sexual partner. What probability of North American pregnancies will be at risk for Rh incompatibility?
 
 ---
-### Example: Blood Types
-
-The probability that a randomly chosen North American has a particular blood type is listed in the table below.
-
-&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt;   &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; O+ &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; O- &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; A+ &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; A- &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; B+ &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; B- &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; AB+ &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; AB- &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; prob &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.374 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.066 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.357 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.063 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.085 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.015 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.034 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.006 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-1. What is the probability that a randomly selected North American has blood type O?
-`\(\\\)`
-`\(\\\)`
-`\(\\\)`
-2. B- blood can be safely donated to anyone who has B+, B-, AB+, or AB- blood. What is the probability that a randomly selected North American can receive blood type B-?
-`\(\\\)`
-`\(\\\)`
-`\(\\\)`
-`\(\\\)`
-3. Only individuals with O+ blood can receive an O+ blood donation. What is the probability that a randomly selected North American cannot receive blood type O+?
-
----
-### Example: Blood Types
-
-The probability that a randomly chosen North American has a particular blood type is listed in the table below.
-
-&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt;   &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; O+ &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; O- &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; A+ &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; A- &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; B+ &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; B- &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; AB+ &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; AB- &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; prob &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.374 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.066 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.357 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.063 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.085 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.015 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.034 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.006 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-4. What is the probability that a randomly selected North American is Rh+?
-`\(\\\)`
-`\(\\\)`
-`\(\\\)`
-`\(\\\)`
-`\(\\\)`
-`\(\\\)`
-5. What is the probability that a randomly selected North American is Rh-?
-`\(\\\)`
-`\(\\\)`
-`\(\\\)`
-`\(\\\)`
-`\(\\\)`
-`\(\\\)`
-6. Assume that blood type does not affect the choice of sexual partner. What probability of North American pregnancies will be at risk for Rh incompatibility?
 
 ---
 class:inverse
@@ -526,16 +347,7 @@ Lupus is a medical condition where antibodies that are supposed to attack foreig
 
 ---
 
-### Fun Application: Monty Hall Problem
-
-Suppose you’re on a game show, and you’re given the choice of three doors: Behind one door is a car; behind the others, goats. You pick a door, say No. 1, and the host, who knows what’s behind the doors, opens another door, say No. 3, which has a goat. He then says to you, ”Do you want to pick door No. 2?” Is it to your advantage to switch your choice?
-
-[Simulator](http://www.rossmanchance.com/applets/2021/montyhall/Monty.html)
-
-
----
-
-### Example (If Time): Cystic Fibrosis 
+### Example : Cystic Fibrosis 
 
 Cystic fibrosis (CF) is a hereditary lung disorder that often results in death. It can be inherited only if both parents are carriers of an abnormal gene. In 1989, the CF gene that is abnormal in carriers of cystic fibrosis was identified. The probability that a randomly chosen person carries an abnormal CF gene is 0.03. The CF20m test detects most, but not all harmful mutations of the CF gene. The test is positive for 90% of people who are carriers. It is positive for 1% of people who are not carriers. If you test positive, what is the probability that you are actually a carrier?
 

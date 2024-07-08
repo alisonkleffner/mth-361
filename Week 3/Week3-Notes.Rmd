@@ -258,11 +258,15 @@ Can also use `summary()` but `favstats()` also provide total number of observati
 We can create a distribution of the `Age` variable with the `ggplot()` function. `ggplot()` is an additive function. The geom_histogram() function will add an new histogram "layer" to our plot. New layers can be added with a `+` sign.  
 
 .pull-left[
-```{r, message=FALSE}
+```{r, message=FALSE, fig.height=6}
 data %>% ggplot(aes(Age)) 
 ```
+
+[ggplot cheat sheet](https://posit.co/wp-content/uploads/2022/10/data-visualization-1.pdf)
+
+
 ].pull-right[
-```{r, message=FALSE}
+```{r, message=FALSE, fig.height=6}
 data %>% ggplot(aes(Age)) + 
   geom_histogram() #<<
 ```

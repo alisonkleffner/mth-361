@@ -1,7 +1,7 @@
 ---
 title: "MTH361: Probability and Statistics in the Health Sciences"
 author: "Sampling Distribution and CLT"
-date: "September 19, 2023"
+date: "September 21, 2024"
 output: 
   xaringan::moon_reader:
     lib_dir: libs
@@ -103,57 +103,6 @@ class:inverse
 ---
 ### Announcements
 
-- Project Proposal due **tonight at 11:59 pm**!
-- Homework 4 due **Thursday September 21 at 11:59 pm**
-- Start Lab 5 on Thursday
-  + due **Friday September 22 and 11:59pm**
-
----
-### Lab Review - Question 1c and Question 1d
-
-.center[
-```{r, echo=FALSE, results='asis'}
-i2 <- img_modal(src = "../Week 6/images/Q1.png", other=list(width="85%"))
-
-c(str_split(i2, "\\n", simplify = T)[1:2],
-  str_split(i2, "\\n", simplify = T)[3:9]
-  ) %>% paste(collapse = "\n") %>% cat()
-
-
-```
-]
-
----
-### Lab Review - Question 4
-
-.center[
-```{r, echo=FALSE, results='asis'}
-i2 <- img_modal(src = "../Week 6/images/Q2 ab.png")
-
-c(str_split(i2, "\\n", simplify = T)[1:2],
-  str_split(i2, "\\n", simplify = T)[3:9]
-  ) %>% paste(collapse = "\n") %>% cat()
-
-
-```
-]
-
----
-### Lab Review - Question 4
-
-.center[
-```{r, echo=FALSE, results='asis'}
-i2 <- img_modal(src = "../Week 6/images/Q2 cd.png")
-
-c(str_split(i2, "\\n", simplify = T)[1:2],
-  str_split(i2, "\\n", simplify = T)[3:9]
-  ) %>% paste(collapse = "\n") %>% cat()
-
-
-```
-]
-
-
 ---
 ### Review on Population and Sample
 
@@ -188,7 +137,6 @@ head(cdc)
 
 set.seed(4)
 cdc_sample <- sample_n(cdc, 60)          
-head(cdc_sample) 
 
 ```
 

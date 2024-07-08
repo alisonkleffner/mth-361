@@ -1,7 +1,7 @@
 ---
 title: "MTH361: Probability and Statistics in the Health Sciences"
 author: "The Normal Distribution"
-date: "September 12, 2023"
+date: "September 19, 2024"
 output: 
   xaringan::moon_reader:
     lib_dir: libs
@@ -40,55 +40,66 @@ knit_hooks$set(output = function(x, options) {
 ---
 ### Announcements
 
-+ Homework 3 due tonight at 11:59 pm!
-+ Homework 4 due Tuesday September 19 at 11:59 pm
-+ Lab 4 on Thursday, due Friday September 15 at 11:59 pm
 
 
 **Today**: Section 3.3
 
 ---
-# Notes
-
-Homework 2: Typical Range is $\mu \pm \sigma$ (see "one numerical variable" section of visualization notes)
-
-Lab 3: 
-+ Question 3: Is having excellent health and no health coverage independent? - Must use multiplication rule
-+ Question 7: Draw a Venn Diagram!
-  - What percent of Americans live above the poverty line and only speak English at home? 68.9 (color overlap)
-
-```{r, echo=FALSE, out.width="40%", fig.align='center'}
-knitr::include_graphics("../images/Week5/7d.png")
-```
-+ Question 4/6/8: Follow along with "Lupus" Example (posted in Blueline)
-
----
 ### Random Variables
 
 
-- Last week, we have talked about the probability of an event. e.g., let C be the even that a person is diagnosed with Cancer, we have P(C).
+- Last week, we have talked about the probability of an event.    
+  + **Example**: let `C` be the even that a person is diagnosed with Cancer, we have `P(C)`.
 - Now suppose we have three people, and we are wondering what is the probability that exactly one of them is diagnosed with Cancer.
-- You can either calculating the sum of all possible events, or use a random variable
-- **Random variable** is a **function** that maps events to real numbers (or high dimensional real space)
-- Let random variable X be the number of people diagnosed with Cancer, then the question is asking what is P(X = 1)
+  + You can either calculating the sum of all possible events, or use a random variable
+
+A **random variable** is a **function** that maps each event in a sample space to a number.
+  +  Let random variable X be the number of people diagnosed with Cancer, then the question is asking what is P(X = 1)?
+  
+--
+  
+```{r, echo=FALSE, out.width="80%", fig.align='center'}
+knitr::include_graphics("../images/Week5/rv-cancer-ex.jpeg")
+```  
 
 ---
 ### Random Variables
 
-If a Coin is tossed three times, the outcome is a sequence of observed heads and tails
+Let's consider a more familiar random phenomenon: a coin flip
+
+If a coin is tossed three times, the outcome is a sequence of observed heads and tails
 
 ```{r, echo=FALSE, out.width="70%", fig.align='center'}
 knitr::include_graphics("../images/Week5/randon-variable-heads.png")
 ```
 
-The figure shows the possible outcomes when a coin is tossed three times. 
+The figure shows all the possible outcomes when a coin is tossed three times. 
 $\\$
-Here, $X$ is the number of heads for the three tosses.
+Here, the random variable $X$ is the number of heads for the three tosses.
 
 ---
 ### Probability Distribution
 
 Probability distribution: a list of the probabilities of all mutually exclusive outcomes of random variable
+
+We can assign probabilities to values of a random variable. Let's calculate these probabilities:
+
+---
+### Probability Distribution
+
+We can use bar graphs to display the distribution of a random variable
+
+```{r, echo=FALSE, out.width="80%", fig.align='center'}
+knitr::include_graphics("../images/Week5/probability-distribution-heads.png")
+```
+
+Rules:
+
++ Outcomes must be mutually exclusive
++ Each probability must be between 0 and 1
++ Probabilities must sum to 1
+---
+### Probability Distribution
 
 Based on the potential outcomes of a random variable, we can classify random variables and their distribution into continuous and discrete. e.g., 
   + The number of people enter the clinic 
@@ -98,18 +109,6 @@ For discrete random variable, its probability distribution is called probability
 
 For continuous random variable, its probability distribution is called probability density function (f (y))
 
----
-### Probability Distribution
-
-```{r, echo=FALSE, out.width="70%", fig.align='center'}
-knitr::include_graphics("../images/Week5/probability-distribution-heads.png")
-```
-
-Rules:
-
-+ Outcomes must be mutually exclusive
-+ Each probability must be between 0 and 1
-+ Probabilities must sum to 1
 
 
 ---
@@ -141,10 +140,10 @@ fev %>% ggplot(aes(x=height)) +
 ---
 ### Normal Distribution
 
-+ Both variables’ distribution is a “bell-shaped curve”. 
-+ **Normal Distribution**: the probability distribution that generates a perfect “bell-shaped curve”
-  - A continuous probability distribution (any value in an interval is possible) that always describes a symmetric, bell-shaped curve with two parameters: mean $(\mu)$ and standard deviation $(\sigma)$.
-  - Notation: $N(\mu, \sigma)$ 
+**Normal Distribution**: the probability distribution that generates a perfect “bell-shaped curve”
+  - A continuous probability distribution (any value in an interval is possible) 
+  - Two parameters: mean $(\mu)$ and standard deviation $(\sigma)$.
+    + Notation: $N(\mu, \sigma)$ 
 
 
 ```{r, echo=FALSE, out.width = "40%", fig.align='center'}
@@ -166,13 +165,12 @@ knitr::include_graphics("../images/Week5/normal-dist.png")
 ```
 
 ---
-
 ### Relationship between Density and Probability
 
 - Density is not probability
 - The area under the probability density function is 1
-- Probability is measured by the area under the curve. e.g., the shaded area in the figure represents the P(−2 < X < 0)
-- Note: For a continuous variable, at any point x, P(X = x) = 0
+  - Probability is measured by the area under the curve. e.g., the shaded area in the figure represents the P(−2 < X < 0)
+  - Note: For a continuous variable, at any point x, P(X = x) = 0
 
 ```{r, echo= FALSE, out.width="55%", fig.align='center'}
 # Return dnorm(x) for 0 < x < 2, and NA for all other x
@@ -194,7 +192,7 @@ p +
 ---
 ### Finding Normal Probabilities
 
-The probability distribution for the normal distribution is:
+The probability density function for the normal distribution is:
 
 $$f(x) = \frac{1}{\sqrt{2\pi\sigma^2}}e^{−(x−μ)^2/2\sigma^2}$$
 
@@ -233,6 +231,12 @@ The Standard Normal $(N(0,1))$ distribution is well-studied
 
 We have a z-score chart that records all the probabilities of the standard normal distribution from $-\infty$ to a certain value ([link to chart](https://www.z-table.com/)). 
 
+- A normal probability table can be used to identify the percentile corresponding to any particular Zscore.
+- `R function`: `xpnorm`
+- Online Calculator: https://istats.shinyapps.io/NormalDist/
+
+---
+### Standard Normal Distribution
 .pull-left[
 ```{r, echo= FALSE, out.width="85%", fig.align='center'}
 # ggplot() with dummy data
@@ -291,7 +295,7 @@ xpnorm(q=1.5, mean = 2.64, sd=0.87)
 ---
 ### Application: Birth Weights
 
-The babies born in single births in the United States have birth weights that are approximately normally distributed with mean 3.3 kg and standard deviation 0.56 kg.
+The babies born in single births in the United States have birth weights that are approximately normally distributed with mean 3.3 kg and standard deviation 0.56 kg. For both questions, calculate the Z-score by hand first.
 
 - What is the probability of a baby with a born weight between 3 kg and 4 kg?
 - What is the probability of a baby with a born weight more than 5 kg?
@@ -301,60 +305,45 @@ The babies born in single births in the United States have birth weights that ar
 
 If X ~ N(3.3, 0.56) then
 .pull-left[
-`xpnorm(3, mean=3.3, sd=0.56)`
-P(Z $\leq$ -0.5357) = 0.2961
 
-```{r, message=FALSE, echo=FALSE, out.width="90%"}
+```{r, message=FALSE, out.width="90%"}
 xpnorm(3, mean=3.3, sd=0.56)
 ```
 
 ].pull-right[
-`xpnorm(4, mean=3.3, sd=0.56)`
-P(Z $\leq$ 1.25) = 0.8944 $\\$
 
-```{r, message=FALSE, echo=FALSE, out.width="90%"}
+```{r, message=FALSE, out.width="90%"}
 xpnorm(4, mean=3.3, sd=0.56)
 ```
 
 ]
+
 
 ---
 ### Probability of a baby with a born weight between 3 kg and 4 kg?
 
 .pull-left[
 
-P(Z $\leq$ -0.5357) = 0.2961
-
-```{r, message=FALSE, echo=FALSE, out.width="85%"}
+```{r, message=FALSE, out.width="80%", echo = FALSE}
 xpnorm(3, mean=3.3, sd=0.56)
 ```
 
 ].pull-right[
 
-P(Z $\leq$ 1.25) = 0.8944 $\\$
-
-```{r, message=FALSE, echo=FALSE, out.width="80%"}
+```{r, message=FALSE, out.width="80%", echo = FALSE}
 xpnorm(4, mean=3.3, sd=0.56)
 ```
-]
 
-.center[
-
-P(3 < X < 4) = P(-0.5357 < Z < 1.25) = 0.8944 - 0.2961 = 0.5983
 ]
 ---
 ### Probability of a baby with a born weight more than 5 kg?
 
---
+---
+### Probability of a baby with a born weight more than 5 kg?
 
-.pull-left[
-`xpnorm(5, mean=3.3, sd=0.56)`
-$\\$ $\\$
-If X ~ N(3.3, 0.56) then $\\$
-P(X $\leq$ 5) = P(Z $\leq$ 3.04) = 0.9988002 $\\$
-P(X > 5) = 1-P(Z $\leq$ 3.04) = 1-0.9988002 = 0.001199833
-].pull-right[
-```{r, message=FALSE}
+
+.center[
+```{r, message=FALSE, fig.height=5}
 1-xpnorm(5, mean=3.3, sd=0.56)
 ```
 ]
@@ -367,7 +356,7 @@ It was rumored that Britain’s domestic intelligence service MI5 has an upper l
 + What proportion of British males are eligible to apply to MI5?
 + What proportion of British females are eligible to apply to MI5?
 
-Sketch a graph of both distributions to help you out.
+Sketch a graph of both distributions to help you out and calculate Z-score by hand first.
 
 ---
 ### Your Turn: Spy Height
@@ -387,19 +376,13 @@ What proportion of British females are eligible to apply to MI5?
 .pull-left[
 What proportion of British males are eligible to apply to MI5?
 
-If X ~ N(177.0, 7.1), then $\\$
-P(X $\leq$ 180.3) = P(Z $\leq$ 0.4648) = 0.679 $\\$
-
-```{r, out.width="60%", message=FALSE}
+```{r, out.width="70%", message=FALSE}
 xpnorm(180.3, mean=177, sd=7.1)
 ```
 ].pull-right[
 What proportion of British females are eligible to apply to MI5?
-
-If X ~ N(163.3, 6.4), then $\\$
-P(X $\leq$ 172.7) = P(Z $\leq$ 1.469) = 0.929 $\\$
 	
-```{r, out.width="60%", message=FALSE}
+```{r, out.width="70%", message=FALSE}
 xpnorm(172.7,mean=163.3,sd=6.4)
 ```
 ]
@@ -452,16 +435,23 @@ The babies born in singleton births in the United States have birth weights that
 + Find the birth rate of the highest 40% of babies
 
 
---
+---
+### Your Turn: Birth Rate
+
+The babies born in singleton births in the United States have birth weights that are approximately normally distributed with mean 3.296 kg and standard deviation 0.560 kg.
+
++ Find the birth rate of the lowest 20% of babies
++ Find the birth rate of the highest 40% of babies
+
 
 .pull-left[
 
-```{r, message=FALSE, out.width="65%", fig.align='center'}
+```{r, message=FALSE, out.width="60%", fig.align='center'}
 xqnorm(0.2,mean=3.296,sd=0.56)
 ```
 
 ].pull-right[
-```{r, message=FALSE, out.width="65%", fig.align='center'}
+```{r, message=FALSE, out.width="60%", fig.align='center'}
 xqnorm(0.6,mean=3.296,sd=0.56)
 ```
 ]
