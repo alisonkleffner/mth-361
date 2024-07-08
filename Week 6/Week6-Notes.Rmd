@@ -1,7 +1,7 @@
 ---
 title: "MTH361: Probability and Statistics in the Health Sciences"
 author: "Sampling Distribution and CLT"
-date: "September 19, 2023"
+date: "September 21, 2024"
 output: 
   xaringan::moon_reader:
     lib_dir: libs
@@ -87,7 +87,7 @@ class:inverse
 <br><br><br>
 ## MTH361: Probability and Statistics in the Health Sciences
 ### Sampling Distribution and CLT
-#### September 19, 2023
+#### September 21, 2024
 
 
 ---
@@ -102,56 +102,6 @@ class:inverse
 
 ---
 ### Announcements
-
-- Project Proposal due **tonight at 11:59 pm**!
-- Homework 4 due **Thursday September 21 at 11:59 pm**
-- Start Lab 5 on Thursday
-  + due **Friday September 22 and 11:59pm**
-
----
-### Lab Review - Question 1c and Question 1d
-
-.center[
-```{r, echo=FALSE, results='asis'}
-i2 <- img_modal(src = "../Week 6/images/Q1.png", other=list(width="85%"))
-
-c(str_split(i2, "\\n", simplify = T)[1:2],
-  str_split(i2, "\\n", simplify = T)[3:9]
-  ) %>% paste(collapse = "\n") %>% cat()
-
-
-```
-]
-
----
-### Lab Review - Question 4
-
-.center[
-```{r, echo=FALSE, results='asis'}
-i2 <- img_modal(src = "../Week 6/images/Q2 ab.png")
-
-c(str_split(i2, "\\n", simplify = T)[1:2],
-  str_split(i2, "\\n", simplify = T)[3:9]
-  ) %>% paste(collapse = "\n") %>% cat()
-
-
-```
-]
-
----
-### Lab Review - Question 4
-
-.center[
-```{r, echo=FALSE, results='asis'}
-i2 <- img_modal(src = "../Week 6/images/Q2 cd.png")
-
-c(str_split(i2, "\\n", simplify = T)[1:2],
-  str_split(i2, "\\n", simplify = T)[3:9]
-  ) %>% paste(collapse = "\n") %>% cat()
-
-
-```
-]
 
 
 ---
@@ -216,15 +166,24 @@ mean(cdc_sample$weight)
 ```
 ]
 
---
 
 Close! But not exactly right! How could we get a more accurate sample?
 
---
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+**Note**: The sample mean is also called a **point estimate**
+---
+### Variability in Estimates
 
 What if the sample size is fixed, but we can take multiple samples? Other random samples of 60 from the population may produce different $\bar{x}$ values.
-
---
 
 Means of two more random samples of size 60:
 
@@ -240,7 +199,6 @@ mean(cdc_sample$weight)
 
 ```
 
-Is there anything we can learn from this sample?
 
 ---
 ### Variability in Estimates
@@ -265,7 +223,6 @@ What are the takeaway points?
   - Variation (standard error)
   - Shape
 
---
   
 .center[
 ```{r, echo=FALSE, results='asis'}
@@ -285,15 +242,15 @@ c(str_split(i2, "\\n", simplify = T)[1:2],
 
 How far away we expect a "typical" sample statistic to be from the true population parameter. Standard error is the standard deviation of the sample distribution.
 
---
+
 
 **Recall**: What is standard deviation?
 
---
+
 
 The standard deviation (SD) measures the amount of variability, or dispersion, from the individual data values to the mean
 
---
+
 
 .center[
 ```{r, echo=FALSE, results='asis'}
@@ -320,7 +277,6 @@ The sampling distribution of $\bar{x}$ has:
   + $s$ is the sample standard deviation
 - Shape: approximately normally distributed, as long as the sample size is "large enough"
 
---
 
 <br>
 <br>
@@ -340,15 +296,6 @@ cdc_sample <- sample_n(cdc, 60)
 favstats(cdc_sample$weight)
 ```
 
---
-
-$$SE = \frac{s}{\sqrt{n}} = $$
---
-
-$$\frac{39.79}{\sqrt{60}} = 5.14$$
---
-
-So the Sampling Distribution for $\bar{X} \sim N(\mu, 5.14)$
 
 ---
 ### Statistical Inference
@@ -373,7 +320,6 @@ The margin of error (MOE) reflects how uncertain we are about the accuracy of ou
   
 <br>
 
---
 
 Large MOE $\longrightarrow$ wide confidence interval $\longrightarrow$ more confidence that the true estimate will be in the interval
 
@@ -446,30 +392,12 @@ Reminder, for our sample:
   - $s$ = 39.7942
   - $n$ = 60
 
---
 
-Formula: $$\bar{x} \pm 1.96 \cdot SE_{\bar{x}} = $$
-
---
-
-$$ 171.4833 \pm 1.96 (\frac{39.7942}{\sqrt{60}}) = $$
---
-
-$$ 171.4833 \pm 1.96(5.137) = $$
---
-
-$$ 171.4833 \pm 10.274 = $$
---
-
-$$[161.2093, 181.7573]$$
 ---
 ### Let's Interpret the Interval!
 
 Interpret the confidence interval you calculated on the previous slide for the mean population weight of US Adults
 
---
-
-We are 95% confident that the population mean weight of US adults is in the range of [161.2093, 181.7573]. 
 
 ---
 ### Application : BMI
@@ -492,29 +420,17 @@ If the a healthy range of BMI is [18.5, 24.9], does this suggest that Americans 
 
 We can also think about this problem using probability: recall $\bar{x} \sim N(\mu, SE_{\bar{x}})$
 
---
 
 What is the probability that the difference between the true mean and sample mean is within 0.5 units?
 
---
 
-$$ P(|\mu - \bar{x}| < 0.5)  = P(\mu - 0.5 < \bar{x} < \mu + 0.5)$$
---
-
-$$= P(\frac{\mu - 0.5 - \mu}{SE_{\bar{x}}} < \frac{\bar{x} - \mu}{SE_{\bar{x}}} < \frac{\mu + 0.5 + \mu}{SE_{\bar{x}}}$$
---
-
-$$= P(-\frac{0.5}{8/\sqrt{190}} < Z < \frac{0.5}{8/\sqrt{190}} = P(-0.58 < Z < 0.58)$$
---
-
-$$= 0.7190 - 0.2810 = 0.438$$
 ---
 ### Changing the Confidence Level
 
 $$\bar{x} \pm 1.96 \cdot SE_{\bar{x}}$$
 
 Why 1.96?
---
+
 <br>
 <br>
 What if we want to have a different confidence level - say 90%?
@@ -604,11 +520,7 @@ sample $\longrightarrow$ population and $s$ $\longrightarrow$ $\sigma$
 
 Recall the BMI application, suppose the population standard deviation is also 8. If I want the the difference between the sample mean and the population mean to be less than 0.5 with probability .95, how many people do I need to sample?
 
-$$ P(\mu - 0.5 < \bar{x} < \mu + 0.5) = 0.95$$
-$$P(\frac{-0.5}{\frac{\sigma}{\sqrt{n}}} < Z \frac{0.5}{\frac{\sigma}{\sqrt{n}}}) = 0.95$$
-$$ \frac{0.5\sqrt{n}}{\sigma} = 1.96$$
-$$n = (1.96\sigma*2)^2 = (3.92*8)^2 = 983.44$$
-We at least need to sample 984 people
+
 
 ---
 ### Application: Study Time
