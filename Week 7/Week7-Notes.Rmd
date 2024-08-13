@@ -1,7 +1,7 @@
 ---
 title: "MTH361: Probability and Statistics in the Health Sciences"
 author: "Hypothesis Testing"
-date: "September 26, 2023"
+date: "October 8, 2024"
 output: 
   xaringan::moon_reader:
     lib_dir: libs
@@ -96,7 +96,7 @@ class:inverse
 <br><br><br>
 ## MTH361: Probability and Statistics in the Health Sciences
 ### Hypothesis Tests
-#### September 26, 2023
+#### October 8, 2024
 
 
 ---
@@ -113,20 +113,6 @@ class:inverse
 **Book**: Section 4.3
 ---
 ### Announcements
-
-Homework 5 **due Tonight at 11:59pm**!
-
-Lab 6 on Thursday (**due Friday at 11:59 pm**)
-  + Rock-Paper-Scissors Portion
-    - Part of Lab will be completed as a class on Thursday
-    - To do so we need to simulate some data
-    - Play 12 games of Rock-Papers-Scissors with a friend and count the number of times they chose heads (do not tell them what you are counting).
-    - Record your number in the Blueline assignment: Lab 6: Rock-Paper-Scissors **due at 12:30 pm on Thursday September 28** (before class)
-    - Completion of this is worth 5 points on your Lab 6 grade.
-    
-Midterm on Thursday October 5
-  - Review on Tuesday October 3
-
 
 ---
 ### From Confidence Intervals to Hypothesis Tests
@@ -373,6 +359,20 @@ When you’re summarizing the results of any hypothesis test, three things shoul
 - The decision (reject $H_0$ or fail to reject $H_0$).
 - The rationale for the decision (test statistic and p-value, most researchers will parenthesize these or put them in a table).
 - An interpretation of the decision in context. What are the practical implications? How can you answer the research question based on this hypothesis test?
+
+---
+### Focus: One-Sample T-Test
+
+Right now, we are focusing on the type of hypothesis called: One-Sample T-Test
+
+- Asking if the measurements of a sample are consistent with some hypothesized value for the population **mean**. 
+
+
+So our test statistic...
+
+$$\text{test statistic} = \frac{\text{sample statistic} - \text{expectation}}{\text{standard error}} \longrightarrow t =  \frac{\bar{x} - \mu_0}{\frac{s}{\sqrt{n}}}$$
+
+We will talk more about the t-distribution next week, but for now just know that we can do the one sample t-test if our response variable has a normal distribution.
 
 ---
 ### Example: BMI

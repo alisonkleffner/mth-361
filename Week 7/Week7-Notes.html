@@ -4,7 +4,7 @@
     <title>MTH361: Probability and Statistics in the Health Sciences</title>
     <meta charset="utf-8" />
     <meta name="author" content="Hypothesis Testing" />
-    <meta name="date" content="2023-09-26" />
+    <meta name="date" content="2024-10-08" />
     <script src="libs/header-attrs-2.27/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
@@ -27,7 +27,7 @@ class:inverse
 &lt;br&gt;&lt;br&gt;&lt;br&gt;
 ## MTH361: Probability and Statistics in the Health Sciences
 ### Hypothesis Tests
-#### September 26, 2023
+#### October 8, 2024
 
 
 ---
@@ -44,36 +44,6 @@ class:inverse
 **Book**: Section 4.3
 ---
 ### Announcements
-
-Homework 5 **due Tonight at 11:59pm**!
-
-Lab 6 on Thursday (**due Friday at 11:59 pm**)
-  + Rock-Paper-Scissors Portion
-    - Part of Lab will be completed as a class on Thursday
-    - To do so we need to simulate some data
-    - Play 12 games of Rock-Papers-Scissors with a friend and count the number of times they chose heads (do not tell them what you are counting).
-    - Record your number in the Blueline assignment: Lab 6: Rock-Paper-Scissors **due at 12:30 pm on Thursday September 28** (before class)
-    - Completion of this is worth 5 points on your Lab 6 grade.
-    
-Midterm on Thursday October 5
-  - Review on Tuesday October 3
-
----
-### Notes on Lab 5
-
-+ Distribution of Random Variable, X: `\(X \sim N(\mu, \sigma)\)`
-
-+ From one sample from the population, we can calculate `\(\bar{x}\)`
-  - But we don't know if this is a good estimate of `\(\mu\)` or not
-
-+ If we take multiple samples from the population, we will have multiple `\(\bar{x}\)`. 
-  - This creates a distribution, called the sampling distribution
-  - `\(\bar{x} \sim N(\mu, SE_{\bar{x}})\)`
-  - When using applets, make sure to use `\(SE_{\bar{x}}\)` instead of `\(\sigma\)`
-  - Less spread out than distribution of X
-
-+ The word "cause" should send up a red flag
-
 
 ---
 ### From Confidence Intervals to Hypothesis Tests
@@ -151,10 +121,6 @@ For the following alternative hypotheses: (1) determine whether it is one-sided 
 
 **Example**: Drug maker GlaxoSmithKline (GSK) investigated the potential impact of its oral anti-diabetic drug Avandia on the blood lipid levels of adult diabetics who might benefit from taking Avandia. They were particularly concerned that LDL, "bad" cholesterol, levels might increase. Write the null and alternative hypothesis for their test.
 
---
-
-`\(H_0\)`: LDL will not change after taking Avandia `\(\\\)`
-`\(H_A\)`: LDL will increase after taking Avandia
 
 ---
 ### Step 2: Calculate the Test Statistic 
@@ -196,7 +162,7 @@ Assuming Randomness!
 
 Do you remember the Arson Activity from the first day of class?
 
-&lt;img src="../images/Week1/arson-results.jpg" width="70%" height="70%" style="display: block; margin: auto;" /&gt;
+
 
 You didn't know it at the time, but we created a Null Distribution!
 ---
@@ -312,64 +278,23 @@ When you’re summarizing the results of any hypothesis test, three things shoul
 - An interpretation of the decision in context. What are the practical implications? How can you answer the research question based on this hypothesis test?
 
 ---
+### Focus: One-Sample T-Test
+
+Right now, we are focusing on the type of hypothesis called: One-Sample T-Test
+
+- Asking if the measurements of a sample are consistent with some hypothesized value for the population **mean**. 
+
+
+So our test statistic...
+
+`$$\text{test statistic} = \frac{\text{sample statistic} - \text{expectation}}{\text{standard error}} \longrightarrow t =  \frac{\bar{x} - \mu_0}{\frac{s}{\sqrt{n}}}$$`
+
+We will talk more about the t-distribution next week, but for now just know that we can do the one sample t-test if our response variable has a normal distribution.
+
+---
 ### Example: BMI
 
 A BMI in adults of 25.0 or greater is considered overweight. Based on the data from the NHANES sample, is there strong enough evidence to show that the population mean BMI for American adults is greater than 25.0?
-
-
-```
-## Registered S3 method overwritten by 'mosaic':
-##   method                           from   
-##   fortify.SpatialPolygonsDataFrame ggplot2
-```
-
-```
-## 
-## The 'mosaic' package masks several functions from core packages in order to add 
-## additional features.  The original behavior of these functions should not be affected by this.
-```
-
-```
-## 
-## Attaching package: 'mosaic'
-```
-
-```
-## The following object is masked from 'package:Matrix':
-## 
-##     mean
-```
-
-```
-## The following objects are masked from 'package:dplyr':
-## 
-##     count, do, tally
-```
-
-```
-## The following object is masked from 'package:purrr':
-## 
-##     cross
-```
-
-```
-## The following object is masked from 'package:ggplot2':
-## 
-##     stat
-```
-
-```
-## The following objects are masked from 'package:stats':
-## 
-##     binom.test, cor, cor.test, cov, fivenum, IQR, median, prop.test,
-##     quantile, sd, t.test, var
-```
-
-```
-## The following objects are masked from 'package:base':
-## 
-##     max, mean, min, prod, range, sample, sum
-```
 
 &lt;img src="Week7-Notes_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
 
