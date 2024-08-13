@@ -103,6 +103,21 @@ class:inverse
 ---
 ## Announcements
 
+**Optional**: If you want some practice with using R, look at the *R Practice* document located in Blueline
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
 **Look Ahead**: Sections covered next week in textbook: Chapter 1.1-1.3
 
 ---
@@ -381,17 +396,16 @@ Method 1:
 ```{r, eval = FALSE}
 getwd() #What is your working directory
 setwd() # Change Working directory
-
 ```
 
-Method 2 (recommendation):
+Method 2:
 
 Session -> Set Working Directory -> Choose Directory -> Select folder data set is located -> Apply
 
 
-Method 3: Import Data set in Environment Tab
+Method 3: Import Data set in Environment Tab (Works well for .csv/.xlsx files)
 
-- Works well for .csv/.xlsx files
+- If using Posit Cloud, you have an extra step. You must upload the data file into your Posit Cloud account
 
 ---
 ## Load Data
@@ -546,6 +560,23 @@ summary(data_c$Cancer)
 <br>
 Introduction points from: https://ourcodingclub.github.io/tutorials/intro-to-r/
 
+---
+## Some Common Errors
+
+Like all the other programming language, R sometimes will generate errors or the output may not be the one you want. There are multiple reasons for that. Here is some common type of errors: 
+
+1. "could not find function" errors, usually caused by typos or not loading a required package
+
+2. "Error in eval" or "object not found" errors, caused by references to objects that don't exist
+  - Could be due to misspelling
+
+3. "cannot open" errors, caused by attempts to read a file that doesn't exist or can't be accessed (wrong file path)
+
+4. "no applicable method" errors, caused by using an object-oriented function on a data type it doesn't support
+ - Ex. Taking a mean of a character value
+
+5. "subscript out of bounds" errors, caused by trying to access an element or dimension that doesn't exist
+
 
 ---
 ## Learning to code can be challenging
@@ -569,5 +600,5 @@ Artwork by @allison_horst
 
 Most of the basics can be found in the [Quarto Website](https://quarto.org/docs/get-started/hello/rstudio.html) 
 
-[Notes from MTH 365](https://alisonkleffner.github.io/mth-365/Week%202/intro-to-quarto.html#1)
+[Notes from MTH 365](https://alisonkleffner.github.io/mth-365/Week 2/slides/intro-to-quarto.html#1)
 

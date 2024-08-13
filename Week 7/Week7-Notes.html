@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="author" content="Hypothesis Testing" />
     <meta name="date" content="2023-09-26" />
-    <script src="libs/header-attrs-2.23/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.27/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
     <link href="libs/tachyons-4.12.0/tachyons.min.css" rel="stylesheet" />
@@ -361,8 +361,8 @@ A BMI in adults of 25.0 or greater is considered overweight. Based on the data f
 ```
 ## The following objects are masked from 'package:stats':
 ## 
-##     binom.test, cor, cor.test, cov, fivenum, IQR, median, prop.test, quantile, sd,
-##     t.test, var
+##     binom.test, cor, cor.test, cov, fivenum, IQR, median, prop.test,
+##     quantile, sd, t.test, var
 ```
 
 ```
@@ -380,7 +380,7 @@ A BMI in adults of 25.0 or greater is considered overweight. Based on the data f
 Write the null and alternative hypothesis, and calculate the test statistic.
 
 
-```r
+``` r
 favstats(~BMI, data=nhanes.samp)
 ```
 
@@ -396,7 +396,7 @@ favstats(~BMI, data=nhanes.samp)
 Identify the p-value, and write a conclusion for the test.
 
 
-```r
+``` r
 t.test(~BMI, 
        mu=25, 
        alternative='greater', 
@@ -438,7 +438,7 @@ Write the null and alternative hypothesis, and calculate the test statistic.
 Identify the p-value, and write a conclusion for the test.
 
 
-```r
+``` r
 t.test(~mercury, 
        mu=0.5, 
        alternative='greater', 

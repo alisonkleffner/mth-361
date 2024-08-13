@@ -99,7 +99,7 @@ df <- data.frame(term = c("superset", "subset", "union", "intersection", "comple
 kable(df, col.names = c("Term", "Notation", "Intuitive Terminology"), escape = F)
 ```
 
-Sarah is a college student and she is good with math. Which is more likely to be true:
+Use venn diagrams to visually show relationships between events! Which is more likely to be true:
 
 - Sarah loves music
 - Sarah loves music and she is a data science major

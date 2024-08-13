@@ -127,22 +127,6 @@ Lab 6 on Thursday (**due Friday at 11:59 pm**)
 Midterm on Thursday October 5
   - Review on Tuesday October 3
 
----
-### Notes on Lab 5
-
-+ Distribution of Random Variable, X: $X \sim N(\mu, \sigma)$
-
-+ From one sample from the population, we can calculate $\bar{x}$
-  - But we don't know if this is a good estimate of $\mu$ or not
-
-+ If we take multiple samples from the population, we will have multiple $\bar{x}$. 
-  - This creates a distribution, called the sampling distribution
-  - $\bar{x} \sim N(\mu, SE_{\bar{x}})$
-  - When using applets, make sure to use $SE_{\bar{x}}$ instead of $\sigma$
-  - Less spread out than distribution of X
-
-+ The word "cause" should send up a red flag
-
 
 ---
 ### From Confidence Intervals to Hypothesis Tests
@@ -222,10 +206,6 @@ For the following alternative hypotheses: (1) determine whether it is one-sided 
 
 **Example**: Drug maker GlaxoSmithKline (GSK) investigated the potential impact of its oral anti-diabetic drug Avandia on the blood lipid levels of adult diabetics who might benefit from taking Avandia. They were particularly concerned that LDL, "bad" cholesterol, levels might increase. Write the null and alternative hypothesis for their test.
 
---
-
-$H_0$: LDL will not change after taking Avandia $\\$
-$H_A$: LDL will increase after taking Avandia
 
 ---
 ### Step 2: Calculate the Test Statistic 
@@ -270,7 +250,7 @@ Assuming Randomness!
 Do you remember the Arson Activity from the first day of class?
 
 ```{r, echo=FALSE, fig.align='center', out.height="70%", out.width="70%"}
-knitr::include_graphics("../images/Week1/arson-results.jpg")
+
 ```
 
 You didn't know it at the time, but we created a Null Distribution!
