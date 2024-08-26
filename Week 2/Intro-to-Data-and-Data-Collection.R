@@ -4,11 +4,13 @@
 
 ## ---- echo = FALSE-------------------------------------------------------------------------------------
 
-#To install the 'oibiostat' package (where LEAP data comes from):
+#To install the 'oibiostat' package (where LEAP data comes from) - You will only need to do this once!:
   
-#install.packages("devtools")
-#devtools::install_github("OI-Biostat/oi_biostat_data")
+install.packages("devtools")
+devtools::install_github("OI-Biostat/oi_biostat_data")
 
+
+#Load Library into your session of RStudio - You will need to do this every time you open R
 library(oibiostat)
 library(tidyverse)
 

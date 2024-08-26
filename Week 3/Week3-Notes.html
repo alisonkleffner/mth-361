@@ -48,6 +48,12 @@ Exploratory Data Analysis:
 ---
 ### Announcements
 
++ **Homework 2** will be released after class today
+  - Due **Tuesday September 10 at 11:59 pm**
+  - Upload to Blueline
+  
++ **Thursday's lab** will be available on Blueline after class today. 
+  - Will be due **Friday September 6 at 11:59pm** in Blueline
 
 
 **Book Sections for Next Week**: Chapter 2
@@ -89,27 +95,22 @@ Note:
 - All R code for producing the graphics and data summaries will use the `tidyverse` and `mosaic` libraries. The code can be found in the provided file in BlueLine, so you should be able to reproduce these graphics at home.
 
 ---
-### Some Bad Graphics: COVID-19
+### A Bad Graphic: COVID-19
 
 .center[
 
 
-&lt;img src="../Week 3/images/bad-pie.png" width="45%" /&gt;
+&lt;img src="../Week 3/images/bad-pie.png" width="75%" /&gt;
 
 ]
 
-.center[
 
-
-&lt;img src="../Week 3/images/bad-scale.png" width="60%" /&gt;
-
-]
 
 
 ---
 ### Case Study: ICU Admission Data
 
-Data for a sample of 200 patients at an Intensive Care Unit (ICU). The data set contains 20 variables. Here is a list of the ones we will use in this example:
+Data for a sample of 200 patients at an Intensive Care Unit (ICU). The data set contains 15 variables. Here is a list of the ones we will use in this example:
 
 - Age
 - Race
@@ -117,6 +118,78 @@ Data for a sample of 200 patients at an Intensive Care Unit (ICU). The data set 
 - Systolic
 - Cancer: Yes/No
 - Type: Elective/Emergency
+
+**Let's read in the data together**
+
+
+---
+### Case Study: ICU Admission Data
+
+Point and Click Methods
+
+- *Note*: If using Posit Cloud, you have an extra step. You must upload the data file into your Posit Cloud account
+
+.pull-left[
+**Method 1**: Import Data set in Environment Tab (Works well for .csv/.xlsx files) using *Import Dataset*
+
+&lt;img src="../Week 3/images/read-data.png" width="1755" /&gt;
+
+].pull-right[
+**Method 2**: Navigate to dataset in Files Tab. Click on desired file, then `Import Dataset`
+
+&lt;img src="../Week 3/images/read-data2.png" width="1760" /&gt;
+
+]
+
+---
+### Check Variable Types
+
+
+
+
+
+``` r
+str(data)
+```
+
+```
+## 'data.frame':	200 obs. of  15 variables:
+##  $ ID       : int  8 12 14 28 32 38 40 41 42 50 ...
+##  $ Status   : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ Age      : int  27 59 77 54 87 69 63 30 35 70 ...
+##  $ Sex      : int  1 0 0 0 1 0 0 1 0 1 ...
+##  $ Race     : int  1 1 1 1 1 1 1 1 2 1 ...
+##  $ Service  : int  0 0 1 0 1 0 1 0 0 1 ...
+##  $ Cancer   : int  0 0 0 0 0 0 0 0 0 1 ...
+##  $ Renal    : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ Infection: int  1 0 0 1 1 1 0 0 0 0 ...
+##  $ CPR      : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ Systolic : int  142 112 100 142 110 110 104 144 108 138 ...
+##  $ HeartRate: int  88 80 70 103 154 132 66 110 60 103 ...
+##  $ Previous : int  0 1 0 0 1 0 0 0 0 0 ...
+##  $ Type     : int  1 1 0 1 1 1 0 1 1 0 ...
+##  $ Fracture : int  0 0 0 1 0 0 0 0 0 0 ...
+```
+
+Note: The purpose of checking variable types is to make sure R is understanding what each column is representing.
+
+---
+### Check Variable Types
+
+`R` does not always read in the variables correctly. For example, `Cancer` is being read in as a integer, when it is a factor (0 if have cancer, 1 if don't). We can change this!
+
+
+``` r
+#To change this column to a factor:
+data$Cancer&lt;- as.factor(data$Cancer)
+#Now Cancer is a Factor!
+class(data$Cancer)
+```
+
+```
+## [1] "factor"
+```
+
 
 ---
 class:inverse
@@ -135,21 +208,7 @@ class:inverse
 ]
 
 ---
-### EDA for One Continuous Variable
-
-- Measures of Center
-  - Mean
-  - Median
-- Variability and Spread
-  - Standard Deviation
-  - Variance
-  - Range and IQR
-- Visualization
-  - Box-plot
-  - Histograms and Density Plots
-
----
-### Measurse of Center
+### EDA for One Continuous Variable: Measurse of Center
 
 Sample Mean: average of all individuals in a sample
 $$ \bar{x} = \frac{\sum^{n}_{i=1}x_i}{n} $$
@@ -159,7 +218,7 @@ Same median (*m*): middle observation when all the values are ordered from small
 
 
 ---
-### Standard Deviation and Variance
+### EDA for One Continuous Variable: Standard Deviation and Variance
 
 **Sample Standard Deviation (s)**: a measure of spread in a data set, the "typical" distance between an individual observation and the sample mean.
 
@@ -221,7 +280,6 @@ Use the `favstats()` function in the  `mosaic` package.
 
 ``` r
 library(mosaic)
-data &lt;- read.csv("ICUAdmissions.csv")
 favstats(data$Age) #gives statistical summaries
 ```
 
@@ -236,34 +294,23 @@ favstats(data$Age) #gives statistical summaries
 Can also use `summary()` but `favstats()` also provide total number of observations and number of missing values. 
 
 ---
-### Visualizing the Distribution - Side Note
+### Visualizing the Distribution - Boxplots
 
-We can create a distribution of the `Age` variable with the `ggplot()` function. `ggplot()` is an additive function. The geom_histogram() function will add an new histogram "layer" to our plot. New layers can be added with a `+` sign.  
-
-.pull-left[
-
-``` r
-data %&gt;% ggplot(aes(Age)) 
-```
-
-![](Week3-Notes_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
-
-[ggplot cheat sheet](https://posit.co/wp-content/uploads/2022/10/data-visualization-1.pdf)
+We will use the `ggplot` package to create plots in `R`
+- [ggplot cheat sheet](https://posit.co/wp-content/uploads/2022/10/data-visualization-1.pdf)
 
 
-].pull-right[
 
 ``` r
-data %&gt;% ggplot(aes(Age)) + 
-* geom_histogram()
+data %&gt;% ggplot(aes(y = Age)) + 
+* geom_boxplot() +
+  ggtitle("Boxplot of Age")
 ```
 
-![](Week3-Notes_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
-
-]
+&lt;img src="Week3-Notes_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
-#### Visualizing the Distribution
+### Visualizing the Distribution - Histograms
 
 
 Use a histogram to capture the distribution (pattern of outcomes) of a variable
@@ -276,7 +323,7 @@ data %&gt;% ggplot(aes(Age)) +
   ggtitle("Histogram 30 Bins")
 ```
 
-![](Week3-Notes_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
+![](Week3-Notes_files/figure-html/unnamed-chunk-13-1.png)&lt;!-- --&gt;
 ].pull-right[
 
 ``` r
@@ -285,14 +332,12 @@ data %&gt;% ggplot(aes(Age)) +
   ggtitle("Histogram 10 Bins")
 ```
 
-![](Week3-Notes_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
+![](Week3-Notes_files/figure-html/unnamed-chunk-14-1.png)&lt;!-- --&gt;
 
 ]
 
-**Note**: Choose interval carefully as it may impact conclusions
-  
 ---
-### Visualizing the Distribution
+### Visualizing the Distribution - Density Plots
 
 Another option for the distribution of a continuous variable: density plot
 
@@ -304,7 +349,7 @@ data %&gt;% ggplot(aes(Age)) +
   ggtitle("Density Plot of Age")
 ```
 
-![](Week3-Notes_files/figure-html/unnamed-chunk-12-1.png)&lt;!-- --&gt;
+![](Week3-Notes_files/figure-html/unnamed-chunk-15-1.png)&lt;!-- --&gt;
 ].pull-right[
 
 ``` r
@@ -313,7 +358,7 @@ data %&gt;% ggplot(aes(Age)) +
   ggtitle("Density Plot of Age")
 ```
 
-![](Week3-Notes_files/figure-html/unnamed-chunk-13-1.png)&lt;!-- --&gt;
+![](Week3-Notes_files/figure-html/unnamed-chunk-16-1.png)&lt;!-- --&gt;
 
 ]
   
@@ -352,7 +397,7 @@ Describe the Heart Rate variable using the given summary statistics and figure
 |----:|-------:|------:|------:|-------:|----:|--------:|---:|-------:|
 |   39|      80|     96| 98.925|  118.25|  192| 26.82962| 200|       0|
 ].pull-left[
-![](Week3-Notes_files/figure-html/unnamed-chunk-16-1.png)&lt;!-- --&gt;
+![](Week3-Notes_files/figure-html/unnamed-chunk-19-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -374,8 +419,7 @@ class:inverse
 ---
 ### EDA for One Categorical Variable
 
-- Frequency Table
-- Sample Proportion `\((\hat{p})\)`: the proportion in a given category of interest
+- Frequency Table (must be a factor!)
 
 
 
@@ -389,6 +433,9 @@ table(data$Race)
 ## White Black Other 
 ##   175    15    10
 ```
+
+- Sample Proportion `\((\hat{p})\)`: the proportion in a given category of interest
+
 
 ``` r
 data %&gt;%    
@@ -416,22 +463,7 @@ data %&gt;% ggplot(aes(x=Race, fill = Race)) +
 * geom_bar()
 ```
 
-&lt;img src="Week3-Notes_files/figure-html/unnamed-chunk-19-1.png" style="display: block; margin: auto;" /&gt;
-
----
-### EDA for One Categorical Variable
-Making a Good Bar Chart:
-- Baseline of the y-axis should be at 0.
-- For ordinal variables, the bars should be in the natural order. For nominal variables, best to arrange by frequency of occurrence. 
-
-What's wrong with this example?
-
-.center[
-
-
-&lt;img src="../Week 3/images/bad-bar.png" width="95%" /&gt;
-
-]
+&lt;img src="Week3-Notes_files/figure-html/unnamed-chunk-23-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 ### Difference Between Bar-Plot and Histogram
@@ -441,9 +473,9 @@ What's wrong with this example?
 
 
 .pull-left[
-![](Week3-Notes_files/figure-html/unnamed-chunk-21-1.png)&lt;!-- --&gt;
+![](Week3-Notes_files/figure-html/unnamed-chunk-24-1.png)&lt;!-- --&gt;
 ].pull-right[
-![](Week3-Notes_files/figure-html/unnamed-chunk-22-1.png)&lt;!-- --&gt;
+![](Week3-Notes_files/figure-html/unnamed-chunk-25-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -472,10 +504,11 @@ class:inverse
 
 ``` r
 data %&gt;% ggplot(aes(x=Systolic, y = HeartRate)) + 
-* geom_point()
+* geom_point() +
+  ggtitle("Scatterplot of Systolic vs Heart Rate")
 ```
 
-&lt;img src="Week3-Notes_files/figure-html/unnamed-chunk-23-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week3-Notes_files/figure-html/unnamed-chunk-26-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 ### Interpretation of Correlation Coffiecient from Scatterplots
@@ -499,7 +532,7 @@ If you want to focus on the trend of the data (the change in `\(y\)`-value with 
 Especially useful if want to show data over time
 
 ---
-### Focus on Trend
+### Focus on Trend - Line Plots
 
 .pull-left[
 
@@ -511,7 +544,7 @@ data %&gt;%
   ggtitle("Line Plot")
 ```
 
-![](Week3-Notes_files/figure-html/unnamed-chunk-25-1.png)&lt;!-- --&gt;
+![](Week3-Notes_files/figure-html/unnamed-chunk-28-1.png)&lt;!-- --&gt;
 ].pull-right[
 
 ``` r
@@ -522,7 +555,7 @@ data %&gt;%
   ggtitle("Smooth Line Plot")
 ```
 
-![](Week3-Notes_files/figure-html/unnamed-chunk-26-1.png)&lt;!-- --&gt;
+![](Week3-Notes_files/figure-html/unnamed-chunk-29-1.png)&lt;!-- --&gt;
 ]
 
 
@@ -545,7 +578,7 @@ class:inverse
 ---
 ### EDA for One Contiuous and One Categorical Variable
 
-- Side-by-side box plots or density plots
+- Side-by-side box plots or density plots (same panel)
 
 
 
@@ -559,7 +592,7 @@ data %&gt;%
   ggtitle("Box Plot of HR")
 ```
 
-![](Week3-Notes_files/figure-html/unnamed-chunk-28-1.png)&lt;!-- --&gt;
+![](Week3-Notes_files/figure-html/unnamed-chunk-31-1.png)&lt;!-- --&gt;
 ].pull-right[
 
 ``` r
@@ -570,7 +603,7 @@ data %&gt;%
   ggtitle("Density Plot of HR")
 ```
 
-![](Week3-Notes_files/figure-html/unnamed-chunk-29-1.png)&lt;!-- --&gt;
+![](Week3-Notes_files/figure-html/unnamed-chunk-32-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -588,7 +621,7 @@ data %&gt;% ggplot(aes(x=HeartRate,
   ggtitle("Box Plot of HR")
 ```
 
-![](Week3-Notes_files/figure-html/unnamed-chunk-30-1.png)&lt;!-- --&gt;
+![](Week3-Notes_files/figure-html/unnamed-chunk-33-1.png)&lt;!-- --&gt;
 ].pull-right[
 
 ``` r
@@ -599,8 +632,24 @@ data %&gt;% ggplot(aes(x=HeartRate,
   ggtitle("Hist of Heart Rate")
 ```
 
-![](Week3-Notes_files/figure-html/unnamed-chunk-31-1.png)&lt;!-- --&gt;
+![](Week3-Notes_files/figure-html/unnamed-chunk-34-1.png)&lt;!-- --&gt;
 ]
+
+---
+### EDA for One Contiuous and One Categorical Variable
+
+Can calculate summary statistics by group:
+
+
+``` r
+favstats(~HeartRate|Infection, data = data)
+```
+
+```
+##   Infection min    Q1 median     Q3 max      mean       sd   n missing
+## 1         0  44 76.00   88.5 109.25 160  91.85345 24.37577 116       0
+## 2         1  39 88.75  106.0 125.00 192 108.69048 27.13286  84       0
+```
 
 ---
 class:inverse
@@ -648,7 +697,7 @@ data %&gt;%
   facet_grid(~Type)+geom_bar()
 ```
 
-![](Week3-Notes_files/figure-html/unnamed-chunk-34-1.png)&lt;!-- --&gt;
+![](Week3-Notes_files/figure-html/unnamed-chunk-38-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -685,7 +734,7 @@ Describe the relationship between Age and Premium Price.
 
 The Correlation Coefficient is 0.698
 
-&lt;img src="Week3-Notes_files/figure-html/unnamed-chunk-35-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week3-Notes_files/figure-html/unnamed-chunk-39-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 ### Exercise (b)
@@ -699,7 +748,7 @@ Describe what you learned about people with a transplant.
 |---:|---:|
 | 931|  55|
 ].pull-right[
-![](Week3-Notes_files/figure-html/unnamed-chunk-37-1.png)&lt;!-- --&gt;
+![](Week3-Notes_files/figure-html/unnamed-chunk-41-1.png)&lt;!-- --&gt;
 
 ]
 
@@ -715,7 +764,7 @@ Describe the relationship between those with transplant &amp; the premium price.
 |Yes         | 15000| 28000| 38000| 38000| 38000| 31763.64| 9213.444|  55|
 
 .pull-left[
-![](Week3-Notes_files/figure-html/unnamed-chunk-39-1.png)&lt;!-- --&gt;
+![](Week3-Notes_files/figure-html/unnamed-chunk-43-1.png)&lt;!-- --&gt;
 ]
 
 
@@ -735,9 +784,48 @@ Does having a transplant relate to whether people have any chronic diseases? Exp
 ```
 
 
-![](Week3-Notes_files/figure-html/unnamed-chunk-41-1.png)&lt;!-- --&gt;
+![](Week3-Notes_files/figure-html/unnamed-chunk-45-1.png)&lt;!-- --&gt;
 ]
 
+---
+
+## Warnings vs. Errors
+
++ Routinely beginners to R panic if they see a red message as innocuous as confirming that a library loaded
+  - Not all red text means that there is an error!
+
++ A *warning* is a message that does not disturb the program flow but is displayed along with the output
+
+  - Not always a cause for concern
+
++ An *error* will terminate a program from being ran
+
++ Google is a beautiful thing
+
+---
+## Some Common Errors
+
+Like all the other programming language, R sometimes will generate errors or the output may not be the one you want. There are multiple reasons for that. Here is some common type of errors: 
+
+1. "could not find function" errors, usually caused by typos or not loading a required package
+
+2. "Error in eval" or "object not found" errors, caused by references to objects that don't exist
+  - Could be due to misspelling
+
+3. "cannot open" errors, caused by attempts to read a file that doesn't exist or can't be accessed (wrong file path)
+
+4. "no applicable method" errors, caused by using an object-oriented function on a data type it doesn't support
+ - Ex. Taking a mean of a character value
+
+5. "subscript out of bounds" errors, caused by trying to access an element or dimension that doesn't exist
+
+
+---
+## Learning to code can be challenging
+
+&lt;img src="../Week 1/images/debug.png" width="1175" /&gt;
+
+Artwork by @allison_horst
 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>

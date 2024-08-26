@@ -109,10 +109,8 @@ Sections covered today in Book: Chapter 1.1-1.3
 ---
 ### Announcements 
 
-+ **Intro Questionnaire** due in Blueline at **11:59pm on Thursday August 29**
-
 + **Homework 1** will be released after class today
-  - Due **Tuesday September 3 at 1:59 pm**
+  - Due **Thursday September 5 at 11:59 pm** (extra time due to Labor Day)
   - Upload to Blueline
   
 + **Thursday's lab** will be available on Blueline after class today. If you want to hand write your lab, feel free to print it out and bring to lab
@@ -486,10 +484,6 @@ You randomly send surveys through mail to some members of the health plan
 .center[
 **What if you have a high non-response rate?**]
 
-<br>
-<br>
-<br>
-<br>
 <br>
 
 Example: If questions assume that participants are fluent in English, then a high non-response rate would be expected if the population largely consists of individuals who are not fluent in English
