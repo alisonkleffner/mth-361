@@ -80,7 +80,7 @@ Choosing an effective data display is a much a science as an art.
 ---
 ### A Quick Note on Good Graphics
 
-Visualization is a method to communicate patterns in data to a wider audience. To do this effectively, the visualizations must be clear, honest, and efficient.
+Visualization is a method to communicate patterns in data to a wider audience. To do this effectively, they must be clear, honest, and efficient.
 
 A Few Principles:
 
@@ -90,18 +90,8 @@ A Few Principles:
 - Make graphical elements clear
 
 
-
-Note:
-
-- All R code for producing the graphics and data summaries will use the `tidyverse` and `mosaic` libraries. The code can be found in the provided file in BlueLine, so you should be able to reproduce these graphics at home.
-
----
-### A Bad Graphic: COVID-19
-
 .center[
-
-
-```{r, echo=FALSE, out.width="75%"}
+```{r, echo=FALSE, out.width="50%"}
 
 knitr::include_graphics("../Week 3/images/bad-pie.png")
 
@@ -126,6 +116,12 @@ Data for a sample of 200 patients at an Intensive Care Unit (ICU). The data set 
 - Type: Elective/Emergency
 
 **Let's read in the data together**
+
+<br>
+
+Note:
+
+- All R code for producing the graphics and data summaries will use the `tidyverse` and `mosaic` libraries. The code can be found in the provided file in BlueLine (`Week3-Notes.R`), so you should be able to reproduce these graphics at home.
 
 
 ---
@@ -255,17 +251,13 @@ Another way to describe the Variability:
   
 The definition of IQR is related to a boxplot and one of the way to define outliers.
 
----
-### IQR and Boxplots
-  
-  
-  
+
 .center[
 
 
 ```{r, echo=FALSE, out.width="65%"}
 
-knitr::include_graphics("../Week 3/images/IQR.png")
+knitr::include_graphics("../Week 3/images/iqr-box.png")
 
 ```
 
@@ -298,7 +290,7 @@ We will use the `ggplot` package to create plots in `R`
 
 
 ```{r, message=FALSE, fig.align='center', fig.height=4.5}
-data %>% ggplot(aes(y = Age)) + 
+data %>% ggplot(aes(x = Age)) + 
   geom_boxplot() + #<<
   ggtitle("Boxplot of Age")
 ```
@@ -785,48 +777,4 @@ tab2
 med %>% ggplot(aes(x=AnyChronicDiseases, fill = Transplants))+ facet_grid(~Transplants) + geom_bar() + ggtitle("Side-by-side bar plot of chronic diseases vs transplant")
 ```
 ]
-
----
-
-## Warnings vs. Errors
-
-+ Routinely beginners to R panic if they see a red message as innocuous as confirming that a library loaded
-  - Not all red text means that there is an error!
-
-+ A *warning* is a message that does not disturb the program flow but is displayed along with the output
-
-  - Not always a cause for concern
-
-+ An *error* will terminate a program from being ran
-
-+ Google is a beautiful thing
-
----
-## Some Common Errors
-
-Like all the other programming language, R sometimes will generate errors or the output may not be the one you want. There are multiple reasons for that. Here is some common type of errors: 
-
-1. "could not find function" errors, usually caused by typos or not loading a required package
-
-2. "Error in eval" or "object not found" errors, caused by references to objects that don't exist
-  - Could be due to misspelling
-
-3. "cannot open" errors, caused by attempts to read a file that doesn't exist or can't be accessed (wrong file path)
-
-4. "no applicable method" errors, caused by using an object-oriented function on a data type it doesn't support
- - Ex. Taking a mean of a character value
-
-5. "subscript out of bounds" errors, caused by trying to access an element or dimension that doesn't exist
-
-
----
-## Learning to code can be challenging
-
-```{r, echo=FALSE}
-
-knitr::include_graphics("../Week 1/images/debug.png")
-
-```
-
-Artwork by @allison_horst
 
