@@ -1,7 +1,7 @@
 ---
 title: "MTH361: Probability and Statistics in the Health Sciences"
 author: "Sampling Distribution and CLT"
-date: "September 21, 2024"
+date: "September 24, 2024"
 output: 
   xaringan::moon_reader:
     lib_dir: libs
@@ -89,21 +89,22 @@ class:inverse
 ### Sampling Distribution and CLT
 #### September 21, 2024
 
-
----
-### Agenda
-
-- Sampling Distribution
-  - Standard Error
-- Confidence Intervals
-  - Definition
-  - Calculation
-  - What affects the width?
-
 ---
 ### Announcements
 
+- **Lab 4** in class Thursday September 26
+  - due Friday September 27 at 11:59pm in Blueline
+  - Will cover material about the Normal Distribution and class today on Sampling Distributions
+- **Homework 4**
+  - due Thursday October 3 at 11:59pm in Blueline
 
+<br>
+
+Book Chapters:
+
+- **Today**: Section 4.1 and 4.2
+
+- **Next Week**: 4.3 and 5.1
 ---
 ### Review on Population and Sample
 

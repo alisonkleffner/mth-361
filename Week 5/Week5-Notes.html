@@ -28,35 +28,39 @@ class: center, middle, inverse, title-slide
 
 
 
-### Agenda
 
-- Probability distribution
-- Random variable
-- Normal distribution
-- Properties of the Normal distribution
-- Finding percentiles/quantiles from a Normal Distribution
-- How do we know if a variable follows a Normal Distribution
-
----
 ### Announcements
 
+- **Lab 4** in class Thursday September 26
+  - due Friday September 27 at 11:59pm in Blueline
+  - Will cover material from today and class on Tuesday September 24
+- **Homework 4**
+  - due Thursday October 3 at 11:59pm in Blueline
+  
+&lt;br&gt;
 
+R code if you want to follow along: Week5-Notes.R
 
-**Today**: Section 3.3
+&lt;br&gt;
+
+Book Chapters:
+
+- **Today**: Section 3.1 and 3.3
+
+- **Tuesday**: Section 4.1 and 4.2
 
 ---
 ### Random Variables
 
 
-- Last week, we have talked about the probability of an event.    
-  + **Example**: let `C` be the even that a person is diagnosed with Cancer, we have `P(C)`.
+- Last week, we talked about the probability of an event.    
+  + **Example**: let `C` be the event that a person is diagnosed with Cancer, we have `P(C)`.
 - Now suppose we have three people, and we are wondering what is the probability that exactly one of them is diagnosed with Cancer.
-  + You can either calculating the sum of all possible events, or use a random variable
+  + You can either calculate the sum of all possible events, or use a random variable
 
 A **random variable** is a **function** that maps each event in a sample space to a number.
   +  Let random variable X be the number of people diagnosed with Cancer, then the question is asking what is P(X = 1)?
   
---
   
 &lt;img src="../images/Week5/rv-cancer-ex.jpeg" width="80%" style="display: block; margin: auto;" /&gt;
 
@@ -113,10 +117,10 @@ The forced expiratory volume (FEV, measured in liters) is a primary indicator of
 Let’s see the distribution of FEV and height.
 
 .pull-left[
-![](Week5-Notes_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
+![](Week5-Notes_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
 
 ].pull-right[
-![](Week5-Notes_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
+![](Week5-Notes_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
 
 ]
 
@@ -129,7 +133,7 @@ Let’s see the distribution of FEV and height.
     + Notation: `\(N(\mu, \sigma)\)` 
 
 
-&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-7-1.png" width="40%" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-8-1.png" width="40%" style="display: block; margin: auto;" /&gt;
 
 ---
 ### Properties of the Normal Model
@@ -148,7 +152,7 @@ Let’s see the distribution of FEV and height.
   - Probability is measured by the area under the curve. e.g., the shaded area in the figure represents the P(−2 &lt; X &lt; 0)
   - Note: For a continuous variable, at any point x, P(X = x) = 0
 
-&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-9-1.png" width="55%" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-10-1.png" width="55%" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -198,9 +202,9 @@ We have a z-score chart that records all the probabilities of the standard norma
 ---
 ### Standard Normal Distribution
 .pull-left[
-&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-11-1.png" width="85%" style="display: block; margin: auto;" /&gt;
-].pull-right[
 &lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-12-1.png" width="85%" style="display: block; margin: auto;" /&gt;
+].pull-right[
+&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-13-1.png" width="85%" style="display: block; margin: auto;" /&gt;
 ]
 
 If you want to calculate `\(P( a &lt; X &lt; b)\)`, then $$ P( a &lt; X &lt; b) = P( -\infty &lt; X &lt; b) = P( -\infty &lt; X &lt; a)$$
@@ -224,7 +228,7 @@ In the `mosaic` package in R, we have a function called `xpnorm`
 xpnorm(q=1.5, mean = 2.64, sd=0.87)
 ```
 
-&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-14-1.png" width="40%" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-15-1.png" width="40%" style="display: block; margin: auto;" /&gt;
 
 ```
 ## [1] 0.0950396
@@ -249,7 +253,7 @@ If X ~ N(3.3, 0.56) then
 xpnorm(3, mean=3.3, sd=0.56)
 ```
 
-&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-15-1.png" width="90%" /&gt;
+&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-16-1.png" width="90%" /&gt;
 
 ```
 ## [1] 0.296078
@@ -262,7 +266,7 @@ xpnorm(3, mean=3.3, sd=0.56)
 xpnorm(4, mean=3.3, sd=0.56)
 ```
 
-&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-16-1.png" width="90%" /&gt;
+&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-17-1.png" width="90%" /&gt;
 
 ```
 ## [1] 0.8943502
@@ -270,27 +274,6 @@ xpnorm(4, mean=3.3, sd=0.56)
 
 ]
 
-
----
-### Probability of a baby with a born weight between 3 kg and 4 kg?
-
-.pull-left[
-
-&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-17-1.png" width="80%" /&gt;
-
-```
-## [1] 0.296078
-```
-
-].pull-right[
-
-&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-18-1.png" width="80%" /&gt;
-
-```
-## [1] 0.8943502
-```
-
-]
 ---
 ### Probability of a baby with a born weight more than 5 kg?
 
@@ -301,13 +284,13 @@ xpnorm(4, mean=3.3, sd=0.56)
 .center[
 
 ``` r
-1-xpnorm(5, mean=3.3, sd=0.56)
+xpnorm(5, mean=3.3, sd=0.56)
 ```
 
-![](Week5-Notes_files/figure-html/unnamed-chunk-19-1.png)&lt;!-- --&gt;
+![](Week5-Notes_files/figure-html/unnamed-chunk-18-1.png)&lt;!-- --&gt;
 
 ```
-## [1] 0.001199833
+## [1] 0.9988002
 ```
 ]
 
@@ -344,7 +327,7 @@ What proportion of British males are eligible to apply to MI5?
 xpnorm(180.3, mean=177, sd=7.1)
 ```
 
-&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-20-1.png" width="70%" /&gt;
+&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-19-1.png" width="70%" /&gt;
 
 ```
 ## [1] 0.6789586
@@ -357,7 +340,7 @@ What proportion of British females are eligible to apply to MI5?
 xpnorm(172.7,mean=163.3,sd=6.4)
 ```
 
-&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-21-1.png" width="70%" /&gt;
+&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-20-1.png" width="70%" /&gt;
 
 ```
 ## [1] 0.9290497
@@ -403,7 +386,7 @@ Assume FEV follows a normal model with `\(\mu\)` = 2.64 and `\(\sigma\)` = 0.87.
 xqnorm(0.40, mean=2.64, sd=0.87)
 ```
 
-&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-23-1.png" width="45%" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-22-1.png" width="45%" style="display: block; margin: auto;" /&gt;
 
 ```
 ## [1] 2.419588
@@ -433,7 +416,7 @@ The babies born in singleton births in the United States have birth weights that
 xqnorm(0.2,mean=3.296,sd=0.56)
 ```
 
-&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-24-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-23-1.png" width="60%" style="display: block; margin: auto;" /&gt;
 
 ```
 ## [1] 2.824692
@@ -445,7 +428,7 @@ xqnorm(0.2,mean=3.296,sd=0.56)
 xqnorm(0.6,mean=3.296,sd=0.56)
 ```
 
-&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-25-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-24-1.png" width="60%" style="display: block; margin: auto;" /&gt;
 
 ```
 ## [1] 3.437874
@@ -466,32 +449,32 @@ The normal distribution can be used to approximate other distributions, such as 
 
 The data sets below were all generated using a N(0, 1) model.
 
-&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-26-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-25-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 ### What to expect in a QQ plot
 
 The data sets below were all generated using a N(0, 1) model.
 
+&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-26-1.png" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+### What to expect in a QQ plot
+
+What happens when we have clearly non-normal data sets?
+
+
 &lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-27-1.png" style="display: block; margin: auto;" /&gt;
 
 
-
 ---
 ### What to expect in a QQ plot
 
 What happens when we have clearly non-normal data sets?
-
 
 &lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-28-1.png" style="display: block; margin: auto;" /&gt;
-
-
----
-### What to expect in a QQ plot
-
-What happens when we have clearly non-normal data sets?
-
-&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-29-1.png" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -500,16 +483,16 @@ What happens when we have clearly non-normal data sets?
 Would it be reasonable to model height of children using a normal distribution?
 
 .pull-left[
-&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-30-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-29-1.png" style="display: block; margin: auto;" /&gt;
 
 ].pull-right[
-&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-31-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-30-1.png" style="display: block; margin: auto;" /&gt;
 ]
 ---
 ### Application: Height
 Would it be reasonable to model height of children using a normal distribution?
 
-&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-32-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-31-1.png" style="display: block; margin: auto;" /&gt;
 
 
 ```

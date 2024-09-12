@@ -14,6 +14,8 @@ output:
 ```{r echo=FALSE, message=FALSE, warning = FALSE}
 library(knitr)
 
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+
 hook_output = knit_hooks$get('output')
 knit_hooks$set(output = function(x, options) {
   # this hook is used only when the linewidth option is not NULL
@@ -28,35 +30,39 @@ knit_hooks$set(output = function(x, options) {
 
 ```
 
-### Agenda
 
-- Probability distribution
-- Random variable
-- Normal distribution
-- Properties of the Normal distribution
-- Finding percentiles/quantiles from a Normal Distribution
-- How do we know if a variable follows a Normal Distribution
-
----
 ### Announcements
 
+- **Lab 4** in class Thursday September 26
+  - due Friday September 27 at 11:59pm in Blueline
+  - Will cover material from today and class on Tuesday September 24
+- **Homework 4**
+  - due Thursday October 3 at 11:59pm in Blueline
+  
+<br>
 
+R code if you want to follow along: Week5-Notes.R
 
-**Today**: Section 3.3
+<br>
+
+Book Chapters:
+
+- **Today**: Section 3.1 and 3.3
+
+- **Tuesday**: Section 4.1 and 4.2
 
 ---
 ### Random Variables
 
 
-- Last week, we have talked about the probability of an event.    
-  + **Example**: let `C` be the even that a person is diagnosed with Cancer, we have `P(C)`.
+- Last week, we talked about the probability of an event.    
+  + **Example**: let `C` be the event that a person is diagnosed with Cancer, we have `P(C)`.
 - Now suppose we have three people, and we are wondering what is the probability that exactly one of them is diagnosed with Cancer.
-  + You can either calculating the sum of all possible events, or use a random variable
+  + You can either calculate the sum of all possible events, or use a random variable
 
 A **random variable** is a **function** that maps each event in a sample space to a number.
   +  Let random variable X be the number of people diagnosed with Cancer, then the question is asking what is P(X = 1)?
   
---
   
 ```{r, echo=FALSE, out.width="80%", fig.align='center'}
 knitr::include_graphics("../images/Week5/rv-cancer-ex.jpeg")
@@ -318,23 +324,6 @@ xpnorm(4, mean=3.3, sd=0.56)
 
 ]
 
-
----
-### Probability of a baby with a born weight between 3 kg and 4 kg?
-
-.pull-left[
-
-```{r, message=FALSE, out.width="80%", echo = FALSE}
-xpnorm(3, mean=3.3, sd=0.56)
-```
-
-].pull-right[
-
-```{r, message=FALSE, out.width="80%", echo = FALSE}
-xpnorm(4, mean=3.3, sd=0.56)
-```
-
-]
 ---
 ### Probability of a baby with a born weight more than 5 kg?
 
@@ -344,7 +333,7 @@ xpnorm(4, mean=3.3, sd=0.56)
 
 .center[
 ```{r, message=FALSE, fig.height=5}
-1-xpnorm(5, mean=3.3, sd=0.56)
+xpnorm(5, mean=3.3, sd=0.56)
 ```
 ]
 
