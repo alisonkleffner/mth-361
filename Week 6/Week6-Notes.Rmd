@@ -145,7 +145,7 @@ head(cdc_sample)
 
 - A natural way to estimate the population parameter is to calculate the corresponding **sample statistic**
   + Population mean $(\mu)$ $\longrightarrow$ sample mean $(\bar{x})$
-  + Population standard deviation $(\sigma)$ $\longrightarrow$ sample standard deviation $s$
+  + Population standard deviation $(\sigma)$ $\longrightarrow$ sample standard deviation $(s)$
   
 But we have a problem, samples aren't perfect!
 
@@ -269,7 +269,7 @@ c(str_split(i2, "\\n", simplify = T)[1:2],
 ---
 ### Standard Error
 
-Sampling Distributions provide the theoretical basis for statistical inference: learning about a population based on a sample.
+Sampling Distributions provide the theoretical basis for **statistical inference**: learning about a population based on a sample.
 
 The sampling distribution of $\bar{x}$ has:
 
@@ -386,7 +386,7 @@ ggplot(cdc_means2, aes(x=sample, y = mean_weight)) +
 
 
 ---
-### Let's Calculate a Confidence Interval!
+### Let's Calculate a 95% Confidence Interval!
 
 Reminder, for our sample: 
   - $\bar{x}$ = 171.4833
@@ -506,6 +506,8 @@ sample $\longrightarrow$ population and $s$ $\longrightarrow$ $\sigma$
 
 **Central Limit Theorem (CLT)**: If $X_{1},...,X_{n}$ are $n$ random samples drawn from a population with mean $\mu$ and finite standard deviation $\sigma$. When the sample size is going to infinity, we have $\frac{\bar{x}-\mu}{\sigma/\sqrt{n}}\sim N(0,1)$
 
+[Simulation](https://seeing-theory.brown.edu/probability-distributions/index.html)
+
 ---
 ### Use CLT to find the Sample Size
 
@@ -526,5 +528,5 @@ Recall the BMI application, suppose the population standard deviation is also 8.
 ---
 ### Application: Study Time
 
-You want to update the University study time survey for 2021. The 2014 survey results were: $\bar{x}$ = 20.1 and $s$ = 3.0. Use the 2014 results to estimate the sample size necessary for MOE of 0.25 hours with 95% confidence.
+You want to update the University study time survey for 2024. The 2014 survey results were: $\bar{x}$ = 20.1 and $s$ = 3.0. Use the 2014 results to estimate the sample size necessary for MOE of 0.25 hours with 95% confidence.
 
