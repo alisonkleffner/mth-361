@@ -1,7 +1,7 @@
 ---
 title: "MTH361: Probability and Statistics in the Health Sciences"
 author: "Hypothesis Testing"
-date: "October 8, 2024"
+date: "October 1, 2024"
 output: 
   xaringan::moon_reader:
     lib_dir: libs
@@ -13,7 +13,7 @@ output:
     nature:
       highlightStyle: github
       highlightLines: true
-      countIncrementalSlides: true
+      countIncrementalSlides: false
 ---
 
 ```{r echo=FALSE, message=FALSE, warning = FALSE}
@@ -96,32 +96,34 @@ class:inverse
 <br><br><br>
 ## MTH361: Probability and Statistics in the Health Sciences
 ### Hypothesis Tests
-#### October 8, 2024
+#### October 1, 2024
 
-
----
-### Agenda
-
-- Hypothesis Testing
-  + Write Hypothesis
-  + Calculate test statistic
-  + Calculate p-value
-  + Make a conclusion
-- Type 1 and Type 2 Errors
-
-
-**Book**: Section 4.3
 ---
 ### Announcements
+
+- **Lab 5** in class Thursday October 3
+  - due Friday October 4 at 11:59pm in Blueline
+  - Data Collection: Play Rock-Paper-Scissors with a friend 12 times and count the number of times they chose scissors (do not tell them what you are counting). Fill out the form: **Lab 5: Rock Paper Scissors Data Collection** by class time on **Thursday October 3**. We will use this data in the lab. 
+- **Homework 5**
+  - Due Tuesday October 22 at 11:59pm in Blueline
+  - Will cover One-Sample Hypothesis Tests from today and Two-Sample Hypothesis Tests from next week
+
+<br>
+
+Book Chapters:
+
+- **Today**: 4.3 and 5.1
+
+- **Next Week**: 5.2 and 5.3
 
 ---
 ### From Confidence Intervals to Hypothesis Tests
 
-Recall in Lab 5, we have this statement:
+Recall from the notes last week:
 
-*The poll provides strong evidence that the percentage of US adults who suffer from chronic illnesses is below 50%.*
+**The data provides evidence that the the BMI of Americans is above the healthy range of BMI ([18.5, 24.9]).**
 
-We also know the 95% confidence interval is [0.43, 0.47].
+We also know the 95% confidence interval is [25.46, 27.74].
 
 Today we are going to discuss and solve these kind of question in a Hypothesis way: Given a sample, how to make conclusion about the population statistics.
 
@@ -183,7 +185,6 @@ Note: Alternative hypothesis can be one-sided ("increased", "decreased") or two-
 
 For the following alternative hypotheses: (1) determine whether it is one-sided or two-sided, and (2) state the corresponding null hypothesis
 
-- Patients who take phentermine and topiramate lose weight at a different rate than control patients without these drugs.
 - Artesunate is less effective that quinine at treating children with severe malaria.
 - Cities that do not have safe-injection sites for drug addicts have higher rates of HIV transmission than cities that do have safe-injection sites.
 
@@ -379,7 +380,7 @@ We will talk more about the t-distribution next week, but for now just know that
 
 A BMI in adults of 25.0 or greater is considered overweight. Based on the data from the NHANES sample, is there strong enough evidence to show that the population mean BMI for American adults is greater than 25.0?
 
-```{r, echo=FALSE, warning=FALSE, fig.height=6, fig.align='center'}
+```{r, echo=FALSE, warning=FALSE, fig.height=6, fig.align='center', message=FALSE}
 library(NHANES)
 library(mosaic)
 library(oibiostat)
@@ -490,16 +491,10 @@ knitr::include_graphics("../images/Week7/rg-error.png")
 A patient was diagnosed with fibromyalgia, a long-term syndrome of body pain, and was prescribed anti-depressants. Being a skeptic, the patient didn’t initially believe that anti-depressants would help her symptoms. However, after a couple months she decides the anti-depressants must be working, because she feels like her symptoms are getting better.
 ]
 
-- What is a Type 1 error? 
-- What is a Type 2 error?
-
---
-
 Type 1: Conclude anti-depressants are working when they are not (Reject)
 
---
-
 Type 2: Conclude they are not working when they are (Fail to Reject)
+
 ---
 
 ### Example: Aspirin Active Ingredient
@@ -511,11 +506,6 @@ __Example__: A pharmaceutical company manufactures aspirin tablets that are sold
 - What are the consequences of Type 1 and Type 2 errors in this scenario? 
 - Which is "worse"?
 
---
-
-Type 1: conclude that the aspirin tablet has more than the active ingredient when they do not
-
-Type 2: conclude that aspirin tablets don't have more than the active ingredient when they do
 ---
 
 ### Adjusting for errors

@@ -4,7 +4,7 @@
     <title>MTH361: Probability and Statistics in the Health Sciences</title>
     <meta charset="utf-8" />
     <meta name="author" content="Two-Sample Testing" />
-    <meta name="date" content="2023-10-17" />
+    <meta name="date" content="2024-10-08" />
     <script src="libs/header-attrs-2.27/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
@@ -27,70 +27,40 @@ class:inverse
 &lt;br&gt;&lt;br&gt;&lt;br&gt;
 ## MTH361: Probability and Statistics in the Health Sciences
 ### Two-Sample Testing
-#### October 17, 2023
+#### October 8, 2024
 
-
----
-### Agenda
-
-- Z vs t distribution
-- Two-sample Hypothesis Tests
-  - Independent 
-  - Paired
-  
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-
-**Book**: 5.1-5.3
 ---
 ### Announcements
 
-- Exams graded and passed back. Please schedule a time to meet with me if you want to go over it.
-- **Lab 7** on Thursday (due Friday at 11:59 per usual)
-- **Homework 7** due on October 31st at 11:59pm
-  + A little bit longer. 
-  + Half over this week and half over next week's materials
-- We will talk about the Analysis Plan on Thursday
+- **Lab 6** on Thursday (due Friday at 11:59 per usual)
+- **Homework 5**
+  - Due Tuesday October 22 at 11:59pm in Blueline
+  - Will cover One-Sample Hypothesis Tests from today and Two-Sample Hypothesis Tests from next week
+- **Midterm**: Thursday October 24 in class
+  - Some review materials in Blueline. Review Day on Tuesday October 22
+    + Midterm Question Form
 
 ---
-## Review: Sampling distribution of the mean
+## Review: Sampling distribution of `\(\bar{x}\)`
 
 We've already learned that, assuming our sample size `\(n\)` is "large enough" and that the population is relatively symmetric, the sample mean follows an approximately normal distribution:
 
 `$$\bar{x}\sim Normal\left(\mu,\frac{\sigma}{\sqrt{n}}\right)$$`
-
---
 
 - We’d like to use the sample mean `\(\bar{x}\)` to estimate the population mean `\(\mu\)`. But, there’s a problem. __Do we have all the necessary information?__
 
 
 ---
 
-## Review: Sampling distribution of the mean
+## Review: Sampling distribution of `\(\bar{x}\)`
 
 We've used the sample standard deviation `\(s\)` to estimate the unknown population standard deviation `\(\sigma\)`.
 
 `$$\bar{x}\sim Normal\left(\mu,\frac{s}{\sqrt{n}}\right)?$$`
 
---
 
 This brings additional variability into the picture. __There are  two sources of error!__
 
---
-
-![](https://media.giphy.com/media/dlMIwDQAxXn1K/giphy.gif)
-
----
-
-## t-distribution
-
-Calculate a new _test statistic_, 
-
-`$$t = \frac{\bar{x}-\mu}{s/\sqrt{n}}$$`
-
-This new test statistic follows a `\(t\)`-distribution.
 
 ---
 
@@ -98,7 +68,7 @@ This new test statistic follows a `\(t\)`-distribution.
 
 In the graph below, the standard normal distribution is the red dotted line and selected `\(t\)`-distributions are the blue solid lines. What do you notice about the `\(t\)`-distribution?
 
-&lt;img src="Week9-Notes_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week8-Notes_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
 
 
 
@@ -111,7 +81,7 @@ __t-distribution__: used to account for the extra variability that comes from es
 
 - Symmetric, bell-shaped curve - looks like a normal distribution!
 - The tails (ends) are "fatter", which means that values farther from zero are more likely than they are under a normal distribution.
-- All centered at 0 (like the standard normal)
+- Centered at 0 (like the standard normal)
 - Has a single parameter, *df* = degrees of freedom
 - Larger sample size -&gt; closer to the standard normal 
 
@@ -141,12 +111,6 @@ If the population standard deviation `\(\sigma\)` is known, the 95% confidence i
 If the population standard deviation `\(\sigma\)` is unknown, the 95% confidence interval is `$$\bar{x} \pm t^*(\frac{s}{\sqrt{n}})$$`
 ]
 
---
-
-For better long-term accuracy, the `\(t\)`-distribution should be used in place of the normal distribution when doing inference about a population mean.
-
-- _Downside: Since the distribution changes for every sample size, it's harder to work with values from the `\(t\)`-distribution "by hand"._
-
 
 
 ---
@@ -167,22 +131,13 @@ qt(p=(1-0.05/2), df=10-1)
 ```
 
 ---
-## Example: Bluefin Tuna Mercury
-
-While fish and other types of seafood are important for a healthy diet, nearly all fish and shellfish contain traces of mercury. Dietary exposure to mercury can be dangerous for young children and unborn babies. The general consensus is that fish with levels above 0.5 ppm should not be consumed. A study of mercury levels for saltwater fish caught of the New Jersey coast found that a sample of 23 Bluefin tuna had a mean mercury level of 0.54 ppm, with standard deviation 0.15 ppm. Calculate a 95% of confidence interval with `\(t^*\)` = 2.074.
-
-
----
 ### Robust Procedure
 
 The `\(t\)`-distribution is a “robust statistical procedure” – it is not sensitive to modest departures from the following assumption: ”the variable is normally distributed in the population”.
 
   - Some textbooks heavily emphasize this assumption, others are more lax about it.
-  - It turns out, that for reasonably large sample sizes, this assumption isn’t really necessary.
-  - When the sample size is ”small”, we can turn to different procedures instead.
   
-  
-Punchline: As long as the variable we’re interested in is numerical with a “reasonable” sample distribution (i.e. no extreme outliers or patterns), the t-test and confidence interval will work well.
+Punchline: As long as the variable we’re interested in is numerical with a “reasonable” sampling distribution (i.e. no extreme outliers or patterns), the t-test and confidence interval will work well.
 
 ---
 ### Two - Sample Tests
@@ -221,17 +176,14 @@ class:inverse
 __Independent samples__: two sets of observations are considered independent if there is no relationship between observations in each group]
 
 
-Let `\(x_{1i}\)` represent the `\(i^{th}\)` observation in group 1 and let `\(x_{2i}\)` represent the `\(i^{th}\)` observation in group 2.
+- Let `\(x_{1i}\)` represent the `\(i^{th}\)` observation in group 1 and let `\(x_{2i}\)` represent the `\(i^{th}\)` observation in group 2.
 
-Denote the sample mean in each group as `\(\bar{x}_1\)` and `\(\bar{x}_2\)` and sample size as `\(n_1\)`
-and `\(n_2\)`, respectively.
+- Denote the sample mean in each group as `\(\bar{x}_1\)` and `\(\bar{x}_2\)` and sample size as `\(n_1\)` and `\(n_2\)`, respectively.
 
 It turns out that `\(\bar{x}_1\)` − `\(\bar{x}_2\)` follows a t-distribution with mean `\(\mu_1 - \mu_2\)`
 
---
 
-Can we assume both groups have the same population standard deviation,
-`\(\sigma_1\)` = `\(\sigma_2\)`?
+We'ere wanting to test the difference in means, but can we assume both groups have the same population standard deviation, `\(\sigma_1\)` = `\(\sigma_2\)`?
 
 ---
 ### Equal variances or unequal variances
@@ -242,7 +194,6 @@ If we assume them to be the same: $$SE_{\bar{x}_1 - \bar{x}_2} = s \sqrt{\frac{1
 
 where `$$s^2 = \frac{(n_1 - 1)s^2_1 + (n_2-1)s^2_2}{(n_1 - 1) + (n_2 -1)}$$`
 
---
 
 If we assume them to be different (Welch Approximation): $$SE_{\bar{x}_1 - \bar{x}_2} = \sqrt{\frac{s^2_1}{n_1} + \frac{s^2_2}{n_2}} $$
 
@@ -254,7 +205,17 @@ In practice the results are pretty similar.
 Confidence interval for the difference of population means:
 `$$(\bar{x}_1 − \bar{x}_2) ± t^∗(SE_{(\bar{x}_1 − \bar{x}_2)})$$`
 
-A study tries to understand how different the average bone density will be for the physically active the women and non-active ones. The study tests 35 women’s bone density for each group and following are the summary statistics. The `\(t^*\)` = 1.995 for 95% confidence interval.
+A study tries to understand how different the average bone density will be for the physically active the women and non-active ones. The study tests 35 women’s bone density for each group and following are the summary statistics.
+
+
+``` r
+qt(p=(1-0.05/2), df=70-1) #Finding t*
+```
+
+```
+## [1] 1.994945
+```
+
 
 
 |group     | min|  Q1| median|  Q3| max|   mean|    sd|  n|
@@ -266,9 +227,8 @@ A study tries to understand how different the average bone density will be for t
 ## Independent: Hypothesis Tests
 
 
-Step 1: What are the Hypothesis and test statistic for an Independent Design?
+**Step 1**: What are the Hypothesis and test statistic for an Independent Design?
 
---
 
 `\(H_0\)`: The population difference in averages is equal to some value, usually zero
 
@@ -279,9 +239,7 @@ from some value
 
 `$$H_A: \mu_1 - \mu_2 (&lt;, &gt;, \ne) \mu_0$$`
 
---
-
-Step 2: Our test statistic:
+**Step 2**: Our test statistic:
 
 `$$t = \frac{(\bar{x}_1 − \bar{x}_2) - \mu_0}{SE_{(\bar{x}_1 − \bar{x}_2)}}$$`
 where `\(\mu_0\)` is typically zero (the expected value)
@@ -289,7 +247,7 @@ where `\(\mu_0\)` is typically zero (the expected value)
 ---
 ## Independent: Hypothesis Tests
 
-Step 3: Determine the p-value:
+**Step 3**: Determine the p-value:
 
 Use `t.test()`.
 
@@ -302,9 +260,7 @@ t.test(Hipp~Group, mu=0, alternative='two.sided', var.equal=TRUE,
 ```
 
 
---
-
-Step 4: Make a conclusion about the original research question:
+**Step 4**: Make a conclusion about the original research question:
 
 Still business as usual. 
 
@@ -322,6 +278,7 @@ A study in the Journal of the American Medical Association (JAMA) included three
 |Control     | 6175| 6780|   7385| 8510| 9710| 7602.6| 1074.02|
 |FBConcuss   | 4490| 5505|   5710| 6035| 7160| 5734.6|  593.40|
 |FBNoConcuss | 4810| 5965|   6515| 7020| 7790| 6459.2|  779.74|
+
 
 
 Is there sufficient evidence to show that the population mean total hippocampus volume for football players with a history of concussions is different from the football players without a history of concussion? Write out your hypothesis and calculate the test statistic.
@@ -401,7 +358,6 @@ difference variable as our variable of interest]
 `$$\bar{d} \pm t^*SE(\bar{d})$$`
 where, `$$SE(\bar{d}) = \frac{s_d}{\sqrt{n_d}}$$` 
 
---
 
 What does it mean if 0 is in your confidence interval?
 
@@ -412,15 +368,13 @@ Nondigestible oligosaccharides are known to stimulate calcium absorption in rats
 
 The 11 subjects took a pill for nine days and had their calcium absorption tested on the last day. The experiment was repeated three weeks later. Some subjects received the oligofructose pill in the first round and a placebo in the second; the order was switched for the remaining subjects.
 
-We take the difference of calcium absorption for each subject when they are in treatment group and control group, the mean of the difference is -10.84 and the sample standard deviation is 18.15. Calculate and interpret a 95% confidence interval for the difference in calcium absorption. The `\(t^*\)` is 2.228.
+Taking the difference of calcium absorption for each subject when they are in treatment group vs control group, `\(\bar{d}\)` is -10.84 and `\(s_d\)` is 18.15. Calculate &amp; interpret a 95% confidence interval for difference in calcium absorption. The `\(t^*\)` is 2.228.
 
 ---
 ## Paired: Hypothesis Tests
 
 
-What are the Hypothesis and test statistic for a Paired Design?
-
---
+**Step 1**: What are the Hypothesis and test statistic for a Paired Design?
 
 `\(H_0\)`: The population mean difference is equal to some value, usually zero
 
@@ -431,40 +385,49 @@ from some value
 
 `$$H_A: \mu_d (&lt;, &gt;, \ne) \mu_0$$`
 
---
 
-Compute the test statistic
+**Step 2**: Compute the test statistic
 
 $$t = \frac{\bar{d} - \mu_0}{s_d/\sqrt{n}} $$
 
 ---
-## Example: oligofructose
+## Paired: Hypothesis Tests
 
-Let's set up a hypothesis test for the oligofructose example. Reminder they wanted to know if the consumption of oligofructose stimulates calcium absorption in healthy male adolescents.
+**Step 3**: Determine the p-value:
 
-The mean of the difference was -10.84, with a sample standard deviation of 18.15.
-
---
-
-If the p value for two sided test is 0.07577, what is the conclusion? Is there a possibility an error was committed?
-
----
-## R for Paired Data
-
-**Note**: Calculate the Differences first
+Use `t.test()`.
 
 
 ``` r
 t.test(~Difference, alternative='two.sided', mu=0,
        data=oligofructose)
 ```
+
+
+**Step 4**: Make a conclusion about the original research question:
+
+Still business as usual. 
+
+- Reject `\(H_0\)` if the `\(p\)`-value `\(&lt;\alpha\)`
+- Fail to reject `\(H_0\)` if the `\(p\)`-value `\(&gt;\alpha\)`
+
+---
+## Example: oligofructose
+
+Let's set up a hypothesis test for the oligofructose example. Reminder they wanted to know if the consumption of oligofructose stimulates calcium absorption in healthy male adolescents. The mean of the difference was -10.84, with a sample standard deviation of 18.15. If the p value for two sided test is 0.07577, what is the conclusion?
+
+---
+### Summary: Difference in t-tests
+
+&lt;img src="../images/Week10/all-t-test.png" width="100%" style="display: block; margin: auto;" /&gt;
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
 "highlightStyle": "github",
 "highlightLines": true,
-"countIncrementalSlides": true
+"countIncrementalSlides": false
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
