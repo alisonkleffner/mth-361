@@ -488,7 +488,7 @@ Still business as usual.
 ---
 ## Example: oligofructose
 
-Let's set up a hypothesis test for the oligofructose example. Reminder they wanted to know if the consumption of oligofructose stimulates calcium absorption in healthy male adolescents. The mean of the difference was -10.84, with a sample standard deviation of 18.15. If the p value for two sided test is 0.07577, what is the conclusion?
+Let's set up a hypothesis test for the oligofructose example. Reminder they wanted to know if the consumption of oligofructose stimulates calcium absorption in healthy male adolescents. The mean of the difference was 10.84, with a sample standard deviation of 18.15. If the p value for two sided test is 0.037885, what is the conclusion?
 
 ---
 ### Summary: Difference in t-tests

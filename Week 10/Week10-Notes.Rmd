@@ -13,7 +13,7 @@ output:
     nature:
       highlightStyle: github
       highlightLines: true
-      countIncrementalSlides: true
+      countIncrementalSlides: false
 ---
 
 ```{r echo=FALSE, message=FALSE, warning = FALSE}
@@ -248,7 +248,7 @@ favstats(~y, data=data)
 ```
 
 
-```{r, echo=FALSE, fig.align='center', fig.height=6, fig.width=8}
+```{r, echo=FALSE, fig.align='center', fig.height=6, fig.width=8, warning = FALSE}
 data %>% ggplot(aes(x=obs, y=y)) + geom_point(aes(col=group)) + 
   geom_hline(yintercept=12.25, col='red')
 ```
@@ -262,7 +262,7 @@ favstats(~y|group, data=data)
 ```
 
 
-```{r, echo=FALSE, fig.align='center',fig.height=6, fig.width=8}
+```{r, echo=FALSE, fig.align='center',fig.height=6, fig.width=8, warning = FALSE}
 data %>% ggplot(aes(x=obs, y=y)) + geom_point(aes(col=group)) +  
   geom_hline(yintercept=12.25) + 
   geom_segment(aes(x=1, y=7.5, xend=4, yend=7.5), col='red') + 
@@ -281,7 +281,7 @@ data %>% ggplot(aes(x=obs, y=y)) + geom_point(aes(col=group)) +
 **Ask ourselves**: Does splitting our data up into groups explain the variability?
 - We want to show the variation between groups is larger than the variation within the groups.
 
-```{r, echo=FALSE, fig.align='center',fig.height=5.5, fig.width=8}
+```{r, echo=FALSE, fig.align='center',fig.height=5.5, fig.width=8, warning = FALSE}
 data %>% ggplot(aes(x=obs, y=y)) + geom_point(aes(col=group)) +  
   geom_hline(yintercept=12.25) + 
   geom_segment(aes(x=1, y=7.5, xend=4, yend=7.5), col='black') + 

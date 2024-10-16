@@ -22,3 +22,5 @@ Date | Notes | Description | Additional Files | Homework Assigned
 10/3/2024 | **Lab 5 Work Day**| | | **Lab 5** due Friday October 4 at 11:59 pm  **Homework 5** due Tuesday October 22nd at 11:59|
 10/8/2024 | [Two-Sample Hypothesis Testing](Week 8/Week8-Notes.html) | Independent vs. Paired Hypothesis Tests| | **Lab 6** due Friday October 11 at 11:59 pm  **Homework 5** due Tuesday October 22nd at 11:59|
 10/10/2024 | **Lab 6 Work Day**| | | **Lab 6** due Friday October 11 at 11:59 pm  **Homework 5** due Tuesday October 22nd at 11:59|
+10/22/2024 | [Midterm Review](Week 9/Midterm-Review.html) | | | |
+10/24/2024 | **Midterm Exam**| | | |
