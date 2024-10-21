@@ -4,7 +4,7 @@
     <title>MTH361: Probability and Statistics in the Health Sciences</title>
     <meta charset="utf-8" />
     <meta name="author" content="ANOVA" />
-    <meta name="date" content="2023-10-24" />
+    <meta name="date" content="2024-10-29" />
     <script src="libs/header-attrs-2.27/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
@@ -27,45 +27,26 @@ class:inverse
 &lt;br&gt;&lt;br&gt;&lt;br&gt;
 ## MTH361: Probability and Statistics in the Health Sciences
 ### ANOVA
-#### October 24, 2023
+#### October 29, 2024
 
-
----
-### Agenda
-
-- Analysis of Variance (ANOVA)
-  - Model
-  - Assumptions
-  - Hypothesis
-- Multiplicity Adjustments
-
-  
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-
-**Book**: 5.5
 ---
 ### Announcements
 
-- **Homework 7 ** due Tuesday October 31 at 11:59 pm
-- **Lab 8 ** on Thursday
-  + Due Friday October 27 at 11:59 pm
+- **Homework 6 ** due Thursday November 7 at 11:59 pm
+- **Lab 7 ** on Thursday
+  + Due Friday November 1 at 11:59 pm
 
 
 ---
-### Summary: What do you need to know for the t-test?
+### What do you need to know for the t-test?
 
 - **Step 1**: Identify the type of test (one-sample, paired, two-sample)
 
-&lt;img src="../images/Week10/all-t-test.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="../images/Week10/all-t-test.png" width="70%" style="display: block; margin: auto;" /&gt;
 
 
----
-### Summary: What do you need to know for the t-test?
 - **Step 2**: Write the null and alternative hypothesis for the test
-  - Null Hypothesis always contains and equal sign
+  - Null Hypothesis always contains an equal sign
   - Alternative hypothesis is the one you want to show (research question). Can be greater than, less than, or two-sided.
 - **Step 3**: Calculate the SE
   - Depends on the type of test
@@ -73,38 +54,20 @@ class:inverse
 - **Step 4**: Given the p-value, make a conclusion for the test
   - P-value + decision + content explanation
 
----
-### One More Example
-
-A study tries to understand how different the average bone density will be for the physically active the women and non-active ones. The study tests 35 women’s bone density for each group and following are the summary statistics. The `\(t^*\)` = 1.995 for 95% confidence interval.
-
-
-|group     | min|  Q1| median|  Q3| max|   mean|    sd|  n|
-|:---------|---:|---:|------:|---:|---:|------:|-----:|--:|
-|active    | 155| 207|    212| 219| 257| 211.63|  8.73| 35|
-|nonactive | 162| 201|    206| 213| 270| 207.60| 21.43| 35|
-
-- Identify the type of the t-test
-- Write the hypothesis for the test
-- Calculate the SE of the test
-- If the p-vale is 0.3084, write the conclusion of the test
-
----
 
 ---
 ### Statistical Modeling
 
 - Much of statistics involves modeling
-- Generally, it is a mathematicl formula showing the relationship between the response and explanatory variable(s)
+- Generally, it is a mathematical formula showing the relationship between the response and explanatory variable(s)
 - Often written as `$$\text{Y = Model + Error}$$` where the model is where you put your explanatory variables
 
 ---
 ### Analysis of Variance (ANOVA)
 
-- Used to find if the difference between multiple independent groups of data are statistically significant.
+- Used to find if the means between multiple independent groups of data are statistically significant.
 - Analyzes the variance (spread) of individuals within each group as well as between the different groups
 - What matters is not how far apart the sample means are, but how far apart they are relative to the variability of individual observations.
-- Also takes into account sample size and difference between the groups
 
 &lt;br&gt;
 
@@ -143,7 +106,7 @@ The alternative hypothesis is that there’s at least two population means diffe
 ---
 ### One-Way ANOVA Model
 
-The statistical model for an analysis of variance is `$$Y_{i,j} = \mu + \alpha_i + \epsilon_{ij}$$`
+The statistical model for analysis of variance is `$$Y_{i,j} = \mu + \alpha_i + \epsilon_{ij}$$`
 
 - Response variable for subject `\(j\)` in group `\(i\)`: `\(Y_{i,j}\)`
 - Mean response for each group `\(i\)`: `\(\mu_i = \mu + \alpha_i\)`
@@ -168,7 +131,7 @@ Overall Summary Statistics - regardless of group
 ```
 
 
-&lt;img src="Week10-Notes_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week10-Notes_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -183,7 +146,7 @@ Overall Summary Statistics - regardless of group
 ```
 
 
-&lt;img src="Week10-Notes_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week10-Notes_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -192,7 +155,7 @@ Overall Summary Statistics - regardless of group
 **Ask ourselves**: Does splitting our data up into groups explain the variability?
 - We want to show the variation between groups is larger than the variation within the groups.
 
-&lt;img src="Week10-Notes_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week10-Notes_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -201,25 +164,22 @@ Overall Summary Statistics - regardless of group
 It is important to check whether the assumptions for conducting ANOVA are reasonably satisfied:
 
 - Observations independent within and across groups
-  + Think about study design/context
 - Data within each group are nearly normal
-  + Look at the data graphically, such as with a histogram 
-  + Normal Q-Q plots can help
 - Variability across groups is about equal
   + Look at the data graphically
-  + Numerical rule of thumb: ratio of largest variance to smallest variance &lt; 3 is considered “about equal”
+  + Numerical rule of thumb: ratio of largest sd to smallest sd &lt; 3 is considered “about equal”
   
 ---
 ### ANOVA: Sums of Squares
 
-Does splitting our data up intro groups explain the variability?
+Does splitting our data up into groups explain the variability?
 
 `$$\sum_{ij}(y_{ij} - \bar{y})^2 = n\sum_i(\bar{y_i} - \bar{y})^2 + \sum_{ij}(y_{ij} - \bar{y_i})^2$$`
 
-`$$SS_{\text{total}} = SS_{\text{treatment}} + SS_{\text{error}}$$`
+`$$SS_{\text{total}} = SS_{\text{group}} + SS_{\text{error}}$$`
 
 Sums of Squares measures deviation of points from mean values
-- `\(SS_{\text{treatment}}\)` signifies between group variability (how much the means vary from group to group)
+- `\(SS_{\text{group}}\)` signifies between group variability (how much the means vary from group to group)
   + Used to calculate the between-group variance
 -  `\(SS_{\text{error}}\)` signifies variability within group (how much the
 observations vary within each group)
@@ -230,7 +190,7 @@ overall mean
 ---
 ### ANOVA: Sums of Squares
 
-If one of the groups have a much different mean from the others, we expect `\(SS_{\text{treatment}}\)` to be large.
+If one of the groups has a much different mean from the others, we expect `\(SS_{\text{group}}\)` to be large.
 
 We want to show the variation between groups are larger than the variation within the groups.
 
@@ -261,9 +221,6 @@ Error|n-k|SSError|MSError||
 Total|n-1|SSTotal|||
 
 - Calculation details are in  _OpenIntro Statistics_ (p. 264-270).
-- I won't expect you to calculate an ANOVA table by hand, but you should be able to identify the most important parts of the ANOVA table and what they tell us.
-
-
 
 
 ---
@@ -279,27 +236,19 @@ A study in the Journal of the American Medical Association (JAMA) included three
 |FBNoConcuss | 4810| 5965|   6515| 7020| 7790| 6459.2|  779.74|
 
 
-Write the hypothesis for the ANOVA Test if we want to test whether the three group have the same brain hippocampus volume. 
+Write the hypothesis for the ANOVA Test if we want to test whether the three groups have the same brain hippocampus volume. 
 
 ---
 
 ---
 ### Football Example: Box-plots
 
+&lt;img src="Week10-Notes_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+### Football Example: Check Assumptions
+
 &lt;img src="Week10-Notes_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /&gt;
-
-
----
-### Football Example: Check Assumptions
-
-&lt;img src="Week10-Notes_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /&gt;
-
-
-
----
-### Football Example: Check Assumptions
-
-&lt;img src="Week10-Notes_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /&gt;
 
 
 Several things you can do:
@@ -331,10 +280,9 @@ Write the conclusion for the test, for `\(\alpha\)` = 0.05.
 ---
 ### Multiple Group Testing
 
-You probably have realized one problem from the ANOVA test.
+You probably have realized one problem from the ANOVA test: 
 
---
-ANOVA can only tell us that at least one group is different but it won’t tell you which.
+- ANOVA can only tell us that at least one group is different but it won’t tell you which.
 
 As one of the solution to the problem, you can do multiple two-sample t-test to address the difference between each pair. However...
 
@@ -347,8 +295,6 @@ In the hypothesis test, we define the significant level `\(\alpha\)`, which is a
   + This is called the comparison-wise error rate
 
 Suppose we need to do three hypothesis tests on a dataset. Each one has a Type 1 error rate  `\(\alpha\)` = 0.05. What is the probability that at least one test results is an error?
-
---
 
 &lt;br&gt;
 &lt;br&gt;
@@ -387,6 +333,9 @@ TukeyHSD(model)
 ```
 
 ---
+### Football Example: Multiplicity Adjustments
+
+---
 ### Example: Yield
 
 Experiment design is extensively applied in the field of Agriculture. People usually select several similar fields but apply different conditions, like humidity or fertilizer to each of them and compare yields (as measured by dried weight of plants) after a period of time. Following are the results of yields obtained under a control and two different treatment conditions.
@@ -416,8 +365,8 @@ Here is the result for ANOVA test. Write the conclusions for each of them with `
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
---
-&lt;br&gt;
+---
+### Example: Yield
 
 What groups are different?
 
