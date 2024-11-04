@@ -4,8 +4,8 @@
     <title>MTH361: Probability and Statistics in the Health Sciences</title>
     <meta charset="utf-8" />
     <meta name="author" content="Simple Linear Regression" />
-    <meta name="date" content="2023-10-31" />
-    <script src="libs/header-attrs-2.23/header-attrs.js"></script>
+    <meta name="date" content="2024-11-05" />
+    <script src="libs/header-attrs-2.27/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
     <link href="libs/tachyons-4.12.0/tachyons.min.css" rel="stylesheet" />
@@ -23,7 +23,7 @@ class: center, middle, inverse, title-slide
 ### Simple Linear Regression
 ]
 .date[
-### October 31, 2023
+### November 5, 2024
 ]
 
 ---
@@ -36,40 +36,30 @@ class: center, middle, inverse, title-slide
 
 ### Announcements
 
-+ Homework 7 due **tonight at 11:59pm**
-+ Lab 9 on Thursday
-  - Due **Friday November 3 at 11:59pm**
-+ Homework 8 due **Tuesday November 7 at 11:59 pm**
++ Homework 6 due **Thursday November 7 at 11:59pm**
 
-+ Analysis Plan due **Tuesday November 14 at 11:59 pm**
++ Lab 8 on Thursday
+  - Due **Friday November 8 at 11:59pm**
+  
++ Homework 7 due **Thursday November 14 at 11:59 pm**
+
++ Analysis Plan due **Tuesday November 26 at 11:59 pm**
 
 
 **Today**: Section 6.1-6.3
 
 ---
-### Notes from Lab 8
-
-- Explain why ANOVA assumptions are met
-- When we Fail to Reject the Null
-  - Just means we don't have evidence for the alternative, not that we have evidence for the null
-  - We are assuming the null hypothesis is true and trying to see if there is evidence against it (think of p-value definition)
-- Include context in conclusions (mean of what?)
 
 
----
-class: inverse
-
-# Examining scatterplots
+## Examining Scatterplots
 
 - Looking for a trend
-
-
 - Measuring a trend with correlation
 
----
-
-
-## Relationships between variables
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
 
 .bg-washed-blue.b--blue.ba.ph3[
 __Example__: Demographic and cardiovascular risk factors were collected as part of the Prevention of Renal and Vascular END-stage Disease (PREVEND) study in the Netherlands. Data from 4,095 participants who completed cognitive testing and were part of the study for the full 10 year period are in the `prevend` data set. As adults age, cognitive function changes over time. The Ruff Figural Fluency Test (RFFT) is a measure of cognitive function that is designed to measure abilities like planning and multitasking. Scores range from 0 to 175 points. Is there a relationship between RFFT scores and age?
@@ -78,7 +68,7 @@ __Example__: Demographic and cardiovascular risk factors were collected as part 
 
 
 ---
-## Relationships between variables
+## Examining Scatterplots
 
 &lt;img src="Week11-Notes_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
 
@@ -89,32 +79,14 @@ __Example__: Demographic and cardiovascular risk factors were collected as part 
 .bg-washed-yellow.b--yellow.ba.ph3[
 __Correlation__: a measure of the strength and direction of the linear relationship between two numerical variables
 
-- Denoted `\(R\)` or `\(r\)`
-
 - Correlation is bounded between -1 and +1
+  +  The closer `\(\vert R \vert\)` is to `\(\pm 1\)`, the stronger the relationship
+  + `\(R&gt;0\)` when there is a postive association
+  + `\(R&lt;0\)` when there is a negative association
 ]
-
---
-
-&lt;img src="../images/Week 11/correlation.png" width="2093" /&gt;
-
----
-
-## Correlation
 
 ![](https://www.mathsisfun.com/data/images/correlation-examples.svg)
 
---
-
-- The closer `\(\vert R \vert\)` is to `\(\pm 1\)`, the stronger the relationship
-
---
-
-- `\(R&gt;0\)` when there is a postive association
-
---
-
-- `\(R&lt;0\)` when there is a negative association
 
 ---
 
@@ -129,7 +101,7 @@ Correlation can be misleading... These all have a correlation of 0.8
 ## Correlation
 
 
-```r
+``` r
 cor(data$x, data$y)
 ```
 
@@ -137,29 +109,20 @@ cor(data$x, data$y)
 ## [1] -0.06447185
 ```
 
-- This data set has a correlation very close to 0! What do you think it looks like?
-
---
+- This data set has a correlation very close to 0! But is there a relationship between variables?
 
 
 &lt;img src="Week11-Notes_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
-
-
 ## Correlation
 
 __Takeaway point__:
 
---
-
 - Strong correlations do not guarantee a linear relationship!
-
---
 
 - Zero correlation does not mean there is no relationship
 
---
 
 .center[
 .bg-washed-red.b--red.ba.ph3[Always plot your data first]
@@ -171,8 +134,6 @@ __Takeaway point__:
 
 When we're working with a lot of numerical variables, it can be useful to calculate all pairwise correlations at once using a __correlation matrix__.
 
---
-
 The PREVEND study is quite large! Let's look at correlations between just a few variables.
 
 - `VAT` is a visual association score.
@@ -180,111 +141,29 @@ The PREVEND study is quite large! Let's look at correlations between just a few 
 - `FRS` (Framingham risk score) is risk of a cardiovascular event in the next ten years.
 
 .small-code[
-&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt;   &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Age &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; RFFT &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; VAT &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; BMI &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; eGFR &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; FRS &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Age &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.0000000 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.5191568 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.2133765 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1925501 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.3789795 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.7507548 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; RFFT &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.5191568 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.0000000 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2102799 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.1915780 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1907343 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.4575277 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; VAT &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.2133765 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2102799 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.0000000 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0452766 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0575921 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.1950206 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; BMI &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1925501 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.1915780 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0452766 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.0000000 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.1286502 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2782355 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; eGFR &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.3789795 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1907343 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0575921 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.1286502 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.0000000 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.2472199 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; FRS &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.7507548 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.4575277 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.1950206 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2782355 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.2472199 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.0000000 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
+
+|     |        Age|       RFFT|        VAT|        BMI|       eGFR|        FRS|
+|:----|----------:|----------:|----------:|----------:|----------:|----------:|
+|Age  |  1.0000000| -0.5191568| -0.2133765|  0.1925501| -0.3789795|  0.7507548|
+|RFFT | -0.5191568|  1.0000000|  0.2102799| -0.1915780|  0.1907343| -0.4575277|
+|VAT  | -0.2133765|  0.2102799|  1.0000000| -0.0452766|  0.0575921| -0.1950206|
+|BMI  |  0.1925501| -0.1915780| -0.0452766|  1.0000000| -0.1286502|  0.2782355|
+|eGFR | -0.3789795|  0.1907343|  0.0575921| -0.1286502|  1.0000000| -0.2472199|
+|FRS  |  0.7507548| -0.4575277| -0.1950206|  0.2782355| -0.2472199|  1.0000000|
 ]
 
-
 ---
+## Correlation Chart
 
-## Correlation plot
-
-We can visualize the pairwise correlations in a __correlation plot__.
+A way to plot and calculate correlation simultaneously is to use a __correlation chart__.
 
 &lt;img src="Week11-Notes_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
-## Correlation chart
-
-Another option is to use a __correlation chart__. These plot the correlation _and_ the original data.
-
-&lt;img src="Week11-Notes_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /&gt;
-
----
-class: inverse
-
-# Estimating and interpreting a regression line
-
-- Regression model: `\(y = \beta_0 + \beta_1 x\)`
-
-
-- Interpreting regression coefficients
-
-
-- Least squares estimation
-
----
-## Simple Linear regression model
+## Developing a Model: Simple Linear Regression
 
 .def[
-__Simple Linear regression model__: a simple way to model the relationship between an explanatory variable (X) and a response variable (Y) is with linear regression
+__Simple Linear Regression Model__: a simple way to model the relationship between an explanatory variable (X) and a response variable (Y) is with linear regression
 
 `$$Y_i = \beta_0 + \beta_1 X_i + \epsilon_i$$`
 
@@ -292,8 +171,6 @@ __Simple Linear regression model__: a simple way to model the relationship betwe
 - `\(\beta_1\)`: slope
 
 ]
-
---
 
 Based on our data, we "fit" the linear regression model:
 
@@ -303,7 +180,7 @@ Based on our data, we "fit" the linear regression model:
 
 ---
 
-## Linear regression model
+## Linear Regression Model
 
 .bg-washed-blue.b--blue.ba.ph3[
 __Example__: Researchers interested in how the human brain reacts to emotional stimuli recruited 16 couples in their mid-twenties who were married or had been dating for at least two years to participate in an experiment. The male partner's hand was zapped with an electrode while the female partner watched. As she watched, they measured the activity in several parts of the woman's brain that would respond to her own pain. They were looking for evidence of an "empathetic" response: that the female partner was sympathizing with how the male partner was feeling while being zapped. 
@@ -320,7 +197,7 @@ Brain activity was recorded as a fraction of the activity observed when the woma
 
 Did the women who scored higher on the psychological test for empathy have stronger reactions in the brain to their partner's pain?
 
-1. Identify the repsonse and explanatory variable.
+1. Identify the response and explanatory variable.
 2. Write the linear model.
 
 ---
@@ -328,11 +205,10 @@ Did the women who scored higher on the psychological test for empathy have stron
 
 Wait, is a linear regression model appropriate?
 
---
-
-&lt;img src="Week11-Notes_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week11-Notes_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /&gt;
 
 The correlations in 0.542. Maybe...
+
 ---
 
 ## Linear regression model
@@ -346,32 +222,18 @@ Write the fitted linear regression model.
 ## Empathy      0.007333256 0.003040537  2.4118292 0.03017705
 ```
 
---
-
-Thus we now have:
-
-- `\(\hat{\beta}_0 = -0.0567\)`
-- `\(\hat{\beta}_1 = 0.0073\)`
-and the estimated linear model is `$$\hat{Y}_i = -0.0567 + 0.0073X_i$$`
-
 ---
-## Linear regression model: Hypothesis Testing
+### Linear regression model: Hypothesis Testing
 
 Determining usefulness of a predictor variable in learning about the response
 
---
+- `\(H_0\)`: There is no linear association between the predictor and response variable
 
-- `\(H_0\)`: There is no linear association between the predictor variable and the response variable
+&lt;br&gt;
 
-`$$\beta_1 = 0$$`
-- `\(H_A\)`: There is a linear association between the predictor variable and the response variable
+- `\(H_A\)`: There is a linear association between the predictor and response variable
 
-`$$\beta_1 \neq 0$$`
---
-
-- Conclusion for slope: If p-value &lt; `\(\alpha\)` -&gt; Reject `\(H_0\)` -&gt; We have evidence there is a linear association between the predictor variable and the response variable
-  
---
+&lt;br&gt;
 
 
 ```
@@ -395,7 +257,7 @@ __Example__: A new couple comes to participate in this experiment. The female pa
 
 ---
 
-## Residuals
+### Residuals
 
 .bg-washed-yellow.b--yellow.ba.ph3[
 __Residuals__: the difference between the predicted value and observed value in a regression model, also called the "error"
@@ -403,22 +265,23 @@ __Residuals__: the difference between the predicted value and observed value in 
 `$$e_i = Y_i - \hat{Y}_i$$`
 ]
 
---
 
-- Sometimes our model will overpredict, sometimes it will overpredict. Models are never perfect!
+- Sometimes our model will overpredict, sometimes it will overpredict.
 
 
-&lt;img src="../images/Week 11/residual.png" width="55%" height="55%" style="display: block; margin: auto;" /&gt;
+&lt;img src="../images/Week 11/residual.png" width="60%" height="30%" style="display: block; margin: auto;" /&gt;
 
 
 ---
-## Residuals
+### Residuals
 
 .bg-washed-blue.b--blue.ba.ph3[
 __Example__: Subject 2 had an empathy assessment score of 53, and a brain response of 0.392. Predict her brain response to the shocks given to her male partner, and calculate the residual.
 ]
 
---
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
 &lt;br&gt;
 
 .bg-washed-blue.b--blue.ba.ph3[
@@ -438,7 +301,7 @@ Linear regression models are typically fit using a technique called __least squa
 Essentially we want to minimize: `\(\sum^n_{i=1}(y_i - \hat{y}_i)^2\)`
 
 ---
-## Evaluating Model : Coefficient of Dtermination `\(R^2\)`
+### Evaluating Model : Coefficient of Dtermination `\(R^2\)`
 
 - A number between 0 and 1 that measures how well a statistical model predicts an outcome
   + Provides a measure of how well observed outcomes are replicated by the model
@@ -446,9 +309,7 @@ Essentially we want to minimize: `\(\sum^n_{i=1}(y_i - \hat{y}_i)^2\)`
 - Amount of variation in the response variable that can be explained by the predictor variable
 
 ---
-## Evaluating Model : Coefficient of Dtermination `\(R^2\)`
-
-So going back to our Empathy vs. Brain Activity Example... 
+### Evaluating Model : Coefficient of Dtermination `\(R^2\)`
 
 
 ```
@@ -472,19 +333,6 @@ So going back to our Empathy vs. Brain Activity Example...
 ## F-statistic: 5.817 on 1 and 14 DF,  p-value: 0.03018
 ```
 
---
-
-29.4% of the variation in brain activity is explained by the empathy score
-
-
----
-class: inverse
-
-# Evaluating model conditions
-
-
-- Regression assumptions
-
 
 ---
 
@@ -497,26 +345,35 @@ There are four conditions a linear regression model must satisfy:
 - __N__: The residuals must be .blue[normally] distributed with mean 0
 - __E__: The .blue[errors] must have constant variance
 
-Before you fit the model, you can check the linearity and the independence (if you know how the data is collected)
+Before you fit the model, you can check independence (if you know how the data is collected)
 
 ---
 ## Evaluating model conditions 
 
-Use a scatterplot of the residuals against the fitted line to assess the assumptions of constant variance and independent residuals.
+Use a scatterplot of the residuals against the fitted line to assess the assumptions of linearity
 
-- What you want to see: random variation above and below zero with no pattern or "runs" (constant variance)
+- What you want to see: random variation above and below zero with no pattern or "runs"
 
-&lt;img src="Week11-Notes_files/figure-html/unnamed-chunk-18-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week11-Notes_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
-
 ## Evaluating model conditions
 
 Use a normal Q-Q plot to check whether the residuals are normally distributed
 
 - What you want to see: most dots close to the diagonal line, with maybe a few deviations at the end
 
+&lt;img src="Week11-Notes_files/figure-html/unnamed-chunk-18-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+## Evaluating model conditions
+
+Use a scatterplot of the scale-location to assess the assumption of constant variance 
+
+- What you want to see: random variation above and below zero with no pattern or "runs" (constant variance)
+
 &lt;img src="Week11-Notes_files/figure-html/unnamed-chunk-19-1.png" style="display: block; margin: auto;" /&gt;
+
 
 ---
 ## Leverage and Outliers
@@ -556,8 +413,7 @@ Standardized residuals greater than 2 are unusual. A point with a standardized r
 &lt;img src="../images/Week 11/leverage.png" width="1333" /&gt;
 
 ---
-
-## Extrapolation
+### Extrapolation
 
 .bg-washed-yellow.b--yellow.ba.ph3[
 __Extrapolation__: Using the regression line to predict beyond the range of observed data
@@ -566,11 +422,8 @@ __Extrapolation__: Using the regression line to predict beyond the range of obse
 &lt;img src="../images/Week 11/extrapolation.png" width="60%" height="60%" style="display: block; margin: auto;" /&gt;
 
 
---
-
 Extrapolation can be dangerous - no guarantee a trend will continue!
 
---
 
 .bg-washed-blue.b--blue.ba.ph3[
 __Example__: What would happen with a subject whose empathy score is 0?

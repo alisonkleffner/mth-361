@@ -1,7 +1,7 @@
 ---
 title: "MTH361: Probability and Statistics in the Health Sciences"
 author: "Simple Linear Regression"
-date: "October 31, 2023"
+date: "November 5, 2024"
 output: 
   xaringan::moon_reader:
     lib_dir: libs 
@@ -37,35 +37,17 @@ knit_hooks$set(output = function(x, options) {
 
 ### Announcements
 
-+ Homework 7 due **tonight at 11:59pm**
-+ Lab 9 on Thursday
-  - Due **Friday November 3 at 11:59pm**
-+ Homework 8 due **Tuesday November 7 at 11:59 pm**
++ Homework 6 due **Thursday November 7 at 11:59pm**
 
-+ Analysis Plan due **Tuesday November 14 at 11:59 pm**
++ Lab 8 on Thursday
+  - Due **Friday November 8 at 11:59pm**
+  
++ Homework 7 due **Thursday November 14 at 11:59 pm**
+
++ Analysis Plan due **Tuesday November 26 at 11:59 pm**
 
 
 **Today**: Section 6.1-6.3
-
----
-### Notes from Lab 8
-
-- Explain why ANOVA assumptions are met
-- When we Fail to Reject the Null
-  - Just means we don't have evidence for the alternative, not that we have evidence for the null
-  - We are assuming the null hypothesis is true and trying to see if there is evidence against it (think of p-value definition)
-- Include context in conclusions (mean of what?)
-
-
----
-class: inverse
-
-# Examining scatterplots
-
-- Looking for a trend
-
-
-- Measuring a trend with correlation
 
 ---
 ```{r xaringan-setup, include=FALSE}
@@ -96,7 +78,15 @@ library(mosaic)
 library(datasauRus)
 ```
 
-## Relationships between variables
+## Examining Scatterplots
+
+- Looking for a trend
+- Measuring a trend with correlation
+
+<br>
+<br>
+<br>
+<br>
 
 .bg-washed-blue.b--blue.ba.ph3[
 __Example__: Demographic and cardiovascular risk factors were collected as part of the Prevention of Renal and Vascular END-stage Disease (PREVEND) study in the Netherlands. Data from 4,095 participants who completed cognitive testing and were part of the study for the full 10 year period are in the `prevend` data set. As adults age, cognitive function changes over time. The Ruff Figural Fluency Test (RFFT) is a measure of cognitive function that is designed to measure abilities like planning and multitasking. Scores range from 0 to 175 points. Is there a relationship between RFFT scores and age?
@@ -108,11 +98,11 @@ data(prevend)
 ```
 
 ---
-## Relationships between variables
+## Examining Scatterplots
 
-```{r, warning=FALSE, message=FALSE, echo=FALSE, fig.align='center'}
+```{r, warning=FALSE, message=FALSE, echo=FALSE, fig.align='center', fig.height=8, fig.width = 12}
 library(tidyverse)
-prevend %>% ggplot(aes(x=Age, y=RFFT)) + geom_point(alpha=0.5) + labs(x='Age (years)', y='RFFT Score')
+prevend %>% ggplot(aes(x=Age, y=RFFT)) + geom_point(alpha=0.5) + labs(x='Age (years)', y='RFFT Score') + geom_smooth(method = "lm")
 ```
 
 ---
@@ -122,36 +112,18 @@ prevend %>% ggplot(aes(x=Age, y=RFFT)) + geom_point(alpha=0.5) + labs(x='Age (ye
 .bg-washed-yellow.b--yellow.ba.ph3[
 __Correlation__: a measure of the strength and direction of the linear relationship between two numerical variables
 
-- Denoted $R$ or $r$
-
 - Correlation is bounded between -1 and +1
+  +  The closer $\vert R \vert$ is to $\pm 1$, the stronger the relationship
+  + $R>0$ when there is a postive association
+  + $R<0$ when there is a negative association
 ]
-
---
-
-```{r, echo=FALSE}
-knitr::include_graphics("../images/Week 11/correlation.png")
-
-```
-
----
-
-## Correlation
 
 ![](https://www.mathsisfun.com/data/images/correlation-examples.svg)
 
---
+```{r, echo=FALSE, eval = FALSE}
+knitr::include_graphics("../images/Week 11/correlation.png")
 
-- The closer $\vert R \vert$ is to $\pm 1$, the stronger the relationship
-
---
-
-- $R>0$ when there is a postive association
-
---
-
-- $R<0$ when there is a negative association
-
+```
 ---
 
 ## Correlation
@@ -177,9 +149,7 @@ data <- datasaurus_dozen %>% filter(dataset == "dino")
 cor(data$x, data$y)
 ```
 
-- This data set has a correlation very close to 0! What do you think it looks like?
-
---
+- This data set has a correlation very close to 0! But is there a relationship between variables?
 
 
 ```{r, echo=FALSE, fig.align='center'}
@@ -187,21 +157,14 @@ data %>% ggplot(aes(x=x, y=y)) + geom_point()
 ```
 
 ---
-
-
 ## Correlation
 
 __Takeaway point__:
 
---
-
 - Strong correlations do not guarantee a linear relationship!
-
---
 
 - Zero correlation does not mean there is no relationship
 
---
 
 .center[
 .bg-washed-red.b--red.ba.ph3[Always plot your data first]
@@ -212,8 +175,6 @@ __Takeaway point__:
 ## Correlation
 
 When we're working with a lot of numerical variables, it can be useful to calculate all pairwise correlations at once using a __correlation matrix__.
-
---
 
 The PREVEND study is quite large! Let's look at correlations between just a few variables.
 
@@ -228,47 +189,21 @@ kable(cor(prevend2))
 ```
 ]
 
-
 ---
+## Correlation Chart
 
-## Correlation plot
+A way to plot and calculate correlation simultaneously is to use a __correlation chart__.
 
-We can visualize the pairwise correlations in a __correlation plot__.
-
-```{r, eval=TRUE, echo=FALSE, fig.align='center'}
-library(corrplot)
-matrix <- cor(prevend2)
-corrplot(matrix) #<<
-```
-
----
-## Correlation chart
-
-Another option is to use a __correlation chart__. These plot the correlation _and_ the original data.
-
-```{r, eval=TRUE, echo=FALSE, fig.align='center'}
+```{r, eval=TRUE, echo=FALSE, fig.align='center', fig.height=6, fig.width=11}
 library(PerformanceAnalytics)
 chart.Correlation(prevend2)
 ```
 
 ---
-class: inverse
-
-# Estimating and interpreting a regression line
-
-- Regression model: $y = \beta_0 + \beta_1 x$
-
-
-- Interpreting regression coefficients
-
-
-- Least squares estimation
-
----
-## Simple Linear regression model
+## Developing a Model: Simple Linear Regression
 
 .def[
-__Simple Linear regression model__: a simple way to model the relationship between an explanatory variable (X) and a response variable (Y) is with linear regression
+__Simple Linear Regression Model__: a simple way to model the relationship between an explanatory variable (X) and a response variable (Y) is with linear regression
 
 $$Y_i = \beta_0 + \beta_1 X_i + \epsilon_i$$
 
@@ -276,8 +211,6 @@ $$Y_i = \beta_0 + \beta_1 X_i + \epsilon_i$$
 - $\beta_1$: slope
 
 ]
-
---
 
 Based on our data, we "fit" the linear regression model:
 
@@ -287,7 +220,7 @@ $$\hat{Y}_i = \hat{\beta}_0 + \hat{\beta}_1 X_i$$
 
 ---
 
-## Linear regression model
+## Linear Regression Model
 
 .bg-washed-blue.b--blue.ba.ph3[
 __Example__: Researchers interested in how the human brain reacts to emotional stimuli recruited 16 couples in their mid-twenties who were married or had been dating for at least two years to participate in an experiment. The male partner's hand was zapped with an electrode while the female partner watched. As she watched, they measured the activity in several parts of the woman's brain that would respond to her own pain. They were looking for evidence of an "empathetic" response: that the female partner was sympathizing with how the male partner was feeling while being zapped. 
@@ -307,7 +240,7 @@ BrainEmpathy <- read.csv("../Week 11/BrainEmpathy.csv")
 
 Did the women who scored higher on the psychological test for empathy have stronger reactions in the brain to their partner's pain?
 
-1. Identify the repsonse and explanatory variable.
+1. Identify the response and explanatory variable.
 2. Write the linear model.
 
 ---
@@ -315,14 +248,13 @@ Did the women who scored higher on the psychological test for empathy have stron
 
 Wait, is a linear regression model appropriate?
 
---
-
 ```{r, fig.align='center'}
 BrainEmpathy %>% ggplot(aes(x=Empathy, y=Brain_Activity)) + 
   geom_point() + geom_smooth(method='lm', se=FALSE)
 ```
 
 The correlations in 0.542. Maybe...
+
 ---
 
 ## Linear regression model
@@ -334,32 +266,18 @@ x<- summary(lm(Brain_Activity~Empathy, data=BrainEmpathy))
 x$coefficients
 ```
 
---
-
-Thus we now have:
-
-- $\hat{\beta}_0 = -0.0567$
-- $\hat{\beta}_1 = 0.0073$
-and the estimated linear model is $$\hat{Y}_i = -0.0567 + 0.0073X_i$$
-
 ---
-## Linear regression model: Hypothesis Testing
+### Linear regression model: Hypothesis Testing
 
 Determining usefulness of a predictor variable in learning about the response
 
---
+- $H_0$: There is no linear association between the predictor and response variable
 
-- $H_0$: There is no linear association between the predictor variable and the response variable
+<br>
 
-$$\beta_1 = 0$$
-- $H_A$: There is a linear association between the predictor variable and the response variable
+- $H_A$: There is a linear association between the predictor and response variable
 
-$$\beta_1 \neq 0$$
---
-
-- Conclusion for slope: If p-value < $\alpha$ -> Reject $H_0$ -> We have evidence there is a linear association between the predictor variable and the response variable
-  
---
+<br>
 
 ```{r, echo=FALSE}
 x$coefficients
@@ -380,7 +298,7 @@ __Example__: A new couple comes to participate in this experiment. The female pa
 
 ---
 
-## Residuals
+### Residuals
 
 .bg-washed-yellow.b--yellow.ba.ph3[
 __Residuals__: the difference between the predicted value and observed value in a regression model, also called the "error"
@@ -388,24 +306,25 @@ __Residuals__: the difference between the predicted value and observed value in 
 $$e_i = Y_i - \hat{Y}_i$$
 ]
 
---
 
-- Sometimes our model will overpredict, sometimes it will overpredict. Models are never perfect!
+- Sometimes our model will overpredict, sometimes it will overpredict.
 
 
-```{r, echo=FALSE, out.height="55%", out.width="55%", fig.align='center'}
+```{r, echo=FALSE, out.height="30%", out.width="60%", fig.align='center'}
 knitr::include_graphics("../images/Week 11/residual.png")
 ```
 
 
 ---
-## Residuals
+### Residuals
 
 .bg-washed-blue.b--blue.ba.ph3[
 __Example__: Subject 2 had an empathy assessment score of 53, and a brain response of 0.392. Predict her brain response to the shocks given to her male partner, and calculate the residual.
 ]
 
---
+<br>
+<br>
+<br>
 <br>
 
 .bg-washed-blue.b--blue.ba.ph3[
@@ -425,7 +344,7 @@ Linear regression models are typically fit using a technique called __least squa
 Essentially we want to minimize: $\sum^n_{i=1}(y_i - \hat{y}_i)^2$
 
 ---
-## Evaluating Model : Coefficient of Dtermination $R^2$
+### Evaluating Model : Coefficient of Dtermination $R^2$
 
 - A number between 0 and 1 that measures how well a statistical model predicts an outcome
   + Provides a measure of how well observed outcomes are replicated by the model
@@ -433,28 +352,11 @@ Essentially we want to minimize: $\sum^n_{i=1}(y_i - \hat{y}_i)^2$
 - Amount of variation in the response variable that can be explained by the predictor variable
 
 ---
-## Evaluating Model : Coefficient of Dtermination $R^2$
-
-So going back to our Empathy vs. Brain Activity Example... 
+### Evaluating Model : Coefficient of Dtermination $R^2$
 
 ```{r, echo=FALSE}
-
 summary(lm(Brain_Activity~Empathy, data=BrainEmpathy))
-
 ```
-
---
-
-29.4% of the variation in brain activity is explained by the empathy score
-
-
----
-class: inverse
-
-# Evaluating model conditions
-
-
-- Regression assumptions
 
 
 ---
@@ -468,14 +370,14 @@ There are four conditions a linear regression model must satisfy:
 - __N__: The residuals must be .blue[normally] distributed with mean 0
 - __E__: The .blue[errors] must have constant variance
 
-Before you fit the model, you can check the linearity and the independence (if you know how the data is collected)
+Before you fit the model, you can check independence (if you know how the data is collected)
 
 ---
 ## Evaluating model conditions 
 
-Use a scatterplot of the residuals against the fitted line to assess the assumptions of constant variance and independent residuals.
+Use a scatterplot of the residuals against the fitted line to assess the assumptions of linearity
 
-- What you want to see: random variation above and below zero with no pattern or "runs" (constant variance)
+- What you want to see: random variation above and below zero with no pattern or "runs"
 
 ```{r, echo=FALSE, fig.align='center'}
 model = lm(Brain_Activity~Empathy, data=BrainEmpathy)
@@ -484,7 +386,6 @@ plot(model, which = 1)
 ```
 
 ---
-
 ## Evaluating model conditions
 
 Use a normal Q-Q plot to check whether the residuals are normally distributed
@@ -494,6 +395,18 @@ Use a normal Q-Q plot to check whether the residuals are normally distributed
 ```{r, echo=FALSE, fig.align='center'}
 plot(model, which = 2)
 ```
+
+---
+## Evaluating model conditions
+
+Use a scatterplot of the scale-location to assess the assumption of constant variance 
+
+- What you want to see: random variation above and below zero with no pattern or "runs" (constant variance)
+
+```{r, echo=FALSE, fig.align='center'}
+plot(model, which = 3)
+```
+
 
 ---
 ## Leverage and Outliers
@@ -537,8 +450,7 @@ knitr::include_graphics("../images/Week 11/leverage.png")
 ```
 
 ---
-
-## Extrapolation
+### Extrapolation
 
 .bg-washed-yellow.b--yellow.ba.ph3[
 __Extrapolation__: Using the regression line to predict beyond the range of observed data
@@ -549,11 +461,8 @@ knitr::include_graphics("../images/Week 11/extrapolation.png")
 ```
 
 
---
-
 Extrapolation can be dangerous - no guarantee a trend will continue!
 
---
 
 .bg-washed-blue.b--blue.ba.ph3[
 __Example__: What would happen with a subject whose empathy score is 0?
