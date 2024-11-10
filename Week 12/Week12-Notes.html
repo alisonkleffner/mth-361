@@ -4,8 +4,8 @@
     <title>MTH361: Probability and Statistics in the Health Sciences</title>
     <meta charset="utf-8" />
     <meta name="author" content="Multiple Linear Regression" />
-    <meta name="date" content="2023-11-07" />
-    <script src="libs/header-attrs-2.23/header-attrs.js"></script>
+    <meta name="date" content="2024-11-12" />
+    <script src="libs/header-attrs-2.27/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
     <link href="libs/tachyons-4.12.0/tachyons.min.css" rel="stylesheet" />
@@ -23,7 +23,7 @@ class: center, middle, inverse, title-slide
 ### Multiple Linear Regression
 ]
 .date[
-### November 7, 2023
+### November 12, 2024
 ]
 
 ---
@@ -37,49 +37,19 @@ class: center, middle, inverse, title-slide
 ### Announcements
 
 
-+ Homework 8 due **Tuesday November 7 at 11:59 pm**
++ Homework 7 due **Thursday November 14 at 11:59pm**
 
-+ Analysis Plan due **Tuesday November 21 at 11:59 pm**
++ Lab 9 on Thursday
+  - Due **Friday November 15 at 11:59pm**
+  
++ Homework 8 due **Thursday November 21 at 11:59 pm**
 
-+ MLR work
-  - Lab 10 due **Friday November 10 at 11:59 pm**
-  - Homework 9 due **Tuesday November 14 at 11:59 pm**
 
++ Analysis Plan due **Tuesday November 26 at 11:59 pm**
+
+&lt;br&gt;
 
 **Today**: Chapter 7
-
----
-### Notes from Lab 9
-
-- When working with a transformation, written out model must included the transformation: 
-$$ log(y) = \beta_0 + \beta_1log(x)$$
-- Assumptions:
-  - QQ plot for normality
-  - Residuals vs Fitted for constant variance (look for pattern!)
-  - Explain why met or not met
-- Leverage vs outliers
-
---
-
-&lt;img src="../images/Week 12/leverage.png" width="70%" height="70%" style="display: block; margin: auto;" /&gt;
-
----
-### Schedule for Rest of the semester
-
-- Option 1 (current)
-
-&lt;img src="../images/Week 12/option1.jpeg" width="80%" height="80%" /&gt;
-
----
-### Schedule for Rest of the semester
-
-- Option 2 (Lab Day before Thanksgiving)
-
-&lt;img src="../images/Week 12/option2.jpeg" width="2203" /&gt;
-
-
-  
-
 
 ---
 ### More about the summary table of the linear model
@@ -105,7 +75,7 @@ Recall our PREVEND example, where we try to show the relationship between cognit
 
 
 
-## Relationships between variables
+## Relationships between Variables
 .bg-washed-blue.b--blue.ba.ph3[
 Sometimes in a study, there are more than one explanatory variables that we are interested in. We want to know:
 
@@ -113,11 +83,9 @@ Sometimes in a study, there are more than one explanatory variables that we are 
 - Whether the correlation between multiple explanatory variables affect the result?
 ]
 
---
-
 **Example**: Statins are a class of drugs widely used to lower cholesterol. Research suggests that adults with elevated LDL cholesterol may be at risk for cardiovascular events such as a heart attack or stroke. 
 
-In 2013, the American College of Cardiology and the American Heart Association recommended that statin therapy be considered for individuals with cardiovascular disease, high LDL levels, and people with Type II diabetes. Policy analysts estimate that almost half of Americans age 40 to 75 and nearly all men over 60 would fall under these guidelines.
+In 2013, the American College of Cardiology and the American Heart Association recommended that statin therapy be considered for individuals with cardiovascular disease, high LDL levels, and people with Type II diabetes. Policy analysts estimate that almost half of Americans age 40 to 75 and nearly all men over 60 would fall under these guidelines [(Source)](https://pubmed.ncbi.nlm.nih.gov/27678427/).
 
 However, there's concern that use of statins may be associated with increased risk of cognitive decline. 
 
@@ -126,9 +94,9 @@ However, there's concern that use of statins may be associated with increased ri
 
 ## Relationships between variables
 
-`Statin` = 1 for statin users and 0 for non-users.
+`Statin` = 1 (blue) for statin users and 0 (red) for non-users.
 
-&lt;img src="Week12-Notes_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week12-Notes_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -138,20 +106,17 @@ However, there's concern that use of statins may be associated with increased ri
 __Confounder__: an additional variable related to both the response and explantory variable in a model
 ]
 
---
-
 There is a relationship between RFFT and Age, but...
 
---
 
 - `Statin` use may also be related!
 
-&lt;img src="Week12-Notes_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week12-Notes_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
 
 
 ---
 
-## Multiple linear regression
+## Multiple Linear Regression (MLR)
 
 .bg-washed-yellow.b--yellow.ba.ph3[
 __Multiple regression model__: Let `\(Y\)` denote the numerical response variable and `\(X_1\)`, `\(X_2\)`,..., `\(X_{p}\)` denote the `\(p\)` possible explanatory variables in the model. Then, 
@@ -160,21 +125,17 @@ __Multiple regression model__: Let `\(Y\)` denote the numerical response variabl
 
 ]
 
---
-
 Basically, we just __add more terms__ to the linear regression model. 
 
 ---
-
-## Multiple linear regression
+## Multiple Linear Regression (MLR)
 
 .bg-washed-blue.b--blue.ba.ph3[
 __Example__: Write the multiple linear regression model for predicting RFFT score based on age and statin use. How many regression coefficients are in the model?
 ]
 
 ---
-
-## Multiple linear regression
+## Multiple Linear Regression (MLR)
 
 .bg-washed-blue.b--blue.ba.ph3[
 __Example__: Write the estimated multiple linear regression model for predicting RFFT score based on age and statin use. How does whether a patient is using statins affect the predicted value? Does it affect the slope?
@@ -203,7 +164,9 @@ __Example__: Write the estimated multiple linear regression model for predicting
 
 ---
 
-## Multiple regression assumptions
+## Multiple Regression Assumptions
+
+From Before:
 
 - __L__: A linear model is a "good fit" for the relationship between the response variable and explanatory variables
 
@@ -213,7 +176,6 @@ __Example__: Write the estimated multiple linear regression model for predicting
 
 - __E__: The error (residual) variance is constant
 
---
 
 One more:
 
@@ -224,21 +186,28 @@ One more:
 
 ## Interpreting residual plots
 
-&lt;img src="Week12-Notes_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week12-Notes_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
-## Coefficient of determination
+## Coefficient of Determination
 
 For simple linear regression, `\(R^2\)` measures the proportion of variability in the response variable `\(Y\)` that can be explained using the linear model.
 
 - For multiple linear regression, same idea!
 
---
-
 .bg-washed-yellow.b--yellow.ba.ph3[
 __Multiple R-squared__: `\(R^2\)` is the correlation between `\(\hat{Y}\)` and `\(Y\)`, squared
 ]
+
+&lt;br&gt;
+
+Model Multiple `\(R^2\)`:
+
+```
+## [1] 0.2851629
+```
+
 
 ---
 
@@ -248,13 +217,19 @@ Adding a new explanatory variable to a multiple linear regression model will alw
 
 __Goal__: Explain as much variability in `\(Y\)` with the simplest possible model!
 
---
+&lt;br&gt;
 
 .bg-washed-yellow.b--yellow.ba.ph3[
 __Adjusted R-squared__: a measure of the "quality" of a model that takes the multiple R-squared and shifts it downward based on the number of terms in the model
 
 `$$R^2_{adj} = 1-\frac{(1-R^2)(n-1)}{n-p-1}$$`
 ]
+
+Model Adjusted `\(R^2\)`:
+
+```
+## [1] 0.2822863
+```
 
 
 ---
@@ -263,31 +238,6 @@ __Adjusted R-squared__: a measure of the "quality" of a model that takes the mul
 
 How much of the variability in the RFFT can be explained using this multiple regression model?
 
-
-```
-## 
-## Call:
-## lm(formula = RFFT ~ Age + Statin + Ethnicity, data = prevend.samp)
-## 
-## Residuals:
-##    Min     1Q Median     3Q    Max 
-## -64.64 -16.57  -1.40  15.64  58.22 
-## 
-## Coefficients:
-##              Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 139.21327    5.10945  27.246   &lt;2e-16 ***
-## Age          -1.28572    0.09381 -13.705   &lt;2e-16 ***
-## Statin1       0.84210    2.57875   0.327   0.7441    
-## Ethnicity1  -32.30331   13.34549  -2.421   0.0159 *  
-## Ethnicity2  -15.75445    7.38229  -2.134   0.0333 *  
-## Ethnicity3   -6.49879   23.07039  -0.282   0.7783    
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 23.04 on 494 degrees of freedom
-## Multiple R-squared:  0.2999,	Adjusted R-squared:  0.2928 
-## F-statistic: 42.31 on 5 and 494 DF,  p-value: &lt; 2.2e-16
-```
 
 ```
 ## 
@@ -302,7 +252,7 @@ How much of the variability in the RFFT can be explained using this multiple reg
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
 ## (Intercept) 137.8822     5.1221  26.919   &lt;2e-16 ***
 ## Age          -1.2710     0.0943 -13.478   &lt;2e-16 ***
-## Statin1       0.8509     2.5957   0.328    0.743    
+## Statin        0.8509     2.5957   0.328    0.743    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -321,16 +271,16 @@ Let’s try to add one more variable Ethnicity, which has four levels: 0 = Weste
 
 
 
-&lt;!-- html table generated in R 4.3.1 by xtable 1.8-4 package --&gt;
-&lt;!-- Mon Oct 30 16:26:24 2023 --&gt;
+&lt;!-- html table generated in R 4.4.0 by xtable 1.8-4 package --&gt;
+&lt;!-- Sun Nov 10 15:15:12 2024 --&gt;
 &lt;table border=1&gt;
 &lt;tr&gt; &lt;th&gt;  &lt;/th&gt; &lt;th&gt; Estimate &lt;/th&gt; &lt;th&gt; Std. Error &lt;/th&gt; &lt;th&gt; t value &lt;/th&gt; &lt;th&gt; Pr(&amp;gt;|t|) &lt;/th&gt;  &lt;/tr&gt;
-  &lt;tr&gt; &lt;td align="right"&gt; (Intercept) &lt;/td&gt; &lt;td align="right"&gt; 106.9100 &lt;/td&gt; &lt;td align="right"&gt; 14.1751 &lt;/td&gt; &lt;td align="right"&gt; 7.54 &lt;/td&gt; &lt;td align="right"&gt; 0.0000 &lt;/td&gt; &lt;/tr&gt;
+  &lt;tr&gt; &lt;td align="right"&gt; (Intercept) &lt;/td&gt; &lt;td align="right"&gt; 139.2133 &lt;/td&gt; &lt;td align="right"&gt; 5.1094 &lt;/td&gt; &lt;td align="right"&gt; 27.25 &lt;/td&gt; &lt;td align="right"&gt; 0.0000 &lt;/td&gt; &lt;/tr&gt;
   &lt;tr&gt; &lt;td align="right"&gt; Age &lt;/td&gt; &lt;td align="right"&gt; -1.2857 &lt;/td&gt; &lt;td align="right"&gt; 0.0938 &lt;/td&gt; &lt;td align="right"&gt; -13.71 &lt;/td&gt; &lt;td align="right"&gt; 0.0000 &lt;/td&gt; &lt;/tr&gt;
-  &lt;tr&gt; &lt;td align="right"&gt; Statin1 &lt;/td&gt; &lt;td align="right"&gt; 0.8421 &lt;/td&gt; &lt;td align="right"&gt; 2.5787 &lt;/td&gt; &lt;td align="right"&gt; 0.33 &lt;/td&gt; &lt;td align="right"&gt; 0.7441 &lt;/td&gt; &lt;/tr&gt;
-  &lt;tr&gt; &lt;td align="right"&gt; Ethnicity0 &lt;/td&gt; &lt;td align="right"&gt; 32.3033 &lt;/td&gt; &lt;td align="right"&gt; 13.3455 &lt;/td&gt; &lt;td align="right"&gt; 2.42 &lt;/td&gt; &lt;td align="right"&gt; 0.0159 &lt;/td&gt; &lt;/tr&gt;
-  &lt;tr&gt; &lt;td align="right"&gt; Ethnicity2 &lt;/td&gt; &lt;td align="right"&gt; 16.5489 &lt;/td&gt; &lt;td align="right"&gt; 15.1805 &lt;/td&gt; &lt;td align="right"&gt; 1.09 &lt;/td&gt; &lt;td align="right"&gt; 0.2762 &lt;/td&gt; &lt;/tr&gt;
-  &lt;tr&gt; &lt;td align="right"&gt; Ethnicity3 &lt;/td&gt; &lt;td align="right"&gt; 25.8045 &lt;/td&gt; &lt;td align="right"&gt; 26.6176 &lt;/td&gt; &lt;td align="right"&gt; 0.97 &lt;/td&gt; &lt;td align="right"&gt; 0.3328 &lt;/td&gt; &lt;/tr&gt;
+  &lt;tr&gt; &lt;td align="right"&gt; Statin &lt;/td&gt; &lt;td align="right"&gt; 0.8421 &lt;/td&gt; &lt;td align="right"&gt; 2.5787 &lt;/td&gt; &lt;td align="right"&gt; 0.33 &lt;/td&gt; &lt;td align="right"&gt; 0.7441 &lt;/td&gt; &lt;/tr&gt;
+  &lt;tr&gt; &lt;td align="right"&gt; Ethnicity1 &lt;/td&gt; &lt;td align="right"&gt; -32.3033 &lt;/td&gt; &lt;td align="right"&gt; 13.3455 &lt;/td&gt; &lt;td align="right"&gt; -2.42 &lt;/td&gt; &lt;td align="right"&gt; 0.0159 &lt;/td&gt; &lt;/tr&gt;
+  &lt;tr&gt; &lt;td align="right"&gt; Ethnicity2 &lt;/td&gt; &lt;td align="right"&gt; -15.7545 &lt;/td&gt; &lt;td align="right"&gt; 7.3823 &lt;/td&gt; &lt;td align="right"&gt; -2.13 &lt;/td&gt; &lt;td align="right"&gt; 0.0333 &lt;/td&gt; &lt;/tr&gt;
+  &lt;tr&gt; &lt;td align="right"&gt; Ethnicity3 &lt;/td&gt; &lt;td align="right"&gt; -6.4988 &lt;/td&gt; &lt;td align="right"&gt; 23.0704 &lt;/td&gt; &lt;td align="right"&gt; -0.28 &lt;/td&gt; &lt;td align="right"&gt; 0.7783 &lt;/td&gt; &lt;/tr&gt;
    &lt;/table&gt;
    
 ---
@@ -339,8 +289,6 @@ Let’s try to add one more variable Ethnicity, which has four levels: 0 = Weste
 Need to include indicator (i.e. dummy) variables.
   - For a categorical variable with *k* levels, need *k−1* indicator variables 
   - Base level in `\(R\)`: first level alphabetically or smallest numerical value 
-
---
 
 &lt;img src="../images/Week 12/dummy-variables.png" width="1648" /&gt;
 
@@ -351,16 +299,14 @@ Let's write out what this looks like:
 
 
 ```
-## (Intercept)         Age     Statin1  Ethnicity0  Ethnicity2  Ethnicity3 
-## 106.9099650  -1.2857178   0.8421041  32.3033066  16.5488525  25.8045132
+## (Intercept)         Age      Statin  Ethnicity1  Ethnicity2  Ethnicity3 
+## 139.2132716  -1.2857178   0.8421041 -32.3033066 -15.7544540  -6.4987934
 ```
 
 ---
 ## Partial F-Test
 
 Tests for a specific combination of predictor variables
-
---
 
 e.g. For 3 predictor variables, one could test for: 
 
@@ -376,12 +322,16 @@ Hence we are testing if `\(x_1\)` contributes significantly to a model that alre
 
 Suppose we are interested in testing to see if Ethnicity should be included in the model. Let's write out our hypothesis:
 
---
+
+---
+## Partial F-Test
+
+Suppose we are interested in testing to see if Ethnicity should be included in the model. Let's write out our hypothesis:
 
 Let's draw an conclusion:
 
 
-```r
+``` r
 model = lm(RFFT ~ Age + Statin + Ethnicity , data=prevend.samp)
 mod.red &lt;- lm(RFFT ~ Age + Statin, data=prevend.samp)
 anova(mod.red, model)
@@ -409,7 +359,7 @@ In the earlier regression model, we discuss how Age and Statin each affect the R
 __Interaction__: an interaction exists between two variables when the relationship of one explanatory variable `\(x_1\)` to the response variable `\(y\)` changes depending on another explanatory variable
 ]
 
---
+&lt;br&gt;
 
 We can add a new term to our model called an __interaction term__:
 
@@ -417,7 +367,7 @@ We can add a new term to our model called an __interaction term__:
 
 ---
 
-## Interaction terms
+## Interaction Terms
 
 .bg-washed-blue.b--blue.ba.ph3[
 __Example__: Write the multiple linear regression model for predicting RFFT score based on age and statin use, _with an interaction term_. How many regression coefficients are in the model?
@@ -425,7 +375,7 @@ __Example__: Write the multiple linear regression model for predicting RFFT scor
 
 ---
 
-## Interaction terms
+## Interaction Terms
 
 .bg-washed-blue.b--blue.ba.ph3[
 __Example__: Write the estimated multiple linear regression model for predicting RFFT score based on age and statin use, _with an interaction term_. How does whether a patient is using statins affect the predicted value? Does it affect the slope?
@@ -438,42 +388,36 @@ __Example__: Write the estimated multiple linear regression model for predicting
 ## lm(formula = RFFT ~ Age + Statin + Age:Statin, data = prevend.samp)
 ## 
 ## Coefficients:
-## (Intercept)          Age      Statin1  Age:Statin1  
+## (Intercept)          Age       Statin   Age:Statin  
 ##    140.2031      -1.3149     -13.9720       0.2474
 ```
 
 ---
 
-## Interaction terms
+## Interaction Terms
 
-&lt;img src="Week12-Notes_files/figure-html/unnamed-chunk-18-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Week12-Notes_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
-## Interaction terms
+## Interaction Terms
 
 .bg-washed-blue.b--blue.ba.ph3[
 __Example__: According to the guidance issued, individuals with Type II diabetes ages 40 to 75 with LDL between 70 to 189 mg/dL should be on statins. For non-diabetic individuals, those individuals aged of 40 to 75 with a predicted probability of future clogged arteries of at least 0.075. Why is the criteria different depending on whether someone has diabetes?
 ]
 
+
+&lt;img src="Week12-Notes_files/figure-html/unnamed-chunk-18-1.png" style="display: block; margin: auto;" /&gt;
+
 ---
 
-## Interaction terms
-
-Describe the relationship between age and cholesterol, without accounting for whether someone has diabetes?
-
+## Interaction Terms
 
 &lt;img src="Week12-Notes_files/figure-html/unnamed-chunk-19-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
-## Interaction terms
-
-&lt;img src="Week12-Notes_files/figure-html/unnamed-chunk-20-1.png" style="display: block; margin: auto;" /&gt;
-
----
-
-## Interaction terms
+## Interaction Terms
 
 Is there an interaction?
 
@@ -507,8 +451,6 @@ secondary education; 2 = higher secondary education; 3 = university.
 - Interpret the p-value of Age
 - Try to write the set of linear model for different education level and interpret the results.
 - Interpret an adjusted `\(R^2\)` of 0.4248
-
----
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

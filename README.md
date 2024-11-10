@@ -24,3 +24,9 @@ Date | Notes | Description | Additional Files | Homework Assigned
 10/10/2024 | **Lab 6 Work Day**| | | **Lab 6** due Friday October 11 at 11:59 pm  **Homework 5** due Tuesday October 22nd at 11:59|
 10/22/2024 | [Midterm Review](Week 9/Midterm-Review.html) | | | |
 10/24/2024 | **Midterm Exam**| | | |
+10/29/2024 | [ANOVA](Week 10/Week10-Notes.html) | Comparing Multiple Groups | | **Lab 7** due Friday November 1 at 11:59 pm  **Homework 6** due Thursday November 7th at 11:59|
+10/31/2024 | **Lab 7 Work Day**| | | **Lab 7** due Friday November 1 at 11:59 pm  **Homework 6** due Thursday November 7th at 11:59|
+11/5/2024 | [Simple Linear Regression](Week 11/Week11-Notes.html) | Introduction to Regression | | **Lab 8** due Friday November 8 at 11:59 pm  **Homework 7** due Thursday November 14th at 11:59|
+11/7/2024 | **Lab 8 Work Day**| | | **Lab 8** due Friday November 8 at 11:59 pm  **Homework 7** due Thursday November 14th at 11:59|
+11/12/2024 | [Mulitple Linear Regression](Week 12/Week12-Notes.html) | Regression with Multiple Variables | | **Lab 9** due Friday November 15 at 11:59 pm  **Homework 8** due Thursday November 21th at 11:59|
+11/14/2024 | **Lab 9 Work Day**| | | **Lab 9** due Friday November 15 at 11:59 pm  **Homework 8** due Thursday November 21th at 11:59|
