@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Ch. 8: Inference for Categorical Data</title>
+    <title>Inference for Categorical Data</title>
     <meta charset="utf-8" />
     <meta name="author" content="MTH 361: Probability and Statistics in the Health Sciences" />
-    <meta name="date" content="2023-11-14" />
-    <script src="libs/header-attrs-2.23/header-attrs.js"></script>
+    <meta name="date" content="2024-11-19" />
+    <script src="libs/header-attrs-2.27/header-attrs.js"></script>
     <link href="libs/tachyons-4.12.0/tachyons.min.css" rel="stylesheet" />
     <link href="libs/tile-view-0.2.6/tile-view.css" rel="stylesheet" />
     <script src="libs/tile-view-0.2.6/tile-view.js"></script>
@@ -16,13 +16,13 @@
 class: left, middle, inverse, title-slide
 
 .title[
-# Ch. 8: Inference for Categorical Data
+# Inference for Categorical Data
 ]
 .author[
 ### MTH 361: Probability and Statistics in the Health Sciences
 ]
 .date[
-### November 14, 2023
+### November 19, 2024
 ]
 
 ---
@@ -33,59 +33,20 @@ class: inverse
 
 Homeworks:
 
-- Homework 9 due tonight at 11:59pm
-- Homework 10 due November 28 at 11:59pm
-- Homework 11 due December 1 at 11:59pm
+- Homework 8 (MLR) due Thursday (November 21) at 11:59pm
+- Homework 9 (Categorical Data) due Friday December 6 at 11:59pm
 
 Labs:
 
-- Lab 11 due November 22 at 11:59 pm
-- Lab 12 due November 29 at 11:59 pm
+- Lab 10 due December 2 at 11:59 pm
+  + Work Day November 26th
 
 Analysis Plan
 
-- Due November 21 at 11:59 pm
+- Due November 26 at 11:59 pm
 
 
 
-
-
----
-### Notes on Lab 10
-
-- Coefficients are calculated assuming all other variables are in the model (even the non-significant ones)
-
-
-```
-## # A tibble: 7 × 5
-##   term         estimate std.error statistic  p.value
-##   &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-## 1 (Intercept)  3.71       0.543      6.82   2.91e-11
-## 2 Age          0.00791    0.00356    2.22   2.70e- 2
-## 3 DiabetesYes -0.346      0.166     -2.08   3.77e- 2
-## 4 BMI         -0.0104     0.00775   -1.34   1.82e- 1
-## 5 Pulse        0.00677    0.00444    1.52   1.28e- 1
-## 6 BPSysAve    -0.000257   0.00373   -0.0689 9.45e- 1
-## 7 BPDiaAve     0.0133     0.00478    2.78   5.60e- 3
-```
-
-
-Model: `$$\hat{\text{Chol}} = 3.71 - 0.0079\text{Age} - 0.35\text{DiabetesYes} - 0.01\text{BMI} + 0.007\text{Pulse}$$` 
-`$$- 0.00026\text{BPSysAve} + 0.0133\text{BPDiaAve}$$`
-
-- Must use all variables for making a prediction
-- "holding other variables constant"
-
----
-### Notes on Lab 10
-
-Model with Categorical Variables
-
-Full Model: `$$\hat{\text{Chol}} = 4.8 + 0.0075\text{Age} - 0.318\text{DiabetesYes}$$`
-
-Diabetes: `$$\hat{\text{Chol}} = 4.8 + 0.0075\text{Age} - 0.318(1) = 4.482 + 0.0075\text{Age}$$`
-
-No-Diabetes: `$$\hat{\text{Chol}} = 4.8 + 0.0075\text{Age} - 0.318(0) = 4.8 + 0.0075\text{Age}$$`
 
 
 ---
@@ -108,7 +69,6 @@ __Binomial variable__: a variable with only two possible outcomes (also called _
 - The possible outcomes are referred to as __successes__ (the outcome we care about) and __failures__ (the outcome we don't).
 ]
 
---
 
 When we have a binomial variable, our goal is usually to estimate the underlying __probability of success__, or __population proportion__, 
 
@@ -131,13 +91,9 @@ The __sampling distribution of `\(\hat{p}\)`__ has:
 `$$n(1-p) \ge 10$$`
 ]
 
---
+We can calculate confidence intervals and carry out hypothesis tests using this approximation but we want to be more accurate.
 
-We can calculate confidence intervals and carry out hypothesis tests using this approximation...
-
-but we want to be accurate.
-
-So instead, we'll use methods based on the __binomial distribution__.
+- So instead, we'll use methods based on the __binomial distribution__.
 
 ---
 
@@ -146,18 +102,13 @@ So instead, we'll use methods based on the __binomial distribution__.
 Assuming each observation is independent, we can get the formula for the __binomial distribution__ from the Multiplication Rule. Let `\(P(X=x)\)` represent the probability that we have observed `\(x\)` successes our of `\(n\)` trials.
 
 `$$P(X=x)={n \choose x}p^{x}(1-p)^{n-x}$$`
-
---
-
-The binomial distribution is the "backbone" of the (1) binomial test, and (2) binomial interval.
-
 ---
 
 ## Binomial distribution
 
 What does the binomial distribution “look like”? It depends on the parameters.
 
-&lt;img src="inference-for-categorical-data_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="inference-for-categorical-data_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -169,47 +120,30 @@ Assume that the true population proportion `\(p=p_0\)`, where `\(p_0\)` is some 
 
 `$$H_0: p = p_0$$`
 
---
-
 `$$H_A: p (&lt;, &gt;, \ne) p_0$$`
 
---
+&lt;br&gt;
+&lt;br&gt;
 
-From our example: 
-
-`$$H_0: p = 0.30$$`
-
-`$$H_A: p &gt; 0.30$$`
-
----
-
-## Binomial test
-  
 _Step 2: Identify the test statistic_
 
 The data we'll need from our sample is the number of successes `\(x\)` and the sample size `\(n\)`.
 
---
+---
 
+### Binomial test
+  
 _Step 3: Calculate the `\(p\)`-value_
 
 We’ll use the binomial distribution with `\(p=p_0\)` to calculate the `\(p\)`-value.
 
+- Calculate the probability of observing a "more extreme" result using this binomial distribution.
 
-1. Build a binomial distribution based on `\(H_0: p = p_0\)`.
+Have two "test statistics": # improved patients (`x=21`), and # trials (`n=52`).
 
+&lt;img src="inference-for-categorical-data_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
 
-2. Calculate the probability of observing a "more extreme" result using this binomial distribution.
-
----
-
-## Binomial test
-
-We have two "test statistics": the number of patients who improved (`x=21`), and the number of trials (`n=52`).
-
-&lt;img src="inference-for-categorical-data_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
-
-What's the probability that 21 patients or more would improve, __if the true improvement rate is 30%__?
+What's the probability that 21 patients or more improve, __if the true improvement rate is 30%__?
 
 ---
 
@@ -232,21 +166,13 @@ Instead of calculating probabilities directly, we can use a function in R called
 ##              0.4038462
 ```
 
---
-
 _Step 4: Make a conclusion to the research question_
   
-- There may be _strong_ evidence to reject `\(H_0\)` if `\(p-value &lt; \alpha\)`.
-
-- There may _not_ be evidence to reject `\(H_0\)` if `\(p-value &gt; \alpha\)`.
-
---
-
-Remember that sample size, data quality, choice of `\(\alpha\)`, and consequences matter!
+- Remember that sample size, data quality, choice of `\(\alpha\)`, and consequences matter!
 
 ---
 
-## Binomial test
+## Example: Binomial test
 
 .bg-washed-blue.b--blue.ba.ph3[
 __Example__: Male radiologists have long suspected that they tend to have fewer sons than daughters. In a random sample of 87 children of "highly irradiated" male radiologists, 30 were male. Assume that the population proportion of male births is 0.519 (in the human population male babies are slightly more likely than female babies). Is there significant evidence to show male radiologists are less likely to have male babies?
@@ -254,7 +180,7 @@ __Example__: Male radiologists have long suspected that they tend to have fewer 
 
 ---
 
-## Binomial test
+## Example: Binomial test
 
 Is there significant evidence to show male radiologists are less likely to have male babies?
 
@@ -317,10 +243,6 @@ The idea here is to take all of the values of
 
 for which we fail to reject the null hypothesis, and set those as the confidence interval!
 
---
-
-- Also called the exact binomial confidence interval, because it's based on exact probabilities from a binomial distribution.
-
 ---
 
 ## Clopper-Pearson confidence interval
@@ -342,40 +264,11 @@ The Clopper-Pearson interval is difficult to calculate by hand, but easy for R.
 ##              0.3448276
 ```
 
---
-
-- So, we are 95% confident the true `\(\textbf{proportion}\)` of male radiologists that have male babies is between 0.246 and 0.454.
 - There are other confidence intervals we could use. As `\(n \rightarrow \infty\)`, they tend to converge.
 
 ---
 
-## Comparing intervals
-
-.bg-washed-blue.b--blue.ba.ph3[
-__Example__: A 2013 report in the New England Journal of Medicine by Wolchok et al. reported the results of a study in which patients were treated with both nivolumab and ipilimumab. Fifty-three patients were given the new regimens concurrently, and the response to therapy could be evaluated in 52 of the 53. Of the 52 evaluable patients, 21 (40%) experienced a response according to commonly accepted criteria. In previous studies, the proportion of patients responding to one of these agents was 30% or less. 
-
-Calculate and interpret a Wald confidence interval and a Clopper-Pearson confidence interval. How do they compare?
-]
-
-
-
-```
-## 
-## 
-## 
-## data:  21 out of 52
-## number of successes = 21, number of trials = 52, p-value = 0.1288
-## alternative hypothesis: true probability of success is not equal to 0.3
-## 95 percent confidence interval:
-##  0.2700597 0.5489842
-## sample estimates:
-## probability of success 
-##              0.4038462
-```
-
----
-
-## Sampling distribution of `\(p_1-p_2\)`
+## Testing for a Difference in Proportions
 
 The difference in two sample proportions, `\(\hat{p}_1 - \hat{p}_2\)` tends to follow a normal model when:
 
@@ -388,7 +281,6 @@ The difference in two sample proportions, `\(\hat{p}_1 - \hat{p}_2\)` tends to f
 
 - The sample sizes are "large enough": collectively, `\(n_1 p_1, \ n_2p_2, \ n_1(1-p_1), \ n_2(1-p_2) \ge 10\)`
 
---
 
 The standard error of the difference is
 
@@ -406,7 +298,7 @@ Control|505|44,405
 
 
 ---
-### Association Between Categorical Variables
+### Testing for an Association Between Categorical Variables
 
 Take another look at the tables from the previous example:
 
@@ -414,9 +306,6 @@ Group|Died from breast cancer|Did not die from breast cancer
 ----|----|-----
 Mammogram|500|44,425
 Control|505|44,405
-
-
-This is a **two-way table**, which summarizes the relationship between two categorical variables.
 
 A natural question for a two-way table is whether there is an association with these two categorical variables. In our context, is there evidence that the screening method is associated with the outcome?
 
@@ -440,11 +329,9 @@ The `\(\chi^2\)` (chi-square) test statistic is:
 
 where `\(k\)` is the number of categories, `\(O_i\)` is the "observed" count in category `\(i\)`, and `\(E_i\)` is the "expected" count in category `\(i\)` under our model.
 
---
+&lt;br&gt;
   
 This test statistic follows a probability distribution called the `\(\chi^2\)` distribution: 
-
---
 
 - Defined on positive values only.
 - Right-skewed probability distribution.
@@ -456,7 +343,7 @@ This test statistic follows a probability distribution called the `\(\chi^2\)` d
 
 How does the chi-square distribution change as `\(k\)` changes?
 
-&lt;img src="inference-for-categorical-data_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="inference-for-categorical-data_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 ### Back to the Example
@@ -471,7 +358,7 @@ Control|505|44,405
 
 If there is no association, the proportions in each group should be approximately equal.
 
-&lt;img src="inference-for-categorical-data_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="inference-for-categorical-data_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -503,11 +390,6 @@ These conditions help ensure the sample size is ”large enough”. Most statist
 ## Chi-square test
 
 
-```r
-table &lt;- tally(group~outcome, data=screening)
-chisq.test(table)
-```
-
 ```
 ## 
 ## 	Pearson's Chi-squared test with Yates' continuity correction
@@ -528,13 +410,16 @@ __Chi-square goodness-of-fit test__: compares the observed frequencies in the da
 
 Test statistics and rule of thumb are exactly the same.
 
---
+&lt;br&gt;
 
 Testing: 
 
+.center[
 `\(H_0\)`: Hypothesized distribution is a good fit
 
 `\(H_A\)`: Hypothesized distribution is not a good fit.
+
+]
 
 ---
 ### Chi-square goodness of fit
@@ -553,7 +438,7 @@ Assume that these body parts represent roughly equal skin areas. Do the data sup
 ---
 ## Chi-square goodness of fit
 
-&lt;img src="inference-for-categorical-data_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="inference-for-categorical-data_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -562,7 +447,7 @@ Assume that these body parts represent roughly equal skin areas. Do the data sup
 Assume that these body parts represent roughly equal skin areas. Do the data support the hypothesis that melanoma occurs evenly on the body?
 
 
-```r
+``` r
 observed &lt;- c(45, 80, 34, 151)
 expected &lt;- c(0.25, 0.25, 0.25, 0.25)
 chisq.test(x=observed, p=expected)
