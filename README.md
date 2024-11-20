@@ -31,3 +31,4 @@ Date | Notes | Description | Additional Files | Homework Assigned
 11/12/2024 | [Mulitple Linear Regression](Week 12/Week12-Notes.html) | Regression with Multiple Variables | | **Lab 9** due Friday November 15 at 11:59 pm  **Homework 8** due Thursday November 21th at 11:59|
 11/14/2024 | **Lab 9 Work Day**| | | **Lab 9** due Friday November 15 at 11:59 pm  **Homework 8** due Thursday November 21th at 11:59|
 11/19/2024 | [Categorical Data](Week 13/inference-for-categorical-data.html) | Inference for Categorical Data | | **Lab 10** due Monday December 2 at 11:59 pm  **Homework 9** due Friday December 6th at 11:59|
+11/21/2024 | [Logistic Regression](Week 13/Logistic-Regression.html) | Regression Models for binary response variable | | **Lab 10** due Monday December 2 at 11:59 pm  **Homework 9** due Friday December 6th at 11:59|

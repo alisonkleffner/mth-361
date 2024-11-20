@@ -1,7 +1,7 @@
 ---
-title: 'Ch. 8: Logistic Regression'
+title: 'Logistic Regression'
 author: "MTH 361: Probability and Statistics in the Health Sciences"
-date: "November 16, 2023"
+date: "November 21, 2024"
 output:
   xaringan::moon_reader:
     css: xaringan-themer.css
@@ -18,18 +18,17 @@ class: inverse
 
 Homeworks:
 
-- Homework 10 due November 28 at 11:59pm
-- Homework 11 due December 1 at 11:59pm
+- Homework 8 (MLR) due Today (November 21) at 11:59pm
+- Homework 9 (Categorical Data) due Friday December 6 at 11:59pm
 
 Labs:
 
-- Lab 11 due November 22 at 11:59 pm
-- Lab 12 due November 29 at 11:59 pm
+- Lab 10 due December 2 at 11:59 pm
+  + Work Day November 26th
 
 Analysis Plan
 
-- Due November 21 at 11:59 pm
-
+- Due November 26 at 11:59 pm
 
 ```{css, include=FALSE}
 @media print {
@@ -80,10 +79,9 @@ Logistic regression generalizes methods for two-way tables, allowing for the joi
 
 Patients admitted to intensive care units (ICUs) are very ill, either from a serious medical event (e.g. respiratory failure from asthma) or from trauma (e.g, traffic accident).
 
-Can patient features available at admission be used to estimate the probability of survival to hospital discharge? The `icu` data set in the `aplore3` package is from a study conducted at Baystate Medical Center in Springfield, MA. 
+Can patient features available at admission (such as heart rate, diagnosis, and kidney function) be used to estimate the probability of survival to hospital discharge? This data is from a study conducted at Baystate Medical Center in Springfield, MA. 
 
-- The data set contains information about patient characteristics at admission, such as heart rate, diagnosis, and kidney function. 
-- The variable `sta` is a factor variable with labels Died and Lived, corresponding to the levels 0 for death before discharge and 1 survival to discharge.
+- Our response variable is a factor with labels Died and Lived: death before discharge (0) and survival to discharge (1).
 
 ---
 ### Survival and CPR
@@ -98,38 +96,32 @@ t <- table(icu$sta, icu$cpr)
 addmargins(t)
 ```
 
-The probability of survival for those who did not receive CPR is $$154/187=0.824$$
+The probability of survival for those who did not receive CPR:
 
---
+<br>
+<br>
 
-With logistic regression, we can also look at the odds of survival for those who did not receive CPR $$154/33=4.67$$
+With logistic regression, we can also look at the odds of survival for those who did not receive CPR:
+
 
 ---
-### Odds and Probabilities
+### Relationship between Odds and Probabilities
 
 If the probability of an event *A* is *p*, the odds of the event are $$\frac{p}{1-p}$$
 
 With some algebra, it is possible to show the following relationship:
 
 $$\text{odds} = \frac{p}{1-p} \longrightarrow p = \frac{\text{odds}}{1 + \text{odds}}$$
---
-
-From the previous example,
-
-- odds = 4.67, *p* = 0.824
-
----
-### Odds
-
+<br>
+<br>
+<br>
 
 - Odds are always greater than 0. 
   + A value greater than 1 means the probability of success is higher.
   + A value less than 1 means the probability of failure is higher.
-- If  probability of success is 75%, the odds is $\frac{0.75}{1−0.75}=3$
-  + Odds of success are 3:1
-  
+
 ---
-### The Model for Logistic Regression
+### The Model for Simple Logistic Regression
 
 - Suppose *Y* is a binary variable and *X* is a predictor variable
   + In the ICU example, let *Y* be survival to discharge and *X* represent prior CPR
@@ -143,7 +135,7 @@ $$\text{log}[\frac{p(x)}{1-p(x)}] = \beta_0 + \beta_1x $$
 ---
 ### True Odds
 
-We often want to write the odds ration in terms of our regression model.
+We often want to write the odds ratio in terms of our regression model.
 
 Notice: $$\text{log}[\frac{p(x)}{1-p(x)}] = \beta_0 + \beta_1x \longrightarrow \frac{p(x)}{1-p(x)} = e^{\beta_0 + \beta_1x}$$ 
 
@@ -154,7 +146,7 @@ Can then use your odds to find the probability
 ---
 ### Why log(odds) in logistic regression models?
 
-**Notes**: log(odds) is also called the logit
+**Note**: log(odds) is also called the logit
 
 - $\text{log}[\frac{p(x)}{1-p(x)}] = \text{logit}(p(x))$
 
@@ -177,8 +169,8 @@ Similarities:
 Differences:
 
 - Logistic regression is used to calculate predicted values of log(odds), rather than the predicted mean.
-- The function `glm` in *R* is used to estimate a logistic regression model, and requires an additional specification in the argument: `family = binomial(link = "logit")`.
-
+  + Changes to slope interpretation
+  
 ---
 ### Interpreting the output...
 
@@ -205,8 +197,6 @@ The odds ratio for $x_1$ = $$\frac{\text{odds}_{x_1 + c}}{\text{odds}_{x_1}} = \
 
 Interpretation: For a *c*-unit increase in $x_1$, the odds of success changes by $e^{c\beta_1}$ 
 
---
-
 The slope coefficient is the log of the estimated *odds ratio* for survival, comparing those who received CPR to those who did not:
 
 
@@ -222,7 +212,18 @@ As with linear regression, the model slope captures information about associatio
 These hypotheses can also be written in terms of the odds ratio.
 
 ---
-### What does logistic regression add?
+### Logistic Regression Assumptions
+
+- The response variable is binary
+- Independence of Observations
+- Linearity: relationship between explanatory variables and log odds must be linear
+- No multicollinearity among explanatory variables (for multiple logistic regression)
+- Large sample size with no extreme outliers
+
+
+
+---
+### What does Logistic Regression add?
 
 The $\chi^2$ test does not directly who the direction of a significant association
 
@@ -230,10 +231,10 @@ The $\chi^2$ test does not directly who the direction of a significant associati
 
 Logistic regression gives a numerical estimate of the size of an association
 
-- Also can be used with a numerical variable
+- Also can be used with a numerical explanatory variables
 
 ---
-### Extending logistic regression to more than one predictor
+### Extending Logistic Regression
 
 Suppose $p(x) = p(x_1, x_2, \dots, x_p) = P(Y = 1|x_1, x_2, \dots, x_p)$.
 
@@ -241,9 +242,7 @@ With several predictors $x_1, x_2, \dots, x_p$, the model is
 
 $$\text{log}[\frac{p(x)}{1-p(x)}] = \beta_0 + \beta_1x_1 + \beta_2x_2+ \dots+\beta_px_p $$
 
-Each coefficient estimates the change in log(odds) for a one unit change in that variables, given the other variables do not change.
-
---
+Each coefficient estimates the change in log(odds) for a one unit change in that variable, given the other variables do not change.
 
 ```{r, echo=FALSE}
 log_model <- glm(sta~cpr + age + sys, data = icu, family = binomial(link = "logit"))
@@ -281,13 +280,6 @@ Overall goals similar to linear regression. . .
 However, in logistic regression, association is captured through odds and log(odds), instead of the mean of a response variable. Logistic regression can be thought of as an extension of two-way tables...
 
 - Just as linear regression can be thought of as an extension of two-sample t-tests and ANOVA.
-
-
-
-
-
-
-
 
 
 
