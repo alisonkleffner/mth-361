@@ -1,0 +1,254 @@
+---
+title: 'Statistical Communication and Ethics'
+author: "MTH 361: Probability and Statistics in the Health Sciences"
+date: "December 3rd, 2024"
+output: 
+  xaringan::moon_reader:
+    lib_dir: libs
+    seal: false
+    css: ["default", "metropolis-fonts", "modal.css", "sizeformat.css"]
+    includes:
+      after_body:
+        "js-addins.html"
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: true
+---
+
+```{r echo=FALSE, message=FALSE, warning = FALSE}
+library(tidyverse)
+library(knitr)
+library(RColorBrewer)
+
+hook_output = knit_hooks$get('output')
+knit_hooks$set(output = function(x, options) {
+  # this hook is used only when the linewidth option is not NULL
+  if (!is.null(n <- options$linewidth)) {
+    x = xfun::split_lines(x)
+    # any lines wider than n should be wrapped
+    if (any(nchar(x) > n)) x = strwrap(x, width = n)
+    x = paste(x, collapse = '\n')
+  }
+  hook_output(x, options)
+})
+
+```
+
+```{r, include = F, eval = T, cache = T}
+clean_file_name <- function(x) {
+  basename(x) %>% str_remove("\\..*?$") %>% str_remove_all("[^[A-z0-9_]]")
+}
+img_modal <- function(src, alt = "", id = clean_file_name(src), other = "") {
+  
+  other_arg <- paste0("'", as.character(other), "'") %>%
+    paste(names(other), ., sep = "=") %>%
+    paste(collapse = " ")
+  
+  js <- glue::glue("<script>
+        /* Get the modal*/
+          var modal{id} = document.getElementById('modal{id}');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+        var img{id} = document.getElementById('img{id}');
+          var modalImg{id} = document.getElementById('imgmodal{id}');
+          var captionText{id} = document.getElementById('caption{id}');
+          img{id}.onclick = function(){{
+            modal{id}.style.display = 'block';
+            modalImg{id}.src = this.src;
+            captionText{id}.innerHTML = this.alt;
+          }}
+          /* When the user clicks on the modalImg, close it*/
+          modalImg{id}.onclick = function() {{
+            modal{id}.style.display = 'none';
+          }}
+</script>")
+  
+  html <- glue::glue(
+     " <!-- Trigger the Modal -->
+<img id='img{id}' src='{src}' alt='{alt}' {other_arg}>
+<!-- The Modal -->
+<div id='modal{id}' class='modal'>
+  <!-- Modal Content (The Image) -->
+  <img class='modal-content' id='imgmodal{id}'>
+  <!-- Modal Caption (Image Text) -->
+  <div id='caption{id}' class='modal-caption'></div>
+</div>
+"
+  )
+  write(js, file = "js-addins.html", append = T)
+  return(html)
+}
+# Clean the file out at the start of the compilation
+write("", file = "js-addins.html")
+```
+
+class:inverse
+
+<br><br><br>
+## MTH 361: Probability and Statistics in the Health Sciences
+### Statistical Communication and Ethics
+#### December 3, 2024
+
+
+
+---
+### Announcements
+
+Homeworks:
+
+- Homework 9 (Categorical Data) due Friday December 6 at 11:59pm
+
+Final
+
+- Wednesday December 11 from 1:00-2:40 PM
+  + If choose final project due Wednesday December 11 at 1:00 PM
+  + Will discuss in class on Thursday
+
+```{r xaringan-setup, include=FALSE}
+
+hook_output = knit_hooks$get('output')
+knit_hooks$set(output = function(x, options) {
+  # this hook is used only when the linewidth option is not NULL
+  if (!is.null(n <- options$linewidth)) {
+    x = xfun::split_lines(x)
+    # any lines wider than n should be wrapped
+    if (any(nchar(x) > n)) x = strwrap(x, width = n)
+    x = paste(x, collapse = '\n')
+  }
+  hook_output(x, options)
+})
+
+
+knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE, fig.width=8, fig.height=5, cache=TRUE)
+
+library(tidyverse)
+library(RColorBrewer)
+library(patchwork)
+library(kableExtra)
+library(oibiostat)
+library(mosaic)
+```
+
+---
+## Statistical Communication
+
+- Statistical Communication is difficult. How can we best communicate results to colleagues/clients/public, who may not be experts, to understand the significance of your analyses? 
+
+  + To do so, we must avoid lying on purpose, as well as one accident.
+  
+
+
+- Let's talk about some common way statistics is used to mislead.
+  + The goal isn't to make you all an over-skeptic, but to learn how to critically think through material presented to you.
+  
+---
+### Misleading Presentation of Numbers
+
+**Fabricated or Misleading Numbers**
+
+```{r, fig.align='center', out.height="50%", out.width="50%"}
+knitr::include_graphics("./images/colgate.png")
+```
+
+
+
+- [Colgate eventually had to retract claim](https://marketinglaw.osborneclarke.com/retailing/colgates-80-of-dentists-recommend-claim-under-fire/)
+- [Sally Clark Case](https://forensicstats.org/blog/2018/02/16/misuse-statistics-courtroom-sally-clark-case/) 
+
+---
+### Misleading Presentation of Numbers
+
+**Ignoring the Baseline**
+
++ A common error is to compare raw numbers without adjusting for expected baseline differences (compare to past or numbers in the same category).
+
+  -  Saying the US GDP was $19.39 trillion in 2017 sounds incredible because of our everyday experience. However, if we compare that to US GDP in the previous year, $18.62 trillion, it doesn’t look nearly as impressive
+  
++ Also should make sure definitions do not change
+  - The number of farms in the US increased from 1930 to 1935 by 500,000 because the definition of a farm from the Census Bureau changed!
+
+---
+### Misleading Presentation of Numbers
+
+**Selection Bias**
+
+- The smaller the sample size, the more extreme the values
+  +  Kidney cancer rates are lowest in counties that are mostly rural, sparsely populated, and located in traditionally Republican states in the Midwest, the South, and the West, but that they are also highest in counties that are mostly rural, sparsely populated, and located in traditionally Republican states in the Midwest, the South, and the West
+
+- Unrepresentative samples
+  + Example from the 1936 presidential elections in the United States of America. The Literary Digest, a popular magazine at the time, carried out a survey to predict who would win the elections. The results predicted that Alfred Landon would win by a landslide. This magazine was known for accurately predicting the outcome of elections. This year, however, they were completely wrong. Franklin Roosevelt won with almost double the votes of his opponent. Further investigation found most of the participants in the survey were people found in the telephone book and on auto registration lists. So the survey was only conducted with those from a certain socio-economic status.
+
+
+
+---
+### Misleading Presentation of Numbers
+
+** Data Dredging**
+
+- If you perform many statistical tests, eventually one of them will be significant
+
+  + Intentionally misleading chocolate study ("Chocolate with high Cocoa content as a weight-loss accelerator"). Bohannon's bogus study had a tiny sample size of 15 and measured 18 variables, almost guaranteeing an erroneously statistically significant result (false positive) due to random fluctuations in participant outcomes. Ended up getting published, and journalists only asked puff piece questions as follow-up.
+
+---
+### Class Activity: Case Studies
+
+With the people around you, pick one of the following case studies and discuss the following with your groups:
+  + What is the original claim?
+  + What is potentially faulty about this claim?
+  + If the author of the original claim responded, what was their response?
+
+Case Studies:
+
++ [The gender gap in 100-meter dash times](https://callingbullshit.org/case_studies/case_study_gender_gap_running.html)
++ [99% Caffeine Free](https://callingbullshit.org/case_studies/case_study_caffeine_free.html)
++ [Machine Learning Bias](https://callingbullshit.org/case_studies/case_study_criminal_machine_learning.html)
+  - [Another Example](https://www.theguardian.com/technology/2017/may/28/joy-buolamwini-when-algorithms-are-racist-facial-recognition-bias)
++ [America's Best Barbeque?](https://callingbullshit.org/case_studies/case_study_barbecue.html)
++ [Foodstamp Fraud](https://callingbullshit.org/case_studies/case_study_foodstamp_fraud.html)
++ [Divorce Rate](https://www.businessinsider.com/what-is-the-divorce-rate-2017-2)
+
+
+---
+### Data Ethics
+
+In much of your work, you will be relying on the trust and confidence that your clients place in you. The term professional ethics describes the special responsibilities not to take unfair advantage of that trust
+
+- Data ethics involves evaluating practices that generate, collect, analyze, and disseminate data that could potentially affect people and society adversely
+
+
+---
+### ASA Guidelines for Statistical Practice
+
+[Link](https://www.amstat.org/docs/default-source/amstat-documents/ethicalguidelines.pdf?Status=Master&sfvrsn=bdeeafdd_6/)
+
+Some highlights:
+
++ Protect and respect the rights and interests of human and animal subjects data privacy (ex. HIPAA)
++ Consider how your study would impact society, groups, and individuals (Remember the numbers are real people)
++ Uses methodology and data that are valid, relevant, and appropriate, without favoritism or prejudice.
++ Ask for help if you don't know how to do something properly
++ Promotes reproducibility and replication, whether results are “significant” or not, by sharing data, methods, and documentation to the extent possible.
++ Don't only present significant results
+
+---
+### Class Activity: An Ethical Dilemma
+
+On March 15, 1994, the New York Times reported on a Federal Investigation of a Canadian researcher at St. Luc's Hospital in Montreal. The investigation found violations of the scientific guidelines that govern the way the study was carried out. 
+
+- [The problem](https://www.nytimes.com/1994/03/14/us/researcher-falsified-data-in-breast-cancer-study.html)
+- [Discussion with Doctor](https://www.nytimes.com/1994/04/01/us/doctor-says-he-falsified-cancer-data-to-help-patients.html)
+- [Ethical Dilemma](https://watermark.silverchair.com/archsurg_129_10_001.pdf?token=AQECAHi208BE49Ooan9kkhW_Ercy7Dm3ZL_9Cf3qfKAc485ysgAAAycwggMjBgkqhkiG9w0BBwagggMUMIIDEAIBADCCAwkGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQM3zLIWdAjUiOLfRlIAgEQgIIC2j_is0IW4TzK8rvlcRPB6mB-m3cdVwNdbexv0kBO_50dQhzxOoUWPDv6uNAoxOqgtXrxn5t_4tcWPBB3ktMAOuNOkJc4zaUXqJ6NLapj7b7WfU0AIzqUm-ha8T9oF2pQsiP-CVfCjOmLlI74gDUmrkoY2nkXRaWMcbh-iFzZwLj-Ew1wV4qjAPbB-DD-SD6PYcw_EDI-S5wwJlP3nZSuxUyKpmzEgFPJHRb58vbUfklMMaX2-FcdpHYGB36qp_IM13rKDjG8YDupVVUQxWadVqTZrTtuoy8gbKUe352Dsb9FqFf0u31Frv9Um6PwmxAY0AaHz_YROTGhqIWlyHBV_k1GzGbfPNGsqus3zQlQips9u278YSa62cSelf7ZSlxJBAASERmZYoBeQzzuY4TT-yOnVCYRl-SO-HVc9QbznnLt6yWl6Eo8qIXnwPO5NO09kEdjt7FmQf8TTXtopAF-Dzd1pSUHKBSFUv8PBaIONtalCrCJ8_OcNkIYL1qsjoR1n-0YOkstfY5HCoiLWKHnuWMuK-CSrUQp-pn5Q837H-0kC4S6ERvRJm3Ut6ksdlUh_p-mq3PvL7UvPBwQFADCZ10lOzbmS1wR3OChEe76GLG4Wsg7VvXdSs8yaFiVgWCrvwGjnWc327JuBLH2EPF9xBudvm7JRwSsqISf-6NhG5Y0CluIQ1-nSZE07prqfb8SB80WYVSBrIcwa90ozqtW4mAM1CSzhnyBwPv0js971N4pQiAEvtuFwK6ZqQFjf5q4Tc5GUkt79WiKDo43A1F_YEhrgtIUqPwR7A9Pt6BPpoBRcRpcQ8vOOAG_EecYlmqsWJs-kePCX3oskjhld9xmPoTlMqZ8VjBTccxiUM8LD8KTZPRgn4T-HDJHcdfgWqroymebf2pMFRzYJwSU3QOViPB44cU0At5psinSjs_MYCPJ_E_5vwtx9jINejHX_ag_hfVeTACwTJTFVg8)
+
+
+Discuss the two sides: 
+
+- Dr. Poisson (1995): "My sole concern at all times was with the health of my patients,... For me it was difficult to tell a woman with breast cancer she was ineligible to recieve the best avaialbe treatments because she did not meet 1 criteria of 22, when I knew this criterion had little or no intrinsic oncologic importance"
+- Charles Weijer, MD (1995): "Fraud is antithetical to scientific inquiry, and therefore we should not be swayed by Poisson's "justifications." We are taught, as medical scientists, to be skeptical of data and the conclusions derived therefrom; we must, however, be able to trust the scientist who has generated the data."
+
+
+
+
+
+
+
+
