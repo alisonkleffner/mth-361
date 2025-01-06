@@ -158,6 +158,6 @@ summary(data_over21$Age)
 ## --------------------------------------------------------------------------------------------
 data_c <- data %>% filter(Cancer == 1)
 # or data_c <- data %>% filter(Cancer ! = 0)
-summary(data_c$Cancer)
+table(data_c$Cancer)
 
 

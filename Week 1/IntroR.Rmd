@@ -1,7 +1,7 @@
 ---
 title: "MTH361: Probability and Statistics in the Health Sciences"
 author: "Introduction to R"
-date: "August 22, 2024"
+date: "January 16, 2025"
 output: 
   xaringan::moon_reader:
     lib_dir: libs
@@ -85,7 +85,7 @@ class:inverse
 <br><br><br>
 ## MTH361: Probability and Statistics in the Health Sciences
 ### Introduction to R
-#### August 22, 2024
+#### January 16, 2025
 
 ---
 ## Agenda
@@ -96,6 +96,8 @@ class:inverse
 - Installing Packages
 - Loading Data
 
+<br>
+<br>
 <br>
 <br>
 
@@ -332,7 +334,7 @@ The `?` also works
 
 This returns the help documentation for this function
 
-Googling for help can be difficult at first. You might need to search for R + CRAN +  to get good results
+Googling for help can be difficult at first. You might need to search for R + CRAN +  to get good results. Also a valid use of ChatGPT.
 
 Stackoverflow is VERY helpful!
 
@@ -537,7 +539,7 @@ Or maybe we only want those diagnosed with Cancer
 ```{r}
 data_c <- data %>% filter(Cancer == 1)
 # or data_c <- data %>% filter(Cancer ! = 0)
-summary(data_c$Cancer)
+table(data_c$Cancer)
 ```
 
 ---
