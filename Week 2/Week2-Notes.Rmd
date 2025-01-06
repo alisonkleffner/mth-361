@@ -1,7 +1,7 @@
 ---
 title: "MTH361: Probability and Statistics in the Health Sciences"
 author: "Introduction to Data and Data Collection"
-date: "August 27, 2024"
+date: "January 21/23, 2025"
 output: 
   xaringan::moon_reader:
     lib_dir: libs
@@ -86,7 +86,7 @@ class:inverse
 <br><br><br>
 ## MTH361: Probability and Statistics in the Health Sciences
 ### Introduction to Data and Data Collection
-#### August 27, 2024
+#### January 21/23, 2025
 
 
 ---
@@ -105,16 +105,16 @@ class:inverse
   - Designing an experiment: control, randomization, and replication
 
 Sections covered today in Book: Chapter 1.1-1.3
-
 ---
 ### Announcements 
 
-+ **Homework 1** will be released after class today
-  - Due **Thursday September 5 at 11:59 pm** (extra time due to Labor Day)
-  - Upload to Blueline
++ **Homework 1** will be released after class Thursday
+  - Due **Tuesday February 4 at 11:59 pm**
+  - Upload to BlueLine
   
-+ **Thursday's lab** will be available on Blueline after class today. If you want to hand write your lab, feel free to print it out and bring to lab
-  - Will be due **Friday August 30 at 11:59pm** in Blueline (but should have most of it done in class)
++ **Lab 1** 
+  - In Class Tuesday January 28 (completed in groups of 2-3)
+  - Will be due **Friday January 31 at 11:59pm** in Blueline (but should have most of it done in class)
 
 **Look Ahead**: Sections 1.4-1.7 covered next week
 
@@ -380,7 +380,7 @@ There are at least two ways to describe variables:
 		
 - For infants predisposed to developing a peanut allergy, is there evidence that introducing peanut products early in life is an effective strategy for reducing the risk of developing a peanut allergy?
 - Does a recently developed drug designed to treat glioblastoma, a form of brain cancer, appear more effective at inducing tumor shrinkage than the drug currently on the market?
-- Do bluefin tuna from the Atlantic Ocean have particularly high levels of mercury, such that they are unsafe for human consumption?
+- For people that are sick, is there evidence that they incorrectly guess the flavor of a single Skittles candy more than those who were not sick?
 
 ---
 ### Another Example
@@ -432,7 +432,8 @@ knitr::include_graphics("../images/Week2/population_sample.png")
 		
 - For infants predisposed to developing a peanut allergy, is there evidence that introducing peanut products early in life is an effective strategy for reducing the risk of developing a peanut allergy?
 - Does a recently developed drug designed to treat glioblastoma, a form of brain cancer, appear more effective at inducing tumor shrinkage than the drug currently on the market?
-- Do bluefin tuna from the Atlantic Ocean have particularly high levels of mercury, such that they are unsafe for human consumption?
+- For people that are sick, is there evidence that they incorrectly guess the flavor of a single Skittles candy more than those who were not sick?
+
 
 ---
 ### Sampling from a Population
@@ -497,7 +498,21 @@ knitr::include_graphics("../images/Week2/sampling.png")
 
 ```
 
-  
+---
+### Random Sampling Activity: Gettysburg Address
+
+**Complete Activity in Groups**
+
+- See document in BlueLine for Instructions
+
+<br>
+<br>
+
+**True Average Length of Words**:
+
+**Moral of the Story**:
+
+
 ---
 ### Let's Go Back to the Peanut Example
 
@@ -611,6 +626,18 @@ c(str_split(i2, "\\n", simplify = T)[1:2],
 Randomly assigning objects to groups tends to balance out all other variables between the groups.
 
 [More Examples](https://www.tylervigen.com/spurious-correlations)
+
+---
+### Random Assignment Activity: Have a Nice Trip
+
+**Complete Activity in Groups**
+
+- See document in BlueLine for Instructions
+
+<br>
+<br>
+
+**Moral of the Story**:
 
 
 ---
