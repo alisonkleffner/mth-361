@@ -1,0 +1,606 @@
+---
+title: "MTH361: Probability and Statistics in the Health Sciences"
+author: "Introduction to R"
+date: "January 16, 2025"
+output: 
+  xaringan::moon_reader:
+    lib_dir: libs
+    seal: false
+    css: ["default", "metropolis-fonts", "modal.css", "sizeformat.css"]
+    includes:
+      after_body:
+        "js-addins.html"
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: true
+---
+
+```{r echo=FALSE, message=FALSE, warning = FALSE}
+library(tidyverse)
+library(knitr)
+
+hook_output = knit_hooks$get('output')
+knit_hooks$set(output = function(x, options) {
+  # this hook is used only when the linewidth option is not NULL
+  if (!is.null(n <- options$linewidth)) {
+    x = xfun::split_lines(x)
+    # any lines wider than n should be wrapped
+    if (any(nchar(x) > n)) x = strwrap(x, width = n)
+    x = paste(x, collapse = '\n')
+  }
+  hook_output(x, options)
+})
+
+```
+
+```{r, include = F, eval = T, cache = T}
+clean_file_name <- function(x) {
+  basename(x) %>% str_remove("\\..*?$") %>% str_remove_all("[^[A-z0-9_]]")
+}
+img_modal <- function(src, alt = "", id = clean_file_name(src), other = "") {
+  
+  other_arg <- paste0("'", as.character(other), "'") %>%
+    paste(names(other), ., sep = "=") %>%
+    paste(collapse = " ")
+  
+  js <- glue::glue("<script>
+        /* Get the modal*/
+          var modal{id} = document.getElementById('modal{id}');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+        var img{id} = document.getElementById('img{id}');
+          var modalImg{id} = document.getElementById('imgmodal{id}');
+          var captionText{id} = document.getElementById('caption{id}');
+          img{id}.onclick = function(){{
+            modal{id}.style.display = 'block';
+            modalImg{id}.src = this.src;
+            captionText{id}.innerHTML = this.alt;
+          }}
+          /* When the user clicks on the modalImg, close it*/
+          modalImg{id}.onclick = function() {{
+            modal{id}.style.display = 'none';
+          }}
+</script>")
+  
+  html <- glue::glue(
+     " <!-- Trigger the Modal -->
+<img id='img{id}' src='{src}' alt='{alt}' {other_arg}>
+<!-- The Modal -->
+<div id='modal{id}' class='modal'>
+  <!-- Modal Content (The Image) -->
+  <img class='modal-content' id='imgmodal{id}'>
+  <!-- Modal Caption (Image Text) -->
+  <div id='caption{id}' class='modal-caption'></div>
+</div>
+"
+  )
+  write(js, file = "js-addins.html", append = T)
+  return(html)
+}
+# Clean the file out at the start of the compilation
+write("", file = "js-addins.html")
+```
+class:inverse
+
+<br><br><br>
+## MTH361: Probability and Statistics in the Health Sciences
+### Introduction to R
+#### January 16, 2025
+
+---
+## Agenda
+
+- R Studio Set-Up
+- R as a Calculator
+- Basic Functions
+- Installing Packages
+- Loading Data
+
+<br>
+<br>
+<br>
+<br>
+
+**Note**: Please follow along and run the code in the file *IntroR.R* found in BlueLine
+---
+## Announcements
+
+**Optional**: If you want some practice with using R, look at the *R Practice* document located in Blueline
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+**Look Ahead**: Sections covered next week in textbook: Chapter 1.1-1.3
+
+---
+### R Studio Set-Up
+
+```{r, echo=FALSE, out.width="100%", fig.align='center'}
+
+knitr::include_graphics("../01-Welcome/images/rstudio.png")
+
+```
+
+To Create a Script, Click the Following: File -> New File -> R script
+
+[R Studio IDE Cheatsheet](cheatsheets/rstudio-ide.pdf)
+
+---
+### R Studio Set-Up - Editor (Top Left)
+
+```{r, echo=FALSE, out.width="80%", fig.align='center'}
+
+knitr::include_graphics("../01-Welcome/images/editor.jpeg")
+
+```
+<br>
+
+To Create a Script, Click the Following: File -> New File -> R script
+
+**Shortcuts for running code**: To run code from your script:
++ Windows: Ctrl + Enter
++ Mac: Cmd + Enter
+
+---
+### R Studio Set-Up - Console (Bottom Left)
+
+```{r, echo=FALSE, out.width="100%", fig.align='center'}
+
+knitr::include_graphics("../01-Welcome/images/console.jpeg")
+
+```
+
+---
+### R Studio Set-Up - Environment  (Top Right)
+
+```{r, echo=FALSE, out.width="100%", fig.align='center'}
+
+knitr::include_graphics("../01-Welcome/images/environment.jpeg")
+
+```
+
+---
+### R Studio Set-Up - Environment  (Bottom Right)
+
+```{r, results='asis', echo=FALSE, fig.align='center'}
+
+i1 <- img_modal(src = "../01-Welcome/images/files.png", alt = "Files",other=list(width="30%"))
+i2 <- img_modal(src = "../01-Welcome/images/packages.png", alt = "Packages",other=list(width="30%"))
+i3 <- img_modal(src = "../01-Welcome/images/help.png", alt = "Help",other=list(width="30%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i2, "\\n", simplify = T)[1:2],
+  str_split(i3, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9],
+  str_split(i2, "\\n", simplify = T)[3:9],
+  str_split(i3, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+```
+
+
+---
+## Writing Code for People
+
+-  A **comment** is a part of computer code which is intended only for people to read. It is not evaluated or run by the computing language. 
+  - In `R` we use `#`
+```{r}
+# This is a comment
+```
+-  **Literate Programming**: interspersing text and code in the same document
+  - R Markdown/Quarto
+---
+
+## Giant Calculator!
+
+.pull-left[
+```{r}
+3+4 #Addition
+5-2 #Subtraction
+3*2 #Multiplication
+9/3 #Division 
+```
+].pull-right[
+```{r}
+sqrt(4)
+2^3
+exp(3)
+log(10)
+```
+]
+
+[Basics Cheatsheets](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf)
+
+---
+
+## Giant Calculator!
+
+```{r}
+a <- 2
+b <- 4
+c <- 3
+```
+
+
+**Note**: In R, the following will not work!
+```{r eval = FALSE}
+
+b(a+c)
+```
+*R* will assume the "b()" is indicating some function, NOT multiplication as we do in math and stats. 
+
+Thus, you MUST include the multiplication symbol.
+```{r}
+b*(a+c)
+```
+
+---
+
+## Creating Variables
+
+We can create variables using the assignment operator `<-`
+
+```{r}
+x <- 5
+```
+
+We can then perform any of the functions on the variables:
+
+```{r}
+log(x)
+```
+
+Rules of Naming Variables:
++ Variables can't start with a number
++ Case-sensitive
++ There are reserved words that *R* won't let you use for variables names
+  - for, in, while, if, else, repeat, break, next
+
+---
+## Vectors
+
+A variable does not need to be a single value. We can create a **vector** using the `c` function (combine- combines several objects into one)
+
+```{r}
+y <- c(1, 5, 3, 2)
+```
+
+
+Operations can then be done element-wise
+
+```{r}
+y/2
+```
+
+Determining number of objects in a vector
+
+```{r}
+length(y)
+```
+
+---
+## Vectors
+
+Can also have vectors of characters
+
+```{r}
+bulldogs <- c("american", "english", "french")
+bulldogs
+```
+
+
+```{r}
+length(bulldogs)
+       
+str(bulldogs)
+```
+
+---
+
+## Logical Values
+
+```{r}
+a <- 4
+a==5
+
+a <= 5
+a !=5 #!=
+```
+
+---
+
+## Getting Help
+
+Let's talk about a couple ways to get help. The primary function to use is the `help` function. Just pass in the name of the function you need help with:
+
+```{r eval = FALSE}
+help(head)
+```
+
+The `?` also works
+```{r eval = FALSE}
+?head
+```
+
+This returns the help documentation for this function
+
+Googling for help can be difficult at first. You might need to search for R + CRAN +  to get good results. Also a valid use of ChatGPT.
+
+Stackoverflow is VERY helpful!
+
+[R Reference Card](https://cran.r-project.org/doc/contrib/Short-refcard.pdf)
+
+---
+## R Packages
+
+- **Packages** are the fundamental units of reproducible R code. They include reusable R functions, the documentation that describes how to use them, and sample data.
+- Commonly used *R* function are installed with base *R*
+- *R* packages containing more specialized *R* functions can be installed freely from CRAN servers using the function `install.packages()`
+  + Should now show up in *Packages* Tab
+- After packages are installed, their function can be loaded into the current *R* session using the function `library()`
+
+
+---
+
+## Installing Packages
+
+**Note**: To run code from your script:
++ Windows: Ctrl + Enter
++ Mac: Cmd + Enter
++ Highlight what you want to run and hit the “Run” button
+
+We will be installing the [tidyverse](https://www.tidyverse.org/) package.
+- Manipulates data structures (includes dplyr, tidyr, purr, tibble, etc packages)
+
+**Method 1**
+```{r, eval= FALSE}
+
+install.packages("tidyverse")
+
+```
+
+**Method 2** - Point and Click
+
++ Tools -> Install Packages
+
+Only have to do this once!!
+
+---
+## Load Package
+
+Let's load the package we just installed!
+
+```{r, eval = FALSE}
+library(tidyverse)
+```
+
+Will have to run this every time we are in a new session and want to use this package
+
+---
+
+## Load Data
+
+We usually work with .csv file in R. When you have a file that needs to be read into the Rstudio, first save the data set to the same file folder as your R file, or set the working directory to the file. 
+
+First Check your working directory!
+
+Method 1:
+```{r, eval = FALSE}
+getwd() #What is your working directory
+setwd() # Change Working directory
+```
+
+Method 2:
+
+Session -> Set Working Directory -> Choose Directory -> Select folder data set is located -> Apply
+
+
+Method 3: Import Data set in Environment Tab (Works well for .csv/.xlsx files)
+
+- If using Posit Cloud, you have an extra step. You must upload the data file into your Posit Cloud account
+
+---
+## Load Data
+
+Second, then load in the data
+```{r, echo=FALSE}
+data = read.csv("data/ICUAdmissions.csv")
+```
+
+```{r, eval=FALSE}
+data = read.csv("ICUAdmissions.csv")
+```
+
+```{r, linewidth=80}
+head(data, n = 3) #make sure data loads in correctly
+
+```
+
+Should see data in environment panel (upper right)
+
+---
+#### Check Variable Types
+
+```{r}
+str(data)
+```
+
+Note: The purpose of checking variable types is to make sure R is understanding what each column is representing.
+
+<br>
+Can also use `glimpse()` from `tidyverse`
+---
+
+## Change Variable Types
+
+*R* does not always read in the variables correctly. For example, `Cancer` is being read in as a integer, when it is a factor (0 if have cancer, 1 if don't). We can change this!
+
+```{r}
+#To change this column to a factor:
+data$Cancer<- as.factor(data$Cancer)
+
+
+#Now Cancer is a Factor!
+class(data$Cancer)
+
+```
+
+[More about Data Types](https://www.geeksforgeeks.org/r-data-types/)
+---
+
+## Selecting Specific Row/Column
+
+```{r}
+data[1,] #first row
+data[,1] #first column 
+
+```
+
+---
+
+## Selecting Specific Row/Column
+
+```{r}
+data[1:2,c(2,5,7)] #row: 1-2, column: 2,5,7
+```
+
+We can use `$` to specify columns as well
+
+```{r}
+head(data$Age)
+```
+
+
+---
+## Some Basic Functions
+
+```{r}
+summary(data[,c(3,7,11:12)])
+
+nrow(data)
+
+ncol(data)
+
+```
+
+---
+## Some Basic Functions
+```{r}
+table(data$Cancer)
+```
+
+
+---
+## Built-In Statistical Functions
+
+```{r}
+mean(data$Age, na.rm = TRUE) #na.rm removes missing values
+sd(data$Age, na.rm = TRUE)
+summary(data$Age)
+quantile(data$Age, c(0.025, 0.975), na.rm = TRUE) 
+```
+
+---
+## Filtering
+
+`filter()` (in `tidyverse`): selects every element of each row with the indicated filter value
+
+```{r, echo=FALSE, out.width="80%", fig.align='center'}
+
+knitr::include_graphics("../01-Welcome/images/filter.png")
+
+```
+
+---
+## Filtering
+
+- Use our logical values from earlier
+
+Let's say we want to filter our data to only include people over 21
+
+```{r}
+data_over21 <- data %>% filter(Age > 21)
+
+summary(data_over21$Age)
+```
+
+Or maybe we only want those diagnosed with Cancer
+
+```{r}
+data_c <- data %>% filter(Cancer == 1)
+# or data_c <- data %>% filter(Cancer ! = 0)
+table(data_c$Cancer)
+```
+
+---
+
+## Warnings vs. Errors
+
++ Routinely beginners to R panic if they see a red message as innocuous as confirming that a library loaded
+  - Not all red text means that there is an error!
+
++ A *warning* is a message that does not disturb the program flow but is displayed along with the output
+
+  - Not always a cause for concern
+
++ An *error* will terminate a program from being ran
+
++ Google is a beautiful thing
+
+
+<br>
+<br>
+Introduction points from: https://ourcodingclub.github.io/tutorials/intro-to-r/
+
+---
+## Some Common Errors
+
+Like all the other programming language, R sometimes will generate errors or the output may not be the one you want. There are multiple reasons for that. Here is some common type of errors: 
+
+1. "could not find function" errors, usually caused by typos or not loading a required package
+
+2. "Error in eval" or "object not found" errors, caused by references to objects that don't exist
+  - Could be due to misspelling
+
+3. "cannot open" errors, caused by attempts to read a file that doesn't exist or can't be accessed (wrong file path)
+
+4. "no applicable method" errors, caused by using an object-oriented function on a data type it doesn't support
+ - Ex. Taking a mean of a character value
+
+5. "subscript out of bounds" errors, caused by trying to access an element or dimension that doesn't exist
+
+
+---
+## Learning to code can be challenging
+
+```{r, echo=FALSE}
+
+knitr::include_graphics("../01-Welcome/images/debug.png")
+
+```
+
+Artwork by @allison_horst
+
+---
+## Quarto
+
+
+- Allows you to "weave together narrative text and code to produce elegantly formatted output as documents, web pages, blog posts, books and more!" ([source](https://quarto.org/docs/faq/rmarkdown.html))
+- R developed *R Markdown* to create documents that include R code, and *Quarto* is their attempt to bring *R Markdown* to everyone.
+  - Developed to be multilingual, beginning with R, Python and Javascript.
+
+
+Most of the basics can be found in the [Quarto Website](https://quarto.org/docs/get-started/hello/rstudio.html) 
+
+[Notes from MTH 365](https://alisonkleffner.github.io/mth-365/Week 2/slides/intro-to-quarto.html#1)
+
