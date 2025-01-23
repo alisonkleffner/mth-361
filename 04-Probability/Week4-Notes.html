@@ -1,62 +1,65 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>MTH361: Probability and Statistics in the Health Sciences</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Probability and Conditional Probability" />
+    <script src="libs/header-attrs-2.27/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# MTH361: Probability and Statistics in the Health Sciences
+]
+.author[
+### Probability and Conditional Probability
+]
+.date[
+### February 6/11, 2025
+]
+
 ---
-title: "MTH361: Probability and Statistics in the Health Sciences"
-author: "Probability and Conditional Probability"
-date: "September 10/12, 2024"
-output: 
-  xaringan::moon_reader:
-    lib_dir: libs
-    nature:
-      highlightStyle: github
-      highlightLines: true
-      countIncrementalSlides: false
----
 
-```{r echo=FALSE, message=FALSE, warning = FALSE}
-library(knitr)
 
-hook_output = knit_hooks$get('output')
-knit_hooks$set(output = function(x, options) {
-  # this hook is used only when the linewidth option is not NULL
-  if (!is.null(n <- options$linewidth)) {
-    x = xfun::split_lines(x)
-    # any lines wider than n should be wrapped
-    if (any(nchar(x) > n)) x = strwrap(x, width = n)
-    x = paste(x, collapse = '\n')
-  }
-  hook_output(x, options)
-})
 
-```
 
 
 ### Announcements
 
 + **Homework 3** 
-  - Due **Thursday September 26 at 11:59 pm**
+  - Due **Thursday February 20 at 11:59 pm**
   - Upload to Blueline
   
-+ **Lab 3** work day on Tuesday September 17
-  - Will be due **Friday September 20 at 11:59pm** in Blueline
++ **Lab 3** work day on Thursday February 13
+  - Will be due **Friday February 14 at 11:59pm** in Blueline
   
 + **Project Proposal**
-  - Due **Thursday September 19** at 11:59pm in Blueline
+  - Due **Thursday February 27** at 11:59pm in Blueline
 
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
 
 **Book Sections for Next Thursday**: Chapter 3.1 and 3.3
 
 ---
 class:inverse
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
 .center[
 # Probability
 ]
@@ -81,23 +84,20 @@ We use capital letters to describe an event, eg event *E*
 
 We denote the probability of some event *E* as *P(E)*
 
-To be a valid probability, $0 \leq P(E) \leq 1$
+To be a valid probability, `\(0 \leq P(E) \leq 1\)`
 
-For all possible events $A_i$ in a sample space, we have $\sum_iP(A_i) = 1$
+For all possible events `\(A_i\)` in a sample space, we have `\(\sum_iP(A_i) = 1\)`
 
 ---
 
 ### Relationship Between Multiple Events
 
-```{r, echo=FALSE}
-library(kableExtra)
 
-df <- data.frame(term = c("superset", "subset", "union", "intersection", "complement"), 
-                 notation = c("", "", "", "", ''),
-                 int = c("", "", "", "", ""))
-
-kable(df, col.names = c("Term", "Notation", "Intuitive Terminology"), escape = F)
-```
+|Term         |Notation |Intuitive Terminology |
+|:------------|:--------|:---------------------|
+|union        |         |                      |
+|intersection |         |                      |
+|complement   |         |                      |
 
 Use venn diagrams to visually show relationships between events! Which is more likely to be true:
 
@@ -143,9 +143,9 @@ The new drug is effective in the trial and the new drug has side effect
 
 The new drug is effective in the trial and the patient wants to take the drug
 
-<br>
-<br>
-<br>
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
 Is it possible that two events are both mutually exclusive and independent?
 ---
 ### Addition Rule for Mutually Exclusive Events
@@ -161,7 +161,7 @@ What is the probability that a death is due to one of these three causes?
 ---
 ### Complement Rule
 
-**Complement Rule**: the probability that an event does not occur is $$P(A^C) = 1 - P(A)$$
+**Complement Rule**: the probability that an event does not occur is `$$P(A^C) = 1 - P(A)$$`
 
 
 **Example**: Government data assigns a single cause for each death that occurs in the US. The data show that among people aged 15-24, the probability that a randomly chosen death was accidental is 0.41, 0.16 that it was a homicide, and 0.15 that it was a suicide.
@@ -175,27 +175,33 @@ What is the probability that a death is due to some other cause?
 $$ P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
 **Example**: Insulin injections and oral medication are two key options for treating diabetes. The 2014 National Diabetes Statistics Report provides the breakdown of diabetes treatments among American Adults with diagnosed diabetes. Use the General Addition Rule to find the probability of an adult with diabetes uses either insulin or oral medication.
 
-```{r, echo=FALSE}
-df <- data.frame(term = c("Insulin Only", "Oral Medication Only", "Both insulin and oral medication", "Neither insulin or oral medication"), 
-                 notation = c(14, 56.9, 14.7, 14.4))
-kable(df, col.names = c("Treatment", "Percent"), escape = F)
-```
+.pull-right[
+
+|Treatment                          | Percent|
+|:----------------------------------|-------:|
+|Insulin                            |    28.7|
+|Oral Medication                    |    71.6|
+|Both insulin and oral medication   |    14.7|
+|Neither insulin or oral medication |    14.4|
+]
 
 ---
 ### Multiplication Rule
 
 **Multiplication Rule**: if two events are independent, then 
 $$ P(A \cap B) = P(A)*P(B)$$
-- The Multiplication Rule is a handy tool for verifying independence!
-- The Multiplication Rule extends to three or more events.
 
 **Example**: Are insulin injections and oral medication independent for treating diabetes? Explain why or why not.
 
-```{r, echo=FALSE}
-df <- data.frame(term = c("Insulin Only", "Oral Medication Only", "Both insulin and oral medication", "Neither insulin or oral medication"), 
-                 notation = c(14, 56.9, 14.7, 14.4))
-kable(df, col.names = c("Treatment", "Percent"), escape = F)
-```
+.pull-right[
+
+|Treatment                          | Percent|
+|:----------------------------------|-------:|
+|Insulin                            |    28.7|
+|Oral Medication                    |    71.6|
+|Both insulin and oral medication   |    14.7|
+|Neither insulin or oral medication |    14.4|
+]
 
 ---
 ### Example: Doctor Visits
@@ -211,26 +217,23 @@ The probability that a visit to a primary care physician’s (PCP) oﬀice resul
 ---
 ### Example: Genetics
 
-The gene Prdm9 is thought to regulate hotspots of recombination (crossing over) in mammals. In the people of Han Chinese descent living in the Los Angeles area there are five alleles at the Prdm9 gene: $A_1$, $A_2$, $A_3$, $A_4$, $A_5$. The relative frequencies with which these alleles occur in that population are 0.06, 0.03, 0.84, 0.03, and 0.04, respectively. Is it reasonable to assume that in this population, the two alleles present in any individual are independently sampled from the population as a whole?
+The gene Prdm9 is thought to regulate hotspots of recombination (crossing over) in mammals. In the people of Han Chinese descent living in the Los Angeles area there are five alleles at the Prdm9 gene: `\(A_1\)`, `\(A_2\)`, `\(A_3\)`, `\(A_4\)`, `\(A_5\)`. The relative frequencies with which these alleles occur in that population are 0.06, 0.03, 0.84, 0.03, and 0.04, respectively. Is it reasonable to assume that in this population, the two alleles present in any individual are independently sampled from the population as a whole?
 
 What is the probability that an individual has...
 
-(a) Two $A_1$ alleles? $\\$
-(b) One $A_1$ allele and one $A_3$ allele $\\$
-(c) Does not have two $A_1$ alleles?
-
----
+(a) Two `\(A_1\)` alleles? `\(\\\)`
+(b) One `\(A_1\)` allele and one `\(A_3\)` allele `\(\\\)`
+(c) Does not have two `\(A_1\)` alleles?
 
 ---
 ### Example: Blood Types
 
 The probability that a randomly chosen North American has a particular blood type is listed in the table below.
 
-```{r, echo=FALSE}
-df <- data.frame(prob = c(0.374, 0.066, 0.357, 0.063, 0.085, 0.015, 0.034, 0.006))
-                 
-kable(t(df), col.names = c("O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-"), escape = F)
-```
+
+|     |    O+|    O-|    A+|    A-|    B+|    B-|   AB+|   AB-|
+|:----|-----:|-----:|-----:|-----:|-----:|-----:|-----:|-----:|
+|prob | 0.374| 0.066| 0.357| 0.063| 0.085| 0.015| 0.034| 0.006|
 
 1. What is the probability that a randomly selected North American has blood type O?
 2. B- blood can be safely donated to anyone who has B+, B-, AB+, or AB- blood. What is the probability that a randomly selected North American can receive blood type B-?
@@ -240,20 +243,18 @@ kable(t(df), col.names = c("O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-"), es
 6. Assume that blood type does not affect the choice of sexual partner. What probability of North American pregnancies will be at risk for Rh incompatibility?
 
 ---
-
----
 class:inverse
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
 .center[
 # Conditional Probability
 ]
@@ -264,7 +265,7 @@ class:inverse
 
 **Conditional Probability**: the probability of an event occurring, given that some other event has occurred or condition is met.
 
-<br>
+&lt;br&gt;
 
 .center[**P(A|B)**]
 
@@ -299,8 +300,8 @@ A large national sample of visits to the Veteran's Health Administration (VHA) s
 ---
 ### Extending Bayes
 
-**Law of Total Probability**: Let $A_1$, $A_2$, ... , $A_n$ be disjoint events covering the entire sample space. Then, 
-$$P(B) = \sum_{i}P(A_i \cap B) = \sum_{i}P(A_i|B)P(B) = \sum_iP(B|A_i)P(A_i),$$
+**Law of Total Probability**: Let `\(A_1\)`, `\(A_2\)`, ... , `\(A_n\)` be disjoint events covering the entire sample space. Then, 
+`$$P(B) = \sum_{i}P(A_i \cap B) = \sum_{i}P(A_i|B)P(B) = \sum_iP(B|A_i)P(A_i),$$`
 which gives us Extending Bayes: 
 $$ P(A_i|B) =  \frac{P(A_i \cap B)}{P(B)} = \frac{P(A_i \cap B)}{\sum_iP(A_i \cap B)} = \frac{P(B|A_i)P(A_i)}{\sum_jP(B|A_i)P(A_i)}$$
 
@@ -344,11 +345,139 @@ Lupus is a medical condition where antibodies that are supposed to attack foreig
 ### Example : Cystic Fibrosis 
 
 Cystic fibrosis (CF) is a hereditary lung disorder that often results in death. It can be inherited only if both parents are carriers of an abnormal gene. In 1989, the CF gene that is abnormal in carriers of cystic fibrosis was identified. The probability that a randomly chosen person carries an abnormal CF gene is 0.03. The CF20m test detects most, but not all harmful mutations of the CF gene. The test is positive for 90% of people who are carriers. It is positive for 1% of people who are not carriers. If you test positive, what is the probability that you are actually a carrier?
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
 
----
-### Example: Monty Hall Problem
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
 
-Suppose you’re on a game show, and you’re given the choice of three doors: Behind one door is a car; behind the others, goats. You pick a door, say No. 1, and the host, who knows what’s behind the doors, opens another door, say No. 3, which has a goat. He then says to you, ”Do you want to pick door No. 2?” Is it to your advantage to switch your choice?
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
-[Simulator](http://www.rossmanchance.com/applets/2021/montyhall/Monty.html)
-
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

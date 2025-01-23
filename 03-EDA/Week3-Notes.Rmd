@@ -44,6 +44,7 @@ knit_hooks$set(output = function(x, options) {
 <br>
 
 **Book Sections Covered Today**: 1.4-1.7
+
 **Book Sections for Next Week**: Chapter 2
 
 ---
