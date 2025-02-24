@@ -1,7 +1,7 @@
 ---
 title: "MTH361: Probability and Statistics in the Health Sciences"
 author: "Hypothesis Testing"
-date: "October 1, 2024"
+date: "March 4, 2025"
 output: 
   xaringan::moon_reader:
     lib_dir: libs
@@ -96,25 +96,25 @@ class:inverse
 <br><br><br>
 ## MTH361: Probability and Statistics in the Health Sciences
 ### Hypothesis Tests
-#### October 1, 2024
+#### March 4, 2025
 
 ---
 ### Announcements
 
-- **Lab 5** in class Thursday October 3
-  - due Friday October 4 at 11:59pm in Blueline
-  - Data Collection: Play Rock-Paper-Scissors with a friend 12 times and count the number of times they chose scissors (do not tell them what you are counting). Fill out the form: **Lab 5: Rock Paper Scissors Data Collection** by class time on **Thursday October 3**. We will use this data in the lab. 
+- **Lab 5** in class Thursday March 6
+  - due Friday March 7 at 11:59pm in Blueline
+  - Data Collection: Play Rock-Paper-Scissors with a friend 12 times and count the number of times they chose scissors (do not tell them what you are counting). Fill out the form: **Lab 5: Rock Paper Scissors Data Collection** by class time on **Thursday March 6**. We will use this data in the lab. 
 - **Homework 5**
-  - Due Tuesday October 22 at 11:59pm in Blueline
-  - Will cover One-Sample Hypothesis Tests from today and Two-Sample Hypothesis Tests from next week
+  - Due Tuesday March 18 at 11:59pm in Blueline
+- **Midterm**: Thursday March 20 in class
+  - Some review materials in Blueline. Review Day on Tuesday March 18
+    + Midterm Question Form
 
 <br>
 
 Book Chapters:
 
 - **Today**: 4.3 and 5.1
-
-- **Next Week**: 5.2 and 5.3
 
 ---
 ### From Confidence Intervals to Hypothesis Tests
@@ -133,7 +133,7 @@ Today we are going to discuss and solve these kind of question in a Hypothesis w
 **Disclaimer:** Lots of people have strong feelings about hypothesis testing
 
 ```{r, echo=FALSE, fig.align='center', out.height="60%", out.width="60%"}
-knitr::include_graphics("../images/Week7/pvalue-controversy.png")
+knitr::include_graphics("../06-Hypothesis-Testing/images/pvalue-controversy.png")
 ```
 
 ---
@@ -150,10 +150,10 @@ Hypothesis tests are designed to answer a yes/no research question: if have a se
 
 Hypothesis testing is a method for evaluating the evidence for/against a specific research claim based on a probability, called a p-value. There are four basic steps to this procedure:
 
-- Write the null and alternative hypothesis
-- Collect evidence from our sample and calculate a test statistic
-- “Translate” the test statistic into a p-value
-- Make a conclusion based on the p-value
+1. Write the null and alternative hypothesis
+2. Collect evidence from our sample and calculate a test statistic
+3. “Translate” the test statistic into a p-value
+4. Make a conclusion based on the p-value
 
 ---
 ### Step 1: Write Hypotheses
@@ -183,14 +183,6 @@ Note: Alternative hypothesis can be one-sided ("increased", "decreased") or two-
 ---
 ### Step 1: Write Hypotheses
 
-For the following alternative hypotheses: (1) determine whether it is one-sided or two-sided, and (2) state the corresponding null hypothesis
-
-- Artesunate is less effective that quinine at treating children with severe malaria.
-- Cities that do not have safe-injection sites for drug addicts have higher rates of HIV transmission than cities that do have safe-injection sites.
-
----
-### Step 1: Write Hypotheses
-
 **Example**: Drug maker GlaxoSmithKline (GSK) investigated the potential impact of its oral anti-diabetic drug Avandia on the blood lipid levels of adult diabetics who might benefit from taking Avandia. They were particularly concerned that LDL, "bad" cholesterol, levels might increase. Write the null and alternative hypothesis for their test.
 
 
@@ -199,12 +191,7 @@ For the following alternative hypotheses: (1) determine whether it is one-sided 
 
 Given the hypothesis, now we need to use data to show whether the hypothesis is valid or not, through test statistics. 
 
-Test statistic: a number calculated from the sample data that is used to evaluate how far the data we've observed are from the result expected assuming the null hypothesis is true.
-
-Note: We know by now that data does not always reflect the population but we also know that a large enough random sample is pretty close.
-
----
-### Step 2: Calculate the Test Statistic 
+- Test statistic: a number calculated from the sample data that is used to evaluate how far the data we've observed are from the result expected assuming the null hypothesis is true.
 
 Usually the test statistic follows this form:
 
@@ -213,8 +200,6 @@ As we'll see, the choice of test statistic depends on two things
 
 - The type of data we're analyzing
 - The assumptions we're willing to make
-
-Different parameters and assumptions will change the test statistics from one hypothesis test to another
 
 ---
 ### Step 3: Calculate the p-value
@@ -226,7 +211,7 @@ p-value: the **probability** of observing a sample statistic as or more extreme 
 **The p-value is not the probability that the null hypothesis is true!**
 
 ```{r, echo=FALSE, fig.align='center', out.height="80%", out.width="80%"}
-knitr::include_graphics("../images/Week7/pvalue-def.png")
+knitr::include_graphics("../06-Hypothesis-Testing/images/pvalue-def.png")
 ```
 
 ---
@@ -244,24 +229,17 @@ You didn't know it at the time, but we created a Null Distribution!
 ---
 ### Step 3: Calculate the p-value
 
-How to covert test statistics to p-value? Recall what we did to convert the Z-score to a probability.
-
 Student t distribution:
 
-- Like the normal distribution, the t-distribution has a symmetric smooth shape.
-- The normal distribution assumes that the population standard deviation is known. The t-distribution does not make this assumption.
+- The t-distribution has a symmetric smooth shape.
+- The normal distribution assumes $\sigma$ is known. The t-distribution does not.
 - The t-distribution is defined by the degrees of freedom. These are related to the sample size.
-- The t-distribution is most useful for small sample sizes, when the population standard deviation is no known, or both.
 - As the sample size increases, the t-distribution becomes more similar to the normal distribution.
 
----
-### Step 3: Calculate the p-value
 
-Because the test makes use of the t distribution, it is called T-test. In today’s lecture, we only have one variable and try to decide whether the variable’s mean is higher/lower/equal to an expected value, this is called one sample t-test.
+```{r, echo=FALSE, out.width="50%", fig.align='center'}
 
-```{r, echo=FALSE, out.width="70%", fig.align='center'}
-
-knitr::include_graphics("../images/Week7/t-distribution.png")
+knitr::include_graphics("../06-Hypothesis-Testing/images/t-distribution.png")
 
 ```
 
@@ -304,7 +282,7 @@ No statistical reason for choosing $\alpha$ = 0.05
 
 ```{r, echo=FALSE, out.width="35%", out.width="35%", fig.align='center'}
 
-knitr::include_graphics("../images/Week7/pvalue-controversy2.png")
+knitr::include_graphics("../06-Hypothesis-Testing/images/pvalue-controversy2.png")
 
 ```
 
@@ -353,7 +331,6 @@ Usually the decision can be a little more complicated:
 - How trustworthy is the sample?
 - What are the consequences of being wrong?
 
---
 
 When you’re summarizing the results of any hypothesis test, three things should always be included.
 
@@ -373,30 +350,19 @@ So our test statistic...
 
 $$\text{test statistic} = \frac{\text{sample statistic} - \text{expectation}}{\text{standard error}} \longrightarrow t =  \frac{\bar{x} - \mu_0}{\frac{s}{\sqrt{n}}}$$
 
-We will talk more about the t-distribution next week, but for now just know that we can do the one sample t-test if our response variable has a normal distribution.
-
 ---
 ### Example: BMI
 
 A BMI in adults of 25.0 or greater is considered overweight. Based on the data from the NHANES sample, is there strong enough evidence to show that the population mean BMI for American adults is greater than 25.0?
 
-```{r, echo=FALSE, warning=FALSE, fig.height=6, fig.align='center', message=FALSE}
+Write the null and alternative hypothesis, and calculate the test statistic.
+
+```{r, echo = FALSE}
 library(NHANES)
 library(mosaic)
 library(oibiostat)
 
 data("nhanes.samp")
-nhanes.samp %>% ggplot(aes(x = BMI)) + geom_histogram(fill = "lightblue", color = "black", bins = 20)
-
-```
-
-
----
-### Example: BMI
-
-Write the null and alternative hypothesis, and calculate the test statistic.
-
-```{r}
 favstats(~BMI, data=nhanes.samp)
 ```
 
@@ -415,29 +381,28 @@ t.test(~BMI,
 
 ---
 
-### Example: Mercury Levels for Saltwater Fish
-
-While fish and other types of seafood are important for a healthy diet, nearly all fish and shellfish contain traces of mercury. Dietary exposure to mercury can be dangerous for young children and unborn babies. The general consensus is that fish with levels above 0.5 ppm should not be consumed. A study of mercury levels for saltwater fish caught of the New Jersey coast found that a sample of 23 bluefin tuna had a mean mercury level of 0.54 ppm, with standard deviation 0.15 ppm.
+### Example: Communicating Online
+A study suggests that the average college student spends 13 hours per week communicating with others online. You believe that this is an underestimate and decide to collect your own sample for a hypothesis test. You randomly sample 60 students from your dorm and find that on average they spent 13.5 hours a week communicating with others online, with a standard deviation of 1.25 hours.
 
 Write the null and alternative hypothesis, and calculate the test statistic.
 
 
 ```{r, echo=FALSE}
 set.seed(361)
-bluefin_tuna <- tibble(mercury = rnorm(n=23, mean=0.52, sd=0.16))
-favstats(~mercury, data=bluefin_tuna)
+online_data <- tibble(online_hours = rnorm(n=60, mean=13.3, sd=1.21))
+favstats(~online_hours, data=online_data)
 ```
 
 ---
-### Example:  Mercury Levels for Saltwater Fish
+### Example:  Communicating Online
 
 Identify the p-value, and write a conclusion for the test.
 
 ```{r, echo=TRUE}
-t.test(~mercury, 
-       mu=0.5, 
+t.test(~online_hours, 
+       mu=13, 
        alternative='greater', 
-       data=bluefin_tuna)
+       data=online_data)
 ```
 
 
@@ -452,11 +417,10 @@ __Type 1 Error__: Rejecting the null hypothesis when it is actually true
 __Type 2 Error__: Failing to reject the null hypothesis when it is actually false
 ]
 
---
 
 ```{r, echo=FALSE, fig.align='center'}
 
-knitr::include_graphics("../images/Week7/error-table.png")
+knitr::include_graphics("../06-Hypothesis-Testing/images/error-table.png")
 
 ```
 
@@ -477,7 +441,7 @@ Let's assume $\alpha = 0.10$
 ].pull-right[
 ```{r, echo=FALSE, fig.align='center', out.height="80%", out.width="80%"}
 
-knitr::include_graphics("../images/Week7/rg-error.png")
+knitr::include_graphics("../06-Hypothesis-Testing/images/rg-error.png")
 
 ```
 ]
@@ -491,9 +455,6 @@ knitr::include_graphics("../images/Week7/rg-error.png")
 A patient was diagnosed with fibromyalgia, a long-term syndrome of body pain, and was prescribed anti-depressants. Being a skeptic, the patient didn’t initially believe that anti-depressants would help her symptoms. However, after a couple months she decides the anti-depressants must be working, because she feels like her symptoms are getting better.
 ]
 
-Type 1: Conclude anti-depressants are working when they are not (Reject)
-
-Type 2: Conclude they are not working when they are (Fail to Reject)
 
 ---
 
@@ -512,11 +473,9 @@ __Example__: A pharmaceutical company manufactures aspirin tablets that are sold
 
 - We can never prevent these errors but we can take steps to control them! For example, we can set the significance level $\alpha$ to be very small if we'd like to control for Type 1 Error.
 
---
 
 - The probability of a Type 2 Error can be controlled by choosing a statistical method with high power. 
 
---
 
 .bg-washed-yellow.b--yellow.ba.ph3[
 __Power__: probability that a random sample taken from a population will lead to a correct rejection of a false null hypothesis
@@ -537,7 +496,7 @@ Caution! There is a trade-off!!
 
 ```{r, echo=FALSE, fig.align='center', out.height="90%", out.width="90%"}
 
-knitr::include_graphics("../images/Week7/power-table.png")
+knitr::include_graphics("../06-Hypothesis-Testing/images/power-table.png")
 
 ```
 

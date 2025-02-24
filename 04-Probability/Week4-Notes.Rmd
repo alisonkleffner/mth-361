@@ -39,7 +39,7 @@ knit_hooks$set(output = function(x, options) {
   - Will be due **Friday February 14 at 11:59pm** in Blueline
   
 + **Project Proposal**
-  - Due **Thursday February 27** at 11:59pm in Blueline
+  - Due **Tuesday February 25** at 11:59pm in Blueline
 
 <br>
 <br>

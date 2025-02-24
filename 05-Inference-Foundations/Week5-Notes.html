@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>MTH361: Probability and Statistics in the Health Sciences</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Foundations for Statistical Inference" />
+    <script src="libs/header-attrs-2.27/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# MTH361: Probability and Statistics in the Health Sciences
+]
+.author[
+### Foundations for Statistical Inference
+]
+.date[
+### February 18/20/25
+]
+
+---
+
+
+
+
+
+### Announcements
+
+- **Project Proposal**
+  - due Tuesday February 25
+- **Lab 4** in class Thursday February 27
+  - due Friday February 28 at 11:59pm in Blueline
+- **Homework 4**
+  - due Thursday March 6
+
+  
+  
+&lt;br&gt;
+&lt;br&gt;
+
+**Book Chapters**: Section 3.1, 3.3, 4.1 and 4.2
+
+---
+### Agenda
+
+- Random Variables
+- The Normal Distribution
+- Sampling Distributions
+- Confidence Intervals
+- Central Limit Theorem
+
+
+---
+class:inverse
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.center[
+## Random Variables and Probability Distributions
+]
+---
+### Random Variables
+
+
+- Last week, we talked about the probability of an event.    
+  + **Example**: let `C` be the event that a person is diagnosed with Cancer, we have `P(C)`.
+- Now suppose we have three people, and we are wondering what is the probability that exactly one of them is diagnosed with Cancer.
+
+A **random variable** is a **function** that maps each event in a sample space to a number.
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+  
+&lt;img src="../05-Inference-Foundations/images/rv-cancer-ex.jpeg" width="80%" style="display: block; margin: auto;" /&gt;
+
+---
+### Random Variables
+
+Let's consider a more familiar random phenomenon: a coin flip
+
+If a coin is tossed three times, the outcome is a sequence of observed heads and tails
+
+&lt;img src="../05-Inference-Foundations/images/randon-variable-heads.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+
+The random variable `\(X\)` is the number of heads for the three tosses.
+
+---
+### Probability Distribution
+
+Probability distribution: a list of the probabilities of all mutually exclusive outcomes of random variable
+
+- We can assign probabilities to values of a random variable. 
+
+---
+### Probability Distribution
+
+We can use bar graphs to display the distribution of a random variable
+
+&lt;img src="../05-Inference-Foundations/images/probability-distribution-heads.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+Rules:
+
++ Outcomes must be mutually exclusive
++ Each probability must be between 0 and 1
++ Probabilities must sum to 1
+
+---
+### Probability Distribution
+
+Based on the potential outcomes of a random variable, we can classify random variables and their distribution into continuous and discrete. 
+  + Discrete random variable: probability mass function (p(y))
+    - The number of people enter the clinic 
+  + Continuous random variable: probability density function (f(y))
+    - The proportion of people recovered with the new drug
+
+
+---
+class:inverse
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.center[
+## The Normal Distribution
+]
+
+---
+### Example: Let's Start with an Example
+
+The forced expiratory volume (FEV, measured in liters) is a primary indicator of successful lung function and corresponds to the volume of air that can be forcibly blown out in the first second after fully breathing in. A study of FEV on a sample of n = 654 children measured the children’s age, FEV, height, sex, and whether they had been exposed to second-hand smoke.
+
+.pull-left[
+![](Week5-Notes_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
+
+].pull-right[
+![](Week5-Notes_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
+
+]
+
+---
+### Normal Distribution
+
+**Normal Distribution**: the probability distribution that generates a perfect “bell-shaped curve”
+  - A continuous probability distribution
+  - Two parameters: mean `\((\mu)\)` and standard deviation `\((\sigma)\)`.
+    + Notation: `\(N(\mu, \sigma)\)` 
+
+
+&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+### Properties of the Normal Model
+
+- Symmetric and unimodal around the mean `\(\mu\)`
+- The standard deviation `\(\sigma\)` controls the spread the distribution
+
+&lt;img src="../05-Inference-Foundations/images/normal-dist.png" width="1501" style="display: block; margin: auto;" /&gt;
+
+---
+### Relationship between Density and Probability
+
+- The area under the probability density function is 1
+  - Probability is measured by the area under the curve. e.g., the shaded area in the figure represents the P(−2 &lt; X &lt; 0)
+  - Note: For a continuous variable, at any point x, P(X = x) = 0
+
+&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+### Finding Normal Probabilities
+
+The probability density function for the normal distribution is:
+
+`$$f(x) = \frac{1}{\sqrt{2\pi\sigma^2}}e^{−(x−μ)^2/2\sigma^2}$$`
+
+How do we find the area under it?
+
+ + Traditional chart reading with Z score
+ + Use R as a calculator
+ 
+ 
+---
+### Z-Score
+
+- Comparing values across different normal distributions can be tricky.
+  - Solution: convert all normal distribution with different `\(\mu\)` and `\(\sigma\)` to a standard normal distribution.
+- For a random normal distribution, we can always define a new random variable Z, such that `$$Z = \frac{X − \mu}{\sigma},$$` then Z will follow a standard normal distribution with mean equal to 0 and standard deviation equals to 1.
+
+
+**Essentially**: if `\(X \sim N(\mu, \sigma^2) \text{ then }  Z = \frac{X − \mu}{\sigma} \sim N(0,1)\)` 
+
+  - [Proof](https://online.stat.psu.edu/stat414/lesson/16/16.2)
+
+---
+### Z-Score
+
+- Quantifies how far the observation is from the mean, in units of standard deviation
+  - Observations above the mean have positive Z-scores, while observations below the mean have negative Z-scores.
+
+&lt;img src="../05-Inference-Foundations/images/standard-normal.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
+
+---
+### Standard Normal Distribution
+
+The Standard Normal `\((N(0,1))\)` distribution is well-studied
+
+&lt;br&gt;
+
+- A normal probability table can be used to identify the percentile corresponding to any particular Zscore.
+  + Z-score chart that records all the probabilities of the standard normal distribution from `\(-\infty\)` to a certain value ([link to chart](https://www.z-table.com/)). 
+- `R function`: `xpnorm`
+- Online Calculator: https://istats.shinyapps.io/NormalDist/
+
+---
+### Standard Normal Distribution
+.pull-left[
+&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-11-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+].pull-right[
+&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-12-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+If you want to calculate `\(P( a &lt; X &lt; b)\)`, then $$ P( a &lt; X &lt; b) = P( -\infty &lt; X &lt; b) = P( -\infty &lt; X &lt; a)$$
+
+---
+### Application: FEV
+
+Assume forced expiratory volume (FEV) follows a normal model with `\(\mu\)` = 2.64 and `\(\sigma\)` = 0.87. Find the probability that a child has FEV less than 1.5. First let's calculate the z-score.
+
+---
+### Application: FEV
+
+Assume forced expiratory volume (FEV) follows a normal model with `\(\mu\)` = 2.64 and `\(\sigma\)` = 0.87. Find the probability that a child has FEV less than 1.5.
+
+
+
+In the `mosaic` package in R, we have a function called `xpnorm`
+
+
+``` r
+xpnorm(q=1.5, mean = 2.64, sd=0.87)
+```
+
+&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-14-1.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+```
+## [1] 0.0950396
+```
+
+---
+### Application: Birth Weights
+
+The babies born in single births in the United States have birth weights that are approximately normally distributed with mean 3.3 kg and standard deviation 0.56 kg. For both questions, calculate the Z-score by hand first.
+
+- What is the probability of a baby with a born weight between 3 kg and 4 kg?
+- What is the probability of a baby with a born weight more than 5 kg?
+
+---
+### Probability of a baby with a born weight between 3 kg and 4 kg?
+
+If X ~ N(3.3, 0.56) then
+.pull-left[
+
+
+``` r
+xpnorm(3, mean=3.3, sd=0.56)
+```
+
+&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-15-1.png" width="90%" /&gt;
+
+```
+## [1] 0.296078
+```
+
+].pull-right[
+
+
+``` r
+xpnorm(4, mean=3.3, sd=0.56)
+```
+
+&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-16-1.png" width="90%" /&gt;
+
+```
+## [1] 0.8943502
+```
+
+]
+
+---
+### Probability of a baby with a born weight more than 5 kg?
+
+---
+### Probability of a baby with a born weight more than 5 kg?
+
+
+.center[
+
+``` r
+xpnorm(5, mean=3.3, sd=0.56)
+```
+
+![](Week5-Notes_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
+
+```
+## [1] 0.9988002
+```
+]
+
+---
+### Your Turn: Spy Height
+
+It was rumored that Britain’s domestic intelligence service MI5 has an upper limit on the height of its spies, on the assumption that tall people stand out. (For the record - they deny this.) The rumor says that, to apply to be a spy, you can be no taller than 5 feet 11 inches (180.3 cm) if you are a man, and no taller than 5 feet 8 inches (172.7 cm) if you are a woman – supposedly to allow the spies to blend in with a crowd. Adult heights are known to be approximately normally distributed. For males, x ∼ N(177.0, 7.1) and for females, x ∼ N(163.3, 6.4).
+
++ What proportion of British males are eligible to apply to MI5?
++ What proportion of British females are eligible to apply to MI5?
+
+Sketch a graph of both distributions to help you out and calculate Z-score by hand first.
+
+---
+### Your Turn: Spy Height
+
+.pull-left[
+What proportion of British males are eligible to apply to MI5?
+
+
+
+].pull-right[
+What proportion of British females are eligible to apply to MI5?
+
+]
+
+
+---
+### Empirical Rule
+
+A simple rule for working with the normal model is the Empirical Rule:
+
+- Approximately 68% of all probability in a normal model is within `\(\mu \pm \sigma\)`
+- Approximately 95% of all probability in a normal model is within `\(\mu \pm 2\sigma\)`
+- Approximately 99.7% of all probability in a normal model is within `\(\mu \pm 3\sigma\)`
+
+&lt;img src="../05-Inference-Foundations/images/empirical rule.png" width="1605" style="display: block; margin: auto;" /&gt;
+
+
+---
+### Application: Birth Rate
+
+The babies born in singleton births in the United States have birth weights that are approximately normally distributed with mean 3.296 kg and standard deviation 0.560 kg.
+
++ Give a range for the central 68% of all birth weights.
++ Give a range for the central 95% of all birth weights.
++ Give a range for nearly all birth weights (99.7%).
+
+---
+### Find the quantile for a random probability
+
+What if the question is asking about a random probability?
+
+To convert a value from the standard normal curve (Z) to one on the normal distribution `\(N(\mu, \sigma)\)`: `$$X = \mu + Z\sigma$$`
+
+---
+### Find the quantile for a random probability
+
+Assume FEV follows a normal model with `\(\mu\)` = 2.64 and `\(\sigma\)` = 0.87. Find the lung capacity of the lowest 40% of children.
+
+
+``` r
+xqnorm(0.40, mean=2.64, sd=0.87)
+```
+
+&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-19-1.png" width="45%" style="display: block; margin: auto;" /&gt;
+
+```
+## [1] 2.419588
+```
+---
+### Your Turn: Birth Rate
+
+The babies born in singleton births in the United States have birth weights that are approximately normally distributed with mean 3.296 kg and standard deviation 0.560 kg.
+
++ Find the birth rate of the lowest 20% of babies
++ Find the birth rate of the highest 40% of babies
+
+---
+### Does the data ”fit” a normal model?
+
+The normal distribution can be used to approximate other distributions. 
+- In order to continue with using the normal distribution, we must test the appropriateness of this assumption
+
+&lt;br&gt;
+
+**QQ plot**: a quantile-quantile plot plots the sample values from our data against the corresponding "theoretical quantiles" from a normal distribution using converted z-scores
++ The closer the QQ plot is to a straight line, the better our data ”fits” a normal model.
++ No QQ plot will be exactly perfect. Look for obvious deviations!
+
+---
+### What to expect in a QQ plot
+
+The data sets below were all generated using a N(0, 1) model.
+
+&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-20-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+### What to expect in a QQ plot
+
+The data sets below were all generated using a N(0, 1) model.
+
+&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-21-1.png" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+### What to expect in a QQ plot
+
+What happens when we have clearly non-normal data sets?
+
+
+&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-22-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+### What to expect in a QQ plot
+
+What happens when we have clearly non-normal data sets?
+
+&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-23-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+### Application: Height
+
+Would it be reasonable to model height of children using a normal distribution?
+
+.pull-left[
+&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-24-1.png" style="display: block; margin: auto;" /&gt;
+
+].pull-right[
+&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-25-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+---
+class:inverse
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.center[
+## Sampling Distributions
+]
+
+---
+### Review on Population and Sample
+
+- We have discussed the concept of population and sample.
+  - In the "real world" we won't have access to the population data.
+  - A good sample should be able to represent the population's characteristics
+- Let's begin to answer the question on how to use the samples to understand the population
+
+---
+### Estimating Population Parameters
+
+**Example**: The Centers for Disease Control (CDC) uses survey data to estimate features of health from samples of the US population. These surveys include:
+
+- National Health Interview Survey (NHIS)
+- National Health and Nutrition Examination Survey (NHANES)
+- Behavioral Risk Factor Surveillance System (BRFSS)
+  - The data set *cdc* contains a small number of variables from a random sample of 20,000 BRFSS responses from the year 2000. 
+
+
+```
+##     genhlth exerany hlthplan smoke100 height weight wtdesire age gender
+## 1      good       0        1        0     70    175      175  77      m
+## 2      good       0        1        1     64    125      115  33      f
+## 3      good       1        1        1     60    105      105  49      f
+## 4      good       1        1        0     66    132      124  42      f
+## 5 very good       0        1        0     61    150      130  55      f
+## 6 very good       1        1        0     64    114      114  55      f
+```
+
+
+---
+### Sample Statistics
+
+- Suppose we pretend that the *cdc* data set represents the entire population of American adults
+  - Let's randomly select 60 rows from the 20,000 responses as our sample.
+
+
+```
+##     genhlth exerany hlthplan smoke100 height weight wtdesire age gender
+## 1      good       0        1        0     63    165      135  65      f
+## 2 excellent       1        1        0     69    130      125  29      f
+## 3 excellent       0        1        1     67    150      135  53      f
+## 4 excellent       1        0        1     73    190      190  51      m
+```
+
+&lt;br&gt; 
+
+- A natural way to estimate the population parameter is to calculate the corresponding **sample statistic**
+  + Population mean `\((\mu)\)` `\(\longrightarrow\)` sample mean `\((\bar{x})\)`
+  + Population standard deviation `\((\sigma)\)` `\(\longrightarrow\)` sample standard deviation `\((s)\)`
+  
+
+---
+### Variability in Estimates
+
+Suppose we want to study the weight variable
+
+.pull-left[
+Here is the population mean `\(\mu\)` = 
+
+
+```
+## [1] 169.683
+```
+].pull-right[
+Here is the sample mean `\(\bar{x}\)` = 
+
+```
+## [1] 171.4833
+```
+]
+
+
+Close! But not exactly right! How could we get a more accurate sample?
+
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+
+**Note**: The sample mean is also called a **point estimate**
+---
+### Variability in Estimates
+
+What if the sample size is fixed, but we can take multiple samples? Other random samples of 60 from the population may produce different `\(\bar{x}\)` values.
+
+Means of two more random samples of size 60:
+
+
+```
+## [1] "Sample Mean 1: 166.95"
+```
+
+```
+## [1] "Sample Mean 2: 169.8"
+```
+
+
+---
+### Variability in Estimates
+
+What are the takeaway points?
+
+- Random samples tend to produce sample statistics that are reasonably close to the population parameter.
+  - Some samples are "unlucky": they may overestimate or underestimate the population parameter 
+  + There aren't very many of these!
+- The distribution of sample statistics has a symmetric, bell-shaped curve appearance.
+
+---
+### Sampling Distribution
+
+**Sampling Distribution**: the probability distribution of all possible values of a sample statistics
+
+- Every statistic has a sampling distribution. Focus:
+  + Quantitative response: mean `\((\bar{x})\)`
+  + Categorical response: proportion `\((\hat{p})\)`
+- To describe a sampling distribution, we'll need to know three things:
+  - Center (mean)
+  - Variation (standard error)
+  - Shape
+
+  
+&lt;img src="../05-Inference-Foundations/images/sampling-distribution.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+### Standard Error
+
+**Standard Error**: a measure of the **sample-to-sample variability** of the sample statistic.
+
+- How far away we expect a "typical" sample statistic to be from the true population parameter. 
+- Standard error is the standard deviation of the sample distribution.
+
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+
+&lt;img src="../05-Inference-Foundations/images/sd-vs-se.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+### Standard Error
+
+Sampling Distributions provide the theoretical basis for **statistical inference**: learning about a population based on a sample.
+
+The sampling distribution of `\(\bar{x}\)` has:
+
+- Mean `\((\mu)\)`
+- Standard Error `\((SE_{\bar{x}})\)` = `\(\frac{s}{\sqrt{n}}\)`
+  + `\(s\)` is the sample standard deviation
+- Shape: approximately normally distributed, as long as `\(n\)` is "large enough"
+
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+
+.center[
+**This is true even if the random variable does not follow a normal distribution.**
+]
+
+---
+### Calculating Standard Error
+
+Summary Statistics from our initial sample:
+
+
+```
+##  min     Q1 median     Q3 max     mean       sd  n missing
+##  104 148.75  164.5 191.75 300 171.4833 39.79417 60       0
+```
+
+
+---
+class:inverse
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.center[
+## Confidence Intervals
+]
+
+
+---
+### Statistical Inference
+
+- Can we find a reasonable estimate or set of estimates for our population parameter?
+  + ie. Given a sample, instead of providing a point estimate to the population parameter, we can give a range of value based on the level of confidence we want.
+  
+- Has our population parameter increased/decreased/changed compared to some other value?
+  + ie. What if my sample sizes increases, how will the other values change
+  
+---
+### Confidence Intervals
+
+**Confidence Intervals**: a range of the most plausible or believable values for the population parameter, based on a sample of data. General formula:  
+&lt;br&gt;
+
+`$$\text{sample statistic} \pm \text{margin of error}$$`
+
+&lt;br&gt;
+The margin of error (MOE) reflects how uncertain we are about the accuracy of our original sample statistic. 
+
+&lt;br&gt;
+
+
+Large MOE `\(\longrightarrow\)` wide confidence interval `\(\longrightarrow\)` more confidence that the true estimate will be in the interval
+
+Small MOE `\(\longrightarrow\)` narrow confidence interval `\(\longrightarrow\)` less confidence that the true estimate will be in the interval
+
+---
+### Confidence Intervals for `\(\mu\)`
+
+Suppose we’re interested in estimating the population mean, `\(\mu\)`. Based on the sampling distribution, we know that, as long as our sample size is "large enough", we will have
+
+`$$\mu - 1.96 \cdot SE_{\bar{x}} &lt; \bar{x} &lt; \mu + 1.96 \cdot SE_{\bar{x}}$$`
+
+---
+### Interpretation of a Confidence Interval
+
+Correct Interpretation of a 95% confidence interval:
+
+- If repeated samples were taken, 95% of intervals calculated from those samples will contain the true population mean
+- We are 95% confident that the population mean is in the interval
+
+Wrong Interpretation of a 95% confidence interval:
+
+- There is a 95% chance that the true population mean lies within the confidence interval
+- 95% of the data will fall into the interval
+- If we take another sample, there is a 95% chance the sample mean will be in the interval
+
+---
+### Application: CDC
+
+We know that in the CDC data set, the overall mean population weight is `\(\mu\)` = 169.683. Let's pretend we don't know this value (which we usually don't). How often will a confidence interval contain this value?
+
+&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-34-1.png" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+### Let's Calculate a 95% Confidence Interval!
+
+Reminder, for our sample: 
+  - `\(\bar{x}\)` = 171.4833
+  - `\(s\)` = 39.7942
+  - `\(n\)` = 60
+
+
+---
+### Let's Interpret the Interval!
+
+Interpret the confidence interval you calculated on the previous slide for the mean population weight of US Adults
+
+
+---
+### Application : BMI
+
+Example: Body mass index (BMI) is one measure of body weight that adjusts for height. The national Health and Nutrition Examination Survey (NHANES) consists of a set of surveys and measurements conducted by the CDC to assess the health and nutritional status of adults and children in the US. Following is summary statistics of BMI of a random sample of 200 individuals from 2009-2010 and 2012-2013. Calculate and interpret a 95% confidence interval for adult BMI.
+
+
+|  min|   Q1| median|   Q3| max| mean| sd|   n| missing|
+|----:|----:|------:|----:|---:|----:|--:|---:|-------:|
+| 13.1| 20.9|     26| 30.7|  69| 26.6|  8| 190|      10|
+
+---
+### Application : BMI
+
+If the a healthy range of BMI is [18.5, 24.9], does this suggest that Americans tend to be overweight?
+
+
+---
+### Application : BMI
+
+We can also think about this problem using probability: recall `\(\bar{x} \sim N(\mu, SE_{\bar{x}})\)`
+
+
+What is the probability that the difference between the true mean and sample mean is within 0.5 units?
+
+
+---
+### Changing the Confidence Level
+
+`$$\bar{x} \pm z^* \cdot SE_{\bar{x}}$$`
+
+
+&lt;br&gt;
+&lt;br&gt;
+What if we want to have a different confidence level - say 90%?
+- For a 90% confidence level, use z* = 1.645
+- For a 95% confidence level, use z* = 1.96
+- For a 99% confidence level, use z* = 2.58
+- For any other confidence level, use the standard normal distribution to find z directly.
+
+
+
+
+---
+### Changing the Confidence Level
+
+&lt;img src="Week5-Notes_files/figure-html/unnamed-chunk-36-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+class:inverse
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.center[
+## Central Limit Theorem
+]
+
+---
+### Central Limit Theorem (CLT)
+
+What if we have an infinite number of samples?
+
+sample `\(\longrightarrow\)` population and `\(s\)` `\(\longrightarrow\)` `\(\sigma\)`
+
+**Central Limit Theorem (CLT)**: If `\(X_{1},...,X_{n}\)` are `\(n\)` random samples drawn from a population with mean `\(\mu\)` and finite standard deviation `\(\sigma\)`. When the sample size is going to infinity, we have `\(\frac{\bar{x}-\mu}{\sigma/\sqrt{n}}\sim N(0,1)\)`
+
+[Simulation](https://seeing-theory.brown.edu/probability-distributions/index.html)
+
+---
+### Use CLT to find the Sample Size
+
+- We have discussed how to collect sample data
+  - However, we did not talk about how large the data has to be
+- First, CLT requires the sample size to be large enough
+  - Generally, at least 30
+- Sample size is decided by the Margin of Error you are willing to have and the population standard deviation.
+
+&lt;br&gt;
+
+Things to consider:
+
+---
+### Use CLT to find the Sample Size
+
+Recall the BMI application, suppose the population standard deviation is also 8. If I want the the difference between the sample mean and the population mean to be less than 0.5 with probability .95, how many people do I need to sample?
+
+
+
+---
+### Application: Study Time
+
+You want to update the University study time survey for 2024. The 2014 survey results were: `\(\bar{x}\)` = 20.1 and `\(s\)` = 3.0. Use the 2014 results to estimate the sample size necessary for MOE of 0.25 hours with 95% confidence.
+
+
+---
+### Activity: Sampling Distribution Simulation
+
+
+**Complete Activity in Groups**
+
+- See document in BlueLine for Instructions
+- Website Link: https://onlinestatbook.com/stat_sim/sampling_dist/
+&lt;br&gt;
+&lt;br&gt;
+
+**Moral of the Story**:
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
