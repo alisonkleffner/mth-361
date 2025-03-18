@@ -4,7 +4,6 @@
     <title>MTH361: Probability and Statistics in the Health Sciences</title>
     <meta charset="utf-8" />
     <meta name="author" content="Two-Sample Testing" />
-    <meta name="date" content="2024-10-08" />
     <script src="libs/header-attrs-2.27/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
@@ -27,18 +26,15 @@ class:inverse
 &lt;br&gt;&lt;br&gt;&lt;br&gt;
 ## MTH361: Probability and Statistics in the Health Sciences
 ### Two-Sample Testing
-#### October 8, 2024
+#### March 25/27, 2025
 
 ---
 ### Announcements
 
-- **Lab 6** on Thursday (due Friday at 11:59 per usual)
-- **Homework 5**
-  - Due Tuesday October 22 at 11:59pm in Blueline
-  - Will cover One-Sample Hypothesis Tests from today and Two-Sample Hypothesis Tests from next week
-- **Midterm**: Thursday October 24 in class
-  - Some review materials in Blueline. Review Day on Tuesday October 22
-    + Midterm Question Form
+- **Lab 6** on Thursday April 3 (includes ANOVA; due Friday April 4 at 11:59)
+- **Homework 6**
+  - Due Thursday April 10 at 11:59pm in Blueline
+
 
 ---
 ## Review: Sampling distribution of `\(\bar{x}\)`
@@ -130,6 +126,15 @@ qt(p=(1-0.05/2), df=10-1)
 ## [1] 2.262157
 ```
 
+
+``` r
+#95% Confidence Interval, n=200
+qt(p=(1-0.05/2), df=200-1)
+```
+
+```
+## [1] 1.971957
+```
 ---
 ### Robust Procedure
 
@@ -138,6 +143,41 @@ The `\(t\)`-distribution is a “robust statistical procedure” – it is not s
   - Some textbooks heavily emphasize this assumption, others are more lax about it.
   
 Punchline: As long as the variable we’re interested in is numerical with a “reasonable” sampling distribution (i.e. no extreme outliers or patterns), the t-test and confidence interval will work well.
+
+---
+### Example: One - Sample
+
+A study tries to understand how different the average bone density will be for physically active women and non-active ones. The study tests 35 women’s bone density for each group. Let's calculate a 95% confidence interval for the average bone density for physically active women. Below are the summary statistics.
+
+
+``` r
+qt(p=(1-0.05/2), df=35-1) #Finding t*
+```
+
+```
+## [1] 2.032245
+```
+
+
+|group  | min|  Q1| median|  Q3| max|   mean|   sd|  n|
+|:------|---:|---:|------:|---:|---:|------:|----:|--:|
+|active | 155| 207|    212| 219| 257| 211.63| 8.73| 35|
+
+---
+class:inverse
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.center[
+## Two - Sample Tests
+]
 
 ---
 ### Two - Sample Tests
@@ -183,7 +223,7 @@ __Independent samples__: two sets of observations are considered independent if 
 It turns out that `\(\bar{x}_1\)` − `\(\bar{x}_2\)` follows a t-distribution with mean `\(\mu_1 - \mu_2\)`
 
 
-We'ere wanting to test the difference in means, but can we assume both groups have the same population standard deviation, `\(\sigma_1\)` = `\(\sigma_2\)`?
+We're wanting to test the difference in means, but can we assume both groups have the same population standard deviation, `\(\sigma_1\)` = `\(\sigma_2\)`?
 
 ---
 ### Equal variances or unequal variances
@@ -194,18 +234,19 @@ If we assume them to be the same: $$SE_{\bar{x}_1 - \bar{x}_2} = s \sqrt{\frac{1
 
 where `$$s^2 = \frac{(n_1 - 1)s^2_1 + (n_2-1)s^2_2}{(n_1 - 1) + (n_2 -1)}$$`
 
+---
+### Equal variances or unequal variances
 
 If we assume them to be different (Welch Approximation): $$SE_{\bar{x}_1 - \bar{x}_2} = \sqrt{\frac{s^2_1}{n_1} + \frac{s^2_2}{n_2}} $$
 
 In practice the results are pretty similar.
 
 ---
-### Confidence interval for the two sample t-test
+### Confidence Interval: Two Sample t-test
 
-Confidence interval for the difference of population means:
 `$$(\bar{x}_1 − \bar{x}_2) ± t^∗(SE_{(\bar{x}_1 − \bar{x}_2)})$$`
 
-A study tries to understand how different the average bone density will be for the physically active the women and non-active ones. The study tests 35 women’s bone density for each group and following are the summary statistics.
+A study tries to understand how different the average bone density will be for physically active women and non-active ones. The study tests 35 women’s bone density for each group and following are the summary statistics.
 
 
 ``` r
@@ -224,7 +265,7 @@ qt(p=(1-0.05/2), df=70-1) #Finding t*
 |nonactive | 162| 201|    206| 213| 270| 207.60| 21.43| 35|
 
 ---
-## Independent: Hypothesis Tests
+### Independent: Hypothesis Tests
 
 
 **Step 1**: What are the Hypothesis and test statistic for an Independent Design?
@@ -232,17 +273,20 @@ qt(p=(1-0.05/2), df=70-1) #Finding t*
 
 `\(H_0\)`: The population difference in averages is equal to some value, usually zero
 
-`$$H_0: \mu_1 - \mu_2 = \mu_0$$`
+&lt;br&gt;
+&lt;br&gt;
 
 `\(H_A\)`: The population difference in averages is less than/greater than/different
 from some value
 
-`$$H_A: \mu_1 - \mu_2 (&lt;, &gt;, \ne) \mu_0$$`
+&lt;br&gt;
+&lt;br&gt;
 
 **Step 2**: Our test statistic:
 
-`$$t = \frac{(\bar{x}_1 − \bar{x}_2) - \mu_0}{SE_{(\bar{x}_1 − \bar{x}_2)}}$$`
-where `\(\mu_0\)` is typically zero (the expected value)
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
 
 ---
 ## Independent: Hypothesis Tests
@@ -255,8 +299,8 @@ Use `t.test()`.
 
 
 ``` r
-t.test(Hipp~Group, mu=0, alternative='two.sided', var.equal=TRUE,
-       data=FootballBrain)
+t.test(Resp~Group, mu=0, alternative='two.sided', var.equal=TRUE,
+       data=dataset)
 ```
 
 
@@ -273,22 +317,34 @@ Still business as usual.
 A study in the Journal of the American Medical Association (JAMA) included three groups, with 25 subjects in each. The control group consisted of healthy individuals with no history of brain trauma who were comparable to the other groups in age, sex, and education. The second group consisted of NCAA Division 1 college football players with no history of concussion, while the third group consisted of NCAA Division 1 college football players with a history of concussion. High resolution MRI was used to collect brain hippocampus volume.
 
 
-|group       |  min|   Q1| median|   Q3|  max|   mean|      sd|
-|:-----------|----:|----:|------:|----:|----:|------:|-------:|
-|Control     | 6175| 6780|   7385| 8510| 9710| 7602.6| 1074.02|
-|FBConcuss   | 4490| 5505|   5710| 6035| 7160| 5734.6|  593.40|
-|FBNoConcuss | 4810| 5965|   6515| 7020| 7790| 6459.2|  779.74|
 
 
+|   |group       |  min|   Q1| median|   Q3|  max|   mean|     sd|
+|:--|:-----------|----:|----:|------:|----:|----:|------:|------:|
+|2  |FBConcuss   | 4490| 5505|   5710| 6035| 7160| 5734.6| 593.40|
+|3  |FBNoConcuss | 4810| 5965|   6515| 7020| 7790| 6459.2| 779.74|
 
 Is there sufficient evidence to show that the population mean total hippocampus volume for football players with a history of concussions is different from the football players without a history of concussion? Write out your hypothesis and calculate the test statistic.
 
 ---
-
----
 ### Example: Football concussion
 
-Let `\(t^*\)` = 2.06. Calculate and interpret a confidence interval. Does this interval provide evidence that the population mean total hippocampus volume for football players with a history of concussions is different from the football players without a history of concussion?
+Let's Draw a Conclusion!
+
+
+```
+## 
+## 	Welch Modified Two-Sample t-Test
+## 
+## data:  Summarized x and y
+## t = -3.6975, df = 44.817, p-value = 0.0005915
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -1119.3508  -329.8492
+## sample estimates:
+## mean of x mean of y 
+##    5734.6    6459.2
+```
 
 
 ---
@@ -338,7 +394,11 @@ Based on the details given, determine whether or not the following scenarios wou
 
 - Reaction times for students taken at 8:00 a.m. compared to reaction times for the same students taken at 10:00 p.m.
 
+&lt;br&gt;
+
 - Change in weight for those on the Atkins Diet compared to the change in weight for those on the Paleo Diet
+
+&lt;br&gt;
 
 - Times for skiers to complete a downhill skiing race course on skis treated with wax A with times for skiers with similar experience to complete the course on skis treated with wax B
 
@@ -352,43 +412,38 @@ Let `\(x_{1i}\)` represent the `\(i^{th}\)` observation in group 1 and let `\(x_
 
 `$$d_i = x_{1i} - x_{2i}$$`
 
-Confidence interval for the population mean difference: we’ll treat the new
-difference variable as our variable of interest]
-
-`$$\bar{d} \pm t^*SE(\bar{d})$$`
-where, `$$SE(\bar{d}) = \frac{s_d}{\sqrt{n_d}}$$` 
+Confidence interval for the population mean difference: we’ll treat the new difference variable as our variable of interest
 
 
-What does it mean if 0 is in your confidence interval?
+
 
 ---
-## Example: oligofructose
+### Example: Oligofructose
 
 Nondigestible oligosaccharides are known to stimulate calcium absorption in rats. A double-blind, randomized experiment investigated whether the consumption of oligofructose similarly stimulates calcium absorption in healthy male adolescents.
 
 The 11 subjects took a pill for nine days and had their calcium absorption tested on the last day. The experiment was repeated three weeks later. Some subjects received the oligofructose pill in the first round and a placebo in the second; the order was switched for the remaining subjects.
 
-Taking the difference of calcium absorption for each subject when they are in treatment group vs control group, `\(\bar{d}\)` is -10.84 and `\(s_d\)` is 18.15. Calculate &amp; interpret a 95% confidence interval for difference in calcium absorption. The `\(t^*\)` is 2.228.
+Taking the difference of calcium absorption for each subject when they are in control group vs treatment group, `\(\bar{d}\)` is -10.84 and `\(s_d\)` is 18.15. Calculate &amp; interpret a 95% confidence interval for difference in calcium absorption. The `\(t^*\)` is 2.228.
 
 ---
-## Paired: Hypothesis Tests
+### Paired: Hypothesis Tests
 
 
 **Step 1**: What are the Hypothesis and test statistic for a Paired Design?
 
 `\(H_0\)`: The population mean difference is equal to some value, usually zero
 
-`$$H_0: \mu_d = \mu_0$$`
+&lt;br&gt;
+&lt;br&gt;
 
-`\(H_A\)`: The population mean difference is less than/greater than/different
-from some value
+`\(H_A\)`: The population mean difference is less than/greater than/different from some value
 
-`$$H_A: \mu_d (&lt;, &gt;, \ne) \mu_0$$`
-
+&lt;br&gt;
+&lt;br&gt;
 
 **Step 2**: Compute the test statistic
 
-$$t = \frac{\bar{d} - \mu_0}{s_d/\sqrt{n}} $$
 
 ---
 ## Paired: Hypothesis Tests
@@ -399,8 +454,7 @@ Use `t.test()`.
 
 
 ``` r
-t.test(~Difference, alternative='two.sided', mu=0,
-       data=oligofructose)
+t.test(~Difference, alternative='less', mu=0, data=oligofructose)
 ```
 
 
@@ -412,15 +466,100 @@ Still business as usual.
 - Fail to reject `\(H_0\)` if the `\(p\)`-value `\(&gt;\alpha\)`
 
 ---
-## Example: oligofructose
+### Example: oligofructose
 
-Let's set up a hypothesis test for the oligofructose example. Reminder they wanted to know if the consumption of oligofructose stimulates calcium absorption in healthy male adolescents. The mean of the difference was -10.84, with a sample standard deviation of 18.15. If the p value for two sided test is 0.07577, what is the conclusion?
+Let's set up a hypothesis test for the oligofructose example. Reminder they wanted to know if the consumption of oligofructose stimulates calcium absorption in healthy male adolescents. 
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+
+
+```
+## 
+## 	One Sample t-test
+## 
+## data:  diff
+## t = -1.98, df = 10, p-value = 0.03793
+## alternative hypothesis: true mean is less than 0
+## 95 percent confidence interval:
+##        -Inf -0.9171624
+## sample estimates:
+## mean of x 
+## -10.83636
+```
 
 ---
 ### Summary: Difference in t-tests
 
 &lt;img src="../images/Week10/all-t-test.png" width="100%" style="display: block; margin: auto;" /&gt;
 
+---
+### Your Turn #1
+
+A group of researchers are interested in the possible effects of distracting stimuli during eating, such as a change in the amount of food consumption. To test this hypothesis, they monitored food intake for a group of 44 patients who were randomized into two equal groups. The treatment group ate lunch while playing solitaire, and the control group ate lunch without any added distractions. Patients in the treatment group ate 52.1 grams of biscuits, with a standard deviation of 46.1 grams, and patients in the control group ate 27.1 grams of biscuits, with a standard deviation of 21.4 grams. Do these data provide convincing evidence that the average food intake (measured in amount of biscuits consumed) is different for the patients in the treatment group?
+
+To begin to answer this question:
+
+- Decide if this is independent or paired data
+- Write out the appropriate hypotheses
+- Calculate the test statistic.
+
+---
+### Your Turn #1
+
+- Draw a conclusion at `\(\alpha = 0.05\)`
+
+
+```
+## 
+## 	Welch Modified Two-Sample t-Test
+## 
+## data:  Summarized x and y
+## t = 2.3071, df = 29.649, p-value = 0.02822
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##   2.859138 47.140862
+## sample estimates:
+## mean of x mean of y 
+##      52.1      27.1
+```
+
+---
+### Your Turn #2
+
+Suppose a music instructor wants to improve their students music recognition. The music instructor took 12 pairs of identical twins and randomly assigned each twin to technique 1 or technique 2. They wanted to see if there was a difference in improvement scores between the two music recognition techniques.
+
+To begin to answer this question:
+
+- Decide if this is independent or paired data
+- Write out the appropriate hypotheses
+
+---
+### Your Turn #2
+
+
+- Calculate the test statistic `\((\bar{x}_d = 1.083333, s_d = 2.35327)\)`.
+- Draw a conclusion at `\(\alpha = 0.05\)`
+
+
+```
+## 
+## 	One Sample t-test
+## 
+## data:  differ
+## t = 1.5947, df = 11, p-value = 0.1391
+## alternative hypothesis: true mean is not equal to 0
+## 95 percent confidence interval:
+##  -0.411863  2.578530
+## sample estimates:
+## mean of x 
+##  1.083333
+```
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

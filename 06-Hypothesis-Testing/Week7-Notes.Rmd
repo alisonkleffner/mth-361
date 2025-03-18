@@ -382,14 +382,14 @@ t.test(~BMI,
 ---
 
 ### Example: Communicating Online
-A study suggests that the average college student spends 13 hours per week communicating with others online. You believe that this is an underestimate and decide to collect your own sample for a hypothesis test. You randomly sample 60 students from your dorm and find that on average they spent 13.5 hours a week communicating with others online, with a standard deviation of 1.25 hours.
+A study suggests that the average college student spends 13 hours per week communicating with others online. You believe that this is an underestimate and decide to collect your own sample for a hypothesis test. You randomly sample 60 students from your dorm and find that on average they spent 13.13 hours a week communicating with others online, with a standard deviation of 1.25 hours.
 
 Write the null and alternative hypothesis, and calculate the test statistic.
 
 
 ```{r, echo=FALSE}
 set.seed(361)
-online_data <- tibble(online_hours = rnorm(n=60, mean=13.3, sd=1.21))
+online_data <- tibble(online_hours = rnorm(n=60, mean=13, sd=0.8))
 favstats(~online_hours, data=online_data)
 ```
 

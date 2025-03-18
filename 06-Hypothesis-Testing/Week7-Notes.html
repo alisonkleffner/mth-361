@@ -311,15 +311,15 @@ t.test(~BMI,
 ---
 
 ### Example: Communicating Online
-A study suggests that the average college student spends 13 hours per week communicating with others online. You believe that this is an underestimate and decide to collect your own sample for a hypothesis test. You randomly sample 60 students from your dorm and find that on average they spent 13.5 hours a week communicating with others online, with a standard deviation of 1.25 hours.
+A study suggests that the average college student spends 13 hours per week communicating with others online. You believe that this is an underestimate and decide to collect your own sample for a hypothesis test. You randomly sample 60 students from your dorm and find that on average they spent 13.13 hours a week communicating with others online, with a standard deviation of 1.25 hours.
 
 Write the null and alternative hypothesis, and calculate the test statistic.
 
 
 
 ```
-##       min       Q1   median       Q3      max     mean      sd  n missing
-##  10.22117 12.66423 13.43911 14.48197 16.62498 13.49781 1.25385 60       0
+##       min       Q1   median       Q3      max     mean        sd  n missing
+##  10.96441 12.57965 13.09197 13.78146 15.19833 13.13078 0.8289915 60       0
 ```
 
 ---
@@ -340,13 +340,13 @@ t.test(~online_hours,
 ## 	One Sample t-test
 ## 
 ## data:  online_hours
-## t = 3.0753, df = 59, p-value = 0.001592
+## t = 1.222, df = 59, p-value = 0.1133
 ## alternative hypothesis: true mean is greater than 13
 ## 95 percent confidence interval:
-##  13.22731      Inf
+##  12.95194      Inf
 ## sample estimates:
 ## mean of x 
-##  13.49781
+##  13.13078
 ```
 
 
