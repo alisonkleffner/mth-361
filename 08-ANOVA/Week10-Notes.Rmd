@@ -1,7 +1,7 @@
 ---
 title: "MTH361: Probability and Statistics in the Health Sciences"
 author: "ANOVA"
-date: "October 29, 2024"
+date: "April 1, 2025"
 output: 
   xaringan::moon_reader:
     lib_dir: libs
@@ -97,35 +97,14 @@ class:inverse
 <br><br><br>
 ## MTH361: Probability and Statistics in the Health Sciences
 ### ANOVA
-#### October 29, 2024
+#### April 1, 2025
 
 ---
 ### Announcements
 
-- **Homework 6 ** due Thursday November 7 at 11:59 pm
-- **Lab 7 ** on Thursday
-  + Due Friday November 1 at 11:59 pm
-
-
----
-### What do you need to know for the t-test?
-
-- **Step 1**: Identify the type of test (one-sample, paired, two-sample)
-
-```{r, echo=FALSE, fig.align='center', out.width="70%"}
-knitr::include_graphics("../images/Week10/all-t-test.png")
-```
-
-
-- **Step 2**: Write the null and alternative hypothesis for the test
-  - Null Hypothesis always contains an equal sign
-  - Alternative hypothesis is the one you want to show (research question). Can be greater than, less than, or two-sided.
-- **Step 3**: Calculate the SE
-  - Depends on the type of test
-  - Use to find the test statistic
-- **Step 4**: Given the p-value, make a conclusion for the test
-  - P-value + decision + content explanation
-
+- **Lab 6** on Thursday April 3 (due Friday April 4 at 11:59)
+- **Homework 6**
+  - Due Thursday April 10 at 11:59pm in Blueline
 
 ---
 ### Statistical Modeling
@@ -139,30 +118,32 @@ knitr::include_graphics("../images/Week10/all-t-test.png")
 
 - Used to find if the means between multiple independent groups of data are statistically significant.
 - Analyzes the variance (spread) of individuals within each group as well as between the different groups
-- What matters is not how far apart the sample means are, but how far apart they are relative to the variability of individual observations.
+
 
 <br>
 
 ```{r, echo=FALSE, fig.align='center', out.width="90%"}
-knitr::include_graphics("../images/Week10/anova-pic.png")
+knitr::include_graphics("../08-ANOVA/images/anova-pic.png")
 ```
 
 
 
 ---
-### Examples of ANOVA
+### Example of ANOVA
 
 Suppose we are interested in comparing if waiting times at Starbucks differ on different days of the week.
 - Explanatory:
+
+<br>
+
 - Number of levels:
+
+<br>
+
 - Response:
 
+<br>
 
-Suppose we are interested in comparing if salaries tend to increase as education level
-(Associates, bachelors, master’s, doctoral) increases.
-- Explanatory:
-- Number of levels:
-- Response:
 
 Typical overarching research questions: Are there at least two population means that differ?
 
@@ -183,7 +164,6 @@ The alternative hypothesis is that there’s at least two population means diffe
 The statistical model for analysis of variance is $$Y_{i,j} = \mu + \alpha_i + \epsilon_{ij}$$
 
 - Response variable for subject $j$ in group $i$: $Y_{i,j}$
-- Mean response for each group $i$: $\mu_i = \mu + \alpha_i$
 - Grand mean: $\mu$
   + Overall mean for baseline group that all other groups are compared to
 - Group effect for group $i$: $\alpha_i$ 
@@ -211,7 +191,7 @@ favstats(~y, data=data)
 
 
 ```{r, echo=FALSE, fig.align='center', fig.height=6, fig.width=8, warning = FALSE}
-data %>% ggplot(aes(x=obs, y=y)) + geom_point(aes(col=group)) + 
+data %>% ggplot(aes(x=obs, y=y)) + geom_point(aes(col=group), size = 3) + 
   geom_hline(yintercept=12.25, col='red')
 ```
 
@@ -225,7 +205,7 @@ favstats(~y|group, data=data)
 
 
 ```{r, echo=FALSE, fig.align='center',fig.height=6, fig.width=8, warning = FALSE}
-data %>% ggplot(aes(x=obs, y=y)) + geom_point(aes(col=group)) +  
+data %>% ggplot(aes(x=obs, y=y)) + geom_point(aes(col=group), size = 4) +  
   geom_hline(yintercept=12.25) + 
   geom_segment(aes(x=1, y=7.5, xend=4, yend=7.5), col='red') + 
   geom_segment(aes(x=5, y=12, xend=8, yend=12), col='red') + 
@@ -241,10 +221,9 @@ data %>% ggplot(aes(x=obs, y=y)) + geom_point(aes(col=group)) +
 ###Example: Analysis of variance
 
 **Ask ourselves**: Does splitting our data up into groups explain the variability?
-- We want to show the variation between groups is larger than the variation within the groups.
 
 ```{r, echo=FALSE, fig.align='center',fig.height=5.5, fig.width=8, warning = FALSE}
-data %>% ggplot(aes(x=obs, y=y)) + geom_point(aes(col=group)) +  
+data %>% ggplot(aes(x=obs, y=y)) + geom_point(aes(col=group), size = 4) +  
   geom_hline(yintercept=12.25) + 
   geom_segment(aes(x=1, y=7.5, xend=4, yend=7.5), col='black') + 
   geom_segment(aes(x=5, y=12, xend=8, yend=12), col='black') + 
@@ -289,21 +268,9 @@ $$\sum_{ij}(y_{ij} - \bar{y})^2 = n\sum_i(\bar{y_i} - \bar{y})^2 + \sum_{ij}(y_{
 $$SS_{\text{total}} = SS_{\text{group}} + SS_{\text{error}}$$
 
 Sums of Squares measures deviation of points from mean values
-- $SS_{\text{group}}$ signifies between group variability (how much the means vary from group to group)
-  + Used to calculate the between-group variance
--  $SS_{\text{error}}$ signifies variability within group (how much the
-observations vary within each group)
-  - Used to calculate the within-group variance
-- $SS_{\text{total}}$  signifies variability of each observation and
-overall mean
-
----
-### ANOVA: Sums of Squares
-
-If one of the groups has a much different mean from the others, we expect $SS_{\text{group}}$ to be large.
-
-We want to show the variation between groups are larger than the variation within the groups.
-
+- $SS_{\text{group}}$: between group variability 
+-  $SS_{\text{error}}$: variability within group 
+- $SS_{\text{total}}$: variability of each observation and overall mean
 
 ---
 ### ANOVA: Test Statistic
@@ -334,7 +301,7 @@ Total|n-1|SSTotal|||
 
 
 ---
-### Example: Recall our football Example
+### Example: Recall Football Example
 
 A study in the Journal of the American Medical Association (JAMA) included three groups, with 25 subjects in each. The control group consisted of healthy individuals with no history of brain trauma who were comparable to the other groups in age, sex, and education. The second group consisted of NCAA Division 1 college football players with no history of concussion, while the third group consisted of NCAA Division 1 college football players with a history of concussion. High resolution MRI was used to collect brain hippocampus volume.
 
@@ -401,21 +368,15 @@ As one of the solution to the problem, you can do multiple two-sample t-test to 
 ---
 ### Recall the meaning of $\alpha$
 
-In the hypothesis test, we define the significant level $\alpha$, which is also the probability of Type 1 error.
+In the hypothesis test, we define the significance level $\alpha$, which is also the probability of Type 1 error.
 
 - So if we did multiple independent t-tests, we want each test to have P(Type 1 Error) = $\alpha$
   + This is called the comparison-wise error rate
 
 Suppose we need to do three hypothesis tests on a dataset. Each one has a Type 1 error rate  $\alpha$ = 0.05. What is the probability that at least one test results is an error?
 
-<br>
-<br>
-<br>
-<br>
 
-This increases the Type 1 error to about 0.143 for the whole experiment.
-  - Called the "family-wise" or "experiment-wise" error rate
-  
+
 ---
 ### Multiplicity Adjustments 
 
