@@ -541,20 +541,20 @@ Let's set up a hypothesis test for the oligofructose example. Reminder they want
 <br>
 <br>
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, message=FALSE}
 Control <- c(78.4, 76.6, 57.4, 51.5, 49.0, 46.6, 44.2, 42.9, 37.2, 34.1, 24.6) 
 Oligofructose <- c(62.0, 95.1, 46.5, 49.4, 89.7, 43.8, 50.3, 51.6, 66.6, 52.7, 54.0)
 diff = Control - Oligofructose
 
 
-t.test(~diff, alternative='less', mu=0)
+mosaic::t.test(~diff, alternative='less', mu=0)
 ```
 
 ---
 ### Summary: Difference in t-tests
 
 ```{r, echo=FALSE, fig.align='center', out.width="100%"}
-knitr::include_graphics("../images/Week10/all-t-test.png")
+knitr::include_graphics("/Users/akl95311/Documents/Classes/MTH361/mth-361/07-Two-Sample-Testing/images/all-t-test.png")
 ```
 
 ---
@@ -577,6 +577,14 @@ To begin to answer this question:
 tsum.test(mean.x=52.1, s.x=46.1, n.x=22, mean.y = 27.1, s.y = 21.4, n.y = 22, mu=0, alternative="two.sided")
 
 ```
+---
+### Your Turn #1
+
+
+```{r f1, echo=FALSE}
+
+knitr::include_graphics("/Users/akl95311/Documents/Classes/MTH361/mth-361/07-Two-Sample-Testing/images/IMG_0227.png")
+```
 
 ---
 ### Your Turn #2
@@ -596,6 +604,16 @@ To begin to answer this question:
 - Draw a conclusion at $\alpha = 0.05$
 
 ```{r, echo = FALSE}
-t.test(~differ, alternative='two.sided', mu=0,
+mosaic::t.test(~differ, alternative='two.sided', mu=0,
        data=Music)
+```
+
+---
+### Your Turn #2
+
+
+```{r f2, echo=FALSE}
+
+knitr::include_graphics("/Users/akl95311/Documents/Classes/MTH361/mth-361/07-Two-Sample-Testing/images/IMG_0228.png")
+
 ```
