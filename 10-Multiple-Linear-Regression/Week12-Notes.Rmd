@@ -1,0 +1,467 @@
+---
+title: "MTH361: Probability and Statistics in the Health Sciences"
+author: "Multiple Linear Regression"
+date: "April 15, 2025"
+output: 
+  xaringan::moon_reader:
+    lib_dir: libs 
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r echo=FALSE, message=FALSE, warning = FALSE}
+library(knitr)
+
+hook_output = knit_hooks$get('output')
+knit_hooks$set(output = function(x, options) {
+  # this hook is used only when the linewidth option is not NULL
+  if (!is.null(n <- options$linewidth)) {
+    x = xfun::split_lines(x)
+    # any lines wider than n should be wrapped
+    if (any(nchar(x) > n)) x = strwrap(x, width = n)
+    x = paste(x, collapse = '\n')
+  }
+  hook_output(x, options)
+})
+
+```
+
+```{css, include=FALSE}
+.small-code .remark-code{
+  font-size: 70%
+}
+```
+
+
+### Announcements
+
+
+- **Homework 7**: Due Thursday April 17 at 11:59pm in Blueline
+
+<br>
+
+- **Lab 8** on Thursday April 17 (due Monday April 21 at 11:59)
+- **Homework 8**: Due Thursday April 24 at 11:59pm in Blueline
+
+<br>
+
+- **Analysis Plan**: Due Tuesday April 29 at 11:59pm in Blueline
+
+<br>
+<br>
+<br>
+
+
+**Today**: Chapter 7
+
+---
+### More about the summary table of the linear model
+
+Recall our PREVEND example, where we try to show the relationship between cognitive score (RFFT) and age. Here is the summary table for the linear model.
+
+```{r, echo=FALSE}
+library(oibiostat)
+library(xtable)
+data(prevend.samp)
+
+model = lm(RFFT~Age, data = prevend.samp)
+#print(xtable(model), type = "html")
+```
+<!-- html table generated in R 4.3.1 by xtable 1.8-4 package -->
+<!-- Mon Oct 30 16:04:01 2023 -->
+<table border=1>
+<tr> <th>  </th> <th> Estimate </th> <th> Std. Error </th> <th> t value </th> <th> Pr(&gt;|t|) </th>  </tr>
+  <tr> <td align="right"> (Intercept) </td> <td align="right"> 137.5497 </td> <td align="right"> 5.0161 </td> <td align="right"> 27.42 </td> <td align="right"> 0.0000 </td> </tr>
+  <tr> <td align="right"> Age </td> <td align="right"> -1.2614 </td> <td align="right"> 0.0895 </td> <td align="right"> -14.09 </td> <td align="right"> 0.0000 </td> </tr>
+   </table>
+
+- The estimate $\hat{\beta}_0$ and $\hat{\beta}_1$ can be viewed as the sample statistics for $\beta_0$ and $\beta_1$
+- Each row is a one-sample, two-sided t-test for whether $\beta_0$ or $\beta_1$ equals to zero.
+- What does it mean if $\beta_1$ is zero?
+
+---
+
+```{css, include=FALSE}
+@media print {
+  .has-continuation {
+    display: block !important;
+  }
+}
+```
+
+```{r xaringan-setup, include=FALSE}
+library(xaringanthemer)
+library(xaringanExtra)
+style_duo_accent(primary_color = "#0054a6",
+                 secondary_color = "#f1fffe",
+  header_font_google = google_font("Source Sans Pro"),
+  text_font_google = google_font("Source Sans Pro"))
+
+
+xaringanExtra::use_tachyons()
+
+xaringanExtra::use_tile_view()
+
+knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE, fig.width=8, fig.height=5, cache=TRUE)
+
+library(tidyverse)
+library(RColorBrewer)
+library(patchwork)
+library(kableExtra)
+library(oibiostat)
+library(mosaic)
+```
+
+### Relationships between Variables
+
+.bg-washed-blue.b--blue.ba.ph3[
+Sometimes in a study, there are more than one explanatory variables that we are interested in. We want to know:
+
+- How does each explanatory variable affect the response variable given the existence of the others?
+- Whether the correlation between multiple explanatory variables affect the result?
+]
+
+**Example**: Statins are a class of drugs widely used to lower cholesterol. Research suggests that adults with elevated LDL cholesterol may be at risk for cardiovascular events such as a heart attack or stroke. 
+
+In 2013, the American College of Cardiology and the American Heart Association recommended that statin therapy be considered for individuals with cardiovascular disease, high LDL levels, and people with Type II diabetes. Policy analysts estimate that almost half of Americans age 40 to 75 and nearly all men over 60 would fall under these guidelines [(Source)](https://pubmed.ncbi.nlm.nih.gov/27678427/).
+
+However, there's concern that use of statins may be associated with increased risk of cognitive decline. 
+
+
+---
+### Relationships between variables
+
+`Statin` = 1 (blue) for statin users and 0 (red) for non-users.
+
+```{r, echo=FALSE, fig.align='center', fig.height=7, fig.width=12}
+prevend.samp %>%
+  ggplot(aes(x=Age, y=RFFT)) + 
+  geom_point(aes(col=as.factor(Statin)), size = 4)
+```
+
+---
+### Confounding
+
+.bg-washed-yellow.b--yellow.ba.ph3[
+__Confounder__: an additional variable related to both the response and explantory variable in a model
+]
+
+There is a relationship between RFFT and Age, but...
+
+
+- `Statin` use may also be related!
+
+```{r, echo=FALSE, fig.align='center', fig.height=4, fig.width=10}
+library(gridExtra)
+p1 = prevend.samp %>%
+  ggplot(aes(x=as.factor(Statin), y=RFFT)) + 
+  geom_boxplot() + xlab("Statin Use?")
+p2 = prevend.samp %>%
+  ggplot(aes(x=as.factor(Statin), y=Age)) + 
+  geom_boxplot() + xlab("Statin Use?")
+grid.arrange(p1, p2, ncol=2)
+
+model = lm(RFFT~Age, data = prevend.samp)
+```
+
+
+---
+### Multiple Linear Regression (MLR)
+
+.bg-washed-yellow.b--yellow.ba.ph3[
+__Multiple regression model__: Let $Y$ denote the numerical response variable and $X_1$, $X_2$,..., $X_{p}$ denote the $p$ possible explanatory variables in the model. Then, 
+
+$$Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + ... \beta_p X_{pi} + \epsilon_i$$
+
+]
+
+Basically, we just __add more terms__ to the linear regression model. 
+
+---
+### Multiple Linear Regression (MLR)
+
+.bg-washed-blue.b--blue.ba.ph3[
+__Example__: Write the estimated multiple linear regression model for predicting RFFT score based on age and statin use. 
+]
+
+```{r, echo=FALSE}
+model <- lm(RFFT ~ Age + Statin, data=prevend.samp)
+broom::tidy(model)
+```
+
+---
+### Take Aways
+
+- Multiple linear regression is just adding more terms to the simple linear regression.
+
+- In the summary table, coefficient part, each row still can be considered as a one-sample, two-sided t-test, to test whether the coefficient is zero.
+
+- The interpretation should highlight holding all other variables fixed, whether a particular explanatory variable will affect the response variable.
+
+- The coefficient and p-value may change when we add more variables to the model.
+
+---
+### Multiple Regression Assumptions
+
+From Before:
+
+- __L__: A linear model is a "good fit" for the relationship between the response variable and explanatory variables
+
+- __I__: Observations (residuals) are independent
+
+- __N__: Residuals are normally distributed
+
+- __E__: The error (residual) variance is constant
+
+
+One more:
+
+- **C**: The explanatory variables are **not highly correlated** with each other.
+  + Calculate correlation between numerical explanatory variables
+
+---
+### Interpreting Residual Plots
+
+```{r, echo=FALSE, fig.align='center', fig.height=7, fig.width=12}
+par(mfrow=c(2,2))
+plot(model)
+```
+
+---
+### Coefficient of Determination
+
+$R^2$ measures the proportion of variability in the response variable $Y$ that can be explained using the linear model.
+
+.pull-left[
+.bg-washed-yellow.b--yellow.ba.ph3[
+__Multiple R-squared__: $R^2$ is the correlation between $\hat{Y}$ and $Y$, squared
+]
+
+
+].pull-right[
+
+.bg-washed-yellow.b--yellow.ba.ph3[
+
+__Adjusted R-squared__: takes the multiple R-squared and shifts it downward based on the number of terms in the model
+]
+
+<br>
+
+Adjusted $R^2$:
+
+$$R^2_{adj} = 1-\frac{(1-R^2)(n-1)}{n-p-1}$$
+
+]
+---
+### Which $R^2$?
+
+How much of the variability in the RFFT can be explained using this multiple regression model?
+
+```{r, echo=FALSE}
+summary(model)
+
+#prevend.samp <- within(prevend.samp, Ethnicity <- relevel(Ethnicity, ref = "1"))
+#model <- lm(RFFT ~ Age + Statin, data=prevend.samp)
+#summary(model)
+```
+
+---
+### Interpretation of Categorical Data
+
+For categorical variables that have two levels, it does not matter if we specify it as categorical or not. What if are variable has more than two levels?
+
+Let’s add one more variable, Education, which has 4 levels: 0 = primary school;
+1 = lower secondary; 2 = higher secondary; 3 = university.
+
+```{r, echo = FALSE}
+prevend.samp$Education = as.factor(prevend.samp$Education)
+prevend.samp <- within(prevend.samp, Education <- relevel(Education, ref = "0"))
+model <- lm(RFFT ~ Age + Statin + Education , data=prevend.samp)
+#print(xtable(model), type = "html")
+```
+
+<!-- html table generated in R 4.4.0 by xtable 1.8-4 package -->
+<!-- Mon Apr  7 15:02:40 2025 -->
+<table border=1>
+<tr> <th>  </th> <th> Estimate </th> <th> Std. Error </th> <th> t value </th> <th> Pr(&gt;|t|) </th>  </tr>
+  <tr> <td align="right"> (Intercept) </td> <td align="right"> 99.3141 </td> <td align="right"> 6.3498 </td> <td align="right"> 15.64 </td> <td align="right"> 0.0000 </td> </tr>
+  <tr> <td align="right"> Age </td> <td align="right"> -0.9288 </td> <td align="right"> 0.0906 </td> <td align="right"> -10.25 </td> <td align="right"> 0.0000 </td> </tr>
+  <tr> <td align="right"> Statin </td> <td align="right"> 3.1024 </td> <td align="right"> 2.3327 </td> <td align="right"> 1.33 </td> <td align="right"> 0.1841 </td> </tr>
+  <tr> <td align="right"> Education1 </td> <td align="right"> 9.9060 </td> <td align="right"> 3.3856 </td> <td align="right"> 2.93 </td> <td align="right"> 0.0036 </td> </tr>
+  <tr> <td align="right"> Education2 </td> <td align="right"> 21.2187 </td> <td align="right"> 3.5894 </td> <td align="right"> 5.91 </td> <td align="right"> 0.0000 </td> </tr>
+  <tr> <td align="right"> Education3 </td> <td align="right"> 33.2109 </td> <td align="right"> 3.5587 </td> <td align="right"> 9.33 </td> <td align="right"> 0.0000 </td> </tr>
+   </table>
+   
+---
+### Interpretation of Categorical Data
+
+Need to include indicator (i.e. dummy) variables.
+  - For a categorical variable with *k* levels, need *k−1* indicator variables 
+  
+```{r, echo=FALSE, out.width="85%", fig.align='center'}
+knitr::include_graphics("./images/dummy-variables.png")
+```
+
+---
+### Interpretation of Categorical Data
+
+Let's write out what this looks like:
+
+```{r, echo=FALSE}
+
+model$coefficients
+
+```
+
+---
+### Partial F-Test
+
+Tests for a specific combination of predictor variables
+
+e.g. For 3 predictor variables, one could test for: 
+
+$$H_0: \beta_1 = 0$$
+$$H_A: \beta_1 \neq 0$$
+
+Hence we are testing if $x_1$ contributes significantly to a model that already contains $x_2$ and $x_3$
+
+
+---
+### Partial F-Test
+
+Let's test to see if Education should be included in the model. Hypotheses:
+
+<br>
+<br>
+<br>
+<br>
+
+Let's draw an conclusion:
+
+```{r, echo = FALSE}
+model = lm(RFFT ~ Age + Statin + Education , data=prevend.samp)
+mod.red <- lm(RFFT ~ Age + Statin, data=prevend.samp)
+anova(mod.red, model)
+```
+
+---
+### Interaction Terms
+
+In the earlier regression model, we discuss how Age and Statin each affect the RFFT. What if the **slope of age depends on Statin**? 
+
+.bg-washed-yellow.b--yellow.ba.ph3[
+__Interaction__: an interaction exists between two variables when the relationship of one explanatory variable $x_1$ to the response variable $y$ changes depending on another explanatory variable $x_2$
+]
+
+<br>
+
+__Interaction term__:
+
+---
+### Interaction Terms
+
+.bg-washed-blue.b--blue.ba.ph3[
+__Example__: Write the estimated multiple linear regression model for predicting RFFT score based on age & statin use, _with an interaction term_. 
+]
+
+```{r, echo=FALSE}
+model2 <- lm(RFFT ~ Age + Statin + Age:Statin, data=prevend.samp)
+model2
+```
+
+---
+### Interaction Terms
+
+```{r, echo=FALSE, fig.align='center', fig.width=12, fig.height=7}
+p1 = prevend.samp %>%
+  ggplot(aes(x=Age, y=RFFT)) + 
+  geom_point(aes(col=as.factor(Statin)), show.legend = FALSE) + 
+  geom_smooth(method='lm', se=FALSE) 
+
+p2 = prevend.samp %>%
+  ggplot(aes(x=Age, y=RFFT)) + 
+  geom_point(aes(col=as.factor(Statin)), show.legend = FALSE) + 
+  geom_smooth(aes(col=as.factor(Statin)),show.legend = FALSE, method='lm', se=FALSE)
+
+grid.arrange(p1, p2, ncol=2)
+```
+
+---
+### Interaction Terms
+
+.bg-washed-blue.b--blue.ba.ph3[
+__Example__: According to guidance issued, individuals with Type II diabetes ages 40 to 75 with LDL between 70 to 189 mg/dL should be on statins. For non-diabetic individuals, those individuals ages 40 to 75 with a predicted probability of future clogged arteries of at least 0.075. Why is the criteria different depending on whether someone has diabetes?
+]
+
+
+```{r, echo=FALSE, fig.align='center', fig.height=5.5, fig.width=12}
+data(nhanes.samp.adult.500)
+a1 <- nhanes.samp.adult.500 %>%
+  ggplot(aes(x=Age, y=TotChol)) + 
+  geom_point(aes(col=as.factor(Diabetes)), size = 4) + 
+  geom_smooth(method='lm', se=FALSE) + 
+  labs(x='Age (years)', y='Total cholesterol', guides='Diabetes')
+
+a2 <- nhanes.samp.adult.500 %>%
+  ggplot(aes(x=Age, y=TotChol)) + 
+  geom_point(aes(col=Diabetes)) + 
+  geom_smooth(aes(col=Diabetes), method='lm', se=FALSE) + 
+  labs(x='Age (years)', y='Total cholesterol', guides='Diabetes')
+
+grid.arrange(p1, p2, ncol=2)
+```
+
+---
+### Interaction Terms
+
+Is there an interaction?
+
+- If the slope changes dramatically (i.e. the lines overlap), then the interaction term should be included.
+
+
+- If the slopes are similar, the interaction term is not needed.
+
+---
+### Your Turn
+
+Let’s try to use Age and Ethnicity to explain RFFT. Ethnicty has four levels: 0 = Western
+European; 1 = African; 2 = Asian; 3 = Other.
+
+
+```{r, echo = FALSE, eval = FALSE}
+prevend.samp$Ethnicity = as.factor(prevend.samp$Ethnicity)
+
+model <- lm(RFFT ~ Age + Statin + Ethnicity, data=prevend.samp)
+#print(xtable(summary(model)), type = "html")
+```
+
+<!-- html table generated in R 4.4.0 by xtable 1.8-4 package -->
+<!-- Mon Apr  7 15:23:35 2025 -->
+<table border=1>
+<tr> <th>  </th> <th> Estimate </th> <th> Std. Error </th> <th> t value </th> <th> Pr(&gt;|t|) </th>  </tr>
+  <tr> <td align="right"> (Intercept) </td> <td align="right"> 139.2133 </td> <td align="right"> 5.1094 </td> <td align="right"> 27.25 </td> <td align="right"> 0.0000 </td> </tr>
+  <tr> <td align="right"> Age </td> <td align="right"> -1.2857 </td> <td align="right"> 0.0938 </td> <td align="right"> -13.71 </td> <td align="right"> 0.0000 </td> </tr>
+  <tr> <td align="right"> Statin </td> <td align="right"> 0.8421 </td> <td align="right"> 2.5787 </td> <td align="right"> 0.33 </td> <td align="right"> 0.7441 </td> </tr>
+  <tr> <td align="right"> Ethnicity1 </td> <td align="right"> -32.3033 </td> <td align="right"> 13.3455 </td> <td align="right"> -2.42 </td> <td align="right"> 0.0159 </td> </tr>
+  <tr> <td align="right"> Ethnicity2 </td> <td align="right"> -15.7545 </td> <td align="right"> 7.3823 </td> <td align="right"> -2.13 </td> <td align="right"> 0.0333 </td> </tr>
+  <tr> <td align="right"> Ethnicity3 </td> <td align="right"> -6.4988 </td> <td align="right"> 23.0704 </td> <td align="right"> -0.28 </td> <td align="right"> 0.7783 </td> </tr>
+   </table>
+
+
+- Interpret the slope and p-value of Age
+- Write the set of lienar models for different education levels and interpret the results
+- Interpret an adjusted $R^2$ if 0.4248
+
+
+
+
+
+
+
+
+
+
+
+
