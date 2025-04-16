@@ -1,0 +1,467 @@
+---
+title: 'Inference for Categorical Data'
+author: "MTH 361: Probability and Statistics in the Health Sciences"
+date: "April 22, 2025"
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer.css
+    lib_dir: libs
+    nature:
+      titleSlideClass: ['left', 'middle', 'inverse']
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+### Homeworks
+
+Labs:
+- **Lab 9**: Work Day on April 29
+  + Due Friday May 2nd at 11:59 pm
+
+Homeworks:
+- **Homework 8**: Due Thursday April 24 at 11:59pm in Blueline
+- **Homework 9**: Due May 6 at 11:59pm in Blueline
+
+<br>
+
+- **Analysis Plan**: Due Tuesday April 29 at 11:59pm in Blueline
+
+- **Final Exam**: Friday May 9 from 3:30pm-4:40pm
+
+```{css, include=FALSE}
+@media print {
+  .has-continuation {
+    display: block !important;
+  }
+}
+```
+
+```{r xaringan-setup, include=FALSE}
+library(xaringanthemer)
+library(xaringanExtra)
+style_duo_accent(primary_color = "#000000",
+                 secondary_color = "#FFFFFF",
+  header_font_google = google_font("Source Sans Pro"),
+  text_font_google = google_font("Source Sans Pro"))
+
+#xaringanExtra::use_logo(
+#  image_url = "https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Creighton_University_seal.svg/1200px-Creighton_University_seal.svg.png"
+#)
+
+
+xaringanExtra::use_tachyons()
+
+xaringanExtra::use_tile_view()
+
+knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE, fig.width=8, fig.height=5, cache=TRUE)
+
+library(tidyverse)
+library(RColorBrewer)
+library(patchwork)
+library(kableExtra)
+library(oibiostat)
+library(mosaic)
+```
+
+---
+### Annoucement
+
+- No Class on Tuesday May 6
+  - I will just have extended office hours
+  
+- Statistical Communication & Ethics and Final Exam Review will be combined into one day on Thursday May 1
+
+---
+### Binomial Data
+
+.bg-washed-blue.b--blue.ba.ph3[
+__Example__: Advanced melanoma is an aggressive form of skin cancer that, until recently, was almost uniformly fatal. Two therapies have seemed to be successful in triggering an immune response to this cancer: nivolumab and ipilimunab.
+
+A 2013 report in the New England Journal of Medicine by Wolchok et al. reported the results of a study in which patients were treated with both nivolumab and ipilimumab. Fifty-three patients were given the new regimens concurrently, and the response to therapy could be evaluated in 52 of the 53. Of the 52 evaluable patients, 21 (40%) experienced a response according to commonly accepted criteria. In previous studies, the proportion of patients responding to one of these agents was 30% or less. How might one compare the new data to past results?
+]
+
+---
+### Binomial Data
+
+.bg-washed-yellow.b--yellow.ba.ph3[
+__Binomial variable__: a variable with only two possible outcomes (also called _binary variables_)
+
+- The possible outcomes are referred to as __successes__ (the outcome we care about) and __failures__ (the outcome we don't).
+]
+
+
+When we have a binomial variable, our goal is usually to estimate the underlying __probability of success__, or __population proportion__, 
+
+
+---
+### Sampling Distribution of $\hat{p}$
+
+.bg-washed-yellow.b--yellow.ba.ph3[
+The __sampling distribution of $\hat{p}$__ has:
+
+- Mean: $np$ 
+
+- Standard error: $SE_{\hat{p}} = \sqrt{\frac{p(1-p)}{n}}$
+
+- Shape: Approximately normally distributed if the sample size is "large enough" 
+
+$$np\ge 10 \text{ and } n(1-p) \ge 10$$
+
+]
+
+
+---
+### Binomial Distribution
+
+Assuming each observation is independent, we can get the formula for the __binomial distribution__ from the Multiplication Rule. 
+- Let $P(X=x)$ represent the probability that we have observed $x$ successes our of $n$ trials.
+
+
+---
+### Binomial Distribution
+
+What does the binomial distribution “look like”? It depends on the parameters.
+
+```{r, echo=FALSE, fig.align='center', fig.height=7.5, fig.width=12}
+x1 <- 0:10
+x2 <- 0:50
+p1 <- dbinom(x1, size=10, prob=0.5)
+p2 <- dbinom(x1, size=10, prob=0.25)
+p3 <- dbinom(x1, size=10, prob=0.1)
+p4 <- dbinom(x2, size=50, prob=0.5)
+p5 <- dbinom(x2, size=50, prob=0.25)
+p6 <- dbinom(x2, size=50, prob=0.1)
+
+data <- tibble(x = c(x1, x1, x1, x2, x2, x2),
+               p = c(p1, p2, p3, p4, p5, p6),
+               dist = c(rep('Binomial(n=10, p=0.5)', 11),
+                        rep('Binomial(n=10, p=0.25)', 11),
+                        rep('Binomial(n=10, p=0.1)', 11),
+                        rep('Binomial(n=100, p=0.5)', 51),
+                        rep('Binomial(n=100, p=0.25)', 51),
+                        rep('Binomial(n=100, p=0.1)', 51)))
+
+data %>% ggplot(aes(x=x, y=p)) + geom_col(aes(fill=dist)) + facet_wrap(~dist, scales='free') + guides(fill="none") 
+               
+```
+
+---
+### Binomial Test
+
+_Step 1: Write the null and alternative hypotheses_
+
+Assume that the true population proportion $p=p_0$, where $p_0$ is some constant value. The hypotheses we’re interested in testing are:
+
+$$H_0: p = p_0$$
+
+$$H_A: p (<, >, \ne) p_0$$
+
+<br>
+<br>
+
+_Step 2: Identify the test statistic_
+
+The data we'll need from our sample is the number of successes $x$ and the sample size $n$.
+
+---
+### Binomial Test
+  
+_Step 3: Calculate the $p$-value_
+
+We’ll use the binomial distribution with $p=p_0$ to calculate the $p$-value.
+
+- Find the probability of observing a "more extreme" result using binomial distribution.
+
+```{r, echo=FALSE, fig.align='center', fig.height=4}
+data <- tibble(x = 0:52,
+               p=dbinom(0:52, size=52, prob=0.30)) %>%
+  mutate(improve=ifelse(x>=21, 1, 0))
+data %>% ggplot(aes(x=x, y=p)) + geom_col(aes(fill=as.factor(improve))) + guides(fill=FALSE)
+```
+
+
+---
+### Binomial Test
+
+Instead of calculating probabilities directly, we can use R!
+
+```{r}
+binom.test(x=21, n=52, p=0.30, alternative='greater')
+```
+
+_Step 4: Make a conclusion to the research question_
+  
+- Remember that sample size, data quality, choice of $\alpha$, and consequences matter!
+
+---
+### Example: Binomial Test
+
+.bg-washed-blue.b--blue.ba.ph3[
+__Example__: Male radiologists have long suspected that they tend to have fewer sons than daughters. In a random sample of 87 children of "highly irradiated" male radiologists, 30 were male. Assume that the population proportion of male births is 0.519 (in the human population male babies are slightly more likely than female babies). Is there significant evidence to show male radiologists are less likely to have male babies?
+]
+
+---
+### Example: Binomial Test
+
+Is there significant evidence to show male radiologists are less likely to have male babies?
+
+
+```{r}
+binom.test(x=30, n=87, p=0.519, alternative='less')
+```
+
+---
+### Confidence Interval for a Proportion
+
+We’ll consider two choices:
+  
+1.	Standard “Wald” confidence interval: based on the normal approximation to the sampling distribution
+
+2.	Clopper-Pearson confidence interval: based on the binomial distribution
+
+---
+### Wald Confidence Interval
+
+.bg-washed-yellow.b--yellow.ba.ph3[__Wald interval__: calculated based on the Central Limit Theorem and the normal distribution
+
+$$\hat{p} \pm 1.96 \times SE(\hat{p})$$
+where $$SE_{\hat{p}} = \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}$$
+
+]
+
+
+- The normal distribution approximation can be inaccurate when $n$ is small or $p$ is "extreme"
+
+---
+### Wald Confidence Interval
+
+.bg-washed-blue.b--blue.ba.ph3[
+__Example__: Calculate and interpret a  Wald confidence interval for the proportion of male babies born to male radiologists. Remember $\hat{p}= 30/87$.
+]
+
+---
+### Clopper-Pearson Confidence Interval
+
+A another alternative is the __Clopper-Pearson confidence interval__, which is based on the binomial distribution. 
+
+The idea here is to take all of the values of
+
+$$H_0: p = p_0$$
+
+for which we fail to reject the null hypothesis, and set those as the confidence interval!
+
+---
+### Clopper-Pearson Confidence Interval
+
+The Clopper-Pearson interval is difficult to calculate by hand, but easy for R.
+
+```{r}
+binom.test(x=30, n=87, conf.level=0.95 , p = 0.519)
+```
+
+- There are other confidence intervals we could use. As $n \rightarrow \infty$, they tend to converge.
+
+---
+### Testing for a Difference in Proportions
+
+The difference in two sample proportions, $\hat{p}_1 - \hat{p}_2$ tends to follow a normal model when:
+
+
+- Each of the two samples are random samples from a population
+
+
+- The two samples are independent of each other
+
+
+- The sample sizes are "large enough": collectively, $n_1 p_1, \ n_2p_2, \ n_1(1-p_1), \ n_2(1-p_2) \ge 10$
+
+
+
+---
+### Confidence Intervals for Difference
+
+Calculate & interpret a 95% CI for the difference in deaths due to breast cancer.
+
+Group|Died from breast cancer|Did not die from breast cancer
+----|----|-----
+Mammogram|500|44,425
+Control|505|44,405
+
+
+---
+### Association Between Categorical Variables?
+
+Take another look at the tables from the previous example:
+
+Group|Died from breast cancer|Did not die from breast cancer
+----|----|-----
+Mammogram|500|44,425
+Control|505|44,405
+
+A natural question for a two-way table is whether there is an association with these two categorical variables. 
+
+---
+### Chi-Square $(\chi^2)$ Test for Independence
+
+.bg-washed-yellow.b--yellow.ba.ph3[__Chi-square test for independence__: procedure for determining whether or not two categorical variables are associated
+
+- $H_0$: The "row" variable is independent of the "column" variable
+- $H_A$: There is an association between the "row" variable and the "column" variable
+]
+
+---
+### Chi-Square $(\chi^2)$ Distribution
+
+The $\chi^2$ (chi-square) test statistic is:
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+where $k$ is the number of categories, $O_i$ is the "observed" count in category $i$, and $E_i$ is the "expected" count in category $i$ under our model.
+
+<br>
+  
+This test statistic follows a probability distribution called the $\chi^2$ distribution: 
+
+- Defined on positive values only.
+- Right-skewed probability distribution.
+- The higher the number of categories, $k$, the higher the expected value of the  test statistic.
+
+---
+### Chi-Square $(\chi^2)$ Distribution
+
+How does the chi-square distribution change as $k$ changes?
+
+```{r, message=FALSE, echo=FALSE, fig.align='center', fig.height=7, fig.width=11}
+x <- seq(from=0, to=25, length=100)
+p <- c(dchisq(x, df=1), dchisq(x, df=2), dchisq(x, df=4), dchisq(x, df=9), dchisq(x, df=14), dchisq(x, df=19))
+dist <- c(rep('Chi-square (k=02)', 100), rep('Chi-square (k=03)', 100),
+         rep('Chi-square (k=05)', 100), rep('Chi-square (k=10)', 100),
+         rep('Chi-square (k=15)', 100), rep('Chi-square (k=20)', 100))
+
+data <- tibble(x=rep(x,6), p, dist)
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
+data %>% ggplot(aes(x=x, y=p)) + geom_area(aes(fill=dist)) + geom_line() + facet_wrap(~dist, scales='free') + scale_fill_manual(values=cbPalette) + guides(fill=FALSE)
+```
+
+---
+### Back to the Example
+
+Is there evidence that screening method is associated with outcome?
+
+
+Group|Died from breast cancer|Did not die from breast cancer
+----|----|-----
+Mammogram|500|44,425
+Control|505|44,405
+
+If there is no association, the proportions in each group should be approximately equal.
+
+```{r, echo=5, warning=FALSE, message=FALSE, fig.align='center', fig.width=10, fig.height=4.5}
+group <- c(rep('Mammogram', 500+44425), rep('Control', 505+44405))
+outcome <- c(rep('died', 500), rep('survived',44425), rep('died', 505), rep('survived', 44405))
+
+screening <- tibble(group, outcome)
+
+library(mosaic)
+
+screening %>% ggplot(aes(x=outcome)) +
+  geom_bar(aes(fill=group), position='fill') + #<<
+  scale_y_continuous(labels = scales::percent) + #<<
+  labs(y='proportion')
+```
+
+
+---
+### Chi-Square Test Calculation
+
+
+Group|Died from breast cancer|Did not die from breast cancer|Survived
+----|----|-----|-----
+Mammogram|500|44,425|44,925
+Control|505|44,405|44,910
+Total|1005|88,830|89,835
+
+The expected value *E* for a cell equals to 
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+Some rule of thumb must be satisfied:
+
+1. None of the categories should have an expected frequency < 1.
+
+2. No more of than 20% of the categories should have expected frequency < 5.
+
+
+---
+### Chi-Square Statistic Calculation
+
+---
+### Chi-Square Test
+
+```{r, echo=FALSE}
+table <- tally(group~outcome, data=screening)
+chisq.test(table)
+```
+
+---
+### Goodness-of-Fit (GOF) Tests
+
+There are a couple of ways to extend the 2*2 chi-square test
+-  _goodness-of-fit tests_ are used to compare a data set to some known distribution.
+
+.bg-washed-yellow.b--yellow.ba.ph3[
+__Chi-Square GOF test__: compares the observed frequencies in the data set to the expected frequencies under the null hypothesis or probability model]
+
+Test statistics and rule of thumb are exactly the same.
+
+
+
+---
+### Chi-square Goodness of Fit
+
+.bg-washed-blue.b--blue.ba.ph3[
+__Example__: Melanoma is a rare form of skin cancer that accounts for the great majority of skin cancer fatalities. UV exposure is a major risk factor for melanoma. Some body parts are regularly more exposed to the sun than others. A random sample of 310 women diagnosed with melanoma were classified according to the known location of the melanoma on their bodies. Assume that these body parts represent roughly equal skin areas. Do the data support the hypothesis that melanoma occurs evenly on the body?
+
+Location|Head/neck|Trunk|Upper limbs|Lower limbs|Total
+---|---|---|---|---|---
+Count|45|80|34|151|310
+Expected|77.5|77.5|77.5|77.5|
+
+
+]
+
+---
+### Chi-square Goodness of Fit
+
+```{r, echo=FALSE, fig.align='center', fig.height=7, fig.width=12}
+data <- tibble(
+  location = c(rep('Head/neck', 45), rep('Trunk', 80), rep('Upper limbs', 34), rep('Lower limbs', 151))
+)
+
+expected <- tibble(location=c('Head/neck', 'Trunk', 'Upper limbs', 'Lower limbs'),
+                   counts = rep(310/4, 4))
+
+data %>% ggplot(aes(x=location)) + geom_bar(aes(fill=location)) + guides(fill=FALSE) +
+  geom_col(data = expected, aes(x = location, y = counts), col='black', alpha=0)
+```
+
+---
+### Chi-square Goodness of Fit
+
+Assume that these body parts represent roughly equal skin areas. Do the data support the hypothesis that melanoma occurs evenly on the body?
+
+```{r, echo=FALSE}
+observed <- c(45, 80, 34, 151)
+expected <- c(0.25, 0.25, 0.25, 0.25)
+chisq.test(x=observed, p=expected)
+```
+

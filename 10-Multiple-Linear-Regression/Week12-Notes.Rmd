@@ -270,7 +270,7 @@ summary(model)
 ---
 ### Interpretation of Categorical Data
 
-For categorical variables that have two levels, it does not matter if we specify it as categorical or not. What if are variable has more than two levels?
+For categorical variables that have two levels, it does not matter if we specify it as categorical or not. What if our variable has more than two levels?
 
 Let’s add one more variable, Education, which has 4 levels: 0 = primary school;
 1 = lower secondary; 2 = higher secondary; 3 = university.
@@ -398,9 +398,11 @@ __Example__: According to guidance issued, individuals with Type II diabetes age
 
 ```{r, echo=FALSE, fig.align='center', fig.height=5.5, fig.width=12}
 data(nhanes.samp.adult.500)
+nhanes.samp.adult.500$Diabetes <- as.factor(nhanes.samp.adult.500$Diabetes)
+
 a1 <- nhanes.samp.adult.500 %>%
   ggplot(aes(x=Age, y=TotChol)) + 
-  geom_point(aes(col=as.factor(Diabetes)), size = 4) + 
+  geom_point(aes(col=Diabetes), size = 4) + 
   geom_smooth(method='lm', se=FALSE) + 
   labs(x='Age (years)', y='Total cholesterol', guides='Diabetes')
 
@@ -410,7 +412,7 @@ a2 <- nhanes.samp.adult.500 %>%
   geom_smooth(aes(col=Diabetes), method='lm', se=FALSE) + 
   labs(x='Age (years)', y='Total cholesterol', guides='Diabetes')
 
-grid.arrange(p1, p2, ncol=2)
+grid.arrange(a1, a2, ncol=2)
 ```
 
 ---
