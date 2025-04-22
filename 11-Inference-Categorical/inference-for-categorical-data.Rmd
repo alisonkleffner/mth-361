@@ -26,7 +26,7 @@ Homeworks:
 
 - **Analysis Plan**: Due Tuesday April 29 at 11:59pm in Blueline
 
-- **Final Exam**: Friday May 9 from 3:30pm-4:40pm
+- **Final Exam**: Friday May 9 from 3:00pm-4:40pm
 
 ```{css, include=FALSE}
 @media print {
@@ -62,14 +62,6 @@ library(kableExtra)
 library(oibiostat)
 library(mosaic)
 ```
-
----
-### Annoucement
-
-- No Class on Tuesday May 6
-  - I will just have extended office hours
-  
-- Statistical Communication & Ethics and Final Exam Review will be combined into one day on Thursday May 1
 
 ---
 ### Binomial Data
@@ -152,10 +144,11 @@ _Step 1: Write the null and alternative hypotheses_
 
 Assume that the true population proportion $p=p_0$, where $p_0$ is some constant value. The hypotheses we’re interested in testing are:
 
-$$H_0: p = p_0$$
 
-$$H_A: p (<, >, \ne) p_0$$
 
+<br>
+<br>
+<br>
 <br>
 <br>
 
@@ -273,7 +266,7 @@ The difference in two sample proportions, $\hat{p}_1 - \hat{p}_2$ tends to follo
 - The two samples are independent of each other
 
 
-- The sample sizes are "large enough": collectively, $n_1 p_1, \ n_2p_2, \ n_1(1-p_1), \ n_2(1-p_2) \ge 10$
+- The sample sizes are "large enough": collectively, $n_1 \hat{p}_1, \ n_2\hat{p}_2, \ n_1(1-\hat{p}_1), \ n_2(1-\hat{p}_2) \ge 10$
 
 
 
@@ -326,9 +319,6 @@ where $k$ is the number of categories, $O_i$ is the "observed" count in category
   
 This test statistic follows a probability distribution called the $\chi^2$ distribution: 
 
-- Defined on positive values only.
-- Right-skewed probability distribution.
-- The higher the number of categories, $k$, the higher the expected value of the  test statistic.
 
 ---
 ### Chi-Square $(\chi^2)$ Distribution
@@ -440,7 +430,7 @@ Expected|77.5|77.5|77.5|77.5|
 ]
 
 ---
-### Chi-square Goodness of Fit
+### Chi-Square Goodness of Fit
 
 ```{r, echo=FALSE, fig.align='center', fig.height=7, fig.width=12}
 data <- tibble(
@@ -455,7 +445,7 @@ data %>% ggplot(aes(x=location)) + geom_bar(aes(fill=location)) + guides(fill=FA
 ```
 
 ---
-### Chi-square Goodness of Fit
+### Chi-Square Goodness of Fit
 
 Assume that these body parts represent roughly equal skin areas. Do the data support the hypothesis that melanoma occurs evenly on the body?
 
