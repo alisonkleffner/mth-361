@@ -1,7 +1,7 @@
 ---
 title: 'Statistical Communication and Ethics'
 author: "MTH 361: Probability and Statistics in the Health Sciences"
-date: "December 3rd, 2024"
+date: "May 1st, 2025"
 output: 
   xaringan::moon_reader:
     lib_dir: libs
@@ -87,22 +87,22 @@ class:inverse
 <br><br><br>
 ## MTH 361: Probability and Statistics in the Health Sciences
 ### Statistical Communication and Ethics
-#### December 3, 2024
+#### May 1st, 2025
 
 
 
 ---
 ### Announcements
 
-Homeworks:
+- **Lab 9**: Due Friday May 2nd at 11:59 pm
+- **Homework 9**: Due May 6 at 11:59pm in Blueline
+- **Analysis Plan**: Due Tonight at 11:59pm in Blueline
+- **Final Exam**: Friday May 9 from 3:00pm-4:40pm
 
-- Homework 9 (Categorical Data) due Friday December 6 at 11:59pm
-
-Final
-
-- Wednesday December 11 from 1:00-2:40 PM
-  + If choose final project due Wednesday December 11 at 1:00 PM
-  + Will discuss in class on Thursday
+<br>
+<br>
+**Reminder:** No class on May 6
+  - I will just have extended office hours
 
 ```{r xaringan-setup, include=FALSE}
 
@@ -237,7 +237,9 @@ On March 15, 1994, the New York Times reported on a Federal Investigation of a C
 
 - [The problem](https://www.nytimes.com/1994/03/14/us/researcher-falsified-data-in-breast-cancer-study.html)
 - [Discussion with Doctor](https://www.nytimes.com/1994/04/01/us/doctor-says-he-falsified-cancer-data-to-help-patients.html)
-- [Ethical Dilemma](https://watermark.silverchair.com/archsurg_129_10_001.pdf?token=AQECAHi208BE49Ooan9kkhW_Ercy7Dm3ZL_9Cf3qfKAc485ysgAAAycwggMjBgkqhkiG9w0BBwagggMUMIIDEAIBADCCAwkGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQM3zLIWdAjUiOLfRlIAgEQgIIC2j_is0IW4TzK8rvlcRPB6mB-m3cdVwNdbexv0kBO_50dQhzxOoUWPDv6uNAoxOqgtXrxn5t_4tcWPBB3ktMAOuNOkJc4zaUXqJ6NLapj7b7WfU0AIzqUm-ha8T9oF2pQsiP-CVfCjOmLlI74gDUmrkoY2nkXRaWMcbh-iFzZwLj-Ew1wV4qjAPbB-DD-SD6PYcw_EDI-S5wwJlP3nZSuxUyKpmzEgFPJHRb58vbUfklMMaX2-FcdpHYGB36qp_IM13rKDjG8YDupVVUQxWadVqTZrTtuoy8gbKUe352Dsb9FqFf0u31Frv9Um6PwmxAY0AaHz_YROTGhqIWlyHBV_k1GzGbfPNGsqus3zQlQips9u278YSa62cSelf7ZSlxJBAASERmZYoBeQzzuY4TT-yOnVCYRl-SO-HVc9QbznnLt6yWl6Eo8qIXnwPO5NO09kEdjt7FmQf8TTXtopAF-Dzd1pSUHKBSFUv8PBaIONtalCrCJ8_OcNkIYL1qsjoR1n-0YOkstfY5HCoiLWKHnuWMuK-CSrUQp-pn5Q837H-0kC4S6ERvRJm3Ut6ksdlUh_p-mq3PvL7UvPBwQFADCZ10lOzbmS1wR3OChEe76GLG4Wsg7VvXdSs8yaFiVgWCrvwGjnWc327JuBLH2EPF9xBudvm7JRwSsqISf-6NhG5Y0CluIQ1-nSZE07prqfb8SB80WYVSBrIcwa90ozqtW4mAM1CSzhnyBwPv0js971N4pQiAEvtuFwK6ZqQFjf5q4Tc5GUkt79WiKDo43A1F_YEhrgtIUqPwR7A9Pt6BPpoBRcRpcQ8vOOAG_EecYlmqsWJs-kePCX3oskjhld9xmPoTlMqZ8VjBTccxiUM8LD8KTZPRgn4T-HDJHcdfgWqroymebf2pMFRzYJwSU3QOViPB44cU0At5psinSjs_MYCPJ_E_5vwtx9jINejHX_ag_hfVeTACwTJTFVg8)
+[General Overview](https://www.bmj.com/content/308/6932/809.2)
+- [Ethical Dilemma](https://acsjournals.onlinelibrary.wiley.com/doi/pdf/10.1002/1097-0142%2819950515%2975%3A10%3C2403%3A%3AAID-CNCR2820751002%3E3.0.CO%3B2-B)
+- [Other Examples](https://pmc.ncbi.nlm.nih.gov/articles/PMC4340084/)
 
 
 Discuss the two sides: 
